@@ -1,0 +1,13 @@
+# Build output
+**/bin/
+**/obj/
+
+# Visual Studio cache / user settings
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# OS junk
+Thumbs.db
+.DS_Store
