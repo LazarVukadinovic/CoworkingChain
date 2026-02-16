@@ -12,12 +12,13 @@ namespace Coworking.WinForms
 
         private void pokreni_btn_Click(object sender, EventArgs e)
         {
+            Main mainPage = new Main();
             string configFileName = comboBox_configFile.Text;
             var configFilePath = Path.Combine(AppContext.BaseDirectory, configFileName);
 
             // TODO: pozivanje DB modela za povezivanje na konekcioni string
-
-
+            this.Hide();
+            mainPage.Show();
         }
     }
 }
