@@ -75,7 +75,10 @@
             Controls.Add(pokreni_btn);
             Controls.Add(pictureBox1);
             Controls.Add(comboBox_configFile);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "Start";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Dobrodošli";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

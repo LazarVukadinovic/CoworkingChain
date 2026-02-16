@@ -1,1 +1,2 @@
 CoworkingChain
+Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CoworkingChain;Integrated Security=True;TrustServerCertificate=True;

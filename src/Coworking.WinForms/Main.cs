@@ -12,9 +12,16 @@ namespace Coworking.WinForms
 {
     public partial class Main : Form
     {
-        public Main()
+        private Form startForm;
+        public Main(Form callingForm)
         {
             InitializeComponent();
+            this.startForm = callingForm;
+        }
+
+        private void izlaz_btn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

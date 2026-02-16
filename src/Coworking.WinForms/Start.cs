@@ -12,7 +12,9 @@ namespace Coworking.WinForms
 
         private void pokreni_btn_Click(object sender, EventArgs e)
         {
-            Main mainPage = new Main();
+            Main mainPage = new Main(this);
+            mainPage.FormClosed += (s, args) => this.Close();
+
             string configFileName = comboBox_configFile.Text;
             var configFilePath = Path.Combine(AppContext.BaseDirectory, configFileName);
 

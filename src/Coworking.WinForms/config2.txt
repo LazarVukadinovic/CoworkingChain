@@ -1,0 +1,2 @@
+﻿CoworkingChain
+Server=localhost;Database=CoworkingChain;Uid=root;Pwd=;Port=3306;
