@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,5 +9,43 @@ namespace Coworking.Data.Models
 {
     internal class TipClanstva
     {
+        public int tipClanstvaId { get; set; }
+        public string? naziv { get; set; }
+        public int? cena { get; set; }
+        public int? trajanjeDana { get; set; }
+        public int? maxSatiRezervacijeMesecno { get; set; }
+        public int? satiSaleMesecno { get; set; }
+        public string? dozvoljenaSala { get; set; }
+
+        public TipClanstva()
+        {
+
+        }
+
+        public TipClanstva(TipClanstva t)
+        {
+            this.tipClanstvaId = t.tipClanstvaId;
+            this.naziv = t.naziv;
+            this.cena= t.cena;
+            this.trajanjeDana = t.trajanjeDana;
+            this.maxSatiRezervacijeMesecno = t.maxSatiRezervacijeMesecno;
+            this.satiSaleMesecno = t.satiSaleMesecno;
+            this.dozvoljenaSala=t.dozvoljenaSala;
+        }
+
+        public TipClanstva(string? naziv, int? cena, int? trajanjeDana, int? maxSatiRezervacijeMesecno, int? satiSaleMesecno, string? dozvoljenaSala)
+        {
+            this.naziv = naziv;
+            this.cena = cena;
+            this.trajanjeDana = trajanjeDana;
+            this.maxSatiRezervacijeMesecno = maxSatiRezervacijeMesecno;
+            this.satiSaleMesecno = satiSaleMesecno;
+            this.dozvoljenaSala = dozvoljenaSala;
+        }
+
+        public override string ToString()
+        {
+            return $"{tipClanstvaId} {naziv} - {cena}, {trajanjeDana} dana, maksimalno {maxSatiRezervacijeMesecno} sati sale mesecno, za sada {satiSaleMesecno} sati sale mesecno, dozvoljena sala {dozvoljenaSala}";
+        }
     }
 }
