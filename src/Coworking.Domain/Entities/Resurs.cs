@@ -5,9 +5,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coworking.Data.Models
+namespace Coworking.Domain.Entities
 {
-    internal class Resurs
+    public class Resurs
     {
         public int resursId { get; set; }
         public int lokacijaId { get; set; }

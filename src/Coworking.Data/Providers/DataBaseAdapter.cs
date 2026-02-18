@@ -11,34 +11,38 @@ namespace Coworking.Data.Providers
     internal class DataBaseAdapter
     {
         private readonly IDataBaseFactory _factory;
-        private readonly string konekcioniString;
+        private readonly string _konekcioniString;
 
         public DataBaseAdapter(IDataBaseFactory factory, string konekcioniString)
         {
             _factory = factory;
-            this.konekcioniString = konekcioniString;
+            _konekcioniString = konekcioniString;
         }
 
         public DataTable izvrsiUpit(string upit)
         {
-            using (var connStr = _factory.napraviKonekciju(konekcioniString))
-            using (var cmn=_factory.napraviKomandu(upit,connStr))
+            using (var connection = _factory.napraviKonekciju(_konekcioniString))
+            using (var cmn=_factory.napraviKomandu(upit,connection))
             {
-                var DataSet = new DataSet();
-                connStr.Open();
+                var dataSet = new DataSet();
+                connection.Open();
                 var adapter = _factory.napraviAdapter(cmn);
-                adapter.Fill(DataSet);
-                return DataSet.Tables[0];
+                adapter.Fill(dataSet);
+
+                // u slucaju da nema tabele
+                if(dataSet.Tables.Count == 0) return new DataTable();
+
+                return dataSet.Tables[0];
             }
         }
 
         public void izvrsiUpitBezRezultata(string upit)
         {
-            using (var connStr = _factory.napraviKonekciju(konekcioniString))
-            using (var cmn = _factory.napraviKomandu(upit, connStr))
+            using (var connection = _factory.napraviKonekciju(_konekcioniString))
+            using (var cmd = _factory.napraviKomandu(upit, connection))
             {
-                connStr.Open();
-                cmn.ExecuteNonQuery();
+                connection.Open();
+                cmd.ExecuteNonQuery();
             }
         }
     }

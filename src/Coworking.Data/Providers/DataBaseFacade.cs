@@ -1,5 +1,4 @@
-﻿using Coworking.Data.Models;
-using Coworking.Data.Recources;
+﻿using Coworking.Domain.Entities;
 using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
@@ -17,16 +16,19 @@ namespace Coworking.Data.Providers
 
         public DataBaseFacade()
         {
-            konekcioniString = File.ReadAllLines("../../../config.txt")[1];
-            var helper=new DataBaseHelper();
+            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
+            konekcioniString = File.ReadAllLines(path)[1];
+
+            var helper = new DataBaseHelper();
             var factory = helper.vratiFactory(konekcioniString);
+
             adapter = new DataBaseAdapter(factory, konekcioniString);
             mapper = new DataBaseMapper();
         }
         public void dodajClana(Clan c)
         {
             string upit = $@"
-            INSERT INTO Clan (ime, prezime, email, telefon, datum_pocetka, datum_kraja, status_naloga, tip_clanstva_id, kreiran_u)
+            INSERT INTO clan (ime, prezime, email, telefon, datum_pocetka, datum_kraja, status_naloga, tip_clanstva_id, kreiran_u)
             VALUES (
                 '{c.ime}',
                 '{c.prezime}',
@@ -45,7 +47,7 @@ namespace Coworking.Data.Providers
         public void dodajLokaciju(Lokacija l)
         {
             string upit = $@"
-            INSERT INTO clan (naziv, adresa, grad, radno_vreme, max_kapacitet, opis)
+            INSERT INTO lokacija (naziv, adresa, grad, radno_vreme, max_kapacitet, opis)
             VALUES (
                 '{l.naziv}',
                 '{l.adresa}',
@@ -78,7 +80,7 @@ namespace Coworking.Data.Providers
         public void dodajTipClanstva(TipClanstva t)
         {
             string upit = $@"
-            INSERT INTO tip_clanstva (naziv, cena, trajanje_dana, max_sati_meseca, dozvoljena_sala, sati_sale_mesecno)
+            INSERT INTO tip_clanstva (naziv, cena, trajanje_dana, max_sati_mesecno, dozvoljena_sala, sati_sale_mesecno)
             VALUES (
                 '{t.naziv}',
                 '{t.cena}',
@@ -98,8 +100,8 @@ namespace Coworking.Data.Providers
             SET pocetak = '{r.pocetak}',
             kraj = '{r.kraj}',
             status = '{r.status}',
-            kreiran_u = '{r.kreiranoU}',
-            otkazan_u = '{r.otkazanoU}',
+            kreirano_u = '{r.kreiranoU}',
+            otkazano_u = '{r.otkazanoU}',
             clan_id = '{r.clanId}'
             resurs_id = {r.resursId};
             WHERE rezervacija_id = '{r.rezervacijaId}'
@@ -110,44 +112,48 @@ namespace Coworking.Data.Providers
 
         public void otkaziRezervaciju(Rezervacija r)
         {
+            // ne treba delete vec update, da status bude 'Otkazana'
             string upit = $"DELETE FROM rezervacija WHERE rezervacija_id = {r.rezervacijaId}";
             adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public List<Clan> prikaziClanove()
         {
-            string upit = "SELECT * FROM Clan";
+            string upit = "SELECT * FROM clan";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapClan);
 
         }
 
         public List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id)
         {
+            // interfejs je bez parametara
             string upit = $"SELECT * FROM rezervacija WHERE clan_id={clan_id}";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
         }
 
         public List<Lokacija> prikaziLokacije()
         {
-            string upit = "SELECT * FROM Lokacija";
+            string upit = "SELECT * FROM lokacija";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapLokacija);
         }
 
         public List<Resurs> prikaziResurse()
         {
-            string upit = "SELECT * FROM Resurs";
+            string upit = "SELECT * FROM resurs";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapResurs);
         }
 
         public List<Rezervacija> prikaziRezervacije(string datum,string lokacija)
         {
+            // interfejs je bez parametara
             string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id WHERE rv.pocetak={DateTime.Parse(datum).Date} AND r.lokacija_id={lokacija}";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
         }
 
         public string prikazLanca()
         {
-            return File.ReadAllLines("../../../config.txt")[0];
+            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
+            return File.ReadAllLines(path)[0];
         }
     }
 }

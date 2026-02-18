@@ -12,11 +12,11 @@ namespace Coworking.Data.Providers
         public IDataBaseFactory? vratiFactory(string konekcioniString)
         {
             konekcioniString = konekcioniString.ToLower();
-            if (konekcioniString.Contains("user id") && konekcioniString.Contains("password"))
+            if (konekcioniString.Contains("localhost"))
             {
                 return new MySqlFactory();
             }
-            else if (konekcioniString.Contains("trusted_connection") || konekcioniString.Contains("trustservercertificate"))
+            else if (konekcioniString.Contains("MSSQLLocalDB"))
             {
                 return new MsSqlFactory();
             }

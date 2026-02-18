@@ -1,4 +1,4 @@
-﻿using Coworking.Data.Models;
+﻿using Coworking.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;

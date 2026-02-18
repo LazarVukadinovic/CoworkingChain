@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coworking.Data.Models
+namespace Coworking.Domain.Entities
 {
-    internal class Rezervacija
+    public class Rezervacija
     {
         public int rezervacijaId { get; set; }
         public int clanId { get; set; }

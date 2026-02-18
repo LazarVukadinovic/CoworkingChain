@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Data.Factories
 {
-    internal class MySqlFactory : IDataBaseFactory
+    public class MySqlFactory : IDataBaseFactory
     {
         public IDbDataAdapter napraviAdapter(IDbCommand komanda)
         {

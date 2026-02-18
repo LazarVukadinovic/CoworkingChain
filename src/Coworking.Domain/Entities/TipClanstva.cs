@@ -5,9 +5,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coworking.Data.Models
+namespace Coworking.Domain.Entities
 {
-    internal class TipClanstva
+    public class TipClanstva
     {
         public int tipClanstvaId { get; set; }
         public string? naziv { get; set; }

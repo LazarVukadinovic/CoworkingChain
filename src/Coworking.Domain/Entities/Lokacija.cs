@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coworking.Data.Models
+namespace Coworking.Domain.Entities
 {
-    internal class Lokacija
+    public class Lokacija
     {
         public int lokacijaId { get; set; }
         public string? naziv { get; set; }

@@ -5,9 +5,9 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coworking.Data.Models
+namespace Coworking.Domain.Entities
 {
-    internal class Clan
+    public class Clan
     {
         public int clanId { get; set; }
         public string? ime { get; set; }
