@@ -21,11 +21,11 @@ namespace Coworking.Data.Recources
 
         List<Rezervacija> prikaziKorisnickeRezervacije();
 
-        void dodajRezervaciju(Rezervacija rezervacija);
+        void dodajRezervaciju(Rezervacija r);
 
-        void otkaziRezervaciju(Rezervacija rezervacija);
+        void otkaziRezervaciju(Rezervacija r);
         
-        void izmeniRezervaciju(Rezervacija rezervacija);
+        void izmeniRezervaciju(Rezervacija r);
 
         void dodajClana(Clan c);
         

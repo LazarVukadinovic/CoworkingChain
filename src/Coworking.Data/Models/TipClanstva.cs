@@ -11,7 +11,7 @@ namespace Coworking.Data.Models
     {
         public int tipClanstvaId { get; set; }
         public string? naziv { get; set; }
-        public int? cena { get; set; }
+        public float? cena { get; set; }
         public int? trajanjeDana { get; set; }
         public int? maxSatiRezervacijeMesecno { get; set; }
         public int? satiSaleMesecno { get; set; }
@@ -33,7 +33,7 @@ namespace Coworking.Data.Models
             this.dozvoljenaSala=t.dozvoljenaSala;
         }
 
-        public TipClanstva(string? naziv, int? cena, int? trajanjeDana, int? maxSatiRezervacijeMesecno, int? satiSaleMesecno, string? dozvoljenaSala)
+        public TipClanstva(string? naziv, float? cena, int? trajanjeDana, int? maxSatiRezervacijeMesecno, int? satiSaleMesecno, string? dozvoljenaSala)
         {
             this.naziv = naziv;
             this.cena = cena;

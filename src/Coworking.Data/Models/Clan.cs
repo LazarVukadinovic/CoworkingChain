@@ -18,6 +18,7 @@ namespace Coworking.Data.Models
         public string? datumPocetka { get; set; }
         public string? datumKraja { get; set; }
         public string? statusNaloga { get; set; }
+        public string? kreiran {  get; set; }
 
         public Clan()
         {
@@ -35,9 +36,10 @@ namespace Coworking.Data.Models
             this.datumPocetka = c.datumPocetka;
             this.datumKraja = c.datumKraja;
             this.statusNaloga = c.statusNaloga;
+            this.kreiran = c.kreiran;
         }
 
-        public Clan(string? ime, string? prezime, string? mail, string? brTel, string? tipCl, string? datPoc, string? datKr, string? stNal)
+        public Clan(string? ime, string? prezime, string? mail, string? brTel, string? tipCl, string? datPoc, string? datKr, string? stNal,string? kreiran)
         {
             this.ime = ime;
             this.prezime = prezime;
@@ -47,12 +49,12 @@ namespace Coworking.Data.Models
             this.datumPocetka = datPoc;
             this.datumKraja = datKr;
             this.statusNaloga = stNal;
-
+            this.kreiran=kreiran;
         }
 
         public override string ToString()
         {
-            return $"{clanId} {ime} {prezime} - {mail}, {brTelefona}, {tipClanstva}, {datumPocetka}, {datumKraja}, {statusNaloga}";
+            return $"{clanId} {ime} {prezime} - {mail}, {brTelefona}, {tipClanstva}, {datumPocetka}, {datumKraja}, {statusNaloga},{kreiran}";
         }
     }
 }
