@@ -9,11 +9,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Coworking.Data\Coworking.Data.csproj" />
     <ProjectReference Include="..\Coworking.Services\Coworking.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="config.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="migrations\mssql\001_init_schema.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="migrations\mysql\001_init_schema.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="migrations\mysql\002_seed_data.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="migrations\mysql\003_views.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="migrations\mysql\procedures.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="migrations\mysql\reset.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

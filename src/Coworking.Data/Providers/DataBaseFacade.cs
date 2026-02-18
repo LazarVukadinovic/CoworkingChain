@@ -131,6 +131,12 @@ namespace Coworking.Data.Providers
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
         }
 
+        public List<Rezervacija> prikaziKorisnickeRezervacije()
+        {
+            // dodato jer nije implementiran, radi testiranja migracija
+            throw new NotImplementedException();
+        }
+
         public List<Lokacija> prikaziLokacije()
         {
             string upit = "SELECT * FROM lokacija";
@@ -148,6 +154,12 @@ namespace Coworking.Data.Providers
             // interfejs je bez parametara
             string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id WHERE rv.pocetak={DateTime.Parse(datum).Date} AND r.lokacija_id={lokacija}";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
+        }
+
+        public List<Rezervacija> prikaziRezervacije()
+        {
+            // dodato jer nije implementiran, radi testiranja migracija
+            throw new NotImplementedException();
         }
 
         public string prikazLanca()
