@@ -1,4 +1,5 @@
 ﻿using Coworking.Domain.Entities;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,67 +11,111 @@ namespace Coworking.Data.Providers
 {
     internal class DataBaseProxy : IDataBase
     {
+        private DataBaseFacade facade;
 
-        public DataBaseProxy() { }
+        List<Clan>? cachedClanovi = null;
+        List<TipClanstva>? cachedTipClanstva = null;
+        List<Lokacija>? cachedLokacija = null;
+        List<Resurs>? cachedResurs = null;
+        List<Rezervacija>? cachedRezervacija = null;
+        List<Rezervacija>? cachedKorisnickaRezervacija = null;
+
+        bool needReset = true;
+
+        public DataBaseProxy() 
+        {
+            facade = new DataBaseFacade();
+        }
 
         public void dodajClana(Clan c)
         {
-            throw new NotImplementedException();
+            facade.dodajClana(c);
+            needReset = true;
         }
 
         public void dodajLokaciju(Lokacija l)
         {
-            throw new NotImplementedException();
+            facade.dodajLokaciju(l);
+            needReset = true;
         }
 
         public void dodajRezervaciju(Rezervacija r)
         {
-            throw new NotImplementedException();
+            facade.dodajRezervaciju(r);
+            needReset = true;
         }
 
         public void dodajTipClanstva(TipClanstva t)
         {
-            throw new NotImplementedException();
+            facade.dodajTipClanstva(t);
+            needReset = true;
         }
 
         public void izmeniRezervaciju(Rezervacija r)
         {
-            throw new NotImplementedException();
+            facade.izmeniRezervaciju(r);
+            needReset = true;
         }
 
         public void otkaziRezervaciju(Rezervacija r)
         {
-            throw new NotImplementedException();
+            facade.otkaziRezervaciju(r);
+            needReset = true;
         }
 
         public List<Clan> prikaziClanove()
         {
-            throw new NotImplementedException();
+            if(cachedClanovi == null || needReset == true)
+            {
+                cachedClanovi = facade.prikaziClanove();
+                needReset = false;
+            }
+            return cachedClanovi;
         }
 
-        public List<Rezervacija> prikaziKorisnickeRezervacije()
+        public List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id)
         {
-            throw new NotImplementedException();
+            if (cachedKorisnickaRezervacija == null || needReset == true)
+            {
+                cachedKorisnickaRezervacija = facade.prikaziKorisnickeRezervacije(clan_id);
+                needReset = false;
+            }
+            return cachedKorisnickaRezervacija;
         }
 
         public List<Lokacija> prikaziLokacije()
         {
-            throw new NotImplementedException();
+            if (cachedLokacija == null || needReset == true)
+            {
+                cachedLokacija = facade.prikaziLokacije();
+                needReset = false;
+            }
+            return cachedLokacija;
         }
 
         public List<Resurs> prikaziResurse()
         {
-            throw new NotImplementedException();
+            if (cachedResurs == null || needReset == true)
+            {
+                cachedResurs = facade.prikaziResurse();
+                needReset = false;
+            }
+            return cachedResurs;
         }
 
-        public List<Rezervacija> prikaziRezervacije()
+        public List<Rezervacija> prikaziRezervacije(string datum, string lokacija)
         {
-            throw new NotImplementedException();
+            if (cachedRezervacija == null || needReset == true)
+            {
+                cachedRezervacija = facade.prikaziRezervacije(datum, lokacija);
+                needReset = false;
+            }
+            return cachedRezervacija;
         }
 
         public string prikazLanca()
         {
-            throw new NotImplementedException();
+            return facade.prikazLanca();
         }
     }
 }

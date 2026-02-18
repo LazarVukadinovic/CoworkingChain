@@ -113,7 +113,14 @@ namespace Coworking.Data.Providers
         public void otkaziRezervaciju(Rezervacija r)
         {
             // ne treba delete vec update, da status bude 'Otkazana'
-            string upit = $"DELETE FROM rezervacija WHERE rezervacija_id = {r.rezervacijaId}";
+            // string upit = $"DELETE FROM rezervacija WHERE rezervacija_id = {r.rezervacijaId}";
+
+            string upit = $@"
+                UPDATE rezervacija
+                SET status = 'Otkazana'
+                WHERE rezervacija_id = {r.rezervacijaId};
+            ";
+
             adapter.izvrsiUpitBezRezultata(upit);
         }
 
@@ -123,18 +130,11 @@ namespace Coworking.Data.Providers
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapClan);
 
         }
-
+       
         public List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id)
         {
-            // interfejs je bez parametara
             string upit = $"SELECT * FROM rezervacija WHERE clan_id={clan_id}";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
-        }
-
-        public List<Rezervacija> prikaziKorisnickeRezervacije()
-        {
-            // dodato jer nije implementiran, radi testiranja migracija
-            throw new NotImplementedException();
         }
 
         public List<Lokacija> prikaziLokacije()
@@ -151,15 +151,8 @@ namespace Coworking.Data.Providers
 
         public List<Rezervacija> prikaziRezervacije(string datum,string lokacija)
         {
-            // interfejs je bez parametara
             string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id WHERE rv.pocetak={DateTime.Parse(datum).Date} AND r.lokacija_id={lokacija}";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
-        }
-
-        public List<Rezervacija> prikaziRezervacije()
-        {
-            // dodato jer nije implementiran, radi testiranja migracija
-            throw new NotImplementedException();
         }
 
         public string prikazLanca()

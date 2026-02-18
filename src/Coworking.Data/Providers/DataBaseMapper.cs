@@ -87,7 +87,7 @@ namespace Coworking.Data.Providers
                 rezervacijaId = (int)red["rezervacija_id"],
                 pocetak = red["pocetak"].ToString(),
                 kraj = red["kraj"].ToString(),
-                status = (int)red["status"],
+                status = red["status"].ToString(),
                 kreiranoU = red["kreirano_u"].ToString(),
                 otkazanoU = red["otkazano_u"].ToString(),
                 clanId = (int)red["clan_id"],

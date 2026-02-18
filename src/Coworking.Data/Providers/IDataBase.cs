@@ -17,9 +17,9 @@ namespace Coworking.Data.Providers
 
         List<Resurs> prikaziResurse();
 
-        List<Rezervacija> prikaziRezervacije();
+        List<Rezervacija> prikaziRezervacije(string datum, string lokacija);
 
-        List<Rezervacija> prikaziKorisnickeRezervacije();
+        List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id);
 
         void dodajRezervaciju(Rezervacija r);
 

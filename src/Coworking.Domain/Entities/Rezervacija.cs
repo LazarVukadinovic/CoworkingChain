@@ -13,7 +13,7 @@ namespace Coworking.Domain.Entities
         public int resursId { get; set; }
         public string? pocetak { get; set; }
         public string? kraj { get; set; }
-        public int? status { get; set; }
+        public string? status { get; set; }
         public string? kreiranoU { get; set; }
         public string? otkazanoU { get; set; }
 
@@ -34,7 +34,7 @@ namespace Coworking.Domain.Entities
             this.otkazanoU = r.otkazanoU;
         }
 
-        public Rezervacija(string? pocetak, string? kraj, int? status,string? kreiranoU, string? otkazanoU)
+        public Rezervacija(string? pocetak, string? kraj, string? status,string? kreiranoU, string? otkazanoU)
         {
             this.pocetak = pocetak;
             this.kraj = kraj;
