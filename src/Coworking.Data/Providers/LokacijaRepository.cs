@@ -39,10 +39,19 @@ namespace Coworking.Data.Providers
             adapter.izvrsiUpitBezRezultata(upit);
         }
 
-        public List<Lokacija> GetAll()
+        public List<Lokacija> GetAll(bool check)
         {
             string upit = "SELECT * FROM lokacija";
+            if(check)
+            {
+                upit = $"l JOIN rezervacija r on  ";
+            }
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapLokacija);
+        }
+
+        public List<Lokacija> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Lokacija item)

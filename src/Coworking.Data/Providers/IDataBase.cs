@@ -31,7 +31,7 @@ namespace Coworking.Data.Providers
         
         void dodajLokaciju(Lokacija l);
 
-        void dodajTipClanstva(TipClanstva t);
+        void dodajTipClanstva(Domain.Entities.TipClanstva t);
 
 
 

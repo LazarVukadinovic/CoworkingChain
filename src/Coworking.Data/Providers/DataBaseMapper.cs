@@ -55,20 +55,53 @@ namespace Coworking.Data.Providers
 
         public Resurs mapResurs(DataRow red)
         {
-            return new Resurs
+            string tip = red["tip_resursa"].ToString();
+
+            if (tip == "radno_mesto")
+            {
+                return mapRadnoMesto(red);
+            }
+            else if (tip == "sala")
+            {
+                return mapSalaZaSastanke(red);
+            }
+
+            throw new Exception($"Nepoznat tip resursa: {tip}");
+        }
+
+
+        public Resurs mapRadnoMesto(DataRow red)
+        {
+            return new RadnoMesto
             {
                 resursId = (int)red["resurs_id"],
                 lokacijaId = (int)red["lokacija_id"],
                 oznaka = red["oznaka"].ToString(),
                 tipResursa = red["tip_resursa"].ToString(),
                 opis = red["opis"].ToString(),
-                aktivan = (int)red["aktivan"],
+                podtip = (PodtipRadnogMesta)Enum.Parse(typeof(PodtipRadnogMesta), red["podtip"].ToString())
             };
         }
 
-        public TipClanstva mapTipClanstva(DataRow red)
+        public Resurs mapSalaZaSastanke(DataRow red)
         {
-            return new TipClanstva
+            return new SalaZaSastanke 
+            {   resursId = (int)red["resurs_id"], 
+                lokacijaId = (int)red["lokacija_id"], 
+                oznaka = red["oznaka"].ToString(), 
+                tipResursa = red["tip_resursa"].ToString(), 
+                opis = red["opis"].ToString(), 
+                imaProjektor = Convert.ToBoolean(red["ima_projektor"]), 
+                imaTablu = Convert.ToBoolean(red["ima_tablu"]), 
+                imaTv = Convert.ToBoolean(red["ima_tv"]), 
+                imaOpremuZaOnlineSastanke = Convert.ToBoolean(red["ima_online_opremu"]) 
+            };
+        }
+
+
+        public Domain.Entities.TipClanstva mapTipClanstva(DataRow red)
+        {
+            return new Domain.Entities.TipClanstva
             {
                 tipClanstvaId = (int)red["tip_clanstva_id"],
                 naziv = red["naziv"].ToString(),

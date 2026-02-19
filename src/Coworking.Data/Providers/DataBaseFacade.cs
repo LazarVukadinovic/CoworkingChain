@@ -1,164 +1,154 @@
 ﻿using Coworking.Domain.Entities;
-using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Coworking.Data.Providers
 {
-    internal class DataBaseFacade : IDataBase
+    public class DataBaseFacade : IDataBase
     {
-        private readonly string konekcioniString;
-        private readonly DataBaseAdapter adapter;
-        private readonly DataBaseMapper mapper;
+        private readonly ClanRepository _clanRepo;
+        private readonly LokacijaRepository _lokacijaRepo;
+        private readonly ResursRepository _resursRepo;
+        private readonly RezervacijaRepository _rezRepo;
 
         public DataBaseFacade()
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
-            konekcioniString = File.ReadAllLines(path)[1];
-
-            var helper = new DataBaseHelper();
-            var factory = helper.vratiFactory(konekcioniString);
-
-            adapter = new DataBaseAdapter(factory, konekcioniString);
-            mapper = new DataBaseMapper();
+            _clanRepo = new ClanRepository();
+            _lokacijaRepo = new LokacijaRepository();
+            _resursRepo = new ResursRepository();
+            _rezRepo = new RezervacijaRepository();
         }
-        public void dodajClana(Clan c)
+
+        // --- Članovi ---
+        public void dodajClana(Clan c) => _clanRepo.Add(c);
+        public List<Clan> prikaziClanove() => _clanRepo.GetAll();
+
+        //// Filtriranje članova po lokaciji, tipu članstva ili statusu ?
+        //public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
+        //{
+        //    var clanovi = _clanRepo.GetAll();
+
+        //    if (lokacijaId.HasValue)
+        //        clanovi = clanovi.FindAll(c => c.lokacijaId == lokacijaId);
+
+        //    if (tipClanstvaId.HasValue)
+        //        clanovi = clanovi.FindAll(c => c.tipClanstva == tipClanstvaId);
+
+        //    if (!string.IsNullOrEmpty(status))
+        //        clanovi = clanovi.FindAll(c => c.statusNaloga == status);
+
+        //    return clanovi;
+        //}
+
+        // --- Lokacije ---
+        public void dodajLokaciju(Lokacija l) => _lokacijaRepo.Add(l);
+        public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAll(check); // za prikaz aktivne lokacije dodati
+
+        // Statistika po lokaciji: broj resursa, broj rezervisanih, procenat zauzetosti
+        public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
         {
-            string upit = $@"
-            INSERT INTO clan (ime, prezime, email, telefon, datum_pocetka, datum_kraja, status_naloga, tip_clanstva_id, kreiran_u)
-            VALUES (
-                '{c.ime}',
-                '{c.prezime}',
-                '{c.mail}',
-                '{c.brTelefona}',
-                '{c.datumPocetka}',
-                '{c.datumKraja}',
-                '{c.statusNaloga}',
-                '{c.tipClanstva}',
-                '{c.kreiran}'
-            );";
+            var lokacije = _lokacijaRepo.GetAll(false);
+            var resursi = _resursRepo.GetAll();
+            var rezervacije = _rezRepo.GetAll();
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            var rezultat = new List<(Lokacija, int, int, double)>();
+
+            foreach (var l in lokacije)
+            {
+                var resursiLokacije = resursi.FindAll(r => r.lokacijaId == l.lokacijaId);
+                int brojResursa = resursiLokacije.Count;
+
+                int brojRezervisanih = rezervacije.FindAll(r =>
+                    resursiLokacije.Exists(res => res.resursId == r.resursId) &&
+                    r.status == "Aktivna").Count;
+
+                double procenat = brojResursa == 0 ? 0 : (double)brojRezervisanih / brojResursa * 100;
+
+                rezultat.Add((l, brojResursa, brojRezervisanih, procenat));
+            }
+
+            return rezultat;
         }
 
-        public void dodajLokaciju(Lokacija l)
+        // --- Resursi ---
+        public void dodajResurs(Resurs r) => _resursRepo.Add(r);
+        public List<Resurs> prikaziResurse() => _resursRepo.GetAll();
+
+        public List<Resurs> prikaziResursePoLokaciji(int lokacijaId)
         {
-            string upit = $@"
-            INSERT INTO lokacija (naziv, adresa, grad, radno_vreme, max_kapacitet, opis)
-            VALUES (
-                '{l.naziv}',
-                '{l.adresa}',
-                '{l.grad}',
-                '{l.radnoVreme}',
-                '{l.maxKapacitet}',
-                '{l.opis}'
-            );";
-
-            adapter.izvrsiUpitBezRezultata(upit);
+            var resursi = _resursRepo.GetAll();
+            return resursi.FindAll(r => r.lokacijaId == lokacijaId);
         }
 
-        public void dodajRezervaciju(Rezervacija r)
+        // --- Rezervacije ---
+        public void dodajRezervaciju(Rezervacija r) => _rezRepo.Add(r);
+        public void izmeniRezervaciju(Rezervacija r) => _rezRepo.Update(r);
+        public void otkaziRezervaciju(int rezervacijaId) => _rezRepo.Cancel(rezervacijaId);
+        public List<Rezervacija> prikaziRezervacije() => _rezRepo.GetAll();
+        public List<Rezervacija> prikaziKorisnickeRezervacije(int clanId) => _rezRepo.GetByClanId(clanId);
+
+        // Rezervacije sa statusom (aktivna, prošla, otkazana)
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaClana(int clanId)
         {
-            string upit = $@"
-            INSERT INTO rezervacija (pocetak, kraj, status, kreirano_u, otkazano_u, clan_id, resurs_id)
-            VALUES (
-                '{r.pocetak}',
-                '{r.kraj}',
-                '{r.status}',
-                '{r.kreiranoU}',
-                '{r.otkazanoU}',
-                '{r.clanId}',
-                '{r.resursId}'
-            );";
+            var rezervacije = _rezRepo.GetByClanId(clanId);
+            var rezultat = new List<Rezervacija>();
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            foreach (var r in rezervacije)
+            {
+                if (DateTime.Parse(r.kraj) < DateTime.Now)
+                    _rezRepo.UpdateStatus(r.rezervacijaId, "Prošla");
+                rezultat.Add(r);
+            }
+
+            return rezultat;
         }
 
-        public void dodajTipClanstva(TipClanstva t)
+        // Rezervacije za dan i lokaciju (zauzetost u toku dana)
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacijaId)
         {
-            string upit = $@"
-            INSERT INTO tip_clanstva (naziv, cena, trajanje_dana, max_sati_mesecno, dozvoljena_sala, sati_sale_mesecno)
-            VALUES (
-                '{t.naziv}',
-                '{t.cena}',
-                '{t.trajanjeDana}',
-                '{t.maxSatiRezervacijeMesecno}',
-                '{t.dozvoljenaSala}',
-                '{t.satiSaleMesecno}'
-            );";
-
-            adapter.izvrsiUpitBezRezultata(upit);
+            return _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
         }
 
-        public void izmeniRezervaciju(Rezervacija r)
+        public List<Resurs> PrikaziResursePoTipu(int lokacijaId)
         {
-            string upit = $@"
-            UPDATE rezervacija
-            SET pocetak = '{r.pocetak}',
-            kraj = '{r.kraj}',
-            status = '{r.status}',
-            kreirano_u = '{r.kreiranoU}',
-            otkazano_u = '{r.otkazanoU}',
-            clan_id = '{r.clanId}'
-            resurs_id = {r.resursId};
-            WHERE rezervacija_id = '{r.rezervacijaId}'
-            ";
+            var resursi = _resursRepo.GetResourcesByLocation(lokacijaId);
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            // Sortiranje po tipu resursa
+            var rezultat = resursi
+                .OrderBy(r => r.tipResursa) 
+                .ThenBy(r => r.resursId)
+                .ToList();
+            Console.WriteLine($"Resursi za lokaciju {lokacijaId} sortirani po tipu: {rezultat}" );
+            return rezultat;
         }
 
-        public void otkaziRezervaciju(Rezervacija r)
-        {
-            // ne treba delete vec update, da status bude 'Otkazana'
-            // string upit = $"DELETE FROM rezervacija WHERE rezervacija_id = {r.rezervacijaId}";
 
-            string upit = $@"
-                UPDATE rezervacija
-                SET status = 'Otkazana'
-                WHERE rezervacija_id = {r.rezervacijaId};
-            ";
-
-            adapter.izvrsiUpitBezRezultata(upit);
-        }
-
-        public List<Clan> prikaziClanove()
-        {
-            string upit = "SELECT * FROM clan";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapClan);
-
-        }
-       
-        public List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id)
-        {
-            string upit = $"SELECT * FROM rezervacija WHERE clan_id={clan_id}";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
-        }
-
-        public List<Lokacija> prikaziLokacije()
-        {
-            string upit = "SELECT * FROM lokacija";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapLokacija);
-        }
-
-        public List<Resurs> prikaziResurse()
-        {
-            string upit = "SELECT * FROM resurs";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapResurs);
-        }
-
-        public List<Rezervacija> prikaziRezervacije(string datum,string lokacija)
-        {
-            string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id WHERE rv.pocetak={DateTime.Parse(datum).Date} AND r.lokacija_id={lokacija}";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
-        }
-
+        // --- Konfiguracija ---
         public string prikazLanca()
         {
             var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
             return File.ReadAllLines(path)[0];
+        }
+
+        public List<Lokacija> prikaziLokacije()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Rezervacija> prikaziRezervacije(string datum, string lokacija)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void otkaziRezervaciju(Rezervacija r)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void dodajTipClanstva(TipClanstva t)
+        {
+            throw new NotImplementedException();
         }
     }
 }

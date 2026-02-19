@@ -14,7 +14,7 @@ namespace Coworking.Data.Providers
         private DataBaseFacade facade;
 
         List<Clan>? cachedClanovi = null;
-        List<TipClanstva>? cachedTipClanstva = null;
+        List<Domain.Entities.TipClanstva>? cachedTipClanstva = null;
         List<Lokacija>? cachedLokacija = null;
         List<Resurs>? cachedResurs = null;
         List<Rezervacija>? cachedRezervacija = null;
@@ -45,7 +45,7 @@ namespace Coworking.Data.Providers
             needReset = true;
         }
 
-        public void dodajTipClanstva(TipClanstva t)
+        public void dodajTipClanstva(Domain.Entities.TipClanstva t)
         {
             facade.dodajTipClanstva(t);
             needReset = true;

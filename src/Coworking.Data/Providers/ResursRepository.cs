@@ -27,13 +27,12 @@ namespace Coworking.Data.Providers
         public void Add(Resurs item)
         {
             string upit = $@"
-            INSERT INTO resurs (lokacija_id, oznaka, tip_resursa, opis, aktivan)
+            INSERT INTO resurs (lokacija_id, oznaka, tip_resursa, opis)
             VALUES (
                 '{item.lokacijaId}',
                 '{item.oznaka}',
                 '{item.tipResursa}',
-                '{item.opis}',
-                '{item.aktivan}'
+                '{item.opis}'
             );";
 
             adapter.izvrsiUpitBezRezultata(upit);
@@ -43,6 +42,21 @@ namespace Coworking.Data.Providers
         public List<Resurs> GetAll()
         {
             string upit = "SELECT * FROM resurs";
+            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapResurs);
+        }
+
+        public List<Resurs> GetResourcesByLocation(int locationId)
+        {
+            string upit = $@"
+            SELECT r.resurs_id, r.lokacija_id, r.oznaka, r.tip_resursa, r.opis,
+                   rm.podtip,
+                   s.ima_projektor, s.ima_tablu, s.ima_tv, s.ima_online_opremu
+            FROM resurs r
+            LEFT JOIN radno_mesto_detalj rm ON r.resurs_id = rm.resurs_id
+            LEFT JOIN sala_detalj s ON r.resurs_id = s.resurs_id
+            WHERE r.lokacija_id = {locationId}";
+
+
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapResurs);
         }
 
