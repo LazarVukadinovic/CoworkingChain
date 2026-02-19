@@ -1,3 +1,5 @@
+using Coworking.Data.Providers;
+
 namespace Coworking.WinForms
 {
     internal static class Program
