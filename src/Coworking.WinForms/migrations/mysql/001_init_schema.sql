@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS schema_migrations (
 -- ============================================
 -- 1. ADMIN KORISNIK
 -- ============================================
-CREATE TABLE admin_korisnik (
+CREATE TABLE IF NOT EXISTS admin_korisnik (
     admin_id INT PRIMARY KEY AUTO_INCREMENT,
     korisnicko_ime VARCHAR(100) NOT NULL UNIQUE,
     lozinka_hash VARCHAR(255) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE admin_korisnik (
 -- ============================================
 -- 2. TIP ČLANSTVA
 -- ============================================
-CREATE TABLE tip_clanstva (
+CREATE TABLE IF NOT EXISTS tip_clanstva (
     tip_clanstva_id INT PRIMARY KEY AUTO_INCREMENT,
     naziv VARCHAR(100) NOT NULL UNIQUE,
     cena DECIMAL(10, 2) NOT NULL CHECK (cena >= 0),
@@ -44,7 +44,7 @@ CREATE TABLE tip_clanstva (
 -- ============================================
 -- 3. ČLAN
 -- ============================================
-CREATE TABLE clan (
+CREATE TABLE IF NOT EXISTS clan (
     clan_id INT PRIMARY KEY AUTO_INCREMENT,
     ime VARCHAR(100) NOT NULL,
     prezime VARCHAR(100) NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE clan (
 -- ============================================
 -- 4. LOKACIJA
 -- ============================================
-CREATE TABLE lokacija (
+CREATE TABLE IF NOT EXISTS lokacija (
     lokacija_id INT PRIMARY KEY AUTO_INCREMENT,
     naziv VARCHAR(255) NOT NULL,
     adresa VARCHAR(500) NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE lokacija (
 -- ============================================
 -- 5. RESURS (glavna tabela)
 -- ============================================
-CREATE TABLE resurs (
+CREATE TABLE IF NOT EXISTS resurs (
     resurs_id INT PRIMARY KEY AUTO_INCREMENT,
     oznaka VARCHAR(100) NOT NULL,
     tip_resursa ENUM('sala', 'radno_mesto') NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE resurs (
 -- ============================================
 -- 6. SALA DETALJ
 -- ============================================
-CREATE TABLE sala_detalj (
+CREATE TABLE IF NOT EXISTS sala_detalj (
     sala_detalj_id INT PRIMARY KEY AUTO_INCREMENT,
     resurs_id INT UNIQUE NOT NULL,
     kapacitet INT NOT NULL CHECK (kapacitet > 0),
@@ -122,7 +122,7 @@ CREATE TABLE sala_detalj (
 -- ============================================
 -- 7. RADNO MESTO DETALJ
 -- ============================================
-CREATE TABLE radno_mesto_detalj (
+CREATE TABLE IF NOT EXISTS radno_mesto_detalj (
     radno_mesto_id INT PRIMARY KEY AUTO_INCREMENT,
     resurs_id INT UNIQUE NOT NULL,
     podtip ENUM('hot_desk', 'dedicated_desk', 'private_office') NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE radno_mesto_detalj (
 -- ============================================
 -- 8. REZERVACIJA
 -- ============================================
-CREATE TABLE rezervacija (
+CREATE TABLE IF NOT EXISTS rezervacija (
     rezervacija_id INT PRIMARY KEY AUTO_INCREMENT,
     pocetak DATETIME NOT NULL,
     kraj DATETIME NOT NULL,
