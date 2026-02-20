@@ -11,6 +11,7 @@ namespace Coworking.Data.Providers
         private readonly LokacijaRepository _lokacijaRepo;
         private readonly ResursRepository _resursRepo;
         private readonly RezervacijaRepository _rezRepo;
+        private readonly TipClanstvaRepository _tcRepo;
 
         public DataBaseFacade()
         {
@@ -24,31 +25,33 @@ namespace Coworking.Data.Providers
         public void dodajClana(Clan c) => _clanRepo.Add(c);
         public List<Clan> prikaziClanove() => _clanRepo.GetAll();
 
-        //// Filtriranje članova po lokaciji, tipu članstva ili statusu ?
-        //public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
-        //{
-        //    var clanovi = _clanRepo.GetAll();
+        // Filtriranje članova po lokaciji, tipu članstva ili statusu ?
+        public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)//stavljeno u Clan klasi tipClanstva da bude int, a ne string
+        {
+            var clanovi = _clanRepo.GetAll();
 
-        //    if (lokacijaId.HasValue)
-        //        clanovi = clanovi.FindAll(c => c.lokacijaId == lokacijaId);
+            if (lokacijaId.HasValue)
+                clanovi = _clanRepo.vratiClanovePoLokaciji(lokacijaId.Value);
 
-        //    if (tipClanstvaId.HasValue)
-        //        clanovi = clanovi.FindAll(c => c.tipClanstva == tipClanstvaId);
+            if (tipClanstvaId.HasValue)
+                clanovi = clanovi.FindAll(c => c.tipClanstva == tipClanstvaId);
 
-        //    if (!string.IsNullOrEmpty(status))
-        //        clanovi = clanovi.FindAll(c => c.statusNaloga == status);
+            if (!string.IsNullOrEmpty(status))
+                clanovi = clanovi.FindAll(c => c.statusNaloga == status);
 
-        //    return clanovi;
-        //}
+            //druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma-marta
+
+            return clanovi;
+        }
 
         // --- Lokacije ---
         public void dodajLokaciju(Lokacija l) => _lokacijaRepo.Add(l);
-        public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAll(check); // za prikaz aktivne lokacije dodati
+        public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check); // za prikaz aktivne lokacije dodati
 
         // Statistika po lokaciji: broj resursa, broj rezervisanih, procenat zauzetosti
         public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
         {
-            var lokacije = _lokacijaRepo.GetAll(false);
+            var lokacije = _lokacijaRepo.GetAllActive(false);
             var resursi = _resursRepo.GetAll();
             var rezervacije = _rezRepo.GetAll();
 
@@ -113,14 +116,7 @@ namespace Coworking.Data.Providers
         public List<Resurs> PrikaziResursePoTipu(int lokacijaId)
         {
             var resursi = _resursRepo.GetResourcesByLocation(lokacijaId);
-
-            // Sortiranje po tipu resursa
-            var rezultat = resursi
-                .OrderBy(r => r.tipResursa) 
-                .ThenBy(r => r.resursId)
-                .ToList();
-            Console.WriteLine($"Resursi za lokaciju {lokacijaId} sortirani po tipu: {rezultat}" );
-            return rezultat;
+            return resursi;
         }
 
 
@@ -131,24 +127,20 @@ namespace Coworking.Data.Providers
             return File.ReadAllLines(path)[0];
         }
 
-        public List<Lokacija> prikaziLokacije()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Rezervacija> prikaziRezervacije(string datum, string lokacija)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void otkaziRezervaciju(Rezervacija r)
-        {
-            throw new NotImplementedException();
-        }
 
         public void dodajTipClanstva(TipClanstva t)
         {
-            throw new NotImplementedException();
+            _tcRepo.Add(t);
+        }
+
+        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
+        {
+             return _resursRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
+        }
+
+        public List<SalaZaSastanke> salaZaSastanke()
+        {
+            return _resursRepo.prikaziSaleZaSastanke();
         }
     }
 }

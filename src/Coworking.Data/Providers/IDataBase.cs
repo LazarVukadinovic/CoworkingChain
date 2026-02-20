@@ -13,17 +13,17 @@ namespace Coworking.Data.Providers
 
         List<Clan> prikaziClanove();
 
-        List<Lokacija> prikaziLokacije();
+        List<Lokacija> prikaziLokacije(bool check);
 
         List<Resurs> prikaziResurse();
 
-        List<Rezervacija> prikaziRezervacije(string datum, string lokacija);
+        List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija);
 
         List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id);
 
         void dodajRezervaciju(Rezervacija r);
 
-        void otkaziRezervaciju(Rezervacija r);
+        void otkaziRezervaciju(int rezervacijaId);
         
         void izmeniRezervaciju(Rezervacija r);
 
@@ -32,6 +32,8 @@ namespace Coworking.Data.Providers
         void dodajLokaciju(Lokacija l);
 
         void dodajTipClanstva(Domain.Entities.TipClanstva t);
+
+        //dodati funkcije iz faced koje nema ovde i dodati iste u proxy gde se i pozivaju za facade
 
 
 

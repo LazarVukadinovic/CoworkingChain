@@ -14,7 +14,7 @@ namespace Coworking.Domain.Entities
         public string? prezime { get; set; }
         public string? mail { get; set; }
         public string? brTelefona { get; set; }
-        public string? tipClanstva { get; set; }
+        public int? tipClanstva { get; set; }
         public string? datumPocetka { get; set; }
         public string? datumKraja { get; set; }
         public string? statusNaloga { get; set; }
@@ -39,7 +39,7 @@ namespace Coworking.Domain.Entities
             this.kreiran = c.kreiran;
         }
 
-        public Clan(string? ime, string? prezime, string? mail, string? brTel, string? tipCl, string? datPoc, string? datKr, string? stNal,string? kreiran)
+        public Clan(string? ime, string? prezime, string? mail, string? brTel, int? tipCl, string? datPoc, string? datKr, string? stNal,string? kreiran)
         {
             this.ime = ime;
             this.prezime = prezime;

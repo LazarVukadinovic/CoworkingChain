@@ -12,6 +12,8 @@ namespace Coworking.Data.Providers
         List<Rezervacija> GetByClanId(int clanId);
         void Cancel(int rezervacijaId);
         public List<Rezervacija> GetReservationsByDateAndLocation(string date, string location);
+
+        public void UpdateStatus(int rezervacijaId, string status);
     }
 
 }

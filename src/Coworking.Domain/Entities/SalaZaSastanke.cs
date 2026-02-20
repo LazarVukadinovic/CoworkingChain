@@ -8,6 +8,7 @@ namespace Coworking.Domain.Entities
 {
     public class SalaZaSastanke : Resurs
     {
+        public int salaId { get; set; }
         public int kapacitet { get; set; }
         public bool imaProjektor { get; set; }
         public bool imaTablu { get; set; }

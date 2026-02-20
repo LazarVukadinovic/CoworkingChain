@@ -34,7 +34,7 @@ namespace Coworking.Data.Providers
                 datumPocetka = red["datum_pocetka"].ToString(),
                 datumKraja = red["datum_kraja"].ToString(),
                 statusNaloga = red["status_naloga"].ToString(),
-                tipClanstva = red["tip_clanstva_id"].ToString(),
+                tipClanstva = (int)red["tip_clanstva_id"],
                 kreiran = red["kreiran_u"].ToString()
             };
         }
@@ -55,22 +55,18 @@ namespace Coworking.Data.Providers
 
         public Resurs mapResurs(DataRow red)
         {
-            string tip = red["tip_resursa"].ToString();
-
-            if (tip == "radno_mesto")
+            return new Resurs
             {
-                return mapRadnoMesto(red);
-            }
-            else if (tip == "sala")
-            {
-                return mapSalaZaSastanke(red);
-            }
-
-            throw new Exception($"Nepoznat tip resursa: {tip}");
+                resursId = (int)red["resurs_id"],
+                lokacijaId = (int)red["lokacija_id"],
+                oznaka = red["oznaka"].ToString(),
+                tipResursa = red["tip_resursa"].ToString(),
+                opis = red["opis"].ToString()
+            };
         }
 
 
-        public Resurs mapRadnoMesto(DataRow red)
+        public RadnoMesto mapRadnoMesto(DataRow red)
         {
             return new RadnoMesto
             {
@@ -79,18 +75,21 @@ namespace Coworking.Data.Providers
                 oznaka = red["oznaka"].ToString(),
                 tipResursa = red["tip_resursa"].ToString(),
                 opis = red["opis"].ToString(),
-                podtip = (PodtipRadnogMesta)Enum.Parse(typeof(PodtipRadnogMesta), red["podtip"].ToString())
+                podtip = (PodtipRadnogMesta)Enum.Parse(typeof(PodtipRadnogMesta), red["podtip"].ToString()),
+                dostupan = red["dostupnost"].ToString()
             };
         }
 
-        public Resurs mapSalaZaSastanke(DataRow red)
+        public SalaZaSastanke mapSalaZaSastanke(DataRow red)
         {
             return new SalaZaSastanke 
             {   resursId = (int)red["resurs_id"], 
                 lokacijaId = (int)red["lokacija_id"], 
                 oznaka = red["oznaka"].ToString(), 
                 tipResursa = red["tip_resursa"].ToString(), 
-                opis = red["opis"].ToString(), 
+                opis = red["opis"].ToString(),
+                salaId= (int)red["sala_id"],
+                kapacitet = (int)red["kapacitet"],
                 imaProjektor = Convert.ToBoolean(red["ima_projektor"]), 
                 imaTablu = Convert.ToBoolean(red["ima_tablu"]), 
                 imaTv = Convert.ToBoolean(red["ima_tv"]), 

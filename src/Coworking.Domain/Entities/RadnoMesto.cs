@@ -12,9 +12,13 @@ namespace Coworking.Domain.Entities
         dedicated_desk,
         private_office
     }
+
     public class RadnoMesto : Resurs
     {
+        public int radnoMestoId { get; set; }
         public PodtipRadnogMesta podtip { get; set; }
+
+        public string? dostupan {  get; set; }
         public RadnoMesto() { }
         public RadnoMesto(string? oznaka, string? tipResursa, string? opis) : base(oznaka, tipResursa, opis)
         {

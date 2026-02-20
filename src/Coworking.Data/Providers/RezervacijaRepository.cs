@@ -17,7 +17,7 @@ namespace Coworking.Data.Providers
             var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
             konekcioniString = File.ReadAllLines(path)[1];
 
-            var helper = new DataBaseHelper();
+            var helper = new DataBaseFactory();
             var factory = helper.vratiFactory(konekcioniString);
 
             adapter = new DataBaseAdapter(factory, konekcioniString);
@@ -90,7 +90,7 @@ namespace Coworking.Data.Providers
 
         public List<Rezervacija> GetReservationsByDateAndLocation(string date, string location)
         {
-            string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id WHERE rv.pocetak" +
+            string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
                 $"WHERE rv.pocetak >= '{date}' AND rv.kraj < DATEADD(day, 1, '{date}') AND r.lokacija_id={location} AND rv.status != 'Otkazana'";
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
         }

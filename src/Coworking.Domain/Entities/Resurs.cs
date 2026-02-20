@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Domain.Entities
 {
-    public abstract class Resurs
+    public class Resurs
     {
         public int resursId { get; set; }
         public int lokacijaId { get; set; }

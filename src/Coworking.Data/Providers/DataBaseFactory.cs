@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Data.Providers
 {
-    internal class DataBaseHelper
+    internal class DataBaseFactory
     {
         public IDataBaseFactory? vratiFactory(string konekcioniString)
         {

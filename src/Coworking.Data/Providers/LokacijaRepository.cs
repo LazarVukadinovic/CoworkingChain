@@ -17,7 +17,7 @@ namespace Coworking.Data.Providers
             var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
             konekcioniString = File.ReadAllLines(path)[1];
 
-            var helper = new DataBaseHelper();
+            var helper = new DataBaseFactory();
             var factory = helper.vratiFactory(konekcioniString);
 
             adapter = new DataBaseAdapter(factory, konekcioniString);
@@ -39,24 +39,37 @@ namespace Coworking.Data.Providers
             adapter.izvrsiUpitBezRezultata(upit);
         }
 
-        public List<Lokacija> GetAll(bool check)
+        public List<Lokacija> GetAllActive(bool check)
         {
-            string upit = "SELECT * FROM lokacija";
+            string upit = "SELECT * FROM lokacija l";
             if(check)
             {
-                upit = $"l JOIN rezervacija r on  ";
+                upit += $" JOIN resurs r on r.lokacija_id=l.lokacija_id JOIN rezervacija rv on rv.resurs_id=r.resurs_id WHERE rv.status='Aktivan'";
             }
             return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapLokacija);
         }
 
         public List<Lokacija> GetAll()
         {
-            throw new NotImplementedException();
+            string upit = "SELECT * FROM lokacija";
+            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapLokacija);
         }
 
         public void Update(Lokacija item)
         {
-            throw new NotImplementedException();
+            string upit = $@"
+            UPDATE lokacija
+            SET 
+                naziv = '{item.naziv}',
+                adresa = '{item.adresa}',
+                grad = '{item.grad}',
+                radno_vreme = '{item.radnoVreme}',
+                max_kapacitet = '{item.maxKapacitet}',
+                opis = '{item.opis}'
+            WHERE lokacija_id = {item.lokacijaId};";
+
+            adapter.izvrsiUpitBezRezultata(upit);
         }
+
     }
 }

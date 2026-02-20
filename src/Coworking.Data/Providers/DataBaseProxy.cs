@@ -57,9 +57,9 @@ namespace Coworking.Data.Providers
             needReset = true;
         }
 
-        public void otkaziRezervaciju(Rezervacija r)
+        public void otkaziRezervaciju(int rezId)
         {
-            facade.otkaziRezervaciju(r);
+            facade.otkaziRezervaciju(rezId);
             needReset = true;
         }
 
@@ -83,15 +83,16 @@ namespace Coworking.Data.Providers
             return cachedKorisnickaRezervacija;
         }
 
-        public List<Lokacija> prikaziLokacije()
+        public List<Lokacija> prikaziLokacije(bool check)
         {
             if (cachedLokacija == null || needReset == true)
             {
-                cachedLokacija = facade.prikaziLokacije();
+                cachedLokacija = facade.prikaziLokacije(check);
                 needReset = false;
             }
             return cachedLokacija;
         }
+
 
         public List<Resurs> prikaziResurse()
         {
@@ -103,11 +104,11 @@ namespace Coworking.Data.Providers
             return cachedResurs;
         }
 
-        public List<Rezervacija> prikaziRezervacije(string datum, string lokacija)
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija)
         {
             if (cachedRezervacija == null || needReset == true)
             {
-                cachedRezervacija = facade.prikaziRezervacije(datum, lokacija);
+                cachedRezervacija = facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
                 needReset = false;
             }
             return cachedRezervacija;
