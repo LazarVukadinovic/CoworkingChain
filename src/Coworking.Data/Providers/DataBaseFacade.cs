@@ -24,6 +24,7 @@ namespace Coworking.Data.Providers
         // --- Članovi ---
         public void dodajClana(Clan c) => _clanRepo.Add(c);
         public List<Clan> prikaziClanove() => _clanRepo.GetAll();
+        public void obrisiClana(int clanId) => _clanRepo.delete(clanId);
 
         // Filtriranje članova po lokaciji, tipu članstva ili statusu ?
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)//stavljeno u Clan klasi tipClanstva da bude int, a ne string
@@ -47,6 +48,7 @@ namespace Coworking.Data.Providers
         // --- Lokacije ---
         public void dodajLokaciju(Lokacija l) => _lokacijaRepo.Add(l);
         public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check); // za prikaz aktivne lokacije dodati
+        public void obrisiLokaciju(int lokacijaId) => _lokacijaRepo.delete(lokacijaId);
 
         // Statistika po lokaciji: broj resursa, broj rezervisanih, procenat zauzetosti
         public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()

@@ -43,6 +43,16 @@ namespace Coworking.Data.Providers
             adapter.izvrsiUpitBezRezultata(upit);
         }
 
+        public void delete(int clanId)
+        {
+            string upit = $@"
+            DELETE FROM clan
+            WHERE clan_id={clanId};
+            ";
+
+            adapter.izvrsiUpitBezRezultata(upit);
+        }
+
         public List<Clan> GetAll()
         {
             string upit = "SELECT * FROM clan";

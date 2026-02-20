@@ -39,6 +39,16 @@ namespace Coworking.Data.Providers
             adapter.izvrsiUpitBezRezultata(upit);
         }
 
+        public void delete(int lokacijaId)
+        {
+            string upit = $@"
+            DELETE FROM lokacija
+            WHERE lokacija_id={lokacijaId};
+            ";
+
+            adapter.izvrsiUpitBezRezultata(upit);
+        }
+
         public List<Lokacija> GetAllActive(bool check)
         {
             string upit = "SELECT * FROM lokacija l";
