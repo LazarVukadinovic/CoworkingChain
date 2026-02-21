@@ -180,6 +180,7 @@
             exitButton.ColorLighting = Color.FromArgb(29, 200, 238);
             exitButton.ColorPen_1 = Color.FromArgb(37, 52, 68);
             exitButton.ColorPen_2 = Color.FromArgb(41, 63, 86);
+            exitButton.Cursor = Cursors.Hand;
             exitButton.CyberButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
             exitButton.Effect_1 = true;
             exitButton.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
@@ -221,6 +222,7 @@
             loginButton.ColorLighting = Color.FromArgb(29, 200, 238);
             loginButton.ColorPen_1 = Color.FromArgb(37, 52, 68);
             loginButton.ColorPen_2 = Color.FromArgb(41, 63, 86);
+            loginButton.Cursor = Cursors.Hand;
             loginButton.CyberButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
             loginButton.Effect_1 = true;
             loginButton.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);

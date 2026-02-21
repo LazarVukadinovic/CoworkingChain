@@ -66,8 +66,10 @@
             // nalogButton
             // 
             nalogButton.BackColor = Color.Transparent;
+            nalogButton.Cursor = Cursors.Hand;
             nalogButton.Dock = DockStyle.Bottom;
             nalogButton.FlatAppearance.BorderSize = 0;
+            nalogButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(13, 18, 23);
             nalogButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
             nalogButton.FlatStyle = FlatStyle.Flat;
             nalogButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
@@ -82,8 +84,10 @@
             // izlazButton
             // 
             izlazButton.BackColor = Color.Transparent;
+            izlazButton.Cursor = Cursors.Hand;
             izlazButton.Dock = DockStyle.Bottom;
             izlazButton.FlatAppearance.BorderSize = 0;
+            izlazButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(13, 18, 23);
             izlazButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
             izlazButton.FlatStyle = FlatStyle.Flat;
             izlazButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
@@ -99,8 +103,10 @@
             // rezervacijeButton
             // 
             rezervacijeButton.BackColor = Color.Transparent;
+            rezervacijeButton.Cursor = Cursors.Hand;
             rezervacijeButton.Dock = DockStyle.Top;
             rezervacijeButton.FlatAppearance.BorderSize = 0;
+            rezervacijeButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(13, 18, 23);
             rezervacijeButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
             rezervacijeButton.FlatStyle = FlatStyle.Flat;
             rezervacijeButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
@@ -115,8 +121,10 @@
             // resursButton
             // 
             resursButton.BackColor = Color.Transparent;
+            resursButton.Cursor = Cursors.Hand;
             resursButton.Dock = DockStyle.Top;
             resursButton.FlatAppearance.BorderSize = 0;
+            resursButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(13, 18, 23);
             resursButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
             resursButton.FlatStyle = FlatStyle.Flat;
             resursButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
@@ -131,8 +139,10 @@
             // tipoviClanstvaButton
             // 
             tipoviClanstvaButton.BackColor = Color.Transparent;
+            tipoviClanstvaButton.Cursor = Cursors.Hand;
             tipoviClanstvaButton.Dock = DockStyle.Top;
             tipoviClanstvaButton.FlatAppearance.BorderSize = 0;
+            tipoviClanstvaButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(13, 18, 23);
             tipoviClanstvaButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
             tipoviClanstvaButton.FlatStyle = FlatStyle.Flat;
             tipoviClanstvaButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
@@ -147,8 +157,10 @@
             // lokacijeButton
             // 
             lokacijeButton.BackColor = Color.Transparent;
+            lokacijeButton.Cursor = Cursors.Hand;
             lokacijeButton.Dock = DockStyle.Top;
             lokacijeButton.FlatAppearance.BorderSize = 0;
+            lokacijeButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(13, 18, 23);
             lokacijeButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
             lokacijeButton.FlatStyle = FlatStyle.Flat;
             lokacijeButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
@@ -163,8 +175,10 @@
             // korisniciButton
             // 
             korisniciButton.BackColor = Color.Transparent;
+            korisniciButton.Cursor = Cursors.Hand;
             korisniciButton.Dock = DockStyle.Top;
             korisniciButton.FlatAppearance.BorderSize = 0;
+            korisniciButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(13, 18, 23);
             korisniciButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
             korisniciButton.FlatStyle = FlatStyle.Flat;
             korisniciButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
