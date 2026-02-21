@@ -16,7 +16,7 @@ namespace Coworking.Data.Providers
             {
                 return new MySqlFactory();
             }
-            else if (konekcioniString.Contains("MSSQLLocalDB"))
+            else if (konekcioniString.Contains("mssqllocaldb"))
             {
                 return new MsSqlFactory();
             }
