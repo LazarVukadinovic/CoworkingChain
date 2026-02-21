@@ -1,6 +1,6 @@
 ﻿namespace Coworking.WinForms
 {
-    partial class Main
+    partial class Dashboard
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             panel1 = new Panel();
             nalogButton = new Button();
             izlazButton = new Button();
@@ -207,7 +207,7 @@
             panel2.Size = new Size(963, 953);
             panel2.TabIndex = 1;
             // 
-            // Main
+            // Dashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -216,7 +216,7 @@
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1300, 900);
-            Name = "Main";
+            Name = "Dashboard";
             Text = "Dashboard";
             WindowState = FormWindowState.Maximized;
             panel1.ResumeLayout(false);

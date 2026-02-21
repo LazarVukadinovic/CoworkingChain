@@ -1,4 +1,4 @@
-﻿using System.Drawing.Drawing2D;
+﻿using System;
 
 namespace Coworking.WinForms
 {
@@ -17,7 +17,7 @@ namespace Coworking.WinForms
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            Main main = new Main(this);
+            Dashboard main = new Dashboard(this);
             main.FormClosed += (s, e) => Application.Exit();
 
             this.Hide();
