@@ -124,5 +124,15 @@ namespace Coworking.Data.Providers
         {
             return _facade.prikaziResursePoTipu(lokacijaId);
         }
+
+        public bool getAdminByUsername(string username, string password)
+        {
+            return _facade.getAdminByUsername(username, password);
+        }
+
+        public void addAdmin(Admin admin)
+        {
+            _facade.addAdmin(admin);
+        }
     }
 }

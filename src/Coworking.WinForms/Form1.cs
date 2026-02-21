@@ -1,9 +1,11 @@
 using Coworking.Data.Providers;
+using Coworking.Domain.Entities;
 
 namespace Coworking.WinForms
 {
     public partial class Form1 : Form
     {
+        IDataBase data;
         public Form1()
         {
             InitializeComponent();
@@ -12,15 +14,16 @@ namespace Coworking.WinForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var data = DataBaseSingleton.vratiInstancu();
-            var resursi = data.prikaziResursePoTipu(1);
-            dataGridView1.DataSource = resursi;
+            data = DataBaseSingleton.vratiInstancu();
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-
+            var username = textBox1.Text;
+            var password = textBox2.Text;
+            var found = data.getAdminByUsername(username, password);
+            textBox1.Text = found.ToString();
         }
     }
 }

@@ -126,5 +126,15 @@ namespace Coworking.Data.Providers
                 resursId = (int)red["resurs_id"]
             };
         }
+
+        public Admin mapAdmin(DataRow red)
+        {
+            return new Admin
+            {
+                adminId = (int)red["admin_id"],
+                KorisnickoIme = red["korisnicko_ime"].ToString(),
+                LozinkaHash = red["lozinka_hash"].ToString(),
+            };
+        }
     }
 }

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Coworking.Data\Coworking.Data.csproj" />
     <ProjectReference Include="..\Coworking.Services\Coworking.Services.csproj" />
   </ItemGroup>

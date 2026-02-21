@@ -36,6 +36,10 @@ namespace Coworking.Data.Providers
         //dodati funkcije iz faced koje nema ovde i dodati iste u proxy gde se i pozivaju za facade
         public List<Resurs> prikaziResursePoTipu(int lokacijaId);
 
+        public bool getAdminByUsername(string username, string password);
+        
+        public void addAdmin(Admin admin);
+
 
     }
 }

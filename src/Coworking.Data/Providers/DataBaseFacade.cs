@@ -12,6 +12,7 @@ namespace Coworking.Data.Providers
         private readonly ResursRepository _resursRepo;
         private readonly RezervacijaRepository _rezRepo;
         private readonly TipClanstvaRepository _tcRepo;
+        private readonly AdminRepository _adminRepo;
 
         public DataBaseFacade(DBSettings settings)
         {
@@ -19,6 +20,8 @@ namespace Coworking.Data.Providers
             _lokacijaRepo = new LokacijaRepository(settings.Adapter, settings.Mapper);
             _resursRepo = new ResursRepository(settings.Adapter, settings.Mapper);
             _rezRepo = new RezervacijaRepository(settings.Adapter, settings.Mapper);
+            _tcRepo = new TipClanstvaRepository(settings.Adapter, settings.Mapper);
+            _adminRepo = new AdminRepository(settings.Adapter, settings.Mapper);
         }
 
         // --- Članovi ---
@@ -143,6 +146,21 @@ namespace Coworking.Data.Providers
         public List<SalaZaSastanke> salaZaSastanke()
         {
             return _resursRepo.prikaziSaleZaSastanke();
+        }
+
+        public bool getAdminByUsername(string username, string password)
+        {
+            var admin = _adminRepo.getAdminByUsername(username);
+            if (admin == null)
+                return false;
+
+            return BCrypt.Net.BCrypt.EnhancedVerify(password, admin.LozinkaHash);
+        }
+
+        public void addAdmin(Admin admin)
+        {
+            admin.LozinkaHash = BCrypt.Net.BCrypt.EnhancedHashPassword(admin.LozinkaHash, 13);
+            _adminRepo.addAdmin(admin);
         }
     }
 }
