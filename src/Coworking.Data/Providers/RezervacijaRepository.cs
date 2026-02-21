@@ -8,20 +8,14 @@ namespace Coworking.Data.Providers
 {
     internal class RezervacijaRepository : IRezervacijaRepository
     {
-        private readonly string konekcioniString;
-        private readonly DataBaseAdapter adapter;
-        private readonly DataBaseMapper mapper;
+        private readonly DataBaseAdapter _adapter;
+        private readonly DataBaseMapper _mapper;
 
-        public RezervacijaRepository()
+        public RezervacijaRepository(DataBaseAdapter adapter, DataBaseMapper mapper)
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
-            konekcioniString = File.ReadAllLines(path)[1];
 
-            var helper = new DataBaseFactory();
-            var factory = helper.vratiFactory(konekcioniString);
-
-            adapter = new DataBaseAdapter(factory, konekcioniString);
-            mapper = new DataBaseMapper();
+            _adapter = adapter;
+            _mapper = mapper;
         }
 
         public void Add(Rezervacija item)
@@ -38,7 +32,7 @@ namespace Coworking.Data.Providers
                     '{item.resursId}'
                 );";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public void Update(Rezervacija item)
@@ -54,7 +48,7 @@ namespace Coworking.Data.Providers
                     resurs_id = '{item.resursId}'
                 WHERE rezervacija_id = '{item.rezervacijaId}';";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public void Cancel(int rezervacijaId)
@@ -64,13 +58,13 @@ namespace Coworking.Data.Providers
                 SET status = 'Otkazana'
                 WHERE rezervacija_id = {rezervacijaId};";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public List<Rezervacija> GetAll()
         {
             string upit = "SELECT * FROM rezervacija";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
         public void UpdateStatus(int rezervacijaId, string status)
@@ -79,20 +73,20 @@ namespace Coworking.Data.Providers
                 UPDATE rezervacija
                 SET status = '{status}'
                 WHERE rezervacija_id = {rezervacijaId};";
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public List<Rezervacija> GetByClanId(int clanId)
         {
             string upit = $"SELECT * FROM rezervacija WHERE clan_id={clanId}";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
         public List<Rezervacija> GetReservationsByDateAndLocation(string date, string location)
         {
             string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
                 $"WHERE rv.pocetak >= '{date}' AND rv.kraj < DATEADD(day, 1, '{date}') AND r.lokacija_id={location} AND rv.status != 'Otkazana'";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRezervacija);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
     }
 }

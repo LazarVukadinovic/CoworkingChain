@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Data.Factories
 {
-    internal interface IDataBaseFactory
+    public interface IDataBaseFactory
     {
         IDbConnection napraviKonekciju(string konekcioniString);
 

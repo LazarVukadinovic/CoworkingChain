@@ -9,19 +9,12 @@ namespace Coworking.Data.Providers
 {
     internal class LokacijaRepository : IRepository<Lokacija>
     {
-        private readonly string konekcioniString;
-        private readonly DataBaseAdapter adapter;
-        private readonly DataBaseMapper mapper;
-        public LokacijaRepository()
+        private readonly DataBaseAdapter _adapter;
+        private readonly DataBaseMapper _mapper;
+        public LokacijaRepository(DataBaseAdapter adapter, DataBaseMapper mapper)
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
-            konekcioniString = File.ReadAllLines(path)[1];
-
-            var helper = new DataBaseFactory();
-            var factory = helper.vratiFactory(konekcioniString);
-
-            adapter = new DataBaseAdapter(factory, konekcioniString);
-            mapper = new DataBaseMapper();
+            _adapter = adapter;
+            _mapper = mapper;
         }
         public void Add(Lokacija item)
         {
@@ -36,7 +29,7 @@ namespace Coworking.Data.Providers
                 '{item.opis}'
             );";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public void delete(int lokacijaId)
@@ -46,7 +39,7 @@ namespace Coworking.Data.Providers
             WHERE lokacija_id={lokacijaId};
             ";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public List<Lokacija> GetAllActive(bool check)
@@ -56,13 +49,13 @@ namespace Coworking.Data.Providers
             {
                 upit += $" JOIN resurs r on r.lokacija_id=l.lokacija_id JOIN rezervacija rv on rv.resurs_id=r.resurs_id WHERE rv.status='Aktivan'";
             }
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapLokacija);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
         }
 
         public List<Lokacija> GetAll()
         {
             string upit = "SELECT * FROM lokacija";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapLokacija);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
         }
 
         public void Update(Lokacija item)
@@ -78,7 +71,7 @@ namespace Coworking.Data.Providers
                 opis = '{item.opis}'
             WHERE lokacija_id = {item.lokacijaId};";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
     }

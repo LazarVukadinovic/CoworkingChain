@@ -9,20 +9,13 @@ namespace Coworking.Data.Providers
 {
     internal class TipClanstvaRepository : IRepository<TipClanstva>
     {
-        private readonly string konekcioniString;
-        private readonly DataBaseAdapter adapter;
-        private readonly DataBaseMapper mapper;
+        private readonly DataBaseAdapter _adapter;
+        private readonly DataBaseMapper _mapper;
 
-        public TipClanstvaRepository()
+        public TipClanstvaRepository(DataBaseAdapter adapter, DataBaseMapper mapper)
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
-            konekcioniString = File.ReadAllLines(path)[1];
-
-            var helper = new DataBaseFactory();
-            var factory = helper.vratiFactory(konekcioniString);
-
-            adapter = new DataBaseAdapter(factory, konekcioniString);
-            mapper = new DataBaseMapper();
+            _adapter = adapter;
+            _mapper = mapper;
         }
         public void Add(TipClanstva item)
         {
@@ -37,13 +30,13 @@ namespace Coworking.Data.Providers
                 '{item.satiSaleMesecno}'
             );";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public List<TipClanstva> GetAll()
         {
             string upit = "SELECT * FROM tip_clanstva";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapTipClanstva);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapTipClanstva);
         }
 
         public void Update(TipClanstva item)
@@ -58,7 +51,7 @@ namespace Coworking.Data.Providers
                 dozvoljena_sala = '{item.dozvoljenaSala}',
                 sati_sale_mesecno = '{item.satiSaleMesecno}'
             WHERE tip_clanstva_id = {item.tipClanstvaId};";
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
     }
 }

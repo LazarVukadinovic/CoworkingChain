@@ -9,20 +9,13 @@ namespace Coworking.Data.Providers
 {
     internal class ClanRepository : IRepository<Clan>
     {
-        private readonly string konekcioniString;
-        private readonly DataBaseAdapter adapter;
-        private readonly DataBaseMapper mapper;
+        private readonly DataBaseAdapter _adapter;
+        private readonly DataBaseMapper _mapper;
 
-        public ClanRepository()
+        public ClanRepository(DataBaseAdapter adapter, DataBaseMapper mapper)
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
-            konekcioniString = File.ReadAllLines(path)[1];
-
-            var helper = new DataBaseFactory();
-            var factory = helper.vratiFactory(konekcioniString);
-
-            adapter = new DataBaseAdapter(factory, konekcioniString);
-            mapper = new DataBaseMapper();
+            _adapter = adapter;
+            _mapper = mapper;
         }
         public void Add(Clan item)
         {
@@ -40,7 +33,7 @@ namespace Coworking.Data.Providers
                 '{item.kreiran}'
             );";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public void delete(int clanId)
@@ -50,13 +43,13 @@ namespace Coworking.Data.Providers
             WHERE clan_id={clanId};
             ";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public List<Clan> GetAll()
         {
             string upit = "SELECT * FROM clan";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapClan);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
 
         public void Update(Clan item)
@@ -74,13 +67,13 @@ namespace Coworking.Data.Providers
                 tip_clanstva = '{item.tipClanstva}',
                 kreiran = '{item.kreiran}'
             WHERE clan_id = {item.clanId};";
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public List<Clan> vratiClanovePoLokaciji(int lokacijaId)
         {
             string upit = @$"SELECT * FROM clan c JOIN rezervacija rv on rv.clan_id=c.clan_id JOIN resurs r on r.resurs_id=rv.resurs_id WHERE r.lokacija_id={lokacijaId}";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapClan);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
     }
 }

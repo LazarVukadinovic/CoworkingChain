@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Data.Providers
 {
-    internal class DataBaseMapper
+    public class DataBaseMapper
     {
         public DataBaseMapper() { }
 

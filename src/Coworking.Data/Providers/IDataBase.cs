@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Data.Providers
 {
-    internal interface IDataBase
+    public interface IDataBase
     {
         string prikazLanca();
 
@@ -34,7 +34,7 @@ namespace Coworking.Data.Providers
         void dodajTipClanstva(Domain.Entities.TipClanstva t);
 
         //dodati funkcije iz faced koje nema ovde i dodati iste u proxy gde se i pozivaju za facade
-
+        public List<Resurs> prikaziResursePoTipu(int lokacijaId);
 
 
     }

@@ -12,9 +12,8 @@ namespace Coworking.WinForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Console.WriteLine("AAAAAAAAAAAAAAAAAAA");
-            var dataFacade = new DataBaseFacade();
-            var resursi = dataFacade.PrikaziResursePoTipu(1);
+            var data = DataBaseSingleton.vratiInstancu();
+            var resursi = data.prikaziResursePoTipu(1);
             dataGridView1.DataSource = resursi;
 
         }

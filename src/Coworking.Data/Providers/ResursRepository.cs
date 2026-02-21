@@ -10,20 +10,13 @@ namespace Coworking.Data.Providers
 {
     internal class ResursRepository : IRepository<Resurs>
     {
-        private readonly string konekcioniString;
-        private readonly DataBaseAdapter adapter;
-        private readonly DataBaseMapper mapper;
+        private readonly DataBaseAdapter _adapter;
+        private readonly DataBaseMapper _mapper;
 
-        public ResursRepository()
+        public ResursRepository(DataBaseAdapter adapter, DataBaseMapper mapper)
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
-            konekcioniString = File.ReadAllLines(path)[1];
-
-            var helper = new DataBaseFactory();
-            var factory = helper.vratiFactory(konekcioniString);
-
-            adapter = new DataBaseAdapter(factory, konekcioniString);
-            mapper = new DataBaseMapper();
+            _adapter = adapter;
+            _mapper = mapper;
         }
         public void Add(Resurs item)
         {
@@ -36,14 +29,14 @@ namespace Coworking.Data.Providers
                 '{item.opis}'
             );";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
 
         }
 
         public List<Resurs> GetAll()
         {
             string upit = "SELECT * FROM resurs";
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapResurs);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
         }
 
         public List<Resurs> GetResourcesByLocation(int locationId)
@@ -55,7 +48,7 @@ namespace Coworking.Data.Providers
             ORDER BY r.tip_resursa";
 
 
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapResurs);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
         }
 
         public void Update(Resurs item)
@@ -69,7 +62,7 @@ namespace Coworking.Data.Providers
                 opis = '{item.opis}'
             WHERE resurs_id = {item.resursId};";
 
-            adapter.izvrsiUpitBezRezultata(upit);
+            _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
@@ -84,7 +77,7 @@ namespace Coworking.Data.Providers
             JOIN rezervacija rv on rv.resurs_id=r.resurs_id
             WHERE r.lokacija_id = {lokacijaId}";
 
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapRadnoMesto);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRadnoMesto);
         }
 
         public List<SalaZaSastanke> prikaziSaleZaSastanke()
@@ -94,7 +87,7 @@ namespace Coworking.Data.Providers
             FROM sala_detalj s
             JOIN resurs r on r.resurs_id=s.resurs_id";
 
-            return mapper.mapDataTable(adapter.izvrsiUpit(upit), mapper.mapSalaZaSastanke);
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapSalaZaSastanke);
         }
     }
 }

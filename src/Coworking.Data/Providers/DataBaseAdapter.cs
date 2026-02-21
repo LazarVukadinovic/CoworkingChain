@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Data.Providers
 {
-    internal class DataBaseAdapter
+    public class DataBaseAdapter
     {
         private readonly IDataBaseFactory _factory;
         private readonly string _konekcioniString;

@@ -11,55 +11,55 @@ namespace Coworking.Data.Providers
 {
     internal class DataBaseProxy : IDataBase
     {
-        private DataBaseFacade facade;
+        private IDataBase _facade;
 
         List<Clan>? cachedClanovi = null;
         List<Domain.Entities.TipClanstva>? cachedTipClanstva = null;
         List<Lokacija>? cachedLokacija = null;
         List<Resurs>? cachedResurs = null;
-        List<Rezervacija>? cachedRezervacija = null;
-        List<Rezervacija>? cachedKorisnickaRezervacija = null;
+        private Dictionary<(string datum, string lokacija), List<Rezervacija>> cachedRezervacije = new Dictionary<(string, string), List<Rezervacija>>(); 
+        private Dictionary<int, List<Rezervacija>> cachedKorisnickeRezervacije = new Dictionary<int, List<Rezervacija>>();
 
         bool needReset = true;
 
-        public DataBaseProxy() 
+        public DataBaseProxy(IDataBase facade) 
         {
-            facade = new DataBaseFacade();
+            _facade = facade;
         }
 
         public void dodajClana(Clan c)
         {
-            facade.dodajClana(c);
+            _facade.dodajClana(c);
             needReset = true;
         }
 
         public void dodajLokaciju(Lokacija l)
         {
-            facade.dodajLokaciju(l);
+            _facade.dodajLokaciju(l);
             needReset = true;
         }
 
         public void dodajRezervaciju(Rezervacija r)
         {
-            facade.dodajRezervaciju(r);
+            _facade.dodajRezervaciju(r);
             needReset = true;
         }
 
         public void dodajTipClanstva(Domain.Entities.TipClanstva t)
         {
-            facade.dodajTipClanstva(t);
+            _facade.dodajTipClanstva(t);
             needReset = true;
         }
 
         public void izmeniRezervaciju(Rezervacija r)
         {
-            facade.izmeniRezervaciju(r);
+            _facade.izmeniRezervaciju(r);
             needReset = true;
         }
 
         public void otkaziRezervaciju(int rezId)
         {
-            facade.otkaziRezervaciju(rezId);
+            _facade.otkaziRezervaciju(rezId);
             needReset = true;
         }
 
@@ -67,27 +67,27 @@ namespace Coworking.Data.Providers
         {
             if(cachedClanovi == null || needReset == true)
             {
-                cachedClanovi = facade.prikaziClanove();
+                cachedClanovi = _facade.prikaziClanove();
                 needReset = false;
             }
             return cachedClanovi;
         }
 
-        public List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id)
-        {
-            if (cachedKorisnickaRezervacija == null || needReset == true)
-            {
-                cachedKorisnickaRezervacija = facade.prikaziKorisnickeRezervacije(clan_id);
-                needReset = false;
-            }
-            return cachedKorisnickaRezervacija;
+        public List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id) 
+        {   
+            if (!cachedKorisnickeRezervacije.ContainsKey(clan_id) || needReset) 
+            { 
+                cachedKorisnickeRezervacije[clan_id] = _facade.prikaziKorisnickeRezervacije(clan_id); 
+                needReset = false; 
+            } 
+            return cachedKorisnickeRezervacije[clan_id]; 
         }
 
         public List<Lokacija> prikaziLokacije(bool check)
         {
             if (cachedLokacija == null || needReset == true)
             {
-                cachedLokacija = facade.prikaziLokacije(check);
+                cachedLokacija = _facade.prikaziLokacije(check);
                 needReset = false;
             }
             return cachedLokacija;
@@ -98,25 +98,31 @@ namespace Coworking.Data.Providers
         {
             if (cachedResurs == null || needReset == true)
             {
-                cachedResurs = facade.prikaziResurse();
+                cachedResurs = _facade.prikaziResurse();
                 needReset = false;
             }
             return cachedResurs;
         }
 
-        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija)
-        {
-            if (cachedRezervacija == null || needReset == true)
-            {
-                cachedRezervacija = facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
-                needReset = false;
-            }
-            return cachedRezervacija;
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija) 
+        {   
+            var key = (datum, lokacija); 
+            if (!cachedRezervacije.ContainsKey(key) || needReset) 
+            { 
+                cachedRezervacije[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija); 
+                needReset = false; 
+            } 
+            return cachedRezervacije[key]; 
         }
 
         public string prikazLanca()
         {
-            return facade.prikazLanca();
+            return _facade.prikazLanca();
+        }
+
+        public List<Resurs> prikaziResursePoTipu(int lokacijaId)
+        {
+            return _facade.prikaziResursePoTipu(lokacijaId);
         }
     }
 }

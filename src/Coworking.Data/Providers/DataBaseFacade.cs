@@ -13,12 +13,12 @@ namespace Coworking.Data.Providers
         private readonly RezervacijaRepository _rezRepo;
         private readonly TipClanstvaRepository _tcRepo;
 
-        public DataBaseFacade()
+        public DataBaseFacade(DBSettings settings)
         {
-            _clanRepo = new ClanRepository();
-            _lokacijaRepo = new LokacijaRepository();
-            _resursRepo = new ResursRepository();
-            _rezRepo = new RezervacijaRepository();
+            _clanRepo = new ClanRepository(settings.Adapter, settings.Mapper);
+            _lokacijaRepo = new LokacijaRepository(settings.Adapter, settings.Mapper);
+            _resursRepo = new ResursRepository(settings.Adapter, settings.Mapper);
+            _rezRepo = new RezervacijaRepository(settings.Adapter, settings.Mapper);
         }
 
         // --- Članovi ---
@@ -115,7 +115,7 @@ namespace Coworking.Data.Providers
             return _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
         }
 
-        public List<Resurs> PrikaziResursePoTipu(int lokacijaId)
+        public List<Resurs> prikaziResursePoTipu(int lokacijaId)
         {
             var resursi = _resursRepo.GetResourcesByLocation(lokacijaId);
             return resursi;
