@@ -101,6 +101,7 @@
             btnCancel.TabIndex = 8;
             btnCancel.Text = "Izlaz";
             btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += this.btnCancel_Click;
             // 
             // btnLogin
             // 

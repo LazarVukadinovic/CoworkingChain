@@ -17,6 +17,11 @@ namespace Coworking.WinForms
             ApplyRadius(txtPassword, 5);
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         private static void ApplyRadius(Control c, int radius)
         {
             int d = radius * 2;
