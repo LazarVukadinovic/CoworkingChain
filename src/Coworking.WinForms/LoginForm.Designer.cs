@@ -246,6 +246,7 @@
             loginButton.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             loginButton.Timer_Effect_1 = 5;
             loginButton.Timer_RGB = 300;
+            loginButton.Click += loginButton_Click;
             // 
             // usernameTextBox
             // 

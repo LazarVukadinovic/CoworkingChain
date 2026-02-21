@@ -14,5 +14,14 @@ namespace Coworking.WinForms
         {
             Application.Exit();
         }
+
+        private void loginButton_Click(object sender, EventArgs e)
+        {
+            Main main = new Main(this);
+            main.FormClosed += (s, e) => Application.Exit();
+
+            this.Hide();
+            main.Show();
+        }
     }
 }

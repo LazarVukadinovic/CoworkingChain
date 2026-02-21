@@ -19,7 +19,7 @@ namespace Coworking.WinForms
             this.startForm = callingForm;
         }
 
-        private void izlaz_btn_Click(object sender, EventArgs e)
+        private void izlazButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }

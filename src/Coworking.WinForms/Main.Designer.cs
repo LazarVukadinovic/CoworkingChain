@@ -28,171 +28,215 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             panel1 = new Panel();
-            izlaz_btn = new Button();
-            rezervacije_btn = new Button();
-            resurs_btn = new Button();
-            tipoviClanstva_btn = new Button();
-            lokacije_btn = new Button();
-            korisnici_btn = new Button();
-            label1 = new Label();
+            nalogButton = new Button();
+            izlazButton = new Button();
+            rezervacijeButton = new Button();
+            resursButton = new Button();
+            tipoviClanstvaButton = new Button();
+            lokacijeButton = new Button();
+            korisniciButton = new Button();
+            panel3 = new Panel();
+            pbLogo = new PictureBox();
             panel2 = new Panel();
             panel1.SuspendLayout();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(0, 71, 160);
-            panel1.Controls.Add(izlaz_btn);
-            panel1.Controls.Add(rezervacije_btn);
-            panel1.Controls.Add(resurs_btn);
-            panel1.Controls.Add(tipoviClanstva_btn);
-            panel1.Controls.Add(lokacije_btn);
-            panel1.Controls.Add(korisnici_btn);
-            panel1.Controls.Add(label1);
+            panel1.BackColor = Color.FromArgb(37, 52, 68);
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(nalogButton);
+            panel1.Controls.Add(izlazButton);
+            panel1.Controls.Add(rezervacijeButton);
+            panel1.Controls.Add(resursButton);
+            panel1.Controls.Add(tipoviClanstvaButton);
+            panel1.Controls.Add(lokacijeButton);
+            panel1.Controls.Add(korisniciButton);
+            panel1.Controls.Add(panel3);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(293, 753);
+            panel1.Size = new Size(319, 953);
             panel1.TabIndex = 0;
             // 
-            // izlaz_btn
+            // nalogButton
             // 
-            izlaz_btn.BackColor = Color.FromArgb(0, 71, 160);
-            izlaz_btn.Dock = DockStyle.Top;
-            izlaz_btn.FlatAppearance.BorderSize = 0;
-            izlaz_btn.FlatStyle = FlatStyle.Flat;
-            izlaz_btn.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
-            izlaz_btn.ForeColor = Color.White;
-            izlaz_btn.Location = new Point(0, 590);
-            izlaz_btn.Name = "izlaz_btn";
-            izlaz_btn.Size = new Size(293, 100);
-            izlaz_btn.TabIndex = 6;
-            izlaz_btn.Text = "Izlaz";
-            izlaz_btn.UseVisualStyleBackColor = false;
-            izlaz_btn.Click += izlaz_btn_Click;
+            nalogButton.BackColor = Color.Transparent;
+            nalogButton.Dock = DockStyle.Bottom;
+            nalogButton.FlatAppearance.BorderSize = 0;
+            nalogButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
+            nalogButton.FlatStyle = FlatStyle.Flat;
+            nalogButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
+            nalogButton.ForeColor = Color.White;
+            nalogButton.Location = new Point(0, 801);
+            nalogButton.Name = "nalogButton";
+            nalogButton.Size = new Size(317, 75);
+            nalogButton.TabIndex = 9;
+            nalogButton.Text = "Nalog";
+            nalogButton.UseVisualStyleBackColor = false;
             // 
-            // rezervacije_btn
+            // izlazButton
             // 
-            rezervacije_btn.BackColor = Color.FromArgb(0, 71, 160);
-            rezervacije_btn.Dock = DockStyle.Top;
-            rezervacije_btn.FlatAppearance.BorderSize = 0;
-            rezervacije_btn.FlatStyle = FlatStyle.Flat;
-            rezervacije_btn.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
-            rezervacije_btn.ForeColor = Color.White;
-            rezervacije_btn.Location = new Point(0, 490);
-            rezervacije_btn.Name = "rezervacije_btn";
-            rezervacije_btn.Size = new Size(293, 100);
-            rezervacije_btn.TabIndex = 5;
-            rezervacije_btn.Text = "Rezervacije";
-            rezervacije_btn.UseVisualStyleBackColor = false;
+            izlazButton.BackColor = Color.Transparent;
+            izlazButton.Dock = DockStyle.Bottom;
+            izlazButton.FlatAppearance.BorderSize = 0;
+            izlazButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
+            izlazButton.FlatStyle = FlatStyle.Flat;
+            izlazButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
+            izlazButton.ForeColor = Color.White;
+            izlazButton.Location = new Point(0, 876);
+            izlazButton.Name = "izlazButton";
+            izlazButton.Size = new Size(317, 75);
+            izlazButton.TabIndex = 6;
+            izlazButton.Text = "Izlaz";
+            izlazButton.UseVisualStyleBackColor = false;
+            izlazButton.Click += izlazButton_Click;
             // 
-            // resurs_btn
+            // rezervacijeButton
             // 
-            resurs_btn.BackColor = Color.FromArgb(0, 71, 160);
-            resurs_btn.Dock = DockStyle.Top;
-            resurs_btn.FlatAppearance.BorderSize = 0;
-            resurs_btn.FlatStyle = FlatStyle.Flat;
-            resurs_btn.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
-            resurs_btn.ForeColor = Color.White;
-            resurs_btn.Location = new Point(0, 390);
-            resurs_btn.Name = "resurs_btn";
-            resurs_btn.Size = new Size(293, 100);
-            resurs_btn.TabIndex = 4;
-            resurs_btn.Text = "Resurs";
-            resurs_btn.UseVisualStyleBackColor = false;
+            rezervacijeButton.BackColor = Color.Transparent;
+            rezervacijeButton.Dock = DockStyle.Top;
+            rezervacijeButton.FlatAppearance.BorderSize = 0;
+            rezervacijeButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
+            rezervacijeButton.FlatStyle = FlatStyle.Flat;
+            rezervacijeButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
+            rezervacijeButton.ForeColor = Color.White;
+            rezervacijeButton.Location = new Point(0, 489);
+            rezervacijeButton.Name = "rezervacijeButton";
+            rezervacijeButton.Size = new Size(317, 90);
+            rezervacijeButton.TabIndex = 5;
+            rezervacijeButton.Text = "Rezervacije";
+            rezervacijeButton.UseVisualStyleBackColor = false;
             // 
-            // tipoviClanstva_btn
+            // resursButton
             // 
-            tipoviClanstva_btn.BackColor = Color.FromArgb(0, 71, 160);
-            tipoviClanstva_btn.Dock = DockStyle.Top;
-            tipoviClanstva_btn.FlatAppearance.BorderSize = 0;
-            tipoviClanstva_btn.FlatStyle = FlatStyle.Flat;
-            tipoviClanstva_btn.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
-            tipoviClanstva_btn.ForeColor = Color.White;
-            tipoviClanstva_btn.Location = new Point(0, 290);
-            tipoviClanstva_btn.Name = "tipoviClanstva_btn";
-            tipoviClanstva_btn.Size = new Size(293, 100);
-            tipoviClanstva_btn.TabIndex = 3;
-            tipoviClanstva_btn.Text = "Tipovi članstva";
-            tipoviClanstva_btn.UseVisualStyleBackColor = false;
+            resursButton.BackColor = Color.Transparent;
+            resursButton.Dock = DockStyle.Top;
+            resursButton.FlatAppearance.BorderSize = 0;
+            resursButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
+            resursButton.FlatStyle = FlatStyle.Flat;
+            resursButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
+            resursButton.ForeColor = Color.White;
+            resursButton.Location = new Point(0, 399);
+            resursButton.Name = "resursButton";
+            resursButton.Size = new Size(317, 90);
+            resursButton.TabIndex = 4;
+            resursButton.Text = "Resurs";
+            resursButton.UseVisualStyleBackColor = false;
             // 
-            // lokacije_btn
+            // tipoviClanstvaButton
             // 
-            lokacije_btn.BackColor = Color.FromArgb(0, 71, 160);
-            lokacije_btn.Dock = DockStyle.Top;
-            lokacije_btn.FlatAppearance.BorderSize = 0;
-            lokacije_btn.FlatStyle = FlatStyle.Flat;
-            lokacije_btn.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
-            lokacije_btn.ForeColor = Color.White;
-            lokacije_btn.Location = new Point(0, 190);
-            lokacije_btn.Name = "lokacije_btn";
-            lokacije_btn.Size = new Size(293, 100);
-            lokacije_btn.TabIndex = 2;
-            lokacije_btn.Text = "Lokacije";
-            lokacije_btn.UseVisualStyleBackColor = false;
+            tipoviClanstvaButton.BackColor = Color.Transparent;
+            tipoviClanstvaButton.Dock = DockStyle.Top;
+            tipoviClanstvaButton.FlatAppearance.BorderSize = 0;
+            tipoviClanstvaButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
+            tipoviClanstvaButton.FlatStyle = FlatStyle.Flat;
+            tipoviClanstvaButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
+            tipoviClanstvaButton.ForeColor = Color.White;
+            tipoviClanstvaButton.Location = new Point(0, 309);
+            tipoviClanstvaButton.Name = "tipoviClanstvaButton";
+            tipoviClanstvaButton.Size = new Size(317, 90);
+            tipoviClanstvaButton.TabIndex = 3;
+            tipoviClanstvaButton.Text = "Tipovi članstva";
+            tipoviClanstvaButton.UseVisualStyleBackColor = false;
             // 
-            // korisnici_btn
+            // lokacijeButton
             // 
-            korisnici_btn.BackColor = Color.FromArgb(0, 71, 160);
-            korisnici_btn.Dock = DockStyle.Top;
-            korisnici_btn.FlatAppearance.BorderSize = 0;
-            korisnici_btn.FlatStyle = FlatStyle.Flat;
-            korisnici_btn.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
-            korisnici_btn.ForeColor = Color.White;
-            korisnici_btn.Location = new Point(0, 90);
-            korisnici_btn.Name = "korisnici_btn";
-            korisnici_btn.Size = new Size(293, 100);
-            korisnici_btn.TabIndex = 1;
-            korisnici_btn.Text = "Korisnici";
-            korisnici_btn.UseVisualStyleBackColor = false;
+            lokacijeButton.BackColor = Color.Transparent;
+            lokacijeButton.Dock = DockStyle.Top;
+            lokacijeButton.FlatAppearance.BorderSize = 0;
+            lokacijeButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
+            lokacijeButton.FlatStyle = FlatStyle.Flat;
+            lokacijeButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
+            lokacijeButton.ForeColor = Color.White;
+            lokacijeButton.Location = new Point(0, 219);
+            lokacijeButton.Name = "lokacijeButton";
+            lokacijeButton.Size = new Size(317, 90);
+            lokacijeButton.TabIndex = 2;
+            lokacijeButton.Text = "Lokacije";
+            lokacijeButton.UseVisualStyleBackColor = false;
             // 
-            // label1
+            // korisniciButton
             // 
-            label1.Dock = DockStyle.Top;
-            label1.FlatStyle = FlatStyle.Flat;
-            label1.Font = new Font("Century Gothic", 18F, FontStyle.Bold);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(293, 90);
-            label1.TabIndex = 0;
-            label1.Text = "CoworkingChain";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            korisniciButton.BackColor = Color.Transparent;
+            korisniciButton.Dock = DockStyle.Top;
+            korisniciButton.FlatAppearance.BorderSize = 0;
+            korisniciButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(18, 26, 33);
+            korisniciButton.FlatStyle = FlatStyle.Flat;
+            korisniciButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold);
+            korisniciButton.ForeColor = Color.White;
+            korisniciButton.Location = new Point(0, 129);
+            korisniciButton.Name = "korisniciButton";
+            korisniciButton.Size = new Size(317, 90);
+            korisniciButton.TabIndex = 1;
+            korisniciButton.Text = "Korisnici";
+            korisniciButton.UseVisualStyleBackColor = false;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(pbLogo);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(317, 129);
+            panel3.TabIndex = 8;
+            // 
+            // pbLogo
+            // 
+            pbLogo.BackColor = Color.Transparent;
+            pbLogo.Dock = DockStyle.Top;
+            pbLogo.Image = Properties.Resources.logo;
+            pbLogo.InitialImage = Properties.Resources.logo;
+            pbLogo.Location = new Point(0, 0);
+            pbLogo.Name = "pbLogo";
+            pbLogo.Size = new Size(317, 126);
+            pbLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            pbLogo.TabIndex = 7;
+            pbLogo.TabStop = false;
             // 
             // panel2
             // 
+            panel2.BackColor = Color.FromArgb(37, 52, 68);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(293, 0);
+            panel2.Location = new Point(319, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(889, 753);
+            panel2.Size = new Size(963, 953);
             panel2.TabIndex = 1;
             // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1182, 753);
+            ClientSize = new Size(1282, 953);
             Controls.Add(panel2);
             Controls.Add(panel1);
-            MinimumSize = new Size(1200, 800);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(1300, 900);
             Name = "Main";
             Text = "Dashboard";
             WindowState = FormWindowState.Maximized;
             panel1.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel panel1;
-        private Label label1;
-        private Button korisnici_btn;
-        private Button rezervacije_btn;
-        private Button resurs_btn;
-        private Button tipoviClanstva_btn;
-        private Button lokacije_btn;
-        private Button izlaz_btn;
+        private Button korisniciButton;
+        private Button rezervacijeButton;
+        private Button resursButton;
+        private Button tipoviClanstvaButton;
+        private Button lokacijeButton;
+        private Button izlazButton;
         private Panel panel2;
+        private PictureBox pbLogo;
+        private Panel panel3;
+        private Button nalogButton;
     }
 }
