@@ -118,6 +118,7 @@
             foreverButton3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             foreverButton3.BackColor = Color.Transparent;
             foreverButton3.BaseColor = Color.FromArgb(8, 133, 161);
+            foreverButton3.Cursor = Cursors.Hand;
             foreverButton3.Font = new Font("Segoe UI", 12F);
             foreverButton3.Location = new Point(806, 12);
             foreverButton3.Name = "foreverButton3";
@@ -131,6 +132,7 @@
             // 
             foreverButton2.BackColor = Color.Transparent;
             foreverButton2.BaseColor = Color.Red;
+            foreverButton2.Cursor = Cursors.Hand;
             foreverButton2.Font = new Font("Segoe UI", 12F);
             foreverButton2.Location = new Point(178, 12);
             foreverButton2.Name = "foreverButton2";
@@ -144,6 +146,7 @@
             // 
             foreverButton1.BackColor = Color.Transparent;
             foreverButton1.BaseColor = Color.FromArgb(35, 168, 109);
+            foreverButton1.Cursor = Cursors.Hand;
             foreverButton1.Font = new Font("Segoe UI", 12F);
             foreverButton1.Location = new Point(11, 12);
             foreverButton1.Name = "foreverButton1";
