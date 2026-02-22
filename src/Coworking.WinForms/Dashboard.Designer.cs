@@ -39,7 +39,7 @@
             korisniciButton = new Button();
             panel3 = new Panel();
             pbLogo = new PictureBox();
-            panel2 = new Panel();
+            mainPanel = new Panel();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
@@ -187,8 +187,9 @@
             korisniciButton.Name = "korisniciButton";
             korisniciButton.Size = new Size(317, 90);
             korisniciButton.TabIndex = 1;
-            korisniciButton.Text = "Korisnici";
+            korisniciButton.Text = "Članovi";
             korisniciButton.UseVisualStyleBackColor = false;
+            korisniciButton.Click += korisniciButton_Click;
             // 
             // panel3
             // 
@@ -212,21 +213,21 @@
             pbLogo.TabIndex = 7;
             pbLogo.TabStop = false;
             // 
-            // panel2
+            // mainPanel
             // 
-            panel2.BackColor = Color.FromArgb(37, 52, 68);
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(319, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(963, 953);
-            panel2.TabIndex = 1;
+            mainPanel.BackColor = Color.FromArgb(37, 52, 68);
+            mainPanel.Dock = DockStyle.Fill;
+            mainPanel.Location = new Point(319, 0);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Size = new Size(963, 953);
+            mainPanel.TabIndex = 1;
             // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1282, 953);
-            Controls.Add(panel2);
+            Controls.Add(mainPanel);
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1300, 900);
@@ -248,7 +249,7 @@
         private Button tipoviClanstvaButton;
         private Button lokacijeButton;
         private Button izlazButton;
-        private Panel panel2;
+        private Panel mainPanel;
         private PictureBox pbLogo;
         private Panel panel3;
         private Button nalogButton;
