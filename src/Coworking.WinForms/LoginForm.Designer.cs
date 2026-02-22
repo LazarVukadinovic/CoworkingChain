@@ -181,7 +181,7 @@
             exitButton.ColorPen_1 = Color.FromArgb(37, 52, 68);
             exitButton.ColorPen_2 = Color.FromArgb(41, 63, 86);
             exitButton.Cursor = Cursors.Hand;
-            exitButton.CyberButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
+            exitButton.CyberButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Default;
             exitButton.Effect_1 = true;
             exitButton.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
             exitButton.Effect_1_Transparency = 25;
@@ -223,7 +223,7 @@
             loginButton.ColorPen_1 = Color.FromArgb(37, 52, 68);
             loginButton.ColorPen_2 = Color.FromArgb(41, 63, 86);
             loginButton.Cursor = Cursors.Hand;
-            loginButton.CyberButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
+            loginButton.CyberButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Default;
             loginButton.Effect_1 = true;
             loginButton.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
             loginButton.Effect_1_Transparency = 25;
@@ -240,7 +240,7 @@
             loginButton.PenWidth = 15;
             loginButton.Rounding = true;
             loginButton.RoundingInt = 70;
-            loginButton.Size = new Size(271, 62);
+            loginButton.Size = new Size(272, 62);
             loginButton.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             loginButton.TabIndex = 12;
             loginButton.Tag = "Cyber";
