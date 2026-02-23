@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coworking.WinForms.Dialogues;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,12 @@ namespace Coworking.WinForms
         public Clanovi()
         {
             InitializeComponent();
+        }
+
+        private void addMemberButton_Click(object sender, EventArgs e)
+        {
+            DodajClana newMember = new DodajClana();
+            newMember.ShowDialog(this);
         }
     }
 }
