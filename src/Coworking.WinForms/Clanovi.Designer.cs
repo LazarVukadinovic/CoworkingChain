@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             headerPanel = new Panel();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
-            filterPaanel = new Panel();
+            filterPanel = new Panel();
             editMemberButton = new ReaLTaiizor.Controls.ForeverButton();
             searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             searchButton = new ReaLTaiizor.Controls.ForeverButton();
@@ -41,7 +41,7 @@
             addMemberButton = new ReaLTaiizor.Controls.ForeverButton();
             memberDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
             headerPanel.SuspendLayout();
-            filterPaanel.SuspendLayout();
+            filterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)memberDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -69,20 +69,20 @@
             headerLabel.TabIndex = 16;
             headerLabel.Text = "Članovi";
             // 
-            // filterPaanel
+            // filterPanel
             // 
-            filterPaanel.BackColor = Color.FromArgb(37, 52, 68);
-            filterPaanel.BorderStyle = BorderStyle.FixedSingle;
-            filterPaanel.Controls.Add(editMemberButton);
-            filterPaanel.Controls.Add(searchTextBox);
-            filterPaanel.Controls.Add(searchButton);
-            filterPaanel.Controls.Add(deleteMemberButton2);
-            filterPaanel.Controls.Add(addMemberButton);
-            filterPaanel.Dock = DockStyle.Top;
-            filterPaanel.Location = new Point(0, 69);
-            filterPaanel.Name = "filterPaanel";
-            filterPaanel.Size = new Size(1102, 72);
-            filterPaanel.TabIndex = 1;
+            filterPanel.BackColor = Color.FromArgb(37, 52, 68);
+            filterPanel.BorderStyle = BorderStyle.FixedSingle;
+            filterPanel.Controls.Add(editMemberButton);
+            filterPanel.Controls.Add(searchTextBox);
+            filterPanel.Controls.Add(searchButton);
+            filterPanel.Controls.Add(deleteMemberButton2);
+            filterPanel.Controls.Add(addMemberButton);
+            filterPanel.Dock = DockStyle.Top;
+            filterPanel.Location = new Point(0, 69);
+            filterPanel.Name = "filterPanel";
+            filterPanel.Size = new Size(1102, 72);
+            filterPanel.TabIndex = 1;
             // 
             // editMemberButton
             // 
@@ -181,23 +181,23 @@
             memberDataGridView.BorderStyle = BorderStyle.None;
             memberDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
             memberDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            memberDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            memberDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             memberDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle2.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            memberDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            memberDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             memberDataGridView.Dock = DockStyle.Fill;
             memberDataGridView.EnableHeadersVisualStyles = false;
             memberDataGridView.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -206,14 +206,14 @@
             memberDataGridView.Name = "memberDataGridView";
             memberDataGridView.ReadOnly = true;
             memberDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            memberDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle6.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            memberDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             memberDataGridView.RowHeadersWidth = 51;
             memberDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             memberDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -226,13 +226,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1102, 590);
             Controls.Add(memberDataGridView);
-            Controls.Add(filterPaanel);
+            Controls.Add(filterPanel);
             Controls.Add(headerPanel);
             Name = "Clanovi";
             Text = "Clanovi";
             headerPanel.ResumeLayout(false);
             headerPanel.PerformLayout();
-            filterPaanel.ResumeLayout(false);
+            filterPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)memberDataGridView).EndInit();
             ResumeLayout(false);
         }
@@ -241,7 +241,7 @@
 
         private Panel headerPanel;
         private ReaLTaiizor.Controls.HeaderLabel headerLabel;
-        private Panel filterPaanel;
+        private Panel filterPanel;
         private ReaLTaiizor.Controls.ForeverButton deleteMemberButton2;
         private ReaLTaiizor.Controls.ForeverButton addMemberButton;
         private ReaLTaiizor.Controls.ForeverButton searchButton;
