@@ -1,4 +1,5 @@
-﻿using Coworking.Domain.Entities;
+﻿using Coworking.Data.Repositories;
+using Coworking.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,12 +25,18 @@ namespace Coworking.Data.Providers
             _adminRepo = new AdminRepository(settings.Adapter, settings.Mapper);
         }
 
-        // --- Članovi ---
+        //-------------------------CLANOVI-------------------------
+        //-------------------------CLANOVI-------------------------
+        //-------------------------CLANOVI-------------------------
+
+        // Dodavanje, izmena, prikaz i brisanje CLANOVA
         public void dodajClana(Clan c) => _clanRepo.Add(c);
+        public void izmeniClana(Clan c) => _clanRepo.Update(c);
         public List<Clan> prikaziClanove() => _clanRepo.GetAll();
         public void obrisiClana(int clanId) => _clanRepo.delete(clanId);
 
-        // Filtriranje članova po lokaciji, tipu članstva ili statusu ?
+
+        // Lista svih clanova, sa mogucnoscu filtriranja po lokaciji, tipu clanstva ili statusu naloga
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)//stavljeno u Clan klasi tipClanstva da bude int, a ne string
         {
             var clanovi = _clanRepo.GetAll();
@@ -43,17 +50,21 @@ namespace Coworking.Data.Providers
             if (!string.IsNullOrEmpty(status))
                 clanovi = clanovi.FindAll(c => c.statusNaloga == status);
 
-            //druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma-marta
-
             return clanovi;
         }
+        //Marta:druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma
 
-        // --- Lokacije ---
+
+        //-------------------------LOKACIJE-------------------------
+        //-------------------------LOKACIJE-------------------------
+        //-------------------------LOKACIJE-------------------------
+
+        // Dodavanje i brisanje co-working LOKACIJA 
         public void dodajLokaciju(Lokacija l) => _lokacijaRepo.Add(l);
-        public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check); // za prikaz aktivne lokacije dodati
         public void obrisiLokaciju(int lokacijaId) => _lokacijaRepo.delete(lokacijaId);
 
-        // Statistika po lokaciji: broj resursa, broj rezervisanih, procenat zauzetosti
+
+        // Lista svih co-working lokacija sa osnovnim statistikama (ukupan broj radnih mesta, broj trenutno rezervisanih, procenat zauzetosti).
         public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
         {
             var lokacije = _lokacijaRepo.GetAllActive(false);
@@ -79,24 +90,30 @@ namespace Coworking.Data.Providers
             return rezultat;
         }
 
-        // --- Resursi ---
-        public void dodajResurs(Resurs r) => _resursRepo.Add(r);
-        public List<Resurs> prikaziResurse() => _resursRepo.GetAll();
 
-        public List<Resurs> prikaziResursePoLokaciji(int lokacijaId)
-        {
-            var resursi = _resursRepo.GetAll();
-            return resursi.FindAll(r => r.lokacijaId == lokacijaId);
-        }
+        // Prikaz liste svih lokacija, uz mogucnost izbora aktivne lokacije
+        public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check);
 
-        // --- Rezervacije ---
+
+        //-------------------------REZERVACIJE-------------------------
+        //-------------------------REZERVACIJE-------------------------
+        //-------------------------REZERVACIJE-------------------------
+
+        // Dodavanje, izmena, otkazivanje i prikaz REZERVACIJA
         public void dodajRezervaciju(Rezervacija r) => _rezRepo.Add(r);
         public void izmeniRezervaciju(Rezervacija r) => _rezRepo.Update(r);
         public void otkaziRezervaciju(int rezervacijaId) => _rezRepo.Cancel(rezervacijaId);
         public List<Rezervacija> prikaziRezervacije() => _rezRepo.GetAll();
-        public List<Rezervacija> prikaziKorisnickeRezervacije(int clanId) => _rezRepo.GetByClanId(clanId);
 
-        // Rezervacije sa statusom (aktivna, prošla, otkazana)
+
+        // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
+        // TO-DO
+
+
+        // Lista svih rezervacija za izabranog korisnika, sa prikazom statusa (aktivna, prosla, otkazana)
+        //1. nacin
+        public List<Rezervacija> prikaziKorisnickeRezervacije(int clanId) => _rezRepo.GetByClanId(clanId);
+        //2. nacin
         public List<Rezervacija> prikaziRezervacijeSaStatusomZaClana(int clanId)
         {
             var rezervacije = _rezRepo.GetByClanId(clanId);
@@ -112,20 +129,44 @@ namespace Coworking.Data.Providers
             return rezultat;
         }
 
-        // Rezervacije za dan i lokaciju (zauzetost u toku dana)
-        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacijaId)
-        {
-            return _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
-        }
 
-        public List<Resurs> prikaziResursePoTipu(int lokacijaId)
-        {
-            var resursi = _resursRepo.GetResourcesByLocation(lokacijaId);
-            return resursi;
-        }
+        // Lista rezervacije za odabrani dan i lokaciju radi prikaza zauzetosti u toku dana.
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
 
 
-        // --- Konfiguracija ---
+        //-------------------------RESURSI-------------------------
+        //-------------------------RESURSI-------------------------
+        //-------------------------RESURSI-------------------------
+
+
+        // Evidencija radnih mesta po lokaciji: hot desk, dedicated desk, privatna kancelarija,
+        // sa informacijom da li je trenutno dostupno ili zauzeto.
+        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _resursRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
+
+
+        // Evidencija sala za sastanke: naziv, kapacitet, opremljenost (projekat, TV, tabla, oprema za online sastanke...).
+        public List<SalaZaSastanke> salaZaSastanke() => _resursRepo.prikaziSaleZaSastanke();
+
+
+        // Lista svih resursa po lokaciji, razvrstanih po tipu (radna mesta, sala za sastanke)
+        public List<Resurs> prikaziResursePoLokaciji(int lokacijaId) => _resursRepo.GetResourcesByLocation(lokacijaId);
+
+
+        //-------------------------TIP CLANSTVA-------------------------
+        //-------------------------TIP CLANSTVA-------------------------
+        //-------------------------TIP CLANSTVA-------------------------
+
+        // Definisanje razlicitih TIPOVA CLANSTVA 
+        public void dodajTipClanstva(TipClanstva t) => _tcRepo.Add(t);
+
+
+
+        //-------------------------NAZIV LANCA-------------------------
+        //-------------------------NAZIV LANCA-------------------------
+        //-------------------------NAZIV LANCA-------------------------
+
+
+        // Prikaz naziva lanca co-working prostora preuzetog iz konfiguracionog fajla
         public string prikazLanca()
         {
             var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
@@ -133,21 +174,9 @@ namespace Coworking.Data.Providers
         }
 
 
-        public void dodajTipClanstva(TipClanstva t)
-        {
-            _tcRepo.Add(t);
-        }
-
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
-        {
-             return _resursRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
-        }
-
-        public List<SalaZaSastanke> salaZaSastanke()
-        {
-            return _resursRepo.prikaziSaleZaSastanke();
-        }
-
+        //-------------------------LOGIN-------------------------
+        //-------------------------LOGIN-------------------------
+        //-------------------------LOGIN-------------------------
         public bool getAdminByUsername(string username, string password)
         {
             var admin = _adminRepo.getAdminByUsername(username);

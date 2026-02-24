@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BCrypt.Net;
 using Microsoft.IdentityModel.Tokens;
+using Coworking.Data.Providers;
 
-namespace Coworking.Data.Providers
+namespace Coworking.Data.Repositories
 {
-    public class AdminRepository : IAdminRepository
+    internal class AdminRepository : IAdminRepository
     {
         private readonly DataBaseAdapter _adapter;
         private readonly DataBaseMapper _mapper;

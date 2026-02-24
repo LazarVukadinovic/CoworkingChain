@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coworking.Data.Providers
+namespace Coworking.Data.Repositories
 {
-    public interface IAdminRepository
+    internal interface IAdminRepository
     {
         Admin getAdminByUsername(string username);
         void addAdmin(Admin admin);

@@ -93,17 +93,6 @@ namespace Coworking.Data.Providers
             return cachedLokacija;
         }
 
-
-        public List<Resurs> prikaziResurse()
-        {
-            if (cachedResurs == null || needReset == true)
-            {
-                cachedResurs = _facade.prikaziResurse();
-                needReset = false;
-            }
-            return cachedResurs;
-        }
-
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija) 
         {   
             var key = (datum, lokacija); 
@@ -120,9 +109,9 @@ namespace Coworking.Data.Providers
             return _facade.prikazLanca();
         }
 
-        public List<Resurs> prikaziResursePoTipu(int lokacijaId)
+        public List<Resurs> prikaziResursePoLokaciji(int lokacijaId)
         {
-            return _facade.prikaziResursePoTipu(lokacijaId);
+            return _facade.prikaziResursePoLokaciji(lokacijaId);
         }
 
         public bool getAdminByUsername(string username, string password)

@@ -15,7 +15,6 @@ namespace Coworking.Data.Providers
 
         List<Lokacija> prikaziLokacije(bool check);
 
-        List<Resurs> prikaziResurse();
 
         List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija);
 
@@ -34,7 +33,7 @@ namespace Coworking.Data.Providers
         void dodajTipClanstva(Domain.Entities.TipClanstva t);
 
         //dodati funkcije iz faced koje nema ovde i dodati iste u proxy gde se i pozivaju za facade
-        public List<Resurs> prikaziResursePoTipu(int lokacijaId);
+        public List<Resurs> prikaziResursePoLokaciji(int lokacijaId);
 
         public bool getAdminByUsername(string username, string password);
         

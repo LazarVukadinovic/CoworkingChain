@@ -1,4 +1,5 @@
-﻿using Coworking.Domain.Entities;
+﻿using Coworking.Data.Providers;
+using Coworking.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
-namespace Coworking.Data.Providers
+namespace Coworking.Data.Repositories
 {
     internal class ResursRepository : IRepository<Resurs>
     {

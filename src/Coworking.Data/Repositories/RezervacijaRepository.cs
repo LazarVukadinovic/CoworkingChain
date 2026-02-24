@@ -1,10 +1,11 @@
-﻿using Coworking.Domain.Entities;
+﻿using Coworking.Data.Providers;
+using Coworking.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Coworking.Data.Providers
+namespace Coworking.Data.Repositories
 {
     internal class RezervacijaRepository : IRezervacijaRepository
     {

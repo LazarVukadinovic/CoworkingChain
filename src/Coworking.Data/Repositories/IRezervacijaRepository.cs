@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Coworking.Data.Providers
+namespace Coworking.Data.Repositories
 {
     internal interface IRezervacijaRepository : IRepository<Rezervacija>
     {
