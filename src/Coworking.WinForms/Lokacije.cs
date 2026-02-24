@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coworking.WinForms.Dialogues;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,12 @@ namespace Coworking.WinForms
         public Lokacije()
         {
             InitializeComponent();
+        }
+
+        private void addLocationButton_Click(object sender, EventArgs e)
+        {
+            DodajLokaciju newLocation = new DodajLokaciju();
+            newLocation.ShowDialog(this);
         }
     }
 }
