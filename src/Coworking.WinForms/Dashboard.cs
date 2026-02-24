@@ -62,5 +62,12 @@ namespace Coworking.WinForms
             resetEnabledComponents();
             tipoviClanstvaButton.Enabled = false;
         }
+
+        private void resursButton_Click(object sender, EventArgs e)
+        {
+            openChildForm(new Resursi());
+            resetEnabledComponents();
+            resursButton.Enabled = false;
+        }
     }
 }

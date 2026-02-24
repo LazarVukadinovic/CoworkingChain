@@ -135,6 +135,7 @@
             resursButton.TabIndex = 4;
             resursButton.Text = "Resurs";
             resursButton.UseVisualStyleBackColor = false;
+            resursButton.Click += resursButton_Click;
             // 
             // tipoviClanstvaButton
             // 
