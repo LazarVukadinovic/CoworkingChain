@@ -1,8 +1,5 @@
 ﻿using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Coworking.Data.Providers
 {

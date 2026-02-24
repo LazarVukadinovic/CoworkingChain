@@ -1,9 +1,4 @@
 ﻿using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Coworking.Data.Providers
 {
@@ -33,12 +28,10 @@ namespace Coworking.Data.Providers
         void dodajTipClanstva(Domain.Entities.TipClanstva t);
 
         //dodati funkcije iz faced koje nema ovde i dodati iste u proxy gde se i pozivaju za facade
-        public List<Resurs> prikaziResursePoLokaciji(int lokacijaId);
+        List<Resurs> prikaziResursePoLokaciji(int lokacijaId);
 
-        public bool getAdminByUsername(string username, string password);
+        bool getAdminByUsername(string username, string password);
         
-        public void addAdmin(Admin admin);
-
-
+        void addAdmin(Admin admin);
     }
 }
