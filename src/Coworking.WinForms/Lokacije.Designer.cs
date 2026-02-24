@@ -1,6 +1,6 @@
 ﻿namespace Coworking.WinForms
 {
-    partial class Clanovi
+    partial class Lokacije
     {
         /// <summary>
         /// Required designer variable.
@@ -31,19 +31,32 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            headerPanel = new Panel();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
+            headerPanel = new Panel();
             filterPaanel = new Panel();
-            editMemberButton = new ReaLTaiizor.Controls.ForeverButton();
             searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             searchButton = new ReaLTaiizor.Controls.ForeverButton();
-            deleteMemberButton2 = new ReaLTaiizor.Controls.ForeverButton();
-            addMemberButton = new ReaLTaiizor.Controls.ForeverButton();
+            editLocationButton = new ReaLTaiizor.Controls.ForeverButton();
+            deleteLocationButton = new ReaLTaiizor.Controls.ForeverButton();
+            addLocationButton = new ReaLTaiizor.Controls.ForeverButton();
             memberDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
             headerPanel.SuspendLayout();
             filterPaanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)memberDataGridView).BeginInit();
             SuspendLayout();
+            // 
+            // headerLabel
+            // 
+            headerLabel.Anchor = AnchorStyles.Top;
+            headerLabel.AutoSize = true;
+            headerLabel.BackColor = Color.Transparent;
+            headerLabel.Font = new Font("Microsoft Sans Serif", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            headerLabel.ForeColor = Color.FromArgb(255, 255, 255);
+            headerLabel.Location = new Point(478, 12);
+            headerLabel.Name = "headerLabel";
+            headerLabel.Size = new Size(164, 42);
+            headerLabel.TabIndex = 16;
+            headerLabel.Text = "Lokacije";
             // 
             // headerPanel
             // 
@@ -54,48 +67,22 @@
             headerPanel.Location = new Point(0, 0);
             headerPanel.Name = "headerPanel";
             headerPanel.Size = new Size(1102, 69);
-            headerPanel.TabIndex = 0;
-            // 
-            // headerLabel
-            // 
-            headerLabel.Anchor = AnchorStyles.Top;
-            headerLabel.AutoSize = true;
-            headerLabel.BackColor = Color.Transparent;
-            headerLabel.Font = new Font("Microsoft Sans Serif", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            headerLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            headerLabel.Location = new Point(476, 13);
-            headerLabel.Name = "headerLabel";
-            headerLabel.Size = new Size(150, 42);
-            headerLabel.TabIndex = 16;
-            headerLabel.Text = "Članovi";
+            headerPanel.TabIndex = 1;
             // 
             // filterPaanel
             // 
             filterPaanel.BackColor = Color.FromArgb(37, 52, 68);
             filterPaanel.BorderStyle = BorderStyle.FixedSingle;
-            filterPaanel.Controls.Add(editMemberButton);
             filterPaanel.Controls.Add(searchTextBox);
             filterPaanel.Controls.Add(searchButton);
-            filterPaanel.Controls.Add(deleteMemberButton2);
-            filterPaanel.Controls.Add(addMemberButton);
+            filterPaanel.Controls.Add(editLocationButton);
+            filterPaanel.Controls.Add(deleteLocationButton);
+            filterPaanel.Controls.Add(addLocationButton);
             filterPaanel.Dock = DockStyle.Top;
             filterPaanel.Location = new Point(0, 69);
             filterPaanel.Name = "filterPaanel";
             filterPaanel.Size = new Size(1102, 72);
-            filterPaanel.TabIndex = 1;
-            // 
-            // editMemberButton
-            // 
-            editMemberButton.BackColor = Color.Transparent;
-            editMemberButton.BaseColor = Color.FromArgb(56, 95, 235);
-            editMemberButton.Font = new Font("Segoe UI", 12F);
-            editMemberButton.Location = new Point(180, 12);
-            editMemberButton.Name = "editMemberButton";
-            editMemberButton.Rounded = true;
-            editMemberButton.Size = new Size(183, 45);
-            editMemberButton.TabIndex = 7;
-            editMemberButton.Text = "Izmena podataka";
-            editMemberButton.TextColor = Color.FromArgb(243, 243, 243);
+            filterPaanel.TabIndex = 2;
             // 
             // searchTextBox
             // 
@@ -122,7 +109,7 @@
             searchTextBox.RoundingInt = 60;
             searchTextBox.Size = new Size(374, 45);
             searchTextBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            searchTextBox.TabIndex = 6;
+            searchTextBox.TabIndex = 9;
             searchTextBox.Tag = "Cyber";
             searchTextBox.TextButton = "";
             searchTextBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
@@ -139,38 +126,50 @@
             searchButton.Name = "searchButton";
             searchButton.Rounded = true;
             searchButton.Size = new Size(112, 45);
-            searchButton.TabIndex = 4;
+            searchButton.TabIndex = 8;
             searchButton.Text = "Pretraga";
             searchButton.TextColor = Color.FromArgb(243, 243, 243);
             // 
-            // deleteMemberButton2
+            // editLocationButton
             // 
-            deleteMemberButton2.BackColor = Color.Transparent;
-            deleteMemberButton2.BaseColor = Color.Red;
-            deleteMemberButton2.Cursor = Cursors.Hand;
-            deleteMemberButton2.Font = new Font("Segoe UI", 12F);
-            deleteMemberButton2.Location = new Point(381, 12);
-            deleteMemberButton2.Name = "deleteMemberButton2";
-            deleteMemberButton2.Rounded = true;
-            deleteMemberButton2.Size = new Size(150, 45);
-            deleteMemberButton2.TabIndex = 3;
-            deleteMemberButton2.Text = "Obriši člana";
-            deleteMemberButton2.TextColor = Color.FromArgb(243, 243, 243);
+            editLocationButton.BackColor = Color.Transparent;
+            editLocationButton.BaseColor = Color.FromArgb(56, 95, 235);
+            editLocationButton.Font = new Font("Segoe UI", 12F);
+            editLocationButton.Location = new Point(180, 12);
+            editLocationButton.Name = "editLocationButton";
+            editLocationButton.Rounded = true;
+            editLocationButton.Size = new Size(183, 45);
+            editLocationButton.TabIndex = 7;
+            editLocationButton.Text = "Izmena podataka";
+            editLocationButton.TextColor = Color.FromArgb(243, 243, 243);
             // 
-            // addMemberButton
+            // deleteLocationButton
             // 
-            addMemberButton.BackColor = Color.Transparent;
-            addMemberButton.BaseColor = Color.FromArgb(35, 168, 109);
-            addMemberButton.Cursor = Cursors.Hand;
-            addMemberButton.Font = new Font("Segoe UI", 12F);
-            addMemberButton.Location = new Point(11, 12);
-            addMemberButton.Name = "addMemberButton";
-            addMemberButton.Rounded = true;
-            addMemberButton.Size = new Size(150, 45);
-            addMemberButton.TabIndex = 2;
-            addMemberButton.Text = "Dodaj člana";
-            addMemberButton.TextColor = Color.FromArgb(243, 243, 243);
-            addMemberButton.Click += addMemberButton_Click;
+            deleteLocationButton.BackColor = Color.Transparent;
+            deleteLocationButton.BaseColor = Color.Red;
+            deleteLocationButton.Cursor = Cursors.Hand;
+            deleteLocationButton.Font = new Font("Segoe UI", 12F);
+            deleteLocationButton.Location = new Point(381, 12);
+            deleteLocationButton.Name = "deleteLocationButton";
+            deleteLocationButton.Rounded = true;
+            deleteLocationButton.Size = new Size(150, 45);
+            deleteLocationButton.TabIndex = 3;
+            deleteLocationButton.Text = "Obriši lokaciju";
+            deleteLocationButton.TextColor = Color.FromArgb(243, 243, 243);
+            // 
+            // addLocationButton
+            // 
+            addLocationButton.BackColor = Color.Transparent;
+            addLocationButton.BaseColor = Color.FromArgb(35, 168, 109);
+            addLocationButton.Cursor = Cursors.Hand;
+            addLocationButton.Font = new Font("Segoe UI", 12F);
+            addLocationButton.Location = new Point(11, 12);
+            addLocationButton.Name = "addLocationButton";
+            addLocationButton.Rounded = true;
+            addLocationButton.Size = new Size(150, 45);
+            addLocationButton.TabIndex = 2;
+            addLocationButton.Text = "Dodaj lokaciju";
+            addLocationButton.TextColor = Color.FromArgb(243, 243, 243);
             // 
             // memberDataGridView
             // 
@@ -217,19 +216,19 @@
             memberDataGridView.RowHeadersWidth = 51;
             memberDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             memberDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            memberDataGridView.Size = new Size(1102, 449);
-            memberDataGridView.TabIndex = 2;
+            memberDataGridView.Size = new Size(1102, 463);
+            memberDataGridView.TabIndex = 3;
             // 
-            // Clanovi
+            // Lokacije
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1102, 590);
+            ClientSize = new Size(1102, 604);
             Controls.Add(memberDataGridView);
             Controls.Add(filterPaanel);
             Controls.Add(headerPanel);
-            Name = "Clanovi";
-            Text = "Clanovi";
+            Name = "Lokacije";
+            Text = "Lokacije";
             headerPanel.ResumeLayout(false);
             headerPanel.PerformLayout();
             filterPaanel.ResumeLayout(false);
@@ -239,14 +238,16 @@
 
         #endregion
 
-        private Panel headerPanel;
         private ReaLTaiizor.Controls.HeaderLabel headerLabel;
+        private Panel headerPanel;
         private Panel filterPaanel;
-        private ReaLTaiizor.Controls.ForeverButton deleteMemberButton2;
-        private ReaLTaiizor.Controls.ForeverButton addMemberButton;
-        private ReaLTaiizor.Controls.ForeverButton searchButton;
+        private ReaLTaiizor.Controls.ForeverButton editLocationButton;
+        private ReaLTaiizor.Controls.CyberTextBox cyberTextBox1;
+        private ReaLTaiizor.Controls.ForeverButton foreverButton3;
+        private ReaLTaiizor.Controls.ForeverButton deleteLocationButton;
+        private ReaLTaiizor.Controls.ForeverButton addLocationButton;
         private ReaLTaiizor.Controls.CyberTextBox searchTextBox;
+        private ReaLTaiizor.Controls.ForeverButton searchButton;
         private ReaLTaiizor.Controls.PoisonDataGridView memberDataGridView;
-        private ReaLTaiizor.Controls.ForeverButton editMemberButton;
     }
 }

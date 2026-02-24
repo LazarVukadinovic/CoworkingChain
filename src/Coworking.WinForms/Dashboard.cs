@@ -5,7 +5,7 @@ namespace Coworking.WinForms
     public partial class Dashboard : Form
     {
         private Form? activeForm;
-        private readonly Form  loginForm;
+        private readonly Form loginForm;
         public Dashboard(Form callingForm)
         {
             InitializeComponent();
@@ -47,6 +47,13 @@ namespace Coworking.WinForms
         private void izlazButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void lokacijeButton_Click(object sender, EventArgs e)
+        {
+            openChildForm(new Lokacije());
+            resetEnabledComponents();
+            lokacijeButton.Enabled = false;
         }
     }
 }
