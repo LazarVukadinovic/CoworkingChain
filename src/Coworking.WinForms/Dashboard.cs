@@ -55,5 +55,12 @@ namespace Coworking.WinForms
             resetEnabledComponents();
             lokacijeButton.Enabled = false;
         }
+
+        private void tipoviClanstvaButton_Click(object sender, EventArgs e)
+        {
+            openChildForm(new TipoviClanstva());
+            resetEnabledComponents();
+            tipoviClanstvaButton.Enabled = false;
+        }
     }
 }

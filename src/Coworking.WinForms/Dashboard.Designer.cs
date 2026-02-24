@@ -153,6 +153,7 @@
             tipoviClanstvaButton.TabIndex = 3;
             tipoviClanstvaButton.Text = "Tipovi članstva";
             tipoviClanstvaButton.UseVisualStyleBackColor = false;
+            tipoviClanstvaButton.Click += tipoviClanstvaButton_Click;
             // 
             // lokacijeButton
             // 

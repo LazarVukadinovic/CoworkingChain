@@ -40,6 +40,7 @@
             capacityNumericUpDown = new ReaLTaiizor.Controls.ForeverNumeric();
             commentLabel = new ReaLTaiizor.Controls.HeaderLabel();
             commentRichTextBox = new ReaLTaiizor.Controls.CyberRichTextBox();
+            addLocationButton = new ReaLTaiizor.Controls.ForeverButton();
             SuspendLayout();
             // 
             // nameLabel
@@ -284,12 +285,27 @@
             commentRichTextBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             commentRichTextBox.Timer_RGB = 300;
             // 
+            // addLocationButton
+            // 
+            addLocationButton.BackColor = Color.Transparent;
+            addLocationButton.BaseColor = Color.FromArgb(35, 168, 109);
+            addLocationButton.Cursor = Cursors.Hand;
+            addLocationButton.Font = new Font("Segoe UI", 12F);
+            addLocationButton.Location = new Point(358, 525);
+            addLocationButton.Name = "addLocationButton";
+            addLocationButton.Rounded = true;
+            addLocationButton.Size = new Size(150, 45);
+            addLocationButton.TabIndex = 32;
+            addLocationButton.Text = "Dodaj lokaciju";
+            addLocationButton.TextColor = Color.FromArgb(243, 243, 243);
+            // 
             // DodajLokaciju
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 26, 33);
-            ClientSize = new Size(848, 525);
+            ClientSize = new Size(848, 591);
+            Controls.Add(addLocationButton);
             Controls.Add(commentRichTextBox);
             Controls.Add(commentLabel);
             Controls.Add(capacityNumericUpDown);
@@ -324,5 +340,6 @@
         private ReaLTaiizor.Controls.ForeverNumeric capacityNumericUpDown;
         private ReaLTaiizor.Controls.HeaderLabel commentLabel;
         private ReaLTaiizor.Controls.CyberRichTextBox commentRichTextBox;
+        private ReaLTaiizor.Controls.ForeverButton addLocationButton;
     }
 }
