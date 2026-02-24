@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coworking.WinForms.Dialogues;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,12 @@ namespace Coworking.WinForms
         public TipoviClanstva()
         {
             InitializeComponent();
+        }
+
+        private void addMembershipButton_Click(object sender, EventArgs e)
+        {
+            DodajTipClanstva newMembership = new DodajTipClanstva();
+            newMembership.ShowDialog(this);
         }
     }
 }

@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             headerPanel = new Panel();
             filterPanel = new Panel();
+            searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
+            searchButton = new ReaLTaiizor.Controls.ForeverButton();
             editMembershipButton = new ReaLTaiizor.Controls.ForeverButton();
             deleteMembershipButton = new ReaLTaiizor.Controls.ForeverButton();
             addMembershipButton = new ReaLTaiizor.Controls.ForeverButton();
-            searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
-            searchButton = new ReaLTaiizor.Controls.ForeverButton();
             membershipDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
             headerPanel.SuspendLayout();
             filterPanel.SuspendLayout();
@@ -83,47 +83,6 @@
             filterPanel.Name = "filterPanel";
             filterPanel.Size = new Size(1102, 72);
             filterPanel.TabIndex = 3;
-            // 
-            // editMembershipButton
-            // 
-            editMembershipButton.BackColor = Color.Transparent;
-            editMembershipButton.BaseColor = Color.FromArgb(56, 95, 235);
-            editMembershipButton.Font = new Font("Segoe UI", 12F);
-            editMembershipButton.Location = new Point(180, 12);
-            editMembershipButton.Name = "editMembershipButton";
-            editMembershipButton.Rounded = true;
-            editMembershipButton.Size = new Size(183, 45);
-            editMembershipButton.TabIndex = 7;
-            editMembershipButton.Text = "Izmena podataka";
-            editMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
-            // 
-            // deleteMembershipButton
-            // 
-            deleteMembershipButton.BackColor = Color.Transparent;
-            deleteMembershipButton.BaseColor = Color.Red;
-            deleteMembershipButton.Cursor = Cursors.Hand;
-            deleteMembershipButton.Font = new Font("Segoe UI", 12F);
-            deleteMembershipButton.Location = new Point(381, 12);
-            deleteMembershipButton.Name = "deleteMembershipButton";
-            deleteMembershipButton.Rounded = true;
-            deleteMembershipButton.Size = new Size(150, 45);
-            deleteMembershipButton.TabIndex = 3;
-            deleteMembershipButton.Text = "Obriši tip";
-            deleteMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
-            // 
-            // addMembershipButton
-            // 
-            addMembershipButton.BackColor = Color.Transparent;
-            addMembershipButton.BaseColor = Color.FromArgb(35, 168, 109);
-            addMembershipButton.Cursor = Cursors.Hand;
-            addMembershipButton.Font = new Font("Segoe UI", 12F);
-            addMembershipButton.Location = new Point(11, 12);
-            addMembershipButton.Name = "addMembershipButton";
-            addMembershipButton.Rounded = true;
-            addMembershipButton.Size = new Size(150, 45);
-            addMembershipButton.TabIndex = 2;
-            addMembershipButton.Text = "Dodaj tip";
-            addMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
             // 
             // searchTextBox
             // 
@@ -171,6 +130,48 @@
             searchButton.Text = "Pretraga";
             searchButton.TextColor = Color.FromArgb(243, 243, 243);
             // 
+            // editMembershipButton
+            // 
+            editMembershipButton.BackColor = Color.Transparent;
+            editMembershipButton.BaseColor = Color.FromArgb(56, 95, 235);
+            editMembershipButton.Font = new Font("Segoe UI", 12F);
+            editMembershipButton.Location = new Point(180, 12);
+            editMembershipButton.Name = "editMembershipButton";
+            editMembershipButton.Rounded = true;
+            editMembershipButton.Size = new Size(183, 45);
+            editMembershipButton.TabIndex = 7;
+            editMembershipButton.Text = "Izmena podataka";
+            editMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
+            // 
+            // deleteMembershipButton
+            // 
+            deleteMembershipButton.BackColor = Color.Transparent;
+            deleteMembershipButton.BaseColor = Color.Red;
+            deleteMembershipButton.Cursor = Cursors.Hand;
+            deleteMembershipButton.Font = new Font("Segoe UI", 12F);
+            deleteMembershipButton.Location = new Point(381, 12);
+            deleteMembershipButton.Name = "deleteMembershipButton";
+            deleteMembershipButton.Rounded = true;
+            deleteMembershipButton.Size = new Size(150, 45);
+            deleteMembershipButton.TabIndex = 3;
+            deleteMembershipButton.Text = "Obriši tip";
+            deleteMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
+            // 
+            // addMembershipButton
+            // 
+            addMembershipButton.BackColor = Color.Transparent;
+            addMembershipButton.BaseColor = Color.FromArgb(35, 168, 109);
+            addMembershipButton.Cursor = Cursors.Hand;
+            addMembershipButton.Font = new Font("Segoe UI", 12F);
+            addMembershipButton.Location = new Point(11, 12);
+            addMembershipButton.Name = "addMembershipButton";
+            addMembershipButton.Rounded = true;
+            addMembershipButton.Size = new Size(150, 45);
+            addMembershipButton.TabIndex = 2;
+            addMembershipButton.Text = "Dodaj tip";
+            addMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
+            addMembershipButton.Click += addMembershipButton_Click;
+            // 
             // membershipDataGridView
             // 
             membershipDataGridView.AllowUserToAddRows = false;
@@ -180,23 +181,23 @@
             membershipDataGridView.BorderStyle = BorderStyle.None;
             membershipDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
             membershipDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            membershipDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            membershipDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             membershipDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            membershipDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            membershipDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             membershipDataGridView.Dock = DockStyle.Fill;
             membershipDataGridView.EnableHeadersVisualStyles = false;
             membershipDataGridView.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -205,14 +206,14 @@
             membershipDataGridView.Name = "membershipDataGridView";
             membershipDataGridView.ReadOnly = true;
             membershipDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            membershipDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            membershipDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             membershipDataGridView.RowHeadersWidth = 51;
             membershipDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             membershipDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
