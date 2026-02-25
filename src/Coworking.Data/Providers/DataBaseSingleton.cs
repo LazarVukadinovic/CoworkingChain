@@ -1,7 +1,7 @@
 ﻿
 namespace Coworking.Data.Providers
 {
-    public class DataBaseSingleton
+    public sealed class DataBaseSingleton
     {
         private static readonly Lazy<IDataBase> _instance = new(() =>
         {
@@ -10,6 +10,7 @@ namespace Coworking.Data.Providers
             return new DataBaseProxy(facade);
         }, isThreadSafe: true);
 
+        private DataBaseSingleton() { }
         public static IDataBase vratiInstancu() => _instance.Value;
     }
 }
