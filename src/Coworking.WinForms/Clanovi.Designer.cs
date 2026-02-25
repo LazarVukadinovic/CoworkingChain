@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             headerPanel = new Panel();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             filterPanel = new Panel();
@@ -40,9 +40,17 @@
             deleteMemberButton2 = new ReaLTaiizor.Controls.ForeverButton();
             addMemberButton = new ReaLTaiizor.Controls.ForeverButton();
             memberDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
+            filteringpanel = new Panel();
+            statusLabel = new ReaLTaiizor.Controls.HeaderLabel();
+            statusComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
+            locationLabel = new ReaLTaiizor.Controls.HeaderLabel();
+            locationComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
+            membershipTypeLabel = new ReaLTaiizor.Controls.HeaderLabel();
+            membershipComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
             headerPanel.SuspendLayout();
             filterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)memberDataGridView).BeginInit();
+            filteringpanel.SuspendLayout();
             SuspendLayout();
             // 
             // headerPanel
@@ -142,6 +150,7 @@
             searchButton.TabIndex = 4;
             searchButton.Text = "Pretraga";
             searchButton.TextColor = Color.FromArgb(243, 243, 243);
+            searchButton.Click += searchButton_Click;
             // 
             // deleteMemberButton2
             // 
@@ -181,23 +190,23 @@
             memberDataGridView.BorderStyle = BorderStyle.None;
             memberDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
             memberDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            memberDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            memberDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             memberDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            memberDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            memberDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             memberDataGridView.Dock = DockStyle.Fill;
             memberDataGridView.EnableHeadersVisualStyles = false;
             memberDataGridView.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -206,25 +215,132 @@
             memberDataGridView.Name = "memberDataGridView";
             memberDataGridView.ReadOnly = true;
             memberDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            memberDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            memberDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             memberDataGridView.RowHeadersWidth = 51;
             memberDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             memberDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             memberDataGridView.Size = new Size(1102, 449);
             memberDataGridView.TabIndex = 2;
             // 
+            // filteringpanel
+            // 
+            filteringpanel.BackColor = Color.FromArgb(37, 52, 68);
+            filteringpanel.BorderStyle = BorderStyle.FixedSingle;
+            filteringpanel.Controls.Add(statusLabel);
+            filteringpanel.Controls.Add(statusComboBox);
+            filteringpanel.Controls.Add(locationLabel);
+            filteringpanel.Controls.Add(locationComboBox);
+            filteringpanel.Controls.Add(membershipTypeLabel);
+            filteringpanel.Controls.Add(membershipComboBox);
+            filteringpanel.Dock = DockStyle.Top;
+            filteringpanel.Location = new Point(0, 141);
+            filteringpanel.Name = "filteringpanel";
+            filteringpanel.Size = new Size(1102, 97);
+            filteringpanel.TabIndex = 7;
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = true;
+            statusLabel.BackColor = Color.Transparent;
+            statusLabel.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold);
+            statusLabel.ForeColor = Color.FromArgb(255, 255, 255);
+            statusLabel.Location = new Point(529, 23);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(130, 20);
+            statusLabel.TabIndex = 21;
+            statusLabel.Text = "Status naloga:";
+            // 
+            // statusComboBox
+            // 
+            statusComboBox.BaseColor = Color.FromArgb(8, 133, 161);
+            statusComboBox.BGColor = Color.FromArgb(18, 26, 33);
+            statusComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            statusComboBox.Font = new Font("Segoe UI", 8F);
+            statusComboBox.ForeColor = Color.White;
+            statusComboBox.FormattingEnabled = true;
+            statusComboBox.HoverColor = Color.FromArgb(35, 168, 109);
+            statusComboBox.HoverFontColor = Color.White;
+            statusComboBox.ItemHeight = 25;
+            statusComboBox.Items.AddRange(new object[] { "Svi", "Aktivan", "Neaktivan", "Suspendovan" });
+            statusComboBox.Location = new Point(529, 46);
+            statusComboBox.Name = "statusComboBox";
+            statusComboBox.Size = new Size(223, 31);
+            statusComboBox.TabIndex = 20;
+            // 
+            // locationLabel
+            // 
+            locationLabel.AutoSize = true;
+            locationLabel.BackColor = Color.Transparent;
+            locationLabel.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold);
+            locationLabel.ForeColor = Color.FromArgb(255, 255, 255);
+            locationLabel.Location = new Point(268, 23);
+            locationLabel.Name = "locationLabel";
+            locationLabel.Size = new Size(85, 20);
+            locationLabel.TabIndex = 19;
+            locationLabel.Text = "Lokacija:";
+            // 
+            // locationComboBox
+            // 
+            locationComboBox.BaseColor = Color.FromArgb(8, 133, 161);
+            locationComboBox.BGColor = Color.FromArgb(18, 26, 33);
+            locationComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            locationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            locationComboBox.Font = new Font("Segoe UI", 8F);
+            locationComboBox.ForeColor = Color.White;
+            locationComboBox.FormattingEnabled = true;
+            locationComboBox.HoverColor = Color.FromArgb(35, 168, 109);
+            locationComboBox.HoverFontColor = Color.White;
+            locationComboBox.ItemHeight = 25;
+            locationComboBox.Items.AddRange(new object[] { "Sve" });
+            locationComboBox.Location = new Point(268, 46);
+            locationComboBox.Name = "locationComboBox";
+            locationComboBox.Size = new Size(223, 31);
+            locationComboBox.TabIndex = 18;
+            // 
+            // membershipTypeLabel
+            // 
+            membershipTypeLabel.AutoSize = true;
+            membershipTypeLabel.BackColor = Color.Transparent;
+            membershipTypeLabel.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold);
+            membershipTypeLabel.ForeColor = Color.FromArgb(255, 255, 255);
+            membershipTypeLabel.Location = new Point(12, 23);
+            membershipTypeLabel.Name = "membershipTypeLabel";
+            membershipTypeLabel.Size = new Size(117, 20);
+            membershipTypeLabel.TabIndex = 17;
+            membershipTypeLabel.Text = "Tip članstva:";
+            // 
+            // membershipComboBox
+            // 
+            membershipComboBox.BaseColor = Color.FromArgb(8, 133, 161);
+            membershipComboBox.BGColor = Color.FromArgb(18, 26, 33);
+            membershipComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            membershipComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            membershipComboBox.Font = new Font("Segoe UI", 8F);
+            membershipComboBox.ForeColor = Color.White;
+            membershipComboBox.FormattingEnabled = true;
+            membershipComboBox.HoverColor = Color.FromArgb(35, 168, 109);
+            membershipComboBox.HoverFontColor = Color.White;
+            membershipComboBox.ItemHeight = 25;
+            membershipComboBox.Items.AddRange(new object[] { "Svi" });
+            membershipComboBox.Location = new Point(12, 46);
+            membershipComboBox.Name = "membershipComboBox";
+            membershipComboBox.Size = new Size(223, 31);
+            membershipComboBox.TabIndex = 0;
+            // 
             // Clanovi
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1102, 590);
+            Controls.Add(filteringpanel);
             Controls.Add(memberDataGridView);
             Controls.Add(filterPanel);
             Controls.Add(headerPanel);
@@ -234,6 +350,8 @@
             headerPanel.PerformLayout();
             filterPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)memberDataGridView).EndInit();
+            filteringpanel.ResumeLayout(false);
+            filteringpanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -248,5 +366,12 @@
         private ReaLTaiizor.Controls.CyberTextBox searchTextBox;
         private ReaLTaiizor.Controls.PoisonDataGridView memberDataGridView;
         private ReaLTaiizor.Controls.ForeverButton editMemberButton;
+        private Panel filteringpanel;
+        private ReaLTaiizor.Controls.HeaderLabel locationLabel;
+        private ReaLTaiizor.Controls.ForeverComboBox locationComboBox;
+        private ReaLTaiizor.Controls.HeaderLabel membershipTypeLabel;
+        private ReaLTaiizor.Controls.ForeverComboBox membershipComboBox;
+        private ReaLTaiizor.Controls.HeaderLabel statusLabel;
+        private ReaLTaiizor.Controls.ForeverComboBox statusComboBox;
     }
 }

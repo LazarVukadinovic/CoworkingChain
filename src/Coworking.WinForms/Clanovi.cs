@@ -16,12 +16,25 @@ namespace Coworking.WinForms
         public Clanovi()
         {
             InitializeComponent();
+            ResetComboBox();
         }
 
         private void addMemberButton_Click(object sender, EventArgs e)
         {
             DodajClana newMember = new DodajClana();
             newMember.ShowDialog(this);
+        }
+
+        private void ResetComboBox()
+        {
+            membershipComboBox.SelectedIndex =
+                locationComboBox.SelectedIndex =
+                    statusComboBox.SelectedIndex = 0;
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            ResetComboBox();
         }
     }
 }
