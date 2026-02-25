@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coworking.WinForms.Dialogues;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,5 +19,10 @@ namespace Coworking.WinForms
             resourceTypeComboBox.SelectedIndex = locationComboBox.SelectedIndex = 0;
         }
 
+        private void addResourceButton_Click(object sender, EventArgs e)
+        {
+            DodajResurs newResource = new DodajResurs();
+            newResource.ShowDialog(this);
+        }
     }
 }
