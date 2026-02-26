@@ -1,4 +1,5 @@
 ﻿using Coworking.Domain.Entities;
+using System.Security.Claims;
 
 namespace Coworking.Data.Providers
 {
@@ -7,11 +8,17 @@ namespace Coworking.Data.Providers
         private IDataBase _facade;
 
         List<Clan>? cachedClanovi = null;
-        List<Domain.Entities.TipClanstva>? cachedTipClanstva = null;
+        List<Clan>? cachedClanoviFiltrirano = null;
+
+        List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)>? cachedLokacijaStatistika = null;
         List<Lokacija>? cachedLokacija = null;
-        List<Resurs>? cachedResurs = null;
-        private Dictionary<(string datum, string lokacija), List<Rezervacija>> cachedRezervacije = new Dictionary<(string, string), List<Rezervacija>>(); 
-        private Dictionary<int, List<Rezervacija>> cachedKorisnickeRezervacije = new Dictionary<int, List<Rezervacija>>();
+
+        private Dictionary<int, List<Rezervacija>> cachedRezervacijeSaStatusomZaIzabranogClana = new Dictionary<int, List<Rezervacija>>();
+        private Dictionary<(string datum, string lokacija), List<Rezervacija>> cachedRezervacijeZaDanILokaciju = new Dictionary<(string, string), List<Rezervacija>>();
+
+        private Dictionary<int, List<RadnoMesto>> cachedRadnaMestaPoLokaciji = new Dictionary<int, List<RadnoMesto>>();
+        List<SalaZaSastanke>? cachedSalaZaSastanke = null;
+        private Dictionary<int, List<Resurs>> cachedResursiPoLokacijiIPoTipu = new Dictionary<int, List<Resurs>>();
 
         bool needReset = true;
 
@@ -58,9 +65,16 @@ namespace Coworking.Data.Providers
 
             needReset = true;
         }
+
+        //ovde mozda treba dictionary
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
         {
-            return null;
+            if (cachedClanoviFiltrirano == null || needReset == true)
+            {
+                cachedClanoviFiltrirano = _facade.PrikaziClanoveFiltrirano(lokacijaId,tipClanstvaId,status);
+                needReset = false;
+            }
+            return cachedClanoviFiltrirano;
         }
 
 
@@ -84,7 +98,12 @@ namespace Coworking.Data.Providers
         }
         public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
         {
-            return null;
+            if (cachedLokacijaStatistika == null || needReset == true)
+            {
+                cachedLokacijaStatistika = _facade.PrikaziStatistikuLokacija();
+                needReset = false;
+            }
+            return cachedLokacijaStatistika;
         }
         public List<Lokacija> prikaziLokacije(bool check)
         {
@@ -110,26 +129,31 @@ namespace Coworking.Data.Providers
             _facade.izmeniRezervaciju(r);
             needReset = true;
         }
-        public void otkaziRezervaciju(int rezId)
+        public void otkaziRezervaciju(int rezervacijaId)
         {
-            _facade.otkaziRezervaciju(rezId);
+            _facade.otkaziRezervaciju(rezervacijaId);
             needReset = true;
         }
         // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
         // TO-DO
         public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
         {
-            return null;
+            if (cachedRezervacijeSaStatusomZaIzabranogClana.ContainsKey(clanId) == true || needReset == true)
+            {
+                cachedRezervacijeSaStatusomZaIzabranogClana[clanId] = _facade.prikaziRezervacijeSaStatusomZaIzabranogClana(clanId);
+                needReset = false;
+            }
+            return cachedRezervacijeSaStatusomZaIzabranogClana[clanId];
         }
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija)
         {
             var key = (datum, lokacija);
-            if (!cachedRezervacije.ContainsKey(key) || needReset)
+            if (!cachedRezervacijeZaDanILokaciju.ContainsKey(key) || needReset)
             {
-                cachedRezervacije[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
+                cachedRezervacijeZaDanILokaciju[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
                 needReset = false;
             }
-            return cachedRezervacije[key];
+            return cachedRezervacijeZaDanILokaciju[key];
         }
 
 
@@ -139,15 +163,30 @@ namespace Coworking.Data.Providers
 
         public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
         {
-            return null;
+            if (cachedRadnaMestaPoLokaciji.ContainsKey(lokacijaId) == true || needReset == true)
+            {
+                cachedRadnaMestaPoLokaciji[lokacijaId] = _facade.prikaziRadnaMestaPoLokaciji(lokacijaId);
+                needReset = false;
+            }
+            return cachedRadnaMestaPoLokaciji[lokacijaId];
         }
         public List<SalaZaSastanke> prikaziSaleZaSastanke()
         {
-            return null;
+            if (cachedSalaZaSastanke == null || needReset == true)
+            {
+                cachedSalaZaSastanke = _facade.prikaziSaleZaSastanke();
+                needReset = false;
+            }
+            return cachedSalaZaSastanke;
         }
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId)
         {
-            return null;
+            if (cachedResursiPoLokacijiIPoTipu.ContainsKey(lokacijaId) == true || needReset == true)
+            {
+                cachedResursiPoLokacijiIPoTipu[lokacijaId] = _facade.prikaziResursePoLokacijiIPoTipu(lokacijaId);
+                needReset = false;
+            }
+            return cachedResursiPoLokacijiIPoTipu[lokacijaId];
         }
 
 
