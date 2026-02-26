@@ -25,15 +25,12 @@ namespace Coworking.Data.Providers
         //-------------------------CLANOVI-------------------------
         //-------------------------CLANOVI-------------------------
         //-------------------------CLANOVI-------------------------
-
-        // Dodavanje, izmena, prikaz i brisanje CLANOVA
         public void dodajClana(Clan c) => _clanRepo.Add(c);
         public void izmeniClana(Clan c) => _clanRepo.Update(c);
         public List<Clan> prikaziClanove() => _clanRepo.GetAll();
         public void obrisiClana(int clanId) => _clanRepo.delete(clanId);
 
 
-        // Lista svih clanova, sa mogucnoscu filtriranja po lokaciji, tipu clanstva ili statusu naloga
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)//stavljeno u Clan klasi tipClanstva da bude int, a ne string
         {
             var clanovi = _clanRepo.GetAll();
@@ -56,12 +53,11 @@ namespace Coworking.Data.Providers
         //-------------------------LOKACIJE-------------------------
         //-------------------------LOKACIJE-------------------------
 
-        // Dodavanje i brisanje co-working LOKACIJA 
         public void dodajLokaciju(Lokacija l) => _lokacijaRepo.Add(l);
+        public void izmeniLokaciju(Lokacija l) => _lokacijaRepo.Update(l);
         public void obrisiLokaciju(int lokacijaId) => _lokacijaRepo.delete(lokacijaId);
 
 
-        // Lista svih co-working lokacija sa osnovnim statistikama (ukupan broj radnih mesta, broj trenutno rezervisanih, procenat zauzetosti).
         public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
         {
             var lokacije = _lokacijaRepo.GetAllActive(false);
@@ -88,7 +84,6 @@ namespace Coworking.Data.Providers
         }
 
 
-        // Prikaz liste svih lokacija, uz mogucnost izbora aktivne lokacije
         public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check);
 
 
@@ -96,38 +91,30 @@ namespace Coworking.Data.Providers
         //-------------------------REZERVACIJE-------------------------
         //-------------------------REZERVACIJE-------------------------
 
-        // Dodavanje, izmena, otkazivanje i prikaz REZERVACIJA
         public void dodajRezervaciju(Rezervacija r) => _rezRepo.Add(r);
         public void izmeniRezervaciju(Rezervacija r) => _rezRepo.Update(r);
         public void otkaziRezervaciju(int rezervacijaId) => _rezRepo.Cancel(rezervacijaId);
-        public List<Rezervacija> prikaziRezervacije() => _rezRepo.GetAll();
 
 
         // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
         // TO-DO
 
 
-        // Lista svih rezervacija za izabranog korisnika, sa prikazom statusa (aktivna, prosla, otkazana)
-        //1. nacin
-        public List<Rezervacija> prikaziKorisnickeRezervacije(int clanId) => _rezRepo.GetByClanId(clanId);
-        //2. nacin
-        public List<Rezervacija> prikaziRezervacijeSaStatusomZaClana(int clanId)
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
         {
             var rezervacije = _rezRepo.GetByClanId(clanId);
-            var rezultat = new List<Rezervacija>();
 
             foreach (var r in rezervacije)
-            {
                 if (DateTime.Parse(r.kraj) < DateTime.Now)
+                {
                     _rezRepo.UpdateStatus(r.rezervacijaId, "Prošla");
-                rezultat.Add(r);
-            }
+                    r.status = "Prošla";
+                }
 
-            return rezultat;
+            return rezervacije;
         }
 
 
-        // Lista rezervacije za odabrani dan i lokaciju radi prikaza zauzetosti u toku dana.
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
 
 
@@ -135,41 +122,29 @@ namespace Coworking.Data.Providers
         //-------------------------RESURSI-------------------------
         //-------------------------RESURSI-------------------------
 
-
-        // Evidencija radnih mesta po lokaciji: hot desk, dedicated desk, privatna kancelarija,
-        // sa informacijom da li je trenutno dostupno ili zauzeto.
         public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _resursRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
 
+        public List<SalaZaSastanke> prikaziSaleZaSastanke() => _resursRepo.prikaziSaleZaSastanke();
 
-        // Evidencija sala za sastanke: naziv, kapacitet, opremljenost (projekat, TV, tabla, oprema za online sastanke...).
-        public List<SalaZaSastanke> salaZaSastanke() => _resursRepo.prikaziSaleZaSastanke();
-
-
-        // Lista svih resursa po lokaciji, razvrstanih po tipu (radna mesta, sala za sastanke)
-        public List<Resurs> prikaziResursePoLokaciji(int lokacijaId) => _resursRepo.GetResourcesByLocation(lokacijaId);
+        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId) => _resursRepo.GetResourcesByLocation(lokacijaId);
 
 
         //-------------------------TIP CLANSTVA-------------------------
         //-------------------------TIP CLANSTVA-------------------------
         //-------------------------TIP CLANSTVA-------------------------
 
-        // Definisanje razlicitih TIPOVA CLANSTVA 
         public void dodajTipClanstva(TipClanstva t) => _tcRepo.Add(t);
 
 
-
         //-------------------------NAZIV LANCA-------------------------
         //-------------------------NAZIV LANCA-------------------------
         //-------------------------NAZIV LANCA-------------------------
 
-
-        // Prikaz naziva lanca co-working prostora preuzetog iz konfiguracionog fajla
         public string prikazLanca()
         {
             var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
             return File.ReadAllLines(path)[0];
         }
-
 
         //-------------------------LOGIN-------------------------
         //-------------------------LOGIN-------------------------

@@ -20,62 +20,72 @@ namespace Coworking.Data.Providers
             _facade = facade;
         }
 
+        //-------------------------CLANOVI-------------------------
+        //-------------------------CLANOVI-------------------------
+        //-------------------------CLANOVI-------------------------
+
         public void dodajClana(Clan c)
         {
             _facade.dodajClana(c);
             needReset = true;
         }
-
-        public void dodajLokaciju(Lokacija l)
+        public void izmeniClana(Clan c)
         {
-            _facade.dodajLokaciju(l);
+            _facade.izmeniClana(c);
             needReset = true;
         }
-
-        public void dodajRezervaciju(Rezervacija r)
-        {
-            _facade.dodajRezervaciju(r);
-            needReset = true;
-        }
-
-        public void dodajTipClanstva(Domain.Entities.TipClanstva t)
-        {
-            _facade.dodajTipClanstva(t);
-            needReset = true;
-        }
-
-        public void izmeniRezervaciju(Rezervacija r)
-        {
-            _facade.izmeniRezervaciju(r);
-            needReset = true;
-        }
-
-        public void otkaziRezervaciju(int rezId)
-        {
-            _facade.otkaziRezervaciju(rezId);
-            needReset = true;
-        }
-
         public List<Clan> prikaziClanove()
         {
-            if(cachedClanovi == null || needReset == true)
+            if (cachedClanovi == null || needReset == true)
             {
                 cachedClanovi = _facade.prikaziClanove();
                 needReset = false;
             }
             return cachedClanovi;
         }
+        public void obrisiClana(int clanId)
+        {
+            _facade.obrisiClana(clanId);
 
-        public List<Rezervacija> prikaziKorisnickeRezervacije(int clan_id) 
-        {   
-            if (!cachedKorisnickeRezervacije.ContainsKey(clan_id) || needReset) 
-            { 
-                cachedKorisnickeRezervacije[clan_id] = _facade.prikaziKorisnickeRezervacije(clan_id); 
-                needReset = false; 
-            } 
-            return cachedKorisnickeRezervacije[clan_id]; 
+            //if (cachedClanovi != null)
+            //    cachedClanovi.RemoveAll(c => c.clanId == clanId);
+
+            //if (cachedKorisnickeRezervacije.ContainsKey(clanId))
+            //    cachedKorisnickeRezervacije.Remove(clanId);
+
+            //Ovo:briše člana iz cachedClanovi, briše njegove rezervacije iz cachedKorisnickeRezervacije i dalje forsira reload
+            //sledeći put
+
+            needReset = true;
+        }
+        public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
+        {
+            return null;
         }
 
+
+        //-------------------------LOKACIJE-------------------------
+        //-------------------------LOKACIJE-------------------------
+        //-------------------------LOKACIJE-------------------------
+        public void dodajLokaciju(Lokacija l)
+        {
+            _facade.dodajLokaciju(l);
+            needReset = true;
+        }
+        public void izmeniLokaciju(Lokacija l)
+        {
+            _facade.izmeniLokaciju(l);
+            needReset = true;
+        }
+        public void obrisiLokaciju(int lokacijaId)
+        {
+            _facade.obrisiLokaciju(lokacijaId);
+            needReset = true;
+        }
+        public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
+        {
+            return null;
+        }
         public List<Lokacija> prikaziLokacije(bool check)
         {
             if (cachedLokacija == null || needReset == true)
@@ -86,26 +96,83 @@ namespace Coworking.Data.Providers
             return cachedLokacija;
         }
 
-        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija) 
-        {   
-            var key = (datum, lokacija); 
-            if (!cachedRezervacije.ContainsKey(key) || needReset) 
-            { 
-                cachedRezervacije[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija); 
-                needReset = false; 
-            } 
-            return cachedRezervacije[key]; 
+
+        //-------------------------REZERVACIJE-------------------------
+        //-------------------------REZERVACIJE-------------------------
+        //-------------------------REZERVACIJE-------------------------
+        public void dodajRezervaciju(Rezervacija r)
+        {
+            _facade.dodajRezervaciju(r);
+            needReset = true;
         }
+        public void izmeniRezervaciju(Rezervacija r)
+        {
+            _facade.izmeniRezervaciju(r);
+            needReset = true;
+        }
+        public void otkaziRezervaciju(int rezId)
+        {
+            _facade.otkaziRezervaciju(rezId);
+            needReset = true;
+        }
+        // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
+        // TO-DO
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
+        {
+            return null;
+        }
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija)
+        {
+            var key = (datum, lokacija);
+            if (!cachedRezervacije.ContainsKey(key) || needReset)
+            {
+                cachedRezervacije[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
+                needReset = false;
+            }
+            return cachedRezervacije[key];
+        }
+
+
+        //-------------------------RESURSI-------------------------
+        //-------------------------RESURSI-------------------------
+        //-------------------------RESURSI-------------------------
+
+        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
+        {
+            return null;
+        }
+        public List<SalaZaSastanke> prikaziSaleZaSastanke()
+        {
+            return null;
+        }
+        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId)
+        {
+            return null;
+        }
+
+
+        //-------------------------TIP CLANSTVA-------------------------
+        //-------------------------TIP CLANSTVA-------------------------
+        //-------------------------TIP CLANSTVA-------------------------
+        
+        public void dodajTipClanstva(Domain.Entities.TipClanstva t)
+        {
+            _facade.dodajTipClanstva(t);
+            needReset = true;
+        }
+
+        //-------------------------NAZIV LANCA-------------------------
+        //-------------------------NAZIV LANCA-------------------------
+        //-------------------------NAZIV LANCA-------------------------
 
         public string prikazLanca()
         {
             return _facade.prikazLanca();
         }
 
-        public List<Resurs> prikaziResursePoLokaciji(int lokacijaId)
-        {
-            return _facade.prikaziResursePoLokaciji(lokacijaId);
-        }
+        //-------------------------LOGIN-------------------------
+        //-------------------------LOGIN-------------------------
+        //-------------------------LOGIN-------------------------
 
         public bool getAdminByUsername(string username, string password)
         {
