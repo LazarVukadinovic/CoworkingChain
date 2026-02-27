@@ -46,6 +46,8 @@ namespace Coworking.Data.Providers
         public List<SalaZaSastanke> prikaziSaleZaSastanke();
         // Lista svih resursa po lokaciji, razvrstanih po tipu (radna mesta, sala za sastanke)
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId);
+        // Lista svih resursa
+        public List<Resurs> prikaziSveResurse();
 
 
         //-------------------------TIP CLANSTVA-------------------------

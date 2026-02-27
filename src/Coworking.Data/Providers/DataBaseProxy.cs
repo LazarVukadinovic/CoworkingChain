@@ -19,6 +19,7 @@ namespace Coworking.Data.Providers
         private Dictionary<int, List<RadnoMesto>> cachedRadnaMestaPoLokaciji = new Dictionary<int, List<RadnoMesto>>();
         List<SalaZaSastanke>? cachedSalaZaSastanke = null;
         private Dictionary<int, List<Resurs>> cachedResursiPoLokacijiIPoTipu = new Dictionary<int, List<Resurs>>();
+        List<Resurs> cachedResursi = null;
 
         bool needReset = true;
 
@@ -138,7 +139,7 @@ namespace Coworking.Data.Providers
         // TO-DO
         public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
         {
-            if (cachedRezervacijeSaStatusomZaIzabranogClana.ContainsKey(clanId) == true || needReset == true)
+            if (cachedRezervacijeSaStatusomZaIzabranogClana.ContainsKey(clanId) == false || needReset == true)
             {
                 cachedRezervacijeSaStatusomZaIzabranogClana[clanId] = _facade.prikaziRezervacijeSaStatusomZaIzabranogClana(clanId);
                 needReset = false;
@@ -148,7 +149,7 @@ namespace Coworking.Data.Providers
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija)
         {
             var key = (datum, lokacija);
-            if (!cachedRezervacijeZaDanILokaciju.ContainsKey(key) || needReset)
+            if (cachedRezervacijeZaDanILokaciju.ContainsKey(key) == false || needReset)
             {
                 cachedRezervacijeZaDanILokaciju[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
                 needReset = false;
@@ -163,7 +164,7 @@ namespace Coworking.Data.Providers
 
         public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
         {
-            if (cachedRadnaMestaPoLokaciji.ContainsKey(lokacijaId) == true || needReset == true)
+            if (cachedRadnaMestaPoLokaciji.ContainsKey(lokacijaId) == false || needReset == true)
             {
                 cachedRadnaMestaPoLokaciji[lokacijaId] = _facade.prikaziRadnaMestaPoLokaciji(lokacijaId);
                 needReset = false;
@@ -181,19 +182,28 @@ namespace Coworking.Data.Providers
         }
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId)
         {
-            if (cachedResursiPoLokacijiIPoTipu.ContainsKey(lokacijaId) == true || needReset == true)
+            if (cachedResursiPoLokacijiIPoTipu.ContainsKey(lokacijaId) == false || needReset == true)
             {
                 cachedResursiPoLokacijiIPoTipu[lokacijaId] = _facade.prikaziResursePoLokacijiIPoTipu(lokacijaId);
                 needReset = false;
             }
             return cachedResursiPoLokacijiIPoTipu[lokacijaId];
         }
+        public List<Resurs> prikaziSveResurse()
+        {
+            if (cachedResursi == null || needReset == true)
+            {
+                cachedResursi = _facade.prikaziSveResurse();
+                needReset = false;
+            }
+            return cachedResursi;
+        }
 
 
         //-------------------------TIP CLANSTVA-------------------------
         //-------------------------TIP CLANSTVA-------------------------
         //-------------------------TIP CLANSTVA-------------------------
-        
+
         public void dodajTipClanstva(Domain.Entities.TipClanstva t)
         {
             _facade.dodajTipClanstva(t);

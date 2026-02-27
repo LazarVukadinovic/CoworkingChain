@@ -1,4 +1,5 @@
 using Coworking.Data.Providers;
+using Coworking.Data.Reports;
 
 namespace Coworking.WinForms
 {
@@ -23,6 +24,20 @@ namespace Coworking.WinForms
 
             // izvrsavanje migracija
             Data.Migrations.MigrationBootstrapper.EnsureDbAndMigrate(targetCs, migrationsBase);
+
+            // izvrsavanje izvestaja
+            //IDataBase dbSettings = DataBaseSingleton.vratiInstancu();
+            //var reportCreator = new CreateReport(dbSettings);
+
+            //var strategy = new PeriodStrategy(PeriodType.Day1);
+            //var rows = reportCreator.GenerateReport(strategy);
+
+            //var exporter = new CsvExporter();
+            //string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\izvestaj.csv";
+            //exporter.ExportToCsv(rows, filePath);
+
+            //MessageBox.Show($"CSV izveštaj je napravljen: {filePath}");
+
 
             Application.Run(new Form1());
         }

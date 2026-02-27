@@ -127,6 +127,7 @@ namespace Coworking.Data.Providers
         public List<SalaZaSastanke> prikaziSaleZaSastanke() => _resursRepo.prikaziSaleZaSastanke();
 
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId) => _resursRepo.GetResourcesByLocation(lokacijaId);
+        public List<Resurs> prikaziSveResurse() => _resursRepo.GetAll();
 
 
         //-------------------------TIP CLANSTVA-------------------------
