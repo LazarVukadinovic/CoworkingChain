@@ -1,4 +1,5 @@
 ﻿using Coworking.Domain.Entities;
+using Microsoft.Extensions.Logging.Abstractions;
 using System.Security.Claims;
 
 namespace Coworking.Data.Providers
@@ -13,6 +14,7 @@ namespace Coworking.Data.Providers
         List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)>? cachedLokacijaStatistika = null;
         List<Lokacija>? cachedLokacija = null;
 
+        List<Rezervacija>? cachedRezervacije = null;
         private Dictionary<int, List<Rezervacija>> cachedRezervacijeSaStatusomZaIzabranogClana = new Dictionary<int, List<Rezervacija>>();
         private Dictionary<(string datum, string lokacija), List<Rezervacija>> cachedRezervacijeZaDanILokaciju = new Dictionary<(string, string), List<Rezervacija>>();
 
@@ -20,6 +22,8 @@ namespace Coworking.Data.Providers
         List<SalaZaSastanke>? cachedSalaZaSastanke = null;
         private Dictionary<int, List<Resurs>> cachedResursiPoLokacijiIPoTipu = new Dictionary<int, List<Resurs>>();
         List<Resurs> cachedResursi = null;
+
+        List<TipClanstva>? cachedTipClanstva = null;
 
         bool needReset = true;
 
@@ -135,6 +139,16 @@ namespace Coworking.Data.Providers
             _facade.otkaziRezervaciju(rezervacijaId);
             needReset = true;
         }
+        public List<Rezervacija> prikaziSveRezervacije()
+        {
+            if (cachedRezervacije == null || needReset == true)
+            {
+                cachedRezervacije = _facade.prikaziSveRezervacije();
+                needReset = false;
+            }
+            return cachedRezervacije;
+        }
+
         // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
         // TO-DO
         public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
@@ -208,6 +222,15 @@ namespace Coworking.Data.Providers
         {
             _facade.dodajTipClanstva(t);
             needReset = true;
+        }
+        public List<TipClanstva> prikaziSveTipoveClanstva()
+        {
+            if (cachedTipClanstva == null || needReset == true)
+            {
+                cachedTipClanstva = _facade.prikaziSveTipoveClanstva();
+                needReset = false;
+            }
+            return cachedTipClanstva;
         }
 
         //-------------------------NAZIV LANCA-------------------------

@@ -94,6 +94,7 @@ namespace Coworking.Data.Providers
         public void dodajRezervaciju(Rezervacija r) => _rezRepo.Add(r);
         public void izmeniRezervaciju(Rezervacija r) => _rezRepo.Update(r);
         public void otkaziRezervaciju(int rezervacijaId) => _rezRepo.Cancel(rezervacijaId);
+        public List<Rezervacija> prikaziSveRezervacije() => _rezRepo.GetAll();
 
 
         // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
@@ -135,6 +136,7 @@ namespace Coworking.Data.Providers
         //-------------------------TIP CLANSTVA-------------------------
 
         public void dodajTipClanstva(TipClanstva t) => _tcRepo.Add(t);
+        public List<TipClanstva> prikaziSveTipoveClanstva() => _tcRepo.GetAll();
 
 
         //-------------------------NAZIV LANCA-------------------------

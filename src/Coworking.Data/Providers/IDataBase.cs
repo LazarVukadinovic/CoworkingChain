@@ -28,6 +28,7 @@ namespace Coworking.Data.Providers
         public void dodajRezervaciju(Rezervacija r);
         public void izmeniRezervaciju(Rezervacija r);
         public void otkaziRezervaciju(int rezervacijaId);
+        public List<Rezervacija> prikaziSveRezervacije();
         // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
         // TO-DO
 
@@ -52,6 +53,7 @@ namespace Coworking.Data.Providers
 
         //-------------------------TIP CLANSTVA-------------------------
         public void dodajTipClanstva(TipClanstva t);
+        public List<TipClanstva> prikaziSveTipoveClanstva();
 
 
         //-------------------------NAZIV LANCA-------------------------
