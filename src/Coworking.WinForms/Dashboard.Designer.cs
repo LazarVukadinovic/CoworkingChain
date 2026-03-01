@@ -117,6 +117,7 @@
             rezervacijeButton.TabIndex = 5;
             rezervacijeButton.Text = "Rezervacije";
             rezervacijeButton.UseVisualStyleBackColor = false;
+            rezervacijeButton.Click += rezervacijeButton_Click;
             // 
             // resursButton
             // 

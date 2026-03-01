@@ -69,5 +69,12 @@ namespace Coworking.WinForms
             resetEnabledComponents();
             resursButton.Enabled = false;
         }
+
+        private void rezervacijeButton_Click(object sender, EventArgs e)
+        {
+            openChildForm(new Rezervacije());
+            resetEnabledComponents();
+            rezervacijeButton.Enabled = false;
+        }
     }
 }
