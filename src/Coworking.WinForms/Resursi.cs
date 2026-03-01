@@ -1,4 +1,5 @@
 ﻿using Coworking.WinForms.Dialogues;
+using Coworking.WinForms.Dialogues.Alter;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,12 @@ namespace Coworking.WinForms
         {
             DodajResurs newResource = new DodajResurs();
             newResource.ShowDialog(this);
+        }
+
+        private void editResourceButton_Click(object sender, EventArgs e)
+        {
+            IzmeniResurs editResource = new IzmeniResurs();
+            editResource.ShowDialog(this);
         }
     }
 }

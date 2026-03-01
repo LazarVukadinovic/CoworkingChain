@@ -149,6 +149,7 @@
             editResourceButton.TabIndex = 7;
             editResourceButton.Text = "Izmena podataka";
             editResourceButton.TextColor = Color.FromArgb(243, 243, 243);
+            editResourceButton.Click += editResourceButton_Click;
             // 
             // deleteResourceButton
             // 
