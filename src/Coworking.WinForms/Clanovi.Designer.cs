@@ -104,6 +104,7 @@
             editMemberButton.TabIndex = 7;
             editMemberButton.Text = "Izmena podataka";
             editMemberButton.TextColor = Color.FromArgb(243, 243, 243);
+            editMemberButton.Click += editMemberButton_Click;
             // 
             // searchTextBox
             // 

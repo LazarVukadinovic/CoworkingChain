@@ -1,4 +1,5 @@
 ﻿using Coworking.WinForms.Dialogues;
+using Coworking.WinForms.Dialogues.Alter;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,6 +36,12 @@ namespace Coworking.WinForms
         private void searchButton_Click(object sender, EventArgs e)
         {
             ResetComboBox();
+        }
+
+        private void editMemberButton_Click(object sender, EventArgs e)
+        {
+            IzmeniClana editMember = new IzmeniClana();
+            editMember.ShowDialog(this);
         }
     }
 }
