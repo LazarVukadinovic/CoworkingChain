@@ -142,7 +142,7 @@
             durationNumeric.Name = "durationNumeric";
             durationNumeric.Size = new Size(218, 30);
             durationNumeric.TabIndex = 31;
-            durationNumeric.Value = 1L;
+            durationNumeric.Value = 30L;
             // 
             // durationLabel
             // 

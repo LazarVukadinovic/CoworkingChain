@@ -142,6 +142,7 @@
             editMembershipButton.TabIndex = 7;
             editMembershipButton.Text = "Izmena podataka";
             editMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
+            editMembershipButton.Click += editMembershipButton_Click;
             // 
             // deleteMembershipButton
             // 
