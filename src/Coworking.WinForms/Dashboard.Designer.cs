@@ -223,18 +223,18 @@
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(319, 0);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(1063, 953);
+            mainPanel.Size = new Size(1143, 953);
             mainPanel.TabIndex = 1;
             // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1382, 953);
+            ClientSize = new Size(1462, 953);
             Controls.Add(mainPanel);
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(1400, 900);
+            MinimumSize = new Size(1480, 900);
             Name = "Dashboard";
             Text = "Dashboard";
             WindowState = FormWindowState.Maximized;
