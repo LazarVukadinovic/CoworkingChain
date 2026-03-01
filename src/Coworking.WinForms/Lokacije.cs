@@ -1,4 +1,5 @@
 ﻿using Coworking.WinForms.Dialogues;
+using Coworking.WinForms.Dialogues.Alter;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,12 @@ namespace Coworking.WinForms
         {
             DodajLokaciju newLocation = new DodajLokaciju();
             newLocation.ShowDialog(this);
+        }
+
+        private void editLocationButton_Click(object sender, EventArgs e)
+        {
+            IzmeniLokaciju editLocation = new IzmeniLokaciju();
+            editLocation.ShowDialog(this);
         }
     }
 }
