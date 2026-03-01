@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PromeniLozinku));
             currentPasswordLabel = new ReaLTaiizor.Controls.HeaderLabel();
             currentPasswordTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             newPasswordLabel = new ReaLTaiizor.Controls.HeaderLabel();
@@ -149,6 +150,7 @@
             Controls.Add(currentPasswordLabel);
             Controls.Add(currentPasswordTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "PromeniLozinku";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Promeni lozinku";

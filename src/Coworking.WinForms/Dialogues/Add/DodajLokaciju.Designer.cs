@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DodajLokaciju));
             nameLabel = new ReaLTaiizor.Controls.HeaderLabel();
             nameTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             addressLabel = new ReaLTaiizor.Controls.HeaderLabel();
@@ -319,6 +320,7 @@
             Controls.Add(nameLabel);
             Controls.Add(nameTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "DodajLokaciju";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Dodaj Lokaciju";

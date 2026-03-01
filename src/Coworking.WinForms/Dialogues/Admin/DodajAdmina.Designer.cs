@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DodajAdmina));
             addAdminButton = new ReaLTaiizor.Controls.ForeverButton();
             nameTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             userLabel = new ReaLTaiizor.Controls.HeaderLabel();
@@ -147,6 +148,7 @@
             Controls.Add(nameTextBox);
             Controls.Add(addAdminButton);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "DodajAdmina";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Dodaj administratora";

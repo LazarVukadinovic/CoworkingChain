@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DodajResurs));
             nameLabel = new ReaLTaiizor.Controls.HeaderLabel();
             nameTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             locationComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
@@ -524,6 +525,7 @@
             Controls.Add(nameLabel);
             Controls.Add(nameTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "DodajResurs";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Dodaj resurs";

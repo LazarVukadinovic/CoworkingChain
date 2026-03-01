@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IzmeniLokaciju));
             commentRichTextBox = new ReaLTaiizor.Controls.CyberRichTextBox();
             commentLabel = new ReaLTaiizor.Controls.HeaderLabel();
             capacityNumericUpDown = new ReaLTaiizor.Controls.ForeverNumeric();
@@ -318,6 +319,7 @@
             Controls.Add(nameLabel);
             Controls.Add(nameTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "IzmeniLokaciju";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Izmeni lokaciju";

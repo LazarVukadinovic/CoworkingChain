@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IzmeniTipClanstva));
             conferenceTimeNumeric = new ReaLTaiizor.Controls.ForeverNumeric();
             conferenceTimeLabel = new ReaLTaiizor.Controls.HeaderLabel();
             conferenceCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
@@ -285,6 +286,7 @@
             Controls.Add(nameLabel);
             Controls.Add(nameTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "IzmeniTipClanstva";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Izmeni tip članstva";

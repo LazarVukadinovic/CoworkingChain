@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IzmeniRezervaciju));
             userLabel = new ReaLTaiizor.Controls.HeaderLabel();
             userNameLabel = new ReaLTaiizor.Controls.HeaderLabel();
             endTimeDateTime = new DateTimePicker();
@@ -330,6 +331,7 @@
             Controls.Add(userNameLabel);
             Controls.Add(userLabel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "IzmeniRezervaciju";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Izmeni rezervaciju";

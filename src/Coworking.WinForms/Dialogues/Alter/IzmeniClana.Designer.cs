@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IzmeniClana));
             lastnameLabel = new ReaLTaiizor.Controls.HeaderLabel();
             nameLabel = new ReaLTaiizor.Controls.HeaderLabel();
             fillNameLabel = new ReaLTaiizor.Controls.HeaderLabel();
@@ -325,6 +326,7 @@
             Controls.Add(lastnameLabel);
             Controls.Add(nameLabel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "IzmeniClana";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Izmeni člana";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IzmeniResurs));
             equipmentGroupBox = new GroupBox();
             onlineCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
             boardCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
@@ -523,6 +524,7 @@
             Controls.Add(nameLabel);
             Controls.Add(nameTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "IzmeniResurs";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Izmeni resurs";

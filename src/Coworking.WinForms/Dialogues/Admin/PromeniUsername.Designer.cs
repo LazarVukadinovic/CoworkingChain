@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PromeniUsername));
             usernameTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             usernameLabel = new ReaLTaiizor.Controls.HeaderLabel();
             editUsernameButton = new ReaLTaiizor.Controls.ForeverButton();
@@ -99,6 +100,7 @@
             Controls.Add(usernameLabel);
             Controls.Add(usernameTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "PromeniUsername";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Promeni korisničko ime";

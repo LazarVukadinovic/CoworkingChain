@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DodajRezervaciju));
             userLabel = new ReaLTaiizor.Controls.HeaderLabel();
             userComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
             resourceLabel = new ReaLTaiizor.Controls.HeaderLabel();
@@ -303,6 +304,7 @@
             Controls.Add(userLabel);
             Controls.Add(userComboBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "DodajRezervaciju";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Dodaj rezervaciju";
