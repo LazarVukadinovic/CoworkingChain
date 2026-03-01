@@ -32,5 +32,11 @@ namespace Coworking.WinForms
             PromeniLozinku newPassword = new PromeniLozinku();
             newPassword.ShowDialog(this);
         }
+
+        private void addAdminButton_Click(object sender, EventArgs e)
+        {
+            DodajAdmina newAdmin = new DodajAdmina();
+            newAdmin.ShowDialog(this);
+        }
     }
 }
