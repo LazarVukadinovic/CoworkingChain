@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coworking.WinForms.Dialogues;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -70,7 +71,7 @@ namespace Coworking.WinForms
 
         private void currentLocationCheckBox_CheckedChanged()
         {
-            if(currentLocationCheckBox.Checked)
+            if (currentLocationCheckBox.Checked)
             {
                 // zakljucava comboBox na nasu lokaciju
                 locationComboBox.Enabled = false;
@@ -82,6 +83,12 @@ namespace Coworking.WinForms
             {
                 locationComboBox.Enabled = true;
             }
+        }
+
+        private void addReservationButton_Click(object sender, EventArgs e)
+        {
+            DodajRezervaciju newReservation = new DodajRezervaciju();
+            newReservation.ShowDialog(this);
         }
     }
 }

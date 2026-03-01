@@ -160,6 +160,7 @@
             addReservationButton.TabIndex = 2;
             addReservationButton.Text = "Dodaj rezervaciju";
             addReservationButton.TextColor = Color.FromArgb(243, 243, 243);
+            addReservationButton.Click += addReservationButton_Click;
             // 
             // locationLabel
             // 
@@ -278,7 +279,9 @@
             // dateDateTime
             // 
             dateDateTime.CalendarMonthBackground = Color.FromArgb(18, 26, 33);
+            dateDateTime.CustomFormat = "dddd, MMMM dd, yyyy";
             dateDateTime.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Medium;
+            dateDateTime.Format = DateTimePickerFormat.Custom;
             dateDateTime.Location = new Point(525, 29);
             dateDateTime.MinimumSize = new Size(0, 30);
             dateDateTime.Name = "dateDateTime";
