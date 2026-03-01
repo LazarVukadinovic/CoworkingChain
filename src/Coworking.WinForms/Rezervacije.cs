@@ -90,5 +90,11 @@ namespace Coworking.WinForms
             DodajRezervaciju newReservation = new DodajRezervaciju();
             newReservation.ShowDialog(this);
         }
+
+        private void editReservationButton_Click(object sender, EventArgs e)
+        {
+            IzmeniRezervaciju editReservation = new IzmeniRezervaciju();
+            editReservation.ShowDialog(this);
+        }
     }
 }
