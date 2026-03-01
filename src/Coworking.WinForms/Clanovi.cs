@@ -1,14 +1,5 @@
 ﻿using Coworking.WinForms.Dialogues;
-using Coworking.WinForms.Dialogues.Alter;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Coworking.WinForms
 {
@@ -26,13 +17,6 @@ namespace Coworking.WinForms
             newMember.ShowDialog(this);
         }
 
-        private void ResetComboBox()
-        {
-            membershipComboBox.SelectedIndex =
-                locationComboBox.SelectedIndex =
-                    statusComboBox.SelectedIndex = 0;
-        }
-
         private void searchButton_Click(object sender, EventArgs e)
         {
             ResetComboBox();
@@ -42,6 +26,13 @@ namespace Coworking.WinForms
         {
             IzmeniClana editMember = new IzmeniClana();
             editMember.ShowDialog(this);
+        }
+
+        private void ResetComboBox()
+        {
+            membershipComboBox.SelectedIndex =
+                locationComboBox.SelectedIndex =
+                    statusComboBox.SelectedIndex = 0;
         }
     }
 }

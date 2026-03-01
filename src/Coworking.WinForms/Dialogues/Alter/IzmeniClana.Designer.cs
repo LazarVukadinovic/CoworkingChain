@@ -1,4 +1,4 @@
-﻿namespace Coworking.WinForms.Dialogues.Alter
+﻿namespace Coworking.WinForms.Dialogues
 {
     partial class IzmeniClana
     {

@@ -1,13 +1,5 @@
 ﻿using Coworking.WinForms.Dialogues;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Coworking.WinForms
 {
@@ -18,8 +10,36 @@ namespace Coworking.WinForms
             InitializeComponent();
             locationComboBox.SelectedIndex = 0;
         }
-        private bool _syncingRadios;
 
+        private void addReservationButton_Click(object sender, EventArgs e)
+        {
+            DodajRezervaciju newReservation = new DodajRezervaciju();
+            newReservation.ShowDialog(this);
+        }
+
+        private void editReservationButton_Click(object sender, EventArgs e)
+        {
+            IzmeniRezervaciju editReservation = new IzmeniRezervaciju();
+            editReservation.ShowDialog(this);
+        }
+
+        private void currentLocationCheckBox_CheckedChanged()
+        {
+            if (currentLocationCheckBox.Checked)
+            {
+                // zakljucava comboBox na nasu lokaciju
+                locationComboBox.Enabled = false;
+
+                // TODO:
+                // setovanje locationComboBox-a na trenutnu lokaciju
+            }
+            else
+            {
+                locationComboBox.Enabled = true;
+            }
+        }
+
+        private bool _syncingRadios;
         private void userRadioButton_CheckedChanged()
         {
             if (_syncingRadios) return;
@@ -67,34 +87,6 @@ namespace Coworking.WinForms
 
             // prikaz dugmeta
             searchButton.Visible = userRadioButton.Checked || locationDateRadioButton.Checked;
-        }
-
-        private void currentLocationCheckBox_CheckedChanged()
-        {
-            if (currentLocationCheckBox.Checked)
-            {
-                // zakljucava comboBox na nasu lokaciju
-                locationComboBox.Enabled = false;
-
-                // TODO:
-                // setovanje locationComboBox-a na trenutnu lokaciju
-            }
-            else
-            {
-                locationComboBox.Enabled = true;
-            }
-        }
-
-        private void addReservationButton_Click(object sender, EventArgs e)
-        {
-            DodajRezervaciju newReservation = new DodajRezervaciju();
-            newReservation.ShowDialog(this);
-        }
-
-        private void editReservationButton_Click(object sender, EventArgs e)
-        {
-            IzmeniRezervaciju editReservation = new IzmeniRezervaciju();
-            editReservation.ShowDialog(this);
         }
     }
 }
