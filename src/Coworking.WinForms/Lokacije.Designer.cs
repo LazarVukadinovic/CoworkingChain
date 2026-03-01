@@ -40,6 +40,7 @@
             deleteLocationButton = new ReaLTaiizor.Controls.ForeverButton();
             addLocationButton = new ReaLTaiizor.Controls.ForeverButton();
             locationDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
+            currentLocationCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
             headerPanel.SuspendLayout();
             filterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)locationDataGridView).BeginInit();
@@ -62,6 +63,7 @@
             // 
             headerPanel.BackColor = Color.FromArgb(37, 52, 68);
             headerPanel.BorderStyle = BorderStyle.FixedSingle;
+            headerPanel.Controls.Add(currentLocationCheckBox);
             headerPanel.Controls.Add(headerLabel);
             headerPanel.Dock = DockStyle.Top;
             headerPanel.Location = new Point(0, 0);
@@ -220,6 +222,44 @@
             locationDataGridView.Size = new Size(1102, 463);
             locationDataGridView.TabIndex = 3;
             // 
+            // currentLocationCheckBox
+            // 
+            currentLocationCheckBox.BackColor = Color.Transparent;
+            currentLocationCheckBox.Background = true;
+            currentLocationCheckBox.Background_WidthPen = 2F;
+            currentLocationCheckBox.BackgroundPen = true;
+            currentLocationCheckBox.Checked = false;
+            currentLocationCheckBox.ColorBackground = Color.FromArgb(37, 52, 68);
+            currentLocationCheckBox.ColorBackground_1 = Color.FromArgb(37, 52, 68);
+            currentLocationCheckBox.ColorBackground_2 = Color.FromArgb(41, 63, 86);
+            currentLocationCheckBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
+            currentLocationCheckBox.ColorChecked = Color.FromArgb(29, 200, 238);
+            currentLocationCheckBox.ColorPen_1 = Color.FromArgb(37, 52, 68);
+            currentLocationCheckBox.ColorPen_2 = Color.FromArgb(41, 63, 86);
+            currentLocationCheckBox.CyberCheckBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
+            currentLocationCheckBox.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
+            currentLocationCheckBox.Effect_1_Transparency = 25;
+            currentLocationCheckBox.Effect_2 = true;
+            currentLocationCheckBox.Effect_2_ColorBackground = Color.White;
+            currentLocationCheckBox.Effect_2_Transparency = 15;
+            currentLocationCheckBox.Font = new Font("Arial", 12F);
+            currentLocationCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
+            currentLocationCheckBox.LinearGradient_Background = false;
+            currentLocationCheckBox.LinearGradientPen = false;
+            currentLocationCheckBox.Location = new Point(11, 12);
+            currentLocationCheckBox.Name = "currentLocationCheckBox";
+            currentLocationCheckBox.RGB = false;
+            currentLocationCheckBox.Rounding = false;
+            currentLocationCheckBox.RoundingInt = 100;
+            currentLocationCheckBox.Size = new Size(213, 45);
+            currentLocationCheckBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            currentLocationCheckBox.TabIndex = 27;
+            currentLocationCheckBox.Tag = "Cyber";
+            currentLocationCheckBox.TextButton = "Trenutna lokacija";
+            currentLocationCheckBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            currentLocationCheckBox.Timer_Effect_1 = 1;
+            currentLocationCheckBox.Timer_RGB = 300;
+            // 
             // Lokacije
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -250,5 +290,6 @@
         private ReaLTaiizor.Controls.CyberTextBox searchTextBox;
         private ReaLTaiizor.Controls.ForeverButton searchButton;
         private ReaLTaiizor.Controls.PoisonDataGridView locationDataGridView;
+        private ReaLTaiizor.Controls.CyberCheckBox currentLocationCheckBox;
     }
 }
