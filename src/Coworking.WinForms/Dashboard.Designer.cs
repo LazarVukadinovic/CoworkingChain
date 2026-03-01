@@ -80,6 +80,7 @@
             nalogButton.TabIndex = 9;
             nalogButton.Text = "Nalog";
             nalogButton.UseVisualStyleBackColor = false;
+            nalogButton.Click += nalogButton_Click;
             // 
             // izlazButton
             // 

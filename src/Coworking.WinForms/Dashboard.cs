@@ -76,5 +76,12 @@ namespace Coworking.WinForms
             resetEnabledComponents();
             rezervacijeButton.Enabled = false;
         }
+
+        private void nalogButton_Click(object sender, EventArgs e)
+        {
+            openChildForm(new AdminNalog());
+            resetEnabledComponents();
+            nalogButton.Enabled = false;
+        }
     }
 }
