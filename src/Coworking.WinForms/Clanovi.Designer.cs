@@ -212,7 +212,7 @@
             memberDataGridView.EnableHeadersVisualStyles = false;
             memberDataGridView.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             memberDataGridView.GridColor = Color.FromArgb(255, 255, 255);
-            memberDataGridView.Location = new Point(0, 141);
+            memberDataGridView.Location = new Point(0, 238);
             memberDataGridView.Name = "memberDataGridView";
             memberDataGridView.ReadOnly = true;
             memberDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -227,7 +227,7 @@
             memberDataGridView.RowHeadersWidth = 51;
             memberDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             memberDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            memberDataGridView.Size = new Size(1102, 449);
+            memberDataGridView.Size = new Size(1102, 352);
             memberDataGridView.TabIndex = 2;
             // 
             // filteringpanel
@@ -341,8 +341,8 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1102, 590);
-            Controls.Add(filteringpanel);
             Controls.Add(memberDataGridView);
+            Controls.Add(filteringpanel);
             Controls.Add(filterPanel);
             Controls.Add(headerPanel);
             Name = "Clanovi";

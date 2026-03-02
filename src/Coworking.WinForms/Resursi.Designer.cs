@@ -210,7 +210,7 @@
             resourceDataGridView.EnableHeadersVisualStyles = false;
             resourceDataGridView.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             resourceDataGridView.GridColor = Color.FromArgb(255, 255, 255);
-            resourceDataGridView.Location = new Point(0, 141);
+            resourceDataGridView.Location = new Point(0, 238);
             resourceDataGridView.Name = "resourceDataGridView";
             resourceDataGridView.ReadOnly = true;
             resourceDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -225,7 +225,7 @@
             resourceDataGridView.RowHeadersWidth = 51;
             resourceDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             resourceDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            resourceDataGridView.Size = new Size(1102, 463);
+            resourceDataGridView.Size = new Size(1102, 366);
             resourceDataGridView.TabIndex = 5;
             // 
             // filteringpanel
@@ -346,8 +346,8 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1102, 604);
-            Controls.Add(filteringpanel);
             Controls.Add(resourceDataGridView);
+            Controls.Add(filteringpanel);
             Controls.Add(filterPanel);
             Controls.Add(headerPanel);
             Name = "Resursi";
