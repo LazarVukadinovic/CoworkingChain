@@ -90,5 +90,24 @@ namespace Coworking.Data.Repositories
 
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapSalaZaSastanke);
         }
+
+        public void Delete(int id)
+        {
+            string upit = $"DeleTE FROM resurs WHERE resurs_id = {id}";
+            _adapter.izvrsiUpitBezRezultata(upit);
+        }
+
+        public Resurs GetById(int id)
+        {
+            string upit = $"SELECT * FROM resurs WHERE resurs_id = {id}";
+            List<Resurs> resursi = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
+            return resursi.Count > 0 ? resursi[0] : null;
+        }
+
+        public List<Resurs> GetByName(string name)
+        {
+            string upit = $"SELECT * FROM resurs WHERE oznaka LIKE '%{name.Trim()}%'";
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
+        }
     }
 }

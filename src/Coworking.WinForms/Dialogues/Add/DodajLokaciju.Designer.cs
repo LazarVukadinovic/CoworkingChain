@@ -299,6 +299,7 @@
             addLocationButton.TabIndex = 32;
             addLocationButton.Text = "Dodaj lokaciju";
             addLocationButton.TextColor = Color.FromArgb(243, 243, 243);
+            addLocationButton.Click += addLocationButton_Click;
             // 
             // DodajLokaciju
             // 

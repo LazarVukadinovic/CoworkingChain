@@ -104,10 +104,13 @@
             currentLocationCheckBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             currentLocationCheckBox.TabIndex = 27;
             currentLocationCheckBox.Tag = "Cyber";
-            currentLocationCheckBox.TextButton = "Trenutna lokacija";
+            currentLocationCheckBox.TextButton = "Aktivne lokacije";
             currentLocationCheckBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             currentLocationCheckBox.Timer_Effect_1 = 1;
             currentLocationCheckBox.Timer_RGB = 300;
+            currentLocationCheckBox.CheckedChanged += currentLocationCheckBox_CheckedChanged;
+            currentLocationCheckBox.Load += currentLocationCheckBox_Load;
+            currentLocationCheckBox.Click += currentLocationCheckBox_Click;
             // 
             // filterPanel
             // 

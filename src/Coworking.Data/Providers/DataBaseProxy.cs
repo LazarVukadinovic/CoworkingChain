@@ -8,6 +8,7 @@ namespace Coworking.Data.Providers
     {
         private IDataBase _facade;
 
+        bool check2=false;
         List<Clan>? cachedClanovi = null;
         List<Clan>? cachedClanoviFiltrirano = null;
 
@@ -112,11 +113,17 @@ namespace Coworking.Data.Providers
         }
         public List<Lokacija> prikaziLokacije(bool check)
         {
-            if (cachedLokacija == null || needReset == true)
+            if (check2 != check)
+            {
+                check2 = check;
+                needReset = true;
+            }
+            if (cachedLokacija == null || needReset)
             {
                 cachedLokacija = _facade.prikaziLokacije(check);
                 needReset = false;
             }
+
             return cachedLokacija;
         }
 
@@ -144,7 +151,7 @@ namespace Coworking.Data.Providers
             if (cachedRezervacije == null || needReset == true)
             {
                 cachedRezervacije = _facade.prikaziSveRezervacije();
-                needReset = false;
+                
             }
             return cachedRezervacije;
         }

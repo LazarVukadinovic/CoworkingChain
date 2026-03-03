@@ -45,10 +45,10 @@ namespace Coworking.Data.Repositories
 
         public List<Lokacija> GetAllActive(bool check)
         {
-            string upit = "SELECT * FROM lokacija l";
+            string upit = "SELECT DISTINCT l.* FROM lokacija l";
             if(check)
             {
-                upit += $" JOIN resurs r on r.lokacija_id=l.lokacija_id JOIN rezervacija rv on rv.resurs_id=r.resurs_id WHERE rv.status='Aktivan'";
+                upit += $" JOIN resurs r on r.lokacija_id=l.lokacija_id JOIN rezervacija rv on rv.resurs_id=r.resurs_id WHERE rv.status='Rezervisana'";
             }
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
         }

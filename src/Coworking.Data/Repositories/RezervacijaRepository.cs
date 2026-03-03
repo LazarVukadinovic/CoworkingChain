@@ -89,5 +89,24 @@ namespace Coworking.Data.Repositories
                 $"WHERE rv.pocetak >= '{date}' AND rv.kraj < DATEADD(day, 1, '{date}') AND r.lokacija_id={location} AND rv.status != 'Otkazana'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
+
+        public void Delete(int id)
+        {
+            string upit = $"DELETE FROM rezervacija WHERE rezervacija_id = {id}";
+            _adapter.izvrsiUpitBezRezultata(upit);
+        }
+
+        public Rezervacija GetById(int id)
+        {
+            var upit = $"SELECT * FROM rezervacija WHERE rezervacija_id = {id}";
+            var rezervacije = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
+            return rezervacije.Count > 0 ? rezervacije[0] : null;
+        }
+
+        public List<Rezervacija> GetByName(string name)
+        {
+            string upit = $"SELECT rv.*, r.naziv FROM rezervacija rv JOIN resurs r ON rv.resurs_id = r.resurs_id WHERE r.naziv LIKE '%{name.Trim()}%'";
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
+        }
     }
 }

@@ -102,8 +102,8 @@ namespace Coworking.Data.Providers
                 cena = float.Parse(red["cena"].ToString()),
                 maxSatiRezervacijeMesecno = (int)red["max_sati_mesecno"],
                 trajanjeDana = (int)red["trajanje_dana"],
-                dozvoljenaSala = Convert.ToBoolean(red["dozvoljena_sala"]),
-                satiSaleMesecno = (int)red["sati_sale_mesecno"]
+                satiSaleMesecno = (int)red["sati_sale_mesecno"],
+                dozvoljenaSala = Convert.ToBoolean(red["dozvoljena_sala"])
             };
         }
 

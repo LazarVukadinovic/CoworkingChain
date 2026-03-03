@@ -24,8 +24,6 @@ BEGIN
         admin_id INT IDENTITY(1,1) PRIMARY KEY,
         korisnicko_ime NVARCHAR(100) NOT NULL UNIQUE,
         lozinka_hash NVARCHAR(255) NOT NULL,
-        lozinka_salt NVARCHAR(255) NOT NULL,
-        aktivan BIT NOT NULL DEFAULT 1,
         kreiran_u DATETIME NOT NULL DEFAULT GETDATE()
     )
 END

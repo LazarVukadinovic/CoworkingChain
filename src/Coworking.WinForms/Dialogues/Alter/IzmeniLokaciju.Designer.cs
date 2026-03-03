@@ -42,6 +42,8 @@
             nameLabel = new ReaLTaiizor.Controls.HeaderLabel();
             nameTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             editLocationButton = new ReaLTaiizor.Controls.ForeverButton();
+            membershipID = new ReaLTaiizor.Controls.HeaderLabel();
+            foreverComboBox1 = new ReaLTaiizor.Controls.ForeverComboBox();
             SuspendLayout();
             // 
             // commentRichTextBox
@@ -60,13 +62,13 @@
             commentRichTextBox.ForeColor = Color.FromArgb(245, 245, 245);
             commentRichTextBox.Lighting = false;
             commentRichTextBox.LinearGradientPen = false;
-            commentRichTextBox.Location = new Point(12, 340);
+            commentRichTextBox.Location = new Point(12, 388);
             commentRichTextBox.Name = "commentRichTextBox";
             commentRichTextBox.PenWidth = 15;
             commentRichTextBox.RGB = false;
             commentRichTextBox.Rounding = true;
             commentRichTextBox.RoundingInt = 60;
-            commentRichTextBox.Size = new Size(797, 162);
+            commentRichTextBox.Size = new Size(797, 122);
             commentRichTextBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             commentRichTextBox.TabIndex = 43;
             commentRichTextBox.Tag = "Cyber";
@@ -80,7 +82,7 @@
             commentLabel.BackColor = Color.Transparent;
             commentLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             commentLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            commentLabel.Location = new Point(12, 301);
+            commentLabel.Location = new Point(12, 349);
             commentLabel.Name = "commentLabel";
             commentLabel.Size = new Size(64, 25);
             commentLabel.TabIndex = 42;
@@ -94,7 +96,7 @@
             capacityNumericUpDown.ButtonColorC = Color.White;
             capacityNumericUpDown.Font = new Font("Segoe UI", 10F);
             capacityNumericUpDown.ForeColor = Color.Silver;
-            capacityNumericUpDown.Location = new Point(572, 274);
+            capacityNumericUpDown.Location = new Point(572, 323);
             capacityNumericUpDown.Maximum = 100L;
             capacityNumericUpDown.Minimum = 0L;
             capacityNumericUpDown.Name = "capacityNumericUpDown";
@@ -108,7 +110,7 @@
             capacityLabel.BackColor = Color.Transparent;
             capacityLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             capacityLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            capacityLabel.Location = new Point(407, 279);
+            capacityLabel.Location = new Point(407, 328);
             capacityLabel.Name = "capacityLabel";
             capacityLabel.Size = new Size(110, 25);
             capacityLabel.TabIndex = 40;
@@ -120,7 +122,7 @@
             workLabel.BackColor = Color.Transparent;
             workLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             workLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            workLabel.Location = new Point(407, 204);
+            workLabel.Location = new Point(407, 253);
             workLabel.Name = "workLabel";
             workLabel.Size = new Size(146, 25);
             workLabel.TabIndex = 39;
@@ -142,7 +144,7 @@
             workTextBox.ForeColor = Color.FromArgb(245, 245, 245);
             workTextBox.Lighting = false;
             workTextBox.LinearGradientPen = false;
-            workTextBox.Location = new Point(572, 193);
+            workTextBox.Location = new Point(572, 242);
             workTextBox.Name = "workTextBox";
             workTextBox.PenWidth = 15;
             workTextBox.RGB = false;
@@ -163,7 +165,7 @@
             cityLabel.BackColor = Color.Transparent;
             cityLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             cityLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            cityLabel.Location = new Point(12, 204);
+            cityLabel.Location = new Point(12, 253);
             cityLabel.Name = "cityLabel";
             cityLabel.Size = new Size(66, 25);
             cityLabel.TabIndex = 37;
@@ -185,7 +187,7 @@
             cityTextBox.ForeColor = Color.FromArgb(245, 245, 245);
             cityTextBox.Lighting = false;
             cityTextBox.LinearGradientPen = false;
-            cityTextBox.Location = new Point(101, 193);
+            cityTextBox.Location = new Point(101, 242);
             cityTextBox.Name = "cityTextBox";
             cityTextBox.PenWidth = 15;
             cityTextBox.RGB = false;
@@ -206,7 +208,7 @@
             addressLabel.BackColor = Color.Transparent;
             addressLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             addressLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            addressLabel.Location = new Point(12, 123);
+            addressLabel.Location = new Point(12, 179);
             addressLabel.Name = "addressLabel";
             addressLabel.Size = new Size(167, 25);
             addressLabel.TabIndex = 35;
@@ -228,7 +230,7 @@
             addressTextBox.ForeColor = Color.FromArgb(245, 245, 245);
             addressTextBox.Lighting = false;
             addressTextBox.LinearGradientPen = false;
-            addressTextBox.Location = new Point(177, 112);
+            addressTextBox.Location = new Point(177, 168);
             addressTextBox.Name = "addressTextBox";
             addressTextBox.PenWidth = 15;
             addressTextBox.RGB = false;
@@ -249,7 +251,7 @@
             nameLabel.BackColor = Color.Transparent;
             nameLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             nameLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            nameLabel.Location = new Point(12, 46);
+            nameLabel.Location = new Point(12, 102);
             nameLabel.Name = "nameLabel";
             nameLabel.Size = new Size(133, 25);
             nameLabel.TabIndex = 33;
@@ -271,7 +273,7 @@
             nameTextBox.ForeColor = Color.FromArgb(245, 245, 245);
             nameTextBox.Lighting = false;
             nameTextBox.LinearGradientPen = false;
-            nameTextBox.Location = new Point(177, 35);
+            nameTextBox.Location = new Point(177, 91);
             nameTextBox.Name = "nameTextBox";
             nameTextBox.PenWidth = 15;
             nameTextBox.RGB = false;
@@ -299,12 +301,45 @@
             editLocationButton.Text = "Izmena podataka";
             editLocationButton.TextColor = Color.FromArgb(243, 243, 243);
             // 
+            // membershipID
+            // 
+            membershipID.AutoSize = true;
+            membershipID.BackColor = Color.Transparent;
+            membershipID.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
+            membershipID.ForeColor = Color.FromArgb(255, 255, 255);
+            membershipID.Location = new Point(13, 33);
+            membershipID.Name = "membershipID";
+            membershipID.Size = new Size(119, 25);
+            membershipID.TabIndex = 53;
+            membershipID.Text = "ID lokacije:";
+            // 
+            // foreverComboBox1
+            // 
+            foreverComboBox1.BackColor = Color.FromArgb(37, 52, 68);
+            foreverComboBox1.BaseColor = Color.FromArgb(37, 52, 68);
+            foreverComboBox1.BGColor = Color.FromArgb(37, 52, 68);
+            foreverComboBox1.DrawMode = DrawMode.OwnerDrawFixed;
+            foreverComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            foreverComboBox1.Font = new Font("Segoe UI", 8F);
+            foreverComboBox1.ForeColor = Color.White;
+            foreverComboBox1.FormattingEnabled = true;
+            foreverComboBox1.HoverColor = Color.FromArgb(35, 168, 109);
+            foreverComboBox1.HoverFontColor = Color.White;
+            foreverComboBox1.ItemHeight = 30;
+            foreverComboBox1.Location = new Point(177, 28);
+            foreverComboBox1.Name = "foreverComboBox1";
+            foreverComboBox1.Size = new Size(632, 36);
+            foreverComboBox1.TabIndex = 52;
+            foreverComboBox1.SelectedIndexChanged += foreverComboBox1_SelectedIndexChanged;
+            // 
             // IzmeniLokaciju
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 26, 33);
             ClientSize = new Size(826, 591);
+            Controls.Add(membershipID);
+            Controls.Add(foreverComboBox1);
             Controls.Add(editLocationButton);
             Controls.Add(commentRichTextBox);
             Controls.Add(commentLabel);
@@ -342,5 +377,7 @@
         private ReaLTaiizor.Controls.HeaderLabel nameLabel;
         private ReaLTaiizor.Controls.CyberTextBox nameTextBox;
         private ReaLTaiizor.Controls.ForeverButton editLocationButton;
+        private ReaLTaiizor.Controls.HeaderLabel membershipID;
+        private ReaLTaiizor.Controls.ForeverComboBox foreverComboBox1;
     }
 }
