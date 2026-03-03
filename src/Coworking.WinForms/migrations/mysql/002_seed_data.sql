@@ -3,11 +3,6 @@
 -- ============================================
 -- 002_seed_data.sql
 
--- Admin korisnici
-INSERT INTO admin_korisnik (korisnicko_ime, lozinka_hash, lozinka_salt, aktivan) VALUES
-('admin', 'hash123', 'salt123', 1),
-('manager', 'hash456', 'salt456', 1);
-
 -- Tipovi članstva
 INSERT INTO tip_clanstva (naziv, cena, trajanje_dana, max_sati_mesecno, dozvoljena_sala, sati_sale_mesecno) VALUES
 ('Basic', 2000.00, 30, 40, 'Standardna sala', 5),

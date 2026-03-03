@@ -18,12 +18,9 @@ CREATE TABLE IF NOT EXISTS admin_korisnik (
     admin_id INT PRIMARY KEY AUTO_INCREMENT,
     korisnicko_ime VARCHAR(100) NOT NULL UNIQUE,
     lozinka_hash VARCHAR(255) NOT NULL,
-    lozinka_salt VARCHAR(255) NOT NULL,
-    aktivan BIT NOT NULL DEFAULT 1,
     kreiran_u DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     INDEX idx_korisnicko_ime (korisnicko_ime),
-    INDEX idx_aktivan (aktivan)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -35,7 +32,7 @@ CREATE TABLE IF NOT EXISTS tip_clanstva (
     cena DECIMAL(10, 2) NOT NULL CHECK (cena >= 0),
     trajanje_dana INT NOT NULL CHECK (trajanje_dana > 0),
     max_sati_mesecno INT NOT NULL CHECK (max_sati_mesecno > 0),
-    dozvoljena_sala VARCHAR(255),
+    dozvoljena_sala TINYINT(1),
     sati_sale_mesecno INT NOT NULL DEFAULT 0,
 
     INDEX idx_naziv (naziv)

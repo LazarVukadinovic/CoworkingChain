@@ -129,6 +129,7 @@
             searchButton.TabIndex = 10;
             searchButton.Text = "Pretraga";
             searchButton.TextColor = Color.FromArgb(243, 243, 243);
+            searchButton.Click += searchButton_Click;
             // 
             // editMembershipButton
             // 
@@ -157,6 +158,7 @@
             deleteMembershipButton.TabIndex = 3;
             deleteMembershipButton.Text = "Obriši tip";
             deleteMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
+            deleteMembershipButton.Click += deleteMembershipButton_Click;
             // 
             // addMembershipButton
             // 
@@ -220,6 +222,7 @@
             membershipDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             membershipDataGridView.Size = new Size(1102, 463);
             membershipDataGridView.TabIndex = 4;
+            membershipDataGridView.CellContentClick += membershipDataGridView_CellContentClick;
             // 
             // TipoviClanstva
             // 

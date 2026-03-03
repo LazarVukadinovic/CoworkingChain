@@ -39,8 +39,10 @@
             priceLabel = new ReaLTaiizor.Controls.HeaderLabel();
             priceTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             nameLabel = new ReaLTaiizor.Controls.HeaderLabel();
-            nameTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             editMembershipButton = new ReaLTaiizor.Controls.ForeverButton();
+            nameTextBox = new ReaLTaiizor.Controls.ForeverComboBox();
+            cyberTextBox1 = new ReaLTaiizor.Controls.CyberTextBox();
+            membershipID = new ReaLTaiizor.Controls.HeaderLabel();
             SuspendLayout();
             // 
             // conferenceTimeNumeric
@@ -120,7 +122,7 @@
             monthlyNumeric1.ButtonColorC = Color.White;
             monthlyNumeric1.Font = new Font("Segoe UI", 10F);
             monthlyNumeric1.ForeColor = Color.Silver;
-            monthlyNumeric1.Location = new Point(333, 194);
+            monthlyNumeric1.Location = new Point(333, 210);
             monthlyNumeric1.Maximum = 365L;
             monthlyNumeric1.Minimum = 1L;
             monthlyNumeric1.Name = "monthlyNumeric1";
@@ -134,7 +136,7 @@
             monthlyLabel.BackColor = Color.Transparent;
             monthlyLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             monthlyLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            monthlyLabel.Location = new Point(26, 199);
+            monthlyLabel.Location = new Point(26, 215);
             monthlyLabel.Name = "monthlyLabel";
             monthlyLabel.Size = new Size(255, 25);
             monthlyLabel.TabIndex = 43;
@@ -148,7 +150,7 @@
             durationNumeric.ButtonColorC = Color.White;
             durationNumeric.Font = new Font("Segoe UI", 10F);
             durationNumeric.ForeColor = Color.Silver;
-            durationNumeric.Location = new Point(333, 249);
+            durationNumeric.Location = new Point(333, 265);
             durationNumeric.Maximum = 365L;
             durationNumeric.Minimum = 1L;
             durationNumeric.Name = "durationNumeric";
@@ -162,7 +164,7 @@
             durationLabel.BackColor = Color.Transparent;
             durationLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             durationLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            durationLabel.Location = new Point(26, 254);
+            durationLabel.Location = new Point(26, 270);
             durationLabel.Name = "durationLabel";
             durationLabel.Size = new Size(168, 25);
             durationLabel.TabIndex = 41;
@@ -174,7 +176,7 @@
             priceLabel.BackColor = Color.Transparent;
             priceLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             priceLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            priceLabel.Location = new Point(32, 123);
+            priceLabel.Location = new Point(32, 154);
             priceLabel.Name = "priceLabel";
             priceLabel.Size = new Size(142, 25);
             priceLabel.TabIndex = 40;
@@ -196,7 +198,7 @@
             priceTextBox.ForeColor = Color.FromArgb(245, 245, 245);
             priceTextBox.Lighting = false;
             priceTextBox.LinearGradientPen = false;
-            priceTextBox.Location = new Point(180, 109);
+            priceTextBox.Location = new Point(180, 144);
             priceTextBox.Name = "priceTextBox";
             priceTextBox.PenWidth = 15;
             priceTextBox.RGB = false;
@@ -217,42 +219,11 @@
             nameLabel.BackColor = Color.Transparent;
             nameLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             nameLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            nameLabel.Location = new Point(32, 50);
+            nameLabel.Location = new Point(32, 92);
             nameLabel.Name = "nameLabel";
             nameLabel.Size = new Size(144, 25);
             nameLabel.TabIndex = 38;
             nameLabel.Text = "Naziv paketa:";
-            // 
-            // nameTextBox
-            // 
-            nameTextBox.Alpha = 20;
-            nameTextBox.BackColor = Color.Transparent;
-            nameTextBox.Background_WidthPen = 3F;
-            nameTextBox.BackgroundPen = true;
-            nameTextBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            nameTextBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            nameTextBox.ColorLighting = Color.FromArgb(29, 200, 238);
-            nameTextBox.ColorPen_1 = Color.FromArgb(29, 200, 238);
-            nameTextBox.ColorPen_2 = Color.FromArgb(37, 52, 68);
-            nameTextBox.CyberTextBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            nameTextBox.Font = new Font("Arial", 12F);
-            nameTextBox.ForeColor = Color.FromArgb(245, 245, 245);
-            nameTextBox.Lighting = false;
-            nameTextBox.LinearGradientPen = false;
-            nameTextBox.Location = new Point(182, 36);
-            nameTextBox.Name = "nameTextBox";
-            nameTextBox.PenWidth = 15;
-            nameTextBox.RGB = false;
-            nameTextBox.RightToLeft = RightToLeft.No;
-            nameTextBox.Rounding = true;
-            nameTextBox.RoundingInt = 60;
-            nameTextBox.Size = new Size(369, 50);
-            nameTextBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            nameTextBox.TabIndex = 37;
-            nameTextBox.Tag = "Cyber";
-            nameTextBox.TextButton = "";
-            nameTextBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            nameTextBox.Timer_RGB = 300;
             // 
             // editMembershipButton
             // 
@@ -266,6 +237,70 @@
             editMembershipButton.TabIndex = 48;
             editMembershipButton.Text = "Izmena podataka";
             editMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
+            editMembershipButton.Click += editMembershipButton_Click;
+            // 
+            // nameTextBox
+            // 
+            nameTextBox.BackColor = Color.FromArgb(37, 52, 68);
+            nameTextBox.BaseColor = Color.FromArgb(37, 52, 68);
+            nameTextBox.BGColor = Color.FromArgb(37, 52, 68);
+            nameTextBox.DrawMode = DrawMode.OwnerDrawFixed;
+            nameTextBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            nameTextBox.Font = new Font("Segoe UI", 8F);
+            nameTextBox.ForeColor = Color.White;
+            nameTextBox.FormattingEnabled = true;
+            nameTextBox.HoverColor = Color.FromArgb(35, 168, 109);
+            nameTextBox.HoverFontColor = Color.White;
+            nameTextBox.ItemHeight = 30;
+            nameTextBox.Location = new Point(181, 29);
+            nameTextBox.Name = "nameTextBox";
+            nameTextBox.Size = new Size(370, 36);
+            nameTextBox.TabIndex = 49;
+            nameTextBox.SelectedIndexChanged += membershipComboBox_SelectedIndexChanged;
+            // 
+            // cyberTextBox1
+            // 
+            cyberTextBox1.Alpha = 20;
+            cyberTextBox1.BackColor = Color.Transparent;
+            cyberTextBox1.Background_WidthPen = 3F;
+            cyberTextBox1.BackgroundPen = true;
+            cyberTextBox1.ColorBackground = Color.FromArgb(37, 52, 68);
+            cyberTextBox1.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
+            cyberTextBox1.ColorLighting = Color.FromArgb(29, 200, 238);
+            cyberTextBox1.ColorPen_1 = Color.FromArgb(29, 200, 238);
+            cyberTextBox1.ColorPen_2 = Color.FromArgb(37, 52, 68);
+            cyberTextBox1.CyberTextBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
+            cyberTextBox1.Font = new Font("Arial", 12F);
+            cyberTextBox1.ForeColor = Color.FromArgb(245, 245, 245);
+            cyberTextBox1.Lighting = false;
+            cyberTextBox1.LinearGradientPen = false;
+            cyberTextBox1.Location = new Point(181, 80);
+            cyberTextBox1.Name = "cyberTextBox1";
+            cyberTextBox1.PenWidth = 15;
+            cyberTextBox1.RGB = false;
+            cyberTextBox1.RightToLeft = RightToLeft.No;
+            cyberTextBox1.Rounding = true;
+            cyberTextBox1.RoundingInt = 60;
+            cyberTextBox1.Size = new Size(371, 50);
+            cyberTextBox1.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            cyberTextBox1.TabIndex = 50;
+            cyberTextBox1.Tag = "Cyber";
+            cyberTextBox1.TextButton = "";
+            cyberTextBox1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            cyberTextBox1.Timer_RGB = 300;
+            // 
+            // membershipID
+            // 
+            membershipID.AutoSize = true;
+            membershipID.BackColor = Color.Transparent;
+            membershipID.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
+            membershipID.ForeColor = Color.FromArgb(255, 255, 255);
+            membershipID.Location = new Point(32, 34);
+            membershipID.Name = "membershipID";
+            membershipID.Size = new Size(111, 25);
+            membershipID.TabIndex = 51;
+            membershipID.Text = "ID paketa:";
+            membershipID.Click += headerLabel1_Click;
             // 
             // IzmeniTipClanstva
             // 
@@ -273,6 +308,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(18, 26, 33);
             ClientSize = new Size(586, 504);
+            Controls.Add(membershipID);
+            Controls.Add(cyberTextBox1);
+            Controls.Add(nameTextBox);
             Controls.Add(editMembershipButton);
             Controls.Add(conferenceTimeNumeric);
             Controls.Add(conferenceTimeLabel);
@@ -284,7 +322,6 @@
             Controls.Add(priceLabel);
             Controls.Add(priceTextBox);
             Controls.Add(nameLabel);
-            Controls.Add(nameTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "IzmeniTipClanstva";
@@ -306,7 +343,9 @@
         private ReaLTaiizor.Controls.HeaderLabel priceLabel;
         private ReaLTaiizor.Controls.CyberTextBox priceTextBox;
         private ReaLTaiizor.Controls.HeaderLabel nameLabel;
-        private ReaLTaiizor.Controls.CyberTextBox nameTextBox;
         private ReaLTaiizor.Controls.ForeverButton editMembershipButton;
+        private ReaLTaiizor.Controls.ForeverComboBox nameTextBox;
+        private ReaLTaiizor.Controls.CyberTextBox cyberTextBox1;
+        private ReaLTaiizor.Controls.HeaderLabel membershipID;
     }
 }

@@ -55,6 +55,14 @@ namespace Coworking.Data.Providers
         public void dodajTipClanstva(TipClanstva t);
         public List<TipClanstva> prikaziSveTipoveClanstva();
 
+        public void updateTipClanstva(TipClanstva t);
+        public List<TipClanstva> GetTipClanstvaByName(string naziv);
+
+        public TipClanstva GetTipClanstvaById(int id);
+
+        public void DeleteTipClanstva(int id);
+
+
 
         //-------------------------NAZIV LANCA-------------------------
         public string prikazLanca();

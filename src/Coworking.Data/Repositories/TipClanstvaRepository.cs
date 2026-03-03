@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Data.Repositories
 {
-    internal class TipClanstvaRepository : IRepository<TipClanstva>
+    internal class TipClanstvaRepository : ITipClanstvaRepository
     {
         private readonly DataBaseAdapter _adapter;
         private readonly DataBaseMapper _mapper;
@@ -34,10 +34,26 @@ namespace Coworking.Data.Repositories
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
+        public TipClanstva GetById(int id)
+        {
+            string upit = $"SELECT * FROM tip_clanstva WHERE tip_clanstva_id = {id}";
+            var tipClanstvaList = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapTipClanstva);
+            return tipClanstvaList.FirstOrDefault();
+        }
+
         public List<TipClanstva> GetAll()
         {
             string upit = "SELECT * FROM tip_clanstva";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapTipClanstva);
+        }
+
+        public List<TipClanstva> GetByName(string name)
+        {
+            // Koristimo LIKE '%term%' da pronađemo poklapanje bilo gde u reči
+            string upit = $"SELECT * FROM tip_clanstva WHERE naziv LIKE '%{name.Trim()}%'";
+
+            var tabela = _adapter.izvrsiUpit(upit);
+            return _mapper.mapDataTable(tabela, _mapper.mapTipClanstva);
         }
 
         public void Update(TipClanstva item)
@@ -52,6 +68,12 @@ namespace Coworking.Data.Repositories
                 dozvoljena_sala = '{item.dozvoljenaSala}',
                 sati_sale_mesecno = '{item.satiSaleMesecno}'
             WHERE tip_clanstva_id = {item.tipClanstvaId};";
+            _adapter.izvrsiUpitBezRezultata(upit);
+        }
+
+        public void Delete(int id)
+        {
+            string upit = $"DELETE FROM tip_clanstva WHERE tip_clanstva_id = {id}";
             _adapter.izvrsiUpitBezRezultata(upit);
         }
     }

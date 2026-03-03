@@ -233,6 +233,35 @@ namespace Coworking.Data.Providers
             return cachedTipClanstva;
         }
 
+        public void izmeniTipClanstva(TipClanstva t)
+        {
+            _facade.updateTipClanstva(t);
+            needReset = true;
+        }
+
+        public List<TipClanstva> GetTipClanstvaByName(string naziv)
+        {
+            return _facade.GetTipClanstvaByName(naziv);
+        }
+
+        public void updateTipClanstva(TipClanstva t)
+        {
+            _facade.updateTipClanstva(t);
+            needReset = true;
+        }
+
+        public TipClanstva GetTipClanstvaById(int id)
+        {
+            return _facade.GetTipClanstvaById(id);
+        }
+
+        public void DeleteTipClanstva(int id)
+        {
+            _facade.DeleteTipClanstva(id);
+            needReset = true;
+        }
+
+
         //-------------------------NAZIV LANCA-------------------------
         //-------------------------NAZIV LANCA-------------------------
         //-------------------------NAZIV LANCA-------------------------
@@ -255,5 +284,6 @@ namespace Coworking.Data.Providers
         {
             _facade.addAdmin(admin);
         }
+
     }
 }

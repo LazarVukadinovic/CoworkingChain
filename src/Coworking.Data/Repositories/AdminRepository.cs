@@ -39,7 +39,7 @@ namespace Coworking.Data.Repositories
             WHERE korisnicko_ime = '{username}';
             ";
             var result = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapAdmin);
-            return result.IsNullOrEmpty() ? null : result[0];
+            return result?.FirstOrDefault();
         }
     }
 }

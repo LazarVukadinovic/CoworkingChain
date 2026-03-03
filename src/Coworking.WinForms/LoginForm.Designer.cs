@@ -279,6 +279,7 @@
             usernameTextBox.TextButton = "";
             usernameTextBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             usernameTextBox.Timer_RGB = 300;
+            usernameTextBox.Load += usernameTextBox_Load;
             // 
             // pnlHorizLine
             // 

@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Coworking.Data.Providers;
+using System;
+using System.Windows.Forms;
 
 namespace Coworking.WinForms
 {
     public partial class LoginForm : Form
     {
+        IDataBase database = DataBaseSingleton.vratiInstancu();
         public LoginForm()
         {
             InitializeComponent();
@@ -19,8 +22,21 @@ namespace Coworking.WinForms
             Dashboard main = new Dashboard(this);
             main.FormClosed += (s, e) => Application.Exit();
 
-            this.Hide();
-            main.Show();
+            string username = usernameTextBox.textBox.Text;
+            string password = passwordTextBox.textBox.Text;
+            var result = database.getAdminByUsername(username, password);
+            if (!result)
+                MessageBox.Show("Pogrešno korisničko ime ili lozinka!", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                this.Hide();
+                main.Show();
+            }
+        }
+
+        private void usernameTextBox_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

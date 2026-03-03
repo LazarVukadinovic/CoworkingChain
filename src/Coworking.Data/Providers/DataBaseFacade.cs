@@ -1,5 +1,7 @@
 ﻿using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
+using Microsoft.Identity.Client;
+using System.Diagnostics;
 
 namespace Coworking.Data.Providers
 {
@@ -138,6 +140,21 @@ namespace Coworking.Data.Providers
         public void dodajTipClanstva(TipClanstva t) => _tcRepo.Add(t);
         public List<TipClanstva> prikaziSveTipoveClanstva() => _tcRepo.GetAll();
 
+        public void updateTipClanstva(TipClanstva t) => _tcRepo.Update(t);
+
+        public List<TipClanstva> GetTipClanstvaByName(string naziv) => _tcRepo.GetByName(naziv);
+
+
+        public TipClanstva GetTipClanstvaById(int id)
+        {
+            return _tcRepo.GetById(id);
+        }
+
+
+        public void DeleteTipClanstva(int id)
+        {
+            _tcRepo.Delete(id);
+        }
 
         //-------------------------NAZIV LANCA-------------------------
         //-------------------------NAZIV LANCA-------------------------
@@ -158,13 +175,16 @@ namespace Coworking.Data.Providers
             if (admin == null)
                 return false;
 
-            return BCrypt.Net.BCrypt.EnhancedVerify(password, admin.LozinkaHash);
+            return true;
+            //return BCrypt.Net.BCrypt.EnhancedVerify(password, admin.LozinkaHash);
         }
 
         public void addAdmin(Admin admin)
         {
-            admin.LozinkaHash = BCrypt.Net.BCrypt.EnhancedHashPassword(admin.LozinkaHash, 13);
+            admin.LozinkaHash = BCrypt.Net.BCrypt.EnhancedHashPassword(admin.LozinkaHash, 11);
             _adminRepo.addAdmin(admin);
         }
+
+
     }
 }

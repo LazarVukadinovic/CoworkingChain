@@ -100,9 +100,9 @@ namespace Coworking.Data.Providers
                 tipClanstvaId = (int)red["tip_clanstva_id"],
                 naziv = red["naziv"].ToString(),
                 cena = float.Parse(red["cena"].ToString()),
+                maxSatiRezervacijeMesecno = (int)red["max_sati_mesecno"],
                 trajanjeDana = (int)red["trajanje_dana"],
-                maxSatiRezervacijeMesecno = (int)red["max_sati_nedelje"],
-                dozvoljenaSala = red["dozvoljena_sala"].ToString(),
+                dozvoljenaSala = Convert.ToBoolean(red["dozvoljena_sala"]),
                 satiSaleMesecno = (int)red["sati_sale_mesecno"]
             };
         }
