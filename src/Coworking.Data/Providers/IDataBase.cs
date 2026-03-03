@@ -23,6 +23,9 @@ namespace Coworking.Data.Providers
         // Prikaz liste svih lokacija, uz mogucnost izbora aktivne lokacije
         public List<Lokacija> prikaziLokacije(bool check);
 
+        public List<Lokacija> GetLokacijaByName(string naziv);
+
+        public Lokacija GetLokacijaById(int id);
 
         //-------------------------REZERVACIJE-------------------------
         public void dodajRezervaciju(Rezervacija r);

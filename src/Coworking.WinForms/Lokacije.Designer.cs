@@ -172,6 +172,7 @@
             searchButton.TabIndex = 8;
             searchButton.Text = "Pretraga";
             searchButton.TextColor = Color.FromArgb(243, 243, 243);
+            searchButton.Click += searchButton_Click;
             // 
             // editLocationButton
             // 
@@ -200,6 +201,7 @@
             deleteLocationButton.TabIndex = 3;
             deleteLocationButton.Text = "Obriši lokaciju";
             deleteLocationButton.TextColor = Color.FromArgb(243, 243, 243);
+            deleteLocationButton.Click += deleteLocationButton_Click;
             // 
             // addLocationButton
             // 

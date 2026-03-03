@@ -55,5 +55,20 @@ namespace Coworking.WinForms
         {
             loadData();
         }
+
+        private void deleteLocationButton_Click(object sender, EventArgs e)
+        {
+            loadData();
+            var membershipId = (int)locationDataGridView.SelectedRows[0].Cells[0].Value;
+            DataBaseSingleton.vratiInstancu().obrisiLokaciju(membershipId);
+            loadData();
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            var text = searchTextBox.textBox.Text;
+            var membership = DataBaseSingleton.vratiInstancu().GetLokacijaByName(text);
+            locationDataGridView.DataSource = membership;
+        }
     }
 }

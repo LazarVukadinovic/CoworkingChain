@@ -36,7 +36,6 @@ namespace Coworking.WinForms.Dialogues
             membership.trajanjeDana = (int)durationNumeric.Value;
             if (conferenceCheckBox.Checked == false)
             {
-                Debug.WriteLine("Nije dozvoljena sala");
                 membership.dozvoljenaSala = false;
                 membership.satiSaleMesecno = 0;
             }

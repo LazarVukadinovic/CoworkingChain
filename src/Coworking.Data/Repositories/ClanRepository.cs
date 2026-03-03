@@ -47,9 +47,27 @@ namespace Coworking.Data.Repositories
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Clan> GetAll()
         {
             string upit = "SELECT * FROM clan";
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
+        }
+
+        public Clan GetById(int id)
+        {
+            string upit = $"SELECT * FROM clan WHERE clan_id={id}";
+            var clanovi = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
+            return clanovi.Count > 0 ? clanovi[0] : null;
+        }
+
+        public List<Clan> GetByName(string name)
+        {
+            string upit = $"SELECT * FROM clan WHERE ime='{name}'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
 

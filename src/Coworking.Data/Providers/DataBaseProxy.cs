@@ -127,6 +127,13 @@ namespace Coworking.Data.Providers
             return cachedLokacija;
         }
 
+        public List<Lokacija> GetLokacijaByName(string naziv) => _facade.GetLokacijaByName(naziv);
+
+        public Lokacija GetLokacijaById(int id)
+        {
+            return _facade.GetLokacijaById(id);
+        }
+
 
         //-------------------------REZERVACIJE-------------------------
         //-------------------------REZERVACIJE-------------------------

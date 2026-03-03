@@ -57,8 +57,14 @@ namespace Coworking.Data.Providers
 
         public void dodajLokaciju(Lokacija l) => _lokacijaRepo.Add(l);
         public void izmeniLokaciju(Lokacija l) => _lokacijaRepo.Update(l);
-        public void obrisiLokaciju(int lokacijaId) => _lokacijaRepo.delete(lokacijaId);
+        public void obrisiLokaciju(int lokacijaId) => _lokacijaRepo.Delete(lokacijaId);
 
+        public List<Lokacija> GetLokacijaByName(string naziv) => _lokacijaRepo.GetByName(naziv);
+
+        public Lokacija GetLokacijaById(int id)
+        {
+            return _lokacijaRepo.GetById(id);
+        }
 
         public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
         {

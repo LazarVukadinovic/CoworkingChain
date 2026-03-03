@@ -33,15 +33,7 @@ namespace Coworking.Data.Repositories
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
-        public void delete(int lokacijaId)
-        {
-            string upit = $@"
-            DELETE FROM lokacija
-            WHERE lokacija_id={lokacijaId};
-            ";
-
-            _adapter.izvrsiUpitBezRezultata(upit);
-        }
+        
 
         public List<Lokacija> GetAllActive(bool check)
         {
@@ -75,5 +67,24 @@ namespace Coworking.Data.Repositories
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
+        public void Delete(int id)
+        {
+            string upit = $"DELETE FROM lokacija WHERE lokacija_id = {id};";
+            _adapter.izvrsiUpitBezRezultata(upit);
+        }
+
+        public Lokacija GetById(int id)
+        {
+            string upit = $"SELECT * FROM lokacija WHERE lokacija_id = {id};";
+            var lokacije = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
+            return lokacije.FirstOrDefault();
+        }
+
+        public List<Lokacija> GetByName(string name)
+        {
+            string upit = $"SELECT * FROM lokacija WHERE naziv LIKE '%{name.Trim()}%'";
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
+
+        }
     }
 }

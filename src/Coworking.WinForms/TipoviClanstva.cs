@@ -35,7 +35,7 @@ namespace Coworking.WinForms
         {
             var membership = singleton.prikaziSveTipoveClanstva();
             membershipDataGridView.DataSource = membership;
-
+            membershipDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -47,8 +47,8 @@ namespace Coworking.WinForms
 
         private void deleteMembershipButton_Click(object sender, EventArgs e)
         {
-            var membershipId = (int)membershipDataGridView.SelectedRows[0].Cells[0].Value;
-            singleton.DeleteTipClanstva(membershipId);
+            var locationId = (int)membershipDataGridView.SelectedRows[0].Cells[0].Value;
+            singleton.DeleteTipClanstva(locationId);
             loadData();
             //observer ovde?
         }
