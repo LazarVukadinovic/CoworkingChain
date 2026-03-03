@@ -175,13 +175,13 @@ namespace Coworking.Data.Providers
             if (admin == null)
                 return false;
 
-            return true;
-            //return BCrypt.Net.BCrypt.EnhancedVerify(password, admin.LozinkaHash);
+            //return true;
+            return BCrypt.Net.BCrypt.Verify(password, admin.LozinkaHash);
         }
 
         public void addAdmin(Admin admin)
         {
-            admin.LozinkaHash = BCrypt.Net.BCrypt.EnhancedHashPassword(admin.LozinkaHash, 11);
+            admin.LozinkaHash = BCrypt.Net.BCrypt.HashPassword(admin.LozinkaHash, 11);
             _adminRepo.addAdmin(admin);
         }
 

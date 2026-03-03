@@ -1,5 +1,6 @@
 ﻿using Coworking.Data.Providers;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Coworking.WinForms
@@ -10,6 +11,7 @@ namespace Coworking.WinForms
         public LoginForm()
         {
             InitializeComponent();
+            //database.addAdmin(new Domain.Entities.Admin { KorisnickoIme = "admin5", LozinkaHash = "admin5" });
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -25,6 +27,7 @@ namespace Coworking.WinForms
             string username = usernameTextBox.textBox.Text;
             string password = passwordTextBox.textBox.Text;
             var result = database.getAdminByUsername(username, password);
+            Debug.WriteLine(result);
             if (!result)
                 MessageBox.Show("Pogrešno korisničko ime ili lozinka!", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
