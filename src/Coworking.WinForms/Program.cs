@@ -38,8 +38,8 @@ namespace Coworking.WinForms
 
             //MessageBox.Show($"CSV izveštaj je napravljen: {filePath}");
 
-
-            Application.Run(new Form1());
+            // konflikt
+            //Application.Run(new Form1());
         }
     }
 }
