@@ -275,6 +275,7 @@
             statusComboBox.Name = "statusComboBox";
             statusComboBox.Size = new Size(223, 31);
             statusComboBox.TabIndex = 20;
+            statusComboBox.SelectedIndexChanged += statusComboBox_SelectedIndexChanged_1;
             // 
             // locationLabel
             // 
@@ -305,6 +306,7 @@
             locationComboBox.Name = "locationComboBox";
             locationComboBox.Size = new Size(223, 31);
             locationComboBox.TabIndex = 18;
+            locationComboBox.SelectedIndexChanged += locationComboBox_SelectedIndexChanged;
             // 
             // membershipTypeLabel
             // 
@@ -335,6 +337,7 @@
             membershipComboBox.Name = "membershipComboBox";
             membershipComboBox.Size = new Size(223, 31);
             membershipComboBox.TabIndex = 0;
+            membershipComboBox.SelectedIndexChanged += membershipComboBox_SelectedIndexChanged;
             // 
             // Clanovi
             // 

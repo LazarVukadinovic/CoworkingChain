@@ -75,11 +75,7 @@ namespace Coworking.Data.Providers
         //ovde mozda treba dictionary
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
         {
-            if (cachedClanoviFiltrirano == null || needReset == true)
-            {
                 cachedClanoviFiltrirano = _facade.PrikaziClanoveFiltrirano(lokacijaId,tipClanstvaId,status);
-                needReset = false;
-            }
             return cachedClanoviFiltrirano;
         }
 

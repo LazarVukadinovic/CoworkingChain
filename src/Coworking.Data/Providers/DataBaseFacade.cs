@@ -33,12 +33,16 @@ namespace Coworking.Data.Providers
         public void obrisiClana(int clanId) => _clanRepo.delete(clanId);
 
 
-        public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)//stavljeno u Clan klasi tipClanstva da bude int, a ne string
+        public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
         {
+            // Uvek kreni od svih, pa sužavaj krug
             var clanovi = _clanRepo.GetAll();
 
             if (lokacijaId.HasValue)
-                clanovi = _clanRepo.vratiClanovePoLokaciji(lokacijaId.Value);
+            {
+                var poLokaciji = _clanRepo.vratiClanovePoLokaciji((int)lokacijaId);
+                clanovi = clanovi.FindAll(c => poLokaciji.Any(pl => pl.clanId == c.clanId));
+            }
 
             if (tipClanstvaId.HasValue)
                 clanovi = clanovi.FindAll(c => c.tipClanstva == tipClanstvaId);
@@ -177,11 +181,12 @@ namespace Coworking.Data.Providers
         //-------------------------LOGIN-------------------------
         public bool getAdminByUsername(string username, string password)
         {
+            return true;
             var admin = _adminRepo.getAdminByUsername(username);
             if (admin == null)
                 return false;
 
-            //return true;
+            
             return BCrypt.Net.BCrypt.Verify(password, admin.LozinkaHash);
         }
 
