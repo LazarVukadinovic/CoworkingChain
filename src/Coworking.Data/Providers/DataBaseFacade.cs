@@ -1,0 +1,170 @@
+﻿using Coworking.Data.Repositories;
+using Coworking.Domain.Entities;
+
+namespace Coworking.Data.Providers
+{
+    public class DataBaseFacade : IDataBase
+    {
+        private readonly ClanRepository _clanRepo;
+        private readonly LokacijaRepository _lokacijaRepo;
+        private readonly ResursRepository _resursRepo;
+        private readonly RezervacijaRepository _rezRepo;
+        private readonly TipClanstvaRepository _tcRepo;
+        private readonly AdminRepository _adminRepo;
+
+        public DataBaseFacade(DBSettings settings)
+        {
+            _clanRepo = new ClanRepository(settings.Adapter, settings.Mapper);
+            _lokacijaRepo = new LokacijaRepository(settings.Adapter, settings.Mapper);
+            _resursRepo = new ResursRepository(settings.Adapter, settings.Mapper);
+            _rezRepo = new RezervacijaRepository(settings.Adapter, settings.Mapper);
+            _tcRepo = new TipClanstvaRepository(settings.Adapter, settings.Mapper);
+            _adminRepo = new AdminRepository(settings.Adapter, settings.Mapper);
+        }
+
+        //-------------------------CLANOVI-------------------------
+        //-------------------------CLANOVI-------------------------
+        //-------------------------CLANOVI-------------------------
+        public void dodajClana(Clan c) => _clanRepo.Add(c);
+        public void izmeniClana(Clan c) => _clanRepo.Update(c);
+        public List<Clan> prikaziClanove() => _clanRepo.GetAll();
+        public void obrisiClana(int clanId) => _clanRepo.delete(clanId);
+
+
+        public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)//stavljeno u Clan klasi tipClanstva da bude int, a ne string
+        {
+            var clanovi = _clanRepo.GetAll();
+
+            if (lokacijaId.HasValue)
+                clanovi = _clanRepo.vratiClanovePoLokaciji(lokacijaId.Value);
+
+            if (tipClanstvaId.HasValue)
+                clanovi = clanovi.FindAll(c => c.tipClanstva == tipClanstvaId);
+
+            if (!string.IsNullOrEmpty(status))
+                clanovi = clanovi.FindAll(c => c.statusNaloga == status);
+
+            return clanovi;
+        }
+        //Marta:druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma
+
+
+        //-------------------------LOKACIJE-------------------------
+        //-------------------------LOKACIJE-------------------------
+        //-------------------------LOKACIJE-------------------------
+
+        public void dodajLokaciju(Lokacija l) => _lokacijaRepo.Add(l);
+        public void izmeniLokaciju(Lokacija l) => _lokacijaRepo.Update(l);
+        public void obrisiLokaciju(int lokacijaId) => _lokacijaRepo.delete(lokacijaId);
+
+
+        public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
+        {
+            var lokacije = _lokacijaRepo.GetAllActive(false);
+            var resursi = _resursRepo.GetAll();
+            var rezervacije = _rezRepo.GetAll();
+
+            var rezultat = new List<(Lokacija, int, int, double)>();
+
+            foreach (var l in lokacije)
+            {
+                var resursiLokacije = resursi.FindAll(r => r.lokacijaId == l.lokacijaId);
+                int brojResursa = resursiLokacije.Count;
+
+                int brojRezervisanih = rezervacije.FindAll(r =>
+                    resursiLokacije.Exists(res => res.resursId == r.resursId) &&
+                    r.status == "Aktivna").Count;
+
+                double procenat = brojResursa == 0 ? 0 : (double)brojRezervisanih / brojResursa * 100;
+
+                rezultat.Add((l, brojResursa, brojRezervisanih, procenat));
+            }
+
+            return rezultat;
+        }
+
+
+        public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check);
+
+
+        //-------------------------REZERVACIJE-------------------------
+        //-------------------------REZERVACIJE-------------------------
+        //-------------------------REZERVACIJE-------------------------
+
+        public void dodajRezervaciju(Rezervacija r) => _rezRepo.Add(r);
+        public void izmeniRezervaciju(Rezervacija r) => _rezRepo.Update(r);
+        public void otkaziRezervaciju(int rezervacijaId) => _rezRepo.Cancel(rezervacijaId);
+        public List<Rezervacija> prikaziSveRezervacije() => _rezRepo.GetAll();
+
+
+        // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
+        // TO-DO
+
+
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
+        {
+            var rezervacije = _rezRepo.GetByClanId(clanId);
+
+            foreach (var r in rezervacije)
+                if (DateTime.Parse(r.kraj) < DateTime.Now)
+                {
+                    _rezRepo.UpdateStatus(r.rezervacijaId, "Prošla");
+                    r.status = "Prošla";
+                }
+
+            return rezervacije;
+        }
+
+
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
+
+
+        //-------------------------RESURSI-------------------------
+        //-------------------------RESURSI-------------------------
+        //-------------------------RESURSI-------------------------
+
+        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _resursRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
+
+        public List<SalaZaSastanke> prikaziSaleZaSastanke() => _resursRepo.prikaziSaleZaSastanke();
+
+        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId) => _resursRepo.GetResourcesByLocation(lokacijaId);
+        public List<Resurs> prikaziSveResurse() => _resursRepo.GetAll();
+
+
+        //-------------------------TIP CLANSTVA-------------------------
+        //-------------------------TIP CLANSTVA-------------------------
+        //-------------------------TIP CLANSTVA-------------------------
+
+        public void dodajTipClanstva(TipClanstva t) => _tcRepo.Add(t);
+        public List<TipClanstva> prikaziSveTipoveClanstva() => _tcRepo.GetAll();
+
+
+        //-------------------------NAZIV LANCA-------------------------
+        //-------------------------NAZIV LANCA-------------------------
+        //-------------------------NAZIV LANCA-------------------------
+
+        public string prikazLanca()
+        {
+            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
+            return File.ReadAllLines(path)[0];
+        }
+
+        //-------------------------LOGIN-------------------------
+        //-------------------------LOGIN-------------------------
+        //-------------------------LOGIN-------------------------
+        public bool getAdminByUsername(string username, string password)
+        {
+            var admin = _adminRepo.getAdminByUsername(username);
+            if (admin == null)
+                return false;
+
+            return BCrypt.Net.BCrypt.EnhancedVerify(password, admin.LozinkaHash);
+        }
+
+        public void addAdmin(Admin admin)
+        {
+            admin.LozinkaHash = BCrypt.Net.BCrypt.EnhancedHashPassword(admin.LozinkaHash, 13);
+            _adminRepo.addAdmin(admin);
+        }
+    }
+}
