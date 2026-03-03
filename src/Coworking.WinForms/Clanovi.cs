@@ -15,6 +15,7 @@ namespace Coworking.WinForms
             loadMemberships();
             loadLocations();
             loadData2();
+            //statusComboBox.SelectedIndex = 0;
             //ResetComboBox();
         }
 

@@ -243,6 +243,7 @@
             membershipComboBox.Name = "membershipComboBox";
             membershipComboBox.Size = new Size(237, 36);
             membershipComboBox.TabIndex = 29;
+            membershipComboBox.SelectedIndexChanged += membershipComboBox_SelectedIndexChanged;
             // 
             // addMemberButton
             // 
@@ -257,6 +258,7 @@
             addMemberButton.TabIndex = 30;
             addMemberButton.Text = "Dodaj člana";
             addMemberButton.TextColor = Color.FromArgb(243, 243, 243);
+            addMemberButton.Click += addMemberButton_Click;
             // 
             // DodajClana
             // 
