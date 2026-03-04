@@ -16,6 +16,7 @@ namespace Coworking.WinForms
             singleton = DataBaseSingleton.vratiInstancu();
             loadMemberships();
             loadLocations();
+            loadStatuses();
             loadData2();
             //statusComboBox.SelectedIndex = 0;
             //ResetComboBox();
@@ -54,6 +55,9 @@ namespace Coworking.WinForms
         private void loadMemberships()
         {
             var memberships = singleton.prikaziSveTipoveClanstva();
+
+            memberships.Insert(0, new TipClanstva { tipClanstvaId = 0, naziv = "Svi" });
+
             membershipComboBox.DisplayMember = "naziv";
             membershipComboBox.ValueMember = "tipClanstvaId";
             membershipComboBox.DataSource = memberships;
@@ -62,18 +66,28 @@ namespace Coworking.WinForms
         private void loadLocations()
         {
             var locations = singleton.prikaziLokacije(false);
+
+            locations.Insert(0, new Lokacija { lokacijaId = 0, naziv = "Sve" });
+
             locationComboBox.DisplayMember = "naziv";
             locationComboBox.ValueMember = "lokacijaId";
             locationComboBox.DataSource = locations;
         }
 
+        private void loadStatuses()
+        {
+            var statuses = new List<string> { "Svi", "Aktivan", "Neaktivan", "Suspendovan" };
+            statusComboBox.DataSource = statuses;
+        }
+
         private void loadData()
         {
-            int? lokacijaId = locationComboBox.SelectedValue is int ? (int)locationComboBox.SelectedValue : null;
-            int? clanstvoId = membershipComboBox.SelectedValue is int ? (int)membershipComboBox.SelectedValue : null;
+            int? lokacijaId = (locationComboBox.SelectedValue is int locationId && locationId != 0) ? locationId : null;
+            int? clanstvoId = (membershipComboBox.SelectedValue is int membershipId && membershipId != 0) ? membershipId : null;
 
             string status = statusComboBox.SelectedItem?.ToString() ?? null;
             status = status == "Svi" ? null : status;
+
             var clanovi = singleton.PrikaziClanoveFiltrirano(lokacijaId, clanstvoId, status);
 
             memberDataGridView.DataSource = null;

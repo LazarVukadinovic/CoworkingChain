@@ -271,7 +271,6 @@
             statusComboBox.HoverColor = Color.FromArgb(35, 168, 109);
             statusComboBox.HoverFontColor = Color.White;
             statusComboBox.ItemHeight = 25;
-            statusComboBox.Items.AddRange(new object[] { "Aktivan", "Neaktivan", "Suspendovan" });
             statusComboBox.Location = new Point(529, 46);
             statusComboBox.Name = "statusComboBox";
             statusComboBox.Size = new Size(223, 31);
