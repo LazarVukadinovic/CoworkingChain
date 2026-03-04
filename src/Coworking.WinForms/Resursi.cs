@@ -25,7 +25,8 @@ namespace Coworking.WinForms
 
         private void editResourceButton_Click(object sender, EventArgs e)
         {
-            IzmeniResurs editResource = new IzmeniResurs();
+            var selectedRow = (Resurs)resourceDataGridView.SelectedRows[0].DataBoundItem;
+            IzmeniResurs editResource = new IzmeniResurs(selectedRow);
             editResource.ShowDialog(this);
         }
 
