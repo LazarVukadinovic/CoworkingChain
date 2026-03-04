@@ -41,7 +41,6 @@
             addResourceButton = new ReaLTaiizor.Controls.ForeverButton();
             resourceDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
             filteringpanel = new Panel();
-            availableCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
             locationLabel = new ReaLTaiizor.Controls.HeaderLabel();
             locationComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
             resourceTypeLabel = new ReaLTaiizor.Controls.HeaderLabel();
@@ -233,7 +232,6 @@
             // 
             filteringpanel.BackColor = Color.FromArgb(37, 52, 68);
             filteringpanel.BorderStyle = BorderStyle.FixedSingle;
-            filteringpanel.Controls.Add(availableCheckBox);
             filteringpanel.Controls.Add(locationLabel);
             filteringpanel.Controls.Add(locationComboBox);
             filteringpanel.Controls.Add(resourceTypeLabel);
@@ -243,44 +241,6 @@
             filteringpanel.Name = "filteringpanel";
             filteringpanel.Size = new Size(1102, 97);
             filteringpanel.TabIndex = 6;
-            // 
-            // availableCheckBox
-            // 
-            availableCheckBox.BackColor = Color.Transparent;
-            availableCheckBox.Background = true;
-            availableCheckBox.Background_WidthPen = 2F;
-            availableCheckBox.BackgroundPen = true;
-            availableCheckBox.Checked = false;
-            availableCheckBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            availableCheckBox.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            availableCheckBox.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            availableCheckBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            availableCheckBox.ColorChecked = Color.FromArgb(29, 200, 238);
-            availableCheckBox.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            availableCheckBox.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            availableCheckBox.CyberCheckBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            availableCheckBox.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
-            availableCheckBox.Effect_1_Transparency = 25;
-            availableCheckBox.Effect_2 = true;
-            availableCheckBox.Effect_2_ColorBackground = Color.White;
-            availableCheckBox.Effect_2_Transparency = 15;
-            availableCheckBox.Font = new Font("Arial", 12F);
-            availableCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
-            availableCheckBox.LinearGradient_Background = false;
-            availableCheckBox.LinearGradientPen = false;
-            availableCheckBox.Location = new Point(536, 39);
-            availableCheckBox.Name = "availableCheckBox";
-            availableCheckBox.RGB = false;
-            availableCheckBox.Rounding = false;
-            availableCheckBox.RoundingInt = 100;
-            availableCheckBox.Size = new Size(212, 45);
-            availableCheckBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            availableCheckBox.TabIndex = 20;
-            availableCheckBox.Tag = "Cyber";
-            availableCheckBox.TextButton = "Dostupno";
-            availableCheckBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            availableCheckBox.Timer_Effect_1 = 1;
-            availableCheckBox.Timer_RGB = 300;
             // 
             // locationLabel
             // 
@@ -311,6 +271,7 @@
             locationComboBox.Name = "locationComboBox";
             locationComboBox.Size = new Size(223, 31);
             locationComboBox.TabIndex = 18;
+            locationComboBox.SelectedIndexChanged += locationComboBox_SelectedIndexChanged;
             // 
             // resourceTypeLabel
             // 
@@ -379,6 +340,5 @@
         private ReaLTaiizor.Controls.HeaderLabel resourceTypeLabel;
         private ReaLTaiizor.Controls.HeaderLabel locationLabel;
         private ReaLTaiizor.Controls.ForeverComboBox locationComboBox;
-        private ReaLTaiizor.Controls.CyberCheckBox availableCheckBox;
     }
 }

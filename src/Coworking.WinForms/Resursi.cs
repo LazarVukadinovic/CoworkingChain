@@ -56,17 +56,24 @@ namespace Coworking.WinForms
 
         private void loadByLocationAndType()
         {
-            //int lokacijaId = (locationComboBox.SelectedValue is int locationId && locationId != 0) ? locationId : null;
-            //string name = resourceTypeComboBox.SelectedItem.ToString();
+            int? lokacijaId = (locationComboBox.SelectedValue is int locationId && locationId != 0) ? locationId : null;
+            string name = resourceTypeComboBox.SelectedItem.ToString();
+            name = name == "Svi" ? null : name;
 
-            //var resources = singleton.prikaziResursePoLokacijiIPoTipu(lokacijaId, name);
-            //resourceDataGridView.DataSource = resources;
-            //resourceDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            var resources = singleton.prikaziResursePoLokacijiIPoTipu(lokacijaId, name);
+
+            resourceDataGridView.DataSource = resources;
+            resourceDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void resourceTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            loadByLocationAndType();
+        }
 
+        private void locationComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadByLocationAndType();
         }
     }
 }
