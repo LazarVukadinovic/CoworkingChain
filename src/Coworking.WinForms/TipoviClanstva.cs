@@ -1,4 +1,4 @@
-ï»¿using Coworking.Data.Providers;
+using Coworking.Data.Providers;
 using Coworking.WinForms.Dialogues;
 using System;
 
@@ -47,10 +47,29 @@ namespace Coworking.WinForms
 
         private void deleteMembershipButton_Click(object sender, EventArgs e)
         {
-            var locationId = (int)membershipDataGridView.SelectedRows[0].Cells[0].Value;
-            singleton.DeleteTipClanstva(locationId);
+            if (membershipDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi tip clanstva za brisanje.", "Brisanje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var membershipId = (int)membershipDataGridView.SelectedRows[0].Cells[0].Value;
+            var confirm = MessageBox.Show(
+                "Da li sigurno želiš da obrišeš izabrani tip clanstva?",
+                "Potvrda brisanja",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
+            singleton.DeleteTipClanstva(membershipId);
             loadData();
-            //observer ovde?
         }
     }
 }
+
+
+

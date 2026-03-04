@@ -1,4 +1,4 @@
-ï»¿using Coworking.Data.Providers;
+using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.WinForms.Dialogues;
 using System;
@@ -122,8 +122,29 @@ namespace Coworking.WinForms
 
         private void deleteMemberButton2_Click(object sender, EventArgs e)
         {
+            if (memberDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi clana za brisanje.", "Brisanje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             _selektovanClan = (Clan)memberDataGridView.SelectedRows[0].DataBoundItem;
+            var confirm = MessageBox.Show(
+                $"Da li sigurno želiš da obrišeš clana '{_selektovanClan.ime} {_selektovanClan.prezime}'?",
+                "Potvrda brisanja",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
             singleton.obrisiClana(_selektovanClan.clanId);
+            loadData();
         }
     }
 }
+
+
+

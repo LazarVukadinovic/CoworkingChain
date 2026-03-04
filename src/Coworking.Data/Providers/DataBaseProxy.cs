@@ -1,4 +1,4 @@
-﻿using Coworking.Domain.Entities;
+using Coworking.Domain.Entities;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Security.Claims;
 
@@ -66,8 +66,8 @@ namespace Coworking.Data.Providers
             //if (cachedKorisnickeRezervacije.ContainsKey(clanId))
             //    cachedKorisnickeRezervacije.Remove(clanId);
 
-            //Ovo:briše člana iz cachedClanovi, briše njegove rezervacije iz cachedKorisnickeRezervacije i dalje forsira reload
-            //sledeći put
+            //Ovo:bri�e clana iz cachedClanovi, bri�e njegove rezervacije iz cachedKorisnickeRezervacije i dalje forsira reload
+            //sledeci put
 
             needReset = true;
         }
@@ -150,6 +150,11 @@ namespace Coworking.Data.Providers
             _facade.otkaziRezervaciju(rezervacijaId);
             needReset = true;
         }
+        public void obrisiRezervaciju(int rezervacijaId)
+        {
+            _facade.obrisiRezervaciju(rezervacijaId);
+            needReset = true;
+        }
         public List<Rezervacija> prikaziSveRezervacije()
         {
             if (cachedRezervacije == null || needReset == true)
@@ -222,6 +227,11 @@ namespace Coworking.Data.Providers
                 needReset = false;
             }
             return cachedResursi;
+        }
+        public void obrisiResurs(int resursId)
+        {
+            _facade.obrisiResurs(resursId);
+            needReset = true;
         }
 
 
@@ -298,3 +308,5 @@ namespace Coworking.Data.Providers
 
     }
 }
+
+

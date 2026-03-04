@@ -1,26 +1,72 @@
-ï»¿using Coworking.WinForms.Dialogues;
+using Coworking.Data.Providers;
+using Coworking.Domain.Entities;
+using Coworking.WinForms.Dialogues;
 using System;
 
 namespace Coworking.WinForms
 {
     public partial class Rezervacije : Form
     {
+        private readonly IDataBase singleton;
+
         public Rezervacije()
         {
             InitializeComponent();
+            singleton = DataBaseSingleton.vratiInstancu();
             locationComboBox.SelectedIndex = 0;
+            loadData();
         }
 
         private void addReservationButton_Click(object sender, EventArgs e)
         {
             DodajRezervaciju newReservation = new DodajRezervaciju();
             newReservation.ShowDialog(this);
+            loadData();
         }
 
         private void editReservationButton_Click(object sender, EventArgs e)
         {
+            if (reservationDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi rezervaciju za izmenu.", "Izmena", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             IzmeniRezervaciju editReservation = new IzmeniRezervaciju();
             editReservation.ShowDialog(this);
+            loadData();
+        }
+
+        private void deleteReservationButton_Click(object sender, EventArgs e)
+        {
+            if (reservationDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi rezervaciju za brisanje.", "Brisanje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedReservation = (Rezervacija)reservationDataGridView.SelectedRows[0].DataBoundItem;
+            var confirm = MessageBox.Show(
+                $"Da li sigurno želiš da obrišeš rezervaciju #{selectedReservation.rezervacijaId}?",
+                "Potvrda brisanja",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
+            singleton.obrisiRezervaciju(selectedReservation.rezervacijaId);
+            loadData();
+        }
+
+        private void loadData()
+        {
+            var reservations = singleton.prikaziSveRezervacije();
+            reservationDataGridView.DataSource = null;
+            reservationDataGridView.DataSource = reservations;
+            reservationDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void currentLocationCheckBox_CheckedChanged()
