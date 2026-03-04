@@ -91,7 +91,7 @@ namespace Coworking.Data.Repositories
 
         public List<Clan> vratiClanovePoLokaciji(int lokacijaId)
         {
-            string upit = @$"SELECT DISTINCT c.* FROM clan c JOIN rezervacija rv on rv.clan_id=c.clan_id JOIN resurs r on r.resurs_id=rv.resurs_id WHERE r.lokacija_id={lokacijaId}";
+            string upit = @$"SELECT DISTINCT c.* FROM clan c JOIN rezervacija rv on rv.clan_id=c.clan_id JOIN resurs r on r.resurs_id=rv.resurs_id WHERE r.lokacija_id={lokacijaId} AND rv.status = 'Rezervisana'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
     }

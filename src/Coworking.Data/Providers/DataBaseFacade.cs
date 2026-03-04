@@ -52,6 +52,8 @@ namespace Coworking.Data.Providers
 
             return clanovi;
         }
+
+        public int vratiClanovePoLokaciji(int lokacijaId) => _clanRepo.vratiClanovePoLokaciji(lokacijaId).Count();
         //Marta:druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma
 
 

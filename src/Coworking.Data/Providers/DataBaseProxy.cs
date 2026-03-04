@@ -79,6 +79,7 @@ namespace Coworking.Data.Providers
             return cachedClanoviFiltrirano;
         }
 
+        public int vratiClanovePoLokaciji(int lokacijaId) => _facade.vratiClanovePoLokaciji(lokacijaId);
 
         //-------------------------LOKACIJE-------------------------
         //-------------------------LOKACIJE-------------------------
