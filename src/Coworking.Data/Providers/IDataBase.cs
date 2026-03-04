@@ -49,7 +49,7 @@ namespace Coworking.Data.Providers
         // Evidencija sala za sastanke: naziv, kapacitet, opremljenost (projekat, TV, tabla, oprema za online sastanke...).
         public List<SalaZaSastanke> prikaziSaleZaSastanke();
         // Lista svih resursa po lokaciji, razvrstanih po tipu (radna mesta, sala za sastanke)
-        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId);
+        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name);
         // Lista svih resursa
         public List<Resurs> prikaziSveResurse();
 

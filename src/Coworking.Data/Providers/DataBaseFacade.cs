@@ -141,7 +141,7 @@ namespace Coworking.Data.Providers
 
         public List<SalaZaSastanke> prikaziSaleZaSastanke() => _resursRepo.prikaziSaleZaSastanke();
 
-        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId) => _resursRepo.GetResourcesByLocation(lokacijaId);
+        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name) => _resursRepo.GetResourcesByLocation(lokacijaId, name);
         public List<Resurs> prikaziSveResurse() => _resursRepo.GetAll();
 
 

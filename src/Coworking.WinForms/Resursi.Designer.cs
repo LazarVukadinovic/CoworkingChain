@@ -227,6 +227,7 @@
             resourceDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             resourceDataGridView.Size = new Size(1102, 366);
             resourceDataGridView.TabIndex = 5;
+            resourceDataGridView.CellContentClick += resourceDataGridView_CellContentClick;
             // 
             // filteringpanel
             // 
@@ -335,11 +336,12 @@
             resourceTypeComboBox.HoverColor = Color.FromArgb(35, 168, 109);
             resourceTypeComboBox.HoverFontColor = Color.White;
             resourceTypeComboBox.ItemHeight = 25;
-            resourceTypeComboBox.Items.AddRange(new object[] { "Svi", "Sale za sastanke", "Radna mesta" });
+            resourceTypeComboBox.Items.AddRange(new object[] { "Svi", "sala", "radno_mesto" });
             resourceTypeComboBox.Location = new Point(12, 46);
             resourceTypeComboBox.Name = "resourceTypeComboBox";
             resourceTypeComboBox.Size = new Size(223, 31);
             resourceTypeComboBox.TabIndex = 0;
+            resourceTypeComboBox.SelectedIndexChanged += resourceTypeComboBox_SelectedIndexChanged;
             // 
             // Resursi
             // 

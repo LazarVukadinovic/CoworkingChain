@@ -3,6 +3,7 @@ using Coworking.Domain.Entities;
 using Coworking.WinForms.Dialogues;
 using System;
 using System.Diagnostics;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace Coworking.WinForms
 {
@@ -56,22 +57,26 @@ namespace Coworking.WinForms
         {
             var memberships = singleton.prikaziSveTipoveClanstva();
 
-            memberships.Insert(0, new TipClanstva { tipClanstvaId = 0, naziv = "Svi" });
+            var membershipsForCombo = new List<TipClanstva>(memberships);
+
+            membershipsForCombo.Insert(0, new TipClanstva { tipClanstvaId = 0, naziv = "Svi" });
 
             membershipComboBox.DisplayMember = "naziv";
             membershipComboBox.ValueMember = "tipClanstvaId";
-            membershipComboBox.DataSource = memberships;
+            membershipComboBox.DataSource = membershipsForCombo;
         }
 
         private void loadLocations()
         {
             var locations = singleton.prikaziLokacije(false);
 
-            locations.Insert(0, new Lokacija { lokacijaId = 0, naziv = "Sve" });
+            var locationsForCombo = new List<Lokacija>(locations);
+
+            locationsForCombo.Insert(0, new Lokacija { lokacijaId = 0, naziv = "Sve" });
 
             locationComboBox.DisplayMember = "naziv";
             locationComboBox.ValueMember = "lokacijaId";
-            locationComboBox.DataSource = locations;
+            locationComboBox.DataSource = locationsForCombo;
         }
 
         private void loadStatuses()

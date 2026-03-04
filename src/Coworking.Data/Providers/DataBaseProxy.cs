@@ -205,14 +205,14 @@ namespace Coworking.Data.Providers
             }
             return cachedSalaZaSastanke;
         }
-        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId)
+        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name)
         {
-            if (cachedResursiPoLokacijiIPoTipu.ContainsKey(lokacijaId) == false || needReset == true)
-            {
-                cachedResursiPoLokacijiIPoTipu[lokacijaId] = _facade.prikaziResursePoLokacijiIPoTipu(lokacijaId);
-                needReset = false;
-            }
-            return cachedResursiPoLokacijiIPoTipu[lokacijaId];
+            //if (cachedResursiPoLokacijiIPoTipu.ContainsKey(lokacijaId) == false || needReset == true)
+            //{
+                //cachedResursiPoLokacijiIPoTipu[lokacijaId] = _facade.prikaziResursePoLokacijiIPoTipu(lokacijaId);
+                //needReset = false;
+            //}
+            return _facade.prikaziResursePoLokacijiIPoTipu(lokacijaId, name);
         }
         public List<Resurs> prikaziSveResurse()
         {

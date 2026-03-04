@@ -40,15 +40,13 @@ namespace Coworking.Data.Repositories
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
         }
 
-        public List<Resurs> GetResourcesByLocation(int locationId)
+        public List<Resurs> GetResourcesByLocation(int? locationId, string name)
         {
             string upit = $@"
             SELECT r.*
             FROM resurs r
             WHERE r.lokacija_id = {locationId}
-            ORDER BY r.tip_resursa";
-
-
+            AND r.tip_resursa = {name}";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
         }
 
