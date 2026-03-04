@@ -166,6 +166,7 @@
             deleteMemberButton2.TabIndex = 3;
             deleteMemberButton2.Text = "Obriši člana";
             deleteMemberButton2.TextColor = Color.FromArgb(243, 243, 243);
+            deleteMemberButton2.Click += deleteMemberButton2_Click;
             // 
             // addMemberButton
             // 

@@ -1,4 +1,5 @@
 ﻿using Coworking.Data.Providers;
+using Coworking.Domain.Entities;
 using Coworking.WinForms.Dialogues;
 using System;
 using System.Diagnostics;
@@ -8,6 +9,7 @@ namespace Coworking.WinForms
     public partial class Clanovi : Form
     {
         IDataBase singleton;
+        Clan _selektovanClan;
         public Clanovi()
         {
             InitializeComponent();
@@ -32,7 +34,8 @@ namespace Coworking.WinForms
 
         private void editMemberButton_Click(object sender, EventArgs e)
         {
-            IzmeniClana editMember = new IzmeniClana();
+            _selektovanClan = (Clan)memberDataGridView.SelectedRows[0].DataBoundItem;
+            IzmeniClana editMember = new IzmeniClana(_selektovanClan);
             editMember.ShowDialog(this);
         }
 
@@ -96,6 +99,12 @@ namespace Coworking.WinForms
         {
             var members = singleton.prikaziClanove();
             memberDataGridView.DataSource = members;
+        }
+
+        private void deleteMemberButton2_Click(object sender, EventArgs e)
+        {
+            _selektovanClan = (Clan)memberDataGridView.SelectedRows[0].DataBoundItem;
+            singleton.obrisiClana(_selektovanClan.clanId);
         }
     }
 }

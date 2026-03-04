@@ -5,10 +5,10 @@
 
 -- Tipovi članstva
 INSERT INTO tip_clanstva (naziv, cena, trajanje_dana, max_sati_mesecno, dozvoljena_sala, sati_sale_mesecno) VALUES
-('Basic', 2000.00, 30, 40, 'Standardna sala', 5),
-('Premium', 5000.00, 30, 80, 'Premium sala', 15),
-('Gold', 10000.00, 30, 160, 'VIP sala', 30),
-('Enterprise', 20000.00, 30, 320, 'Sve sale', 60);
+('Basic', 2000.00, 30, 40, 0, 5),
+('Premium', 5000.00, 30, 80, 0, 15),
+('Gold', 10000.00, 30, 160, 0, 30),
+('Enterprise', 20000.00, 30, 320, 1, 60);
 
 -- Lokacije
 INSERT INTO lokacija (naziv, adresa, grad, radno_vreme, max_kapacitet, opis) VALUES

@@ -74,18 +74,17 @@ namespace Coworking.Data.Repositories
         public void Update(Clan item)
         {
             string upit = $@"
-            UPDATE clan
-            SET 
-                ime = '{item.ime}',
-                prezime = '{item.prezime}',
-                mail = '{item.mail}',
-                br_telefona = '{item.brTelefona}',
-                datum_pocetka = '{item.datumPocetka}',
-                datum_kraja = '{item.datumKraja}',
-                status_naloga = '{item.statusNaloga}',
-                tip_clanstva = '{item.tipClanstva}',
-                kreiran = '{item.kreiran}'
-            WHERE clan_id = {item.clanId};";
+                UPDATE clan
+                SET 
+                    ime = '{item.ime}',
+                    prezime = '{item.prezime}',
+                    telefon = '{item.brTelefona}',
+                    datum_pocetka = '{item.datumPocetka}',
+                    datum_kraja = '{item.datumKraja}',
+                    status_naloga = '{item.statusNaloga}',
+                    tip_clanstva_id = {item.tipClanstva}
+                WHERE clan_id = {item.clanId};";
+
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
