@@ -240,7 +240,7 @@
             capacityNumeric.ButtonColorC = Color.White;
             capacityNumeric.Font = new Font("Segoe UI", 10F);
             capacityNumeric.ForeColor = Color.Silver;
-            capacityNumeric.Location = new Point(12, 324);
+            capacityNumeric.Location = new Point(12, 325);
             capacityNumeric.Maximum = 365L;
             capacityNumeric.Minimum = 1L;
             capacityNumeric.Name = "capacityNumeric";
@@ -315,7 +315,7 @@
             deskTypeComboBox.HoverColor = Color.FromArgb(35, 168, 109);
             deskTypeComboBox.HoverFontColor = Color.White;
             deskTypeComboBox.ItemHeight = 25;
-            deskTypeComboBox.Items.AddRange(new object[] { "Hot desk", "Dedicated desk", "Private office" });
+            deskTypeComboBox.Items.AddRange(new object[] { "hot_desk", "dedicated_desk", "private_office" });
             deskTypeComboBox.Location = new Point(12, 324);
             deskTypeComboBox.Name = "deskTypeComboBox";
             deskTypeComboBox.Size = new Size(250, 31);
@@ -374,7 +374,7 @@
             deskTypeRadioButton.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             deskTypeRadioButton.Timer_Effect_1 = 1;
             deskTypeRadioButton.Timer_RGB = 300;
-            deskTypeRadioButton.CheckedChanged += deskTypeRadioButton_CheckedChanged;
+            deskTypeRadioButton.CheckedChanged += deskTypeRadioButton_CheckedChanged_1;
             // 
             // conferenceRadioButton
             // 
@@ -417,7 +417,7 @@
             conferenceRadioButton.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             conferenceRadioButton.Timer_Effect_1 = 1;
             conferenceRadioButton.Timer_RGB = 300;
-            conferenceRadioButton.CheckedChanged += conferenceRadioButton_CheckedChanged;
+            conferenceRadioButton.CheckedChanged += conferenceRadioButton_CheckedChanged_1;
             // 
             // locationLabel
             // 

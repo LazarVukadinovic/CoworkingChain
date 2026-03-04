@@ -139,7 +139,8 @@ namespace Coworking.Data.Providers
 
         public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _resursRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
 
-        public List<SalaZaSastanke> prikaziSaleZaSastanke() => _resursRepo.prikaziSaleZaSastanke();
+        public List<SalaZaSastanke> prikaziSaleZaSastankePoId(int resurdId) => _resursRepo.prikaziSaleZaSastankePoId(resurdId);
+        public List<RadnoMesto> prikaziRadnaMestaPoId(int resurdId) => _resursRepo.prikaziRadnaMestaPoId(resurdId);
 
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string? name) 
         {

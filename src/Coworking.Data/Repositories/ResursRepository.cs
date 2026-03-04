@@ -79,14 +79,27 @@ namespace Coworking.Data.Repositories
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRadnoMesto);
         }
 
-        public List<SalaZaSastanke> prikaziSaleZaSastanke()
+        public List<SalaZaSastanke> prikaziSaleZaSastankePoId(int resursId)
         {
             string upit = $@"
-            SELECT r.*,s.sala_id,s.kapacitet,s.ima_projektor,s.ima_tv,s.ima_tablu,s.ima_online_opremu
+            SELECT r.*,s.sala_detalj_id,s.kapacitet,s.ima_projektor,s.ima_tv,s.ima_tablu,s.ima_online_opremu
             FROM sala_detalj s
-            JOIN resurs r on r.resurs_id=s.resurs_id";
+            JOIN resurs r on r.resurs_id=s.resurs_id
+            WHERE s.resurs_id={resursId}
+            ";
 
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapSalaZaSastanke);
+        }
+        public List<RadnoMesto> prikaziRadnaMestaPoId(int resursId)
+        {
+            string upit = $@"
+            SELECT r.*,rad.podtip
+            FROM radno_mesto_detalj rad
+            JOIN resurs r on r.resurs_id=rad.resurs_id
+            WHERE rad.resurs_id={resursId}
+            ";
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRadnoMesto);
         }
 
         public void Delete(int id)

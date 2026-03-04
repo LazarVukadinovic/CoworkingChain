@@ -16,48 +16,9 @@ namespace Coworking.WinForms.Dialogues
             singleton = DataBaseSingleton.vratiInstancu();
             loadLocations();
             changeResource();
-
-            // TODO
-            // treba popuniti komponente odgovarajucim podacima iz baze
         }
         private bool _syncingRadios;
 
-        private void deskTypeRadioButton_CheckedChanged()
-        {
-            if (_syncingRadios) return;
-
-            if (deskTypeRadioButton.Checked)
-            {
-                _syncingRadios = true;
-                conferenceRadioButton.Checked = false;
-                _syncingRadios = false;
-            }
-
-            UpdateUI();
-        }
-
-        private void conferenceRadioButton_CheckedChanged()
-        {
-            if (_syncingRadios) return;
-
-            if (conferenceRadioButton.Checked)
-            {
-                _syncingRadios = true;
-                deskTypeRadioButton.Checked = false;
-                _syncingRadios = false;
-            }
-
-            UpdateUI();
-        }
-
-        private void UpdateUI()
-        {
-            deskTypeLabel.Visible = deskTypeComboBox.Visible = deskTypeRadioButton.Checked;
-
-            capacityLabel.Visible =
-            capacityNumeric.Visible =
-            equipmentGroupBox.Visible = conferenceRadioButton.Checked;
-        }
 
         private void loadLocations()
         {
@@ -74,17 +35,58 @@ namespace Coworking.WinForms.Dialogues
             if (_selektovanResurs.tipResursa == "radno_mesto")
             {
                 deskTypeRadioButton.Checked = true;
-                deskTypeComboBox.SelectedItem = _selektovanResurs.opis;
+                conferenceRadioButton.Enabled = false;
+                deskTypeComboBox.SelectedItem = singleton.prikaziRadnaMestaPoId(_selektovanResurs.resursId)[0].podtip;
             }
             else if (_selektovanResurs.tipResursa == "sala")
             {
                 conferenceRadioButton.Checked = true;
-                
+                deskTypeRadioButton.Enabled = false;
+                var sala = singleton.prikaziSaleZaSastankePoId(_selektovanResurs.resursId)[0];
+                capacityNumeric.Value = sala.kapacitet;
+                projectorCheckBox.Checked = sala.imaProjektor;
+                boardCheckBox.Checked = sala.imaTablu;
+                tvCheckBox.Checked = sala.imaTv;
+                onlineCheckBox.Checked = sala.imaOpremuZaOnlineSastanke;
             }
             aboutRichTextBox.TextButton = _selektovanResurs.opis;
 
+        }
 
+        private void UpdateUI()
+        {
+            deskTypeLabel.Visible = deskTypeComboBox.Visible = deskTypeRadioButton.Checked;
 
+            capacityLabel.Visible =
+            capacityNumeric.Visible =
+            equipmentGroupBox.Visible = conferenceRadioButton.Checked;
+        }
+        private void deskTypeRadioButton_CheckedChanged_1()
+        {
+            if (_syncingRadios) return;
+
+            if (deskTypeRadioButton.Checked)
+            {
+                _syncingRadios = true;
+                conferenceRadioButton.Checked = false;
+                _syncingRadios = false;
+            }
+
+            UpdateUI();
+        }
+
+        private void conferenceRadioButton_CheckedChanged_1()
+        {
+            if (_syncingRadios) return;
+
+            if (conferenceRadioButton.Checked)
+            {
+                _syncingRadios = true;
+                deskTypeRadioButton.Checked = false;
+                _syncingRadios = false;
+            }
+
+            UpdateUI();
         }
     }
 }

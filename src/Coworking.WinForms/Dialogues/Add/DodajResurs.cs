@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Coworking.Data.Providers;
+using System;
 
 namespace Coworking.WinForms.Dialogues
 {
     public partial class DodajResurs : Form
     {
+        private IDataBase singleton;
         public DodajResurs()
         {
             InitializeComponent();
             deskTypeComboBox.SelectedIndex = 0;
+            singleton = DataBaseSingleton.vratiInstancu();
+            loadLocations();
         }
         private bool _syncingRadios;
 
@@ -46,6 +50,13 @@ namespace Coworking.WinForms.Dialogues
             capacityLabel.Visible =
             capacityNumeric.Visible =
             equipmentGroupBox.Visible = conferenceRadioButton.Checked;
+        }
+        private void loadLocations()
+        {
+            var locations = singleton.prikaziLokacije(false);
+            locationComboBox.DisplayMember = "naziv";
+            locationComboBox.ValueMember = "lokacijaId";
+            locationComboBox.DataSource = locations;
         }
     }
 }

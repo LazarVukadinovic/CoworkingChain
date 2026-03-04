@@ -163,6 +163,7 @@
             deleteResourceButton.TabIndex = 3;
             deleteResourceButton.Text = "Obriši resurs";
             deleteResourceButton.TextColor = Color.FromArgb(243, 243, 243);
+            deleteResourceButton.Click += deleteResourceButton_Click;
             // 
             // addResourceButton
             // 
