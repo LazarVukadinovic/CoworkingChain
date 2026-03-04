@@ -11,4 +11,10 @@
     <ProjectReference Include="..\Coworking.Data\Coworking.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="config.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
