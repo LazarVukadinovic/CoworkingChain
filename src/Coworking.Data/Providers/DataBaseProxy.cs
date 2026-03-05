@@ -1,4 +1,5 @@
 using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Security.Claims;
 
@@ -168,15 +169,7 @@ namespace Coworking.Data.Providers
 
         // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
         // TO-DO
-        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
-        {
-            if (cachedRezervacijeSaStatusomZaIzabranogClana.ContainsKey(clanId) == false || needReset == true)
-            {
-                cachedRezervacijeSaStatusomZaIzabranogClana[clanId] = _facade.prikaziRezervacijeSaStatusomZaIzabranogClana(clanId);
-                needReset = false;
-            }
-            return cachedRezervacijeSaStatusomZaIzabranogClana[clanId];
-        }
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId, List<ReservationStatus> filterStatusi) => _facade.prikaziRezervacijeSaStatusomZaIzabranogClana(clanId, filterStatusi);
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacija)
         {
             var key = (datum, lokacija);

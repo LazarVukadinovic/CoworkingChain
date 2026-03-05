@@ -74,21 +74,30 @@ namespace Coworking.Data.Repositories
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
-        public List<Rezervacija> GetByClanId(int clanId)
+        public List<Rezervacija> GetByClanIdAndStatuses(int clanId, List<ReservationStatus> statusi)
         {
-            string upit = $"SELECT * FROM rezervacija WHERE clan_id={clanId}";
+            string upit = $@"SELECT rv.*, r.oznaka 
+                     FROM rezervacija rv 
+                     JOIN resurs r ON rv.resurs_id = r.resurs_id 
+                     WHERE rv.clan_id = {clanId}";
+
+            if (statusi != null && statusi.Count > 0)
+            {
+                string statusiString = string.Join(",", statusi.Select(s => $"'{s.ToDbString()}'"));
+                upit += $" AND rv.status IN ({statusiString})";
+            }
+
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
         public List<Rezervacija> GetReservationsByDateAndLocation(string date, int location)
         {
-            //DateTime dt = DateTime.Parse(date);
-            //string sutra = dt.AddDays(1).ToString("yyyy-MM-dd");
+            // Pretpostavljam da AddDaysExpr vraća nešto tipa: DATE_ADD('2025-02-16', INTERVAL 1 DAY)
             string nextDay = _adapter.AddDaysExpr($"'{date}'", 1);
 
-            // Ovaj upit sada radi na SVIM bazama (MySQL, MSSQL, PostgreSQL...)
+            // UKLONJENI NAVODNICI oko {nextDay}
             string upit = $"SELECT rv.*, r.oznaka FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
-                          $"WHERE rv.pocetak >= '{date}' AND rv.kraj < '{nextDay}' " +
+                          $"WHERE rv.pocetak >= '{date}' AND rv.kraj < {nextDay} " +
                           $"AND r.lokacija_id={location} AND rv.status != '{ReservationStatus.Otkazana.ToDbString()}'";
 
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);

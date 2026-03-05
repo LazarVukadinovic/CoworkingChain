@@ -101,7 +101,7 @@ namespace Coworking.Data.Providers
             }
 
             return rezultat;
-        }
+        } // ????????????
 
 
         public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check);
@@ -122,20 +122,21 @@ namespace Coworking.Data.Providers
         // TO-DO
 
 
-        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId, List<ReservationStatus> filterStatusi)
         {
-            var rezervacije = _rezRepo.GetByClanId(clanId);
+            var rezervacije = _rezRepo.GetByClanIdAndStatuses(clanId, filterStatusi);
 
             foreach (var r in rezervacije)
-                if (DateTime.Parse(r.kraj) < DateTime.Now)
+            {
+                if (r.status != ReservationStatus.Zavrsena && DateTime.Parse(r.kraj) < DateTime.Now)
                 {
                     _rezRepo.UpdateStatus(r.rezervacijaId, ReservationStatus.Zavrsena);
                     r.status = ReservationStatus.Zavrsena;
                 }
+            }
 
             return rezervacije;
         }
-
 
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
 

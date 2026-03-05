@@ -5,7 +5,7 @@ namespace Coworking.Data.Repositories
 {
     internal interface IRezervacijaRepository : IRepository<Rezervacija>
     {
-        List<Rezervacija> GetByClanId(int clanId);
+        public List<Rezervacija> GetByClanIdAndStatuses(int clanId, List<ReservationStatus> statusi);
         void Cancel(int rezervacijaId);
         public List<Rezervacija> GetReservationsByDateAndLocation(string date, int location);
 

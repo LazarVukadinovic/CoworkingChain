@@ -1,5 +1,6 @@
 using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
 using Coworking.WinForms.Dialogues;
 using System;
 
@@ -99,6 +100,7 @@ namespace Coworking.WinForms
             }
 
             UpdateUI();
+            loadUsers();
         }
 
         private void locationDateRadioButton_CheckedChanged()
@@ -152,7 +154,7 @@ namespace Coworking.WinForms
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            if(locationDateRadioButton.Checked == true)
+            if (locationDateRadioButton.Checked == true)
             {
                 var locationId = (int)locationComboBox.SelectedValue;
                 var date = dateDateTime.Value.ToString("yyyy-MM-dd"); ;
@@ -169,7 +171,30 @@ namespace Coworking.WinForms
                 //if (doneCheckBox.Checked) statusi.Add("Done");
                 //var results = singleton.prikaziRezervacijeSaStatusomZaIzabranogClana(user, statusi);
                 //reservationDataGridView.DataSource = results;
+
+                List<ReservationStatus> selektovaniStatusi = new List<ReservationStatus>();
+
+                if (reservedCheckBox.Checked) selektovaniStatusi.Add(ReservationStatus.Rezervisana);
+                if (confirmedCheckBox.Checked) selektovaniStatusi.Add(ReservationStatus.Potvrdjena);
+                if (cancelledCheckBox.Checked) selektovaniStatusi.Add(ReservationStatus.Otkazana);
+                if (doneCheckBox.Checked) selektovaniStatusi.Add(ReservationStatus.Zavrsena);
+                var user = userTextBox.SelectedValue;
+                var results = singleton.prikaziRezervacijeSaStatusomZaIzabranogClana((int)user, selektovaniStatusi);
+                reservationDataGridView.DataSource = results;
             }
+        }
+
+        private void userTextBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void loadUsers()
+        {
+            var users = singleton.prikaziClanove();
+            userTextBox.ValueMember = "clanId";
+            userTextBox.DisplayMember = "";
+            userTextBox.DataSource = users;
         }
     }
 }

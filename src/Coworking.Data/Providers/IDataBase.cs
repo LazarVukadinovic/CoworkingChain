@@ -1,4 +1,5 @@
 using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Providers
 {
@@ -37,7 +38,7 @@ namespace Coworking.Data.Providers
         // TO-DO
 
         // Lista svih rezervacija za izabranog korisnika, sa prikazom statusa (aktivna, prosla, otkazana)
-        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId);
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId, List<ReservationStatus> filterStatusi);
         // Lista rezervacije za odabrani dan i lokaciju radi prikaza zauzetosti u toku dana.
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacijaId);
 

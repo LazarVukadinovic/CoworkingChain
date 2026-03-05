@@ -53,12 +53,9 @@ namespace Coworking.Domain.Entities
             this.kreiran=kreiran;
         }
 
-        [Browsable(false)]
-        public string PunoIme => $"{ime} {prezime} - {mail}";
-
         public override string ToString()
         {
-            return $"{clanId} {ime} {prezime} - {mail}, {brTelefona}, {tipClanstva}, {datumPocetka}, {datumKraja}, {statusNaloga},{kreiran}";
+            return $"{ime} {prezime} - {mail}";
         }
     }
 }
