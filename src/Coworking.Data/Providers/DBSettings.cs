@@ -10,8 +10,7 @@ namespace Coworking.Data.Providers
             var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
             var konekcioniString = File.ReadAllLines(path)[1];
 
-            var helper = new DataBaseFactory();
-            var factory = helper.vratiFactory(konekcioniString);
+            var factory = DataBaseFactory.vratiFactory(konekcioniString);
 
             Adapter = new DataBaseAdapter(factory, konekcioniString);
             Mapper = new DataBaseMapper();

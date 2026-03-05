@@ -4,7 +4,7 @@ namespace Coworking.Data.Providers
 {
     internal class DataBaseFactory
     {
-        public IDataBaseFactory? vratiFactory(string konekcioniString)
+        public static IDataBaseFactory? vratiFactory(string konekcioniString)
         {
             konekcioniString = konekcioniString.ToLower();
 

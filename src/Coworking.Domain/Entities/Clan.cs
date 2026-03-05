@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -52,6 +53,7 @@ namespace Coworking.Domain.Entities
             this.kreiran=kreiran;
         }
 
+        [Browsable(false)]
         public string PunoIme => $"{ime} {prezime} - {mail}";
 
         public override string ToString()

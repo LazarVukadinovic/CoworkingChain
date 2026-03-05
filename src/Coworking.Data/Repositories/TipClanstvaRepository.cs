@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Coworking.Data.Repositories
 {
-    internal class TipClanstvaRepository : ITipClanstvaRepository
+    internal class TipClanstvaRepository : IRepository<TipClanstva>
     {
         private readonly DataBaseAdapter _adapter;
         private readonly DataBaseMapper _mapper;
