@@ -17,7 +17,7 @@ namespace Coworking.Data.Providers
 
         List<Rezervacija>? cachedRezervacije = null;
         private Dictionary<int, List<Rezervacija>> cachedRezervacijeSaStatusomZaIzabranogClana = new Dictionary<int, List<Rezervacija>>();
-        private Dictionary<(string datum, string lokacija), List<Rezervacija>> cachedRezervacijeZaDanILokaciju = new Dictionary<(string, string), List<Rezervacija>>();
+        private Dictionary<(string datum, int lokacija), List<Rezervacija>> cachedRezervacijeZaDanILokaciju = new Dictionary<(string, int), List<Rezervacija>>();
 
         private Dictionary<int, List<RadnoMesto>> cachedRadnaMestaPoLokaciji = new Dictionary<int, List<RadnoMesto>>();
         List<SalaZaSastanke>? cachedSalaZaSastanke = null;
@@ -172,7 +172,7 @@ namespace Coworking.Data.Providers
             }
             return cachedRezervacijeSaStatusomZaIzabranogClana[clanId];
         }
-        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija)
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacija)
         {
             var key = (datum, lokacija);
             if (cachedRezervacijeZaDanILokaciju.ContainsKey(key) == false || needReset)

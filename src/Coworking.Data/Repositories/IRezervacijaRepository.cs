@@ -7,7 +7,7 @@ namespace Coworking.Data.Repositories
     {
         List<Rezervacija> GetByClanId(int clanId);
         void Cancel(int rezervacijaId);
-        public List<Rezervacija> GetReservationsByDateAndLocation(string date, string location);
+        public List<Rezervacija> GetReservationsByDateAndLocation(string date, int location);
 
         public void UpdateStatus(int rezervacijaId, ReservationStatus status);
     }

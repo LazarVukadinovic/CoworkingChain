@@ -38,7 +38,7 @@ namespace Coworking.Data.Providers
         // Lista svih rezervacija za izabranog korisnika, sa prikazom statusa (aktivna, prosla, otkazana)
         public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId);
         // Lista rezervacije za odabrani dan i lokaciju radi prikaza zauzetosti u toku dana.
-        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacijaId);
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacijaId);
 
 
         //-------------------------RESURSI-------------------------

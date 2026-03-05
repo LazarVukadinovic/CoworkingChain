@@ -80,11 +80,16 @@ namespace Coworking.Data.Repositories
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
-        public List<Rezervacija> GetReservationsByDateAndLocation(string date, string location)
+        public List<Rezervacija> GetReservationsByDateAndLocation(string date, int location)
         {
-            // DATEADD je MSSQL, puca u MySQL
+            DateTime dt = DateTime.Parse(date);
+            string sutra = dt.AddDays(1).ToString("yyyy-MM-dd");
+
+            // Ovaj upit sada radi na SVIM bazama (MySQL, MSSQL, PostgreSQL...)
             string upit = $"SELECT rv.*, r.oznaka FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
-                $"WHERE rv.pocetak >= '{date}' AND rv.kraj < DATEADD(day, 1, '{date}') AND r.lokacija_id={location} AND rv.status != '{ReservationStatus.Otkazana.ToDbString()}'";
+                          $"WHERE rv.pocetak >= '{date}' AND rv.kraj < '{sutra}' " +
+                          $"AND r.lokacija_id={location} AND rv.status != '{ReservationStatus.Otkazana.ToDbString()}'";
+
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 

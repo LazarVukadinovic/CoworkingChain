@@ -100,11 +100,11 @@
             resourceComboBox.HoverColor = Color.FromArgb(35, 168, 109);
             resourceComboBox.HoverFontColor = Color.White;
             resourceComboBox.ItemHeight = 25;
-            resourceComboBox.Items.AddRange(new object[] { "Hot desk", "Dedicated desk", "Private office", "Conference room" });
             resourceComboBox.Location = new Point(115, 96);
             resourceComboBox.Name = "resourceComboBox";
             resourceComboBox.Size = new Size(562, 31);
             resourceComboBox.TabIndex = 33;
+            resourceComboBox.SelectedIndexChanged += resourceComboBox_SelectedIndexChanged;
             // 
             // locationLabel
             // 

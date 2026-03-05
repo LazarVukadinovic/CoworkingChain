@@ -132,7 +132,7 @@ namespace Coworking.Data.Providers
         }
 
 
-        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
 
 
         //-------------------------RESURSI-------------------------
