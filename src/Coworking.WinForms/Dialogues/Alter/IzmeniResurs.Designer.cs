@@ -240,7 +240,7 @@
             capacityNumeric.ButtonColorC = Color.White;
             capacityNumeric.Font = new Font("Segoe UI", 10F);
             capacityNumeric.ForeColor = Color.Silver;
-            capacityNumeric.Location = new Point(12, 325);
+            capacityNumeric.Location = new Point(12, 324);
             capacityNumeric.Maximum = 365L;
             capacityNumeric.Minimum = 1L;
             capacityNumeric.Name = "capacityNumeric";
@@ -315,7 +315,7 @@
             deskTypeComboBox.HoverColor = Color.FromArgb(35, 168, 109);
             deskTypeComboBox.HoverFontColor = Color.White;
             deskTypeComboBox.ItemHeight = 25;
-            deskTypeComboBox.Items.AddRange(new object[] { "hot_desk", "dedicated_desk", "private_office" });
+            deskTypeComboBox.Items.AddRange(new object[] { "Hot desk", "Dedicated desk", "Private office" });
             deskTypeComboBox.Location = new Point(12, 324);
             deskTypeComboBox.Name = "deskTypeComboBox";
             deskTypeComboBox.Size = new Size(250, 31);
@@ -503,6 +503,7 @@
             editResourceButton.TabIndex = 55;
             editResourceButton.Text = "Izmena podataka";
             editResourceButton.TextColor = Color.FromArgb(243, 243, 243);
+            editResourceButton.Click += editResourceButton_Click;
             // 
             // IzmeniResurs
             // 

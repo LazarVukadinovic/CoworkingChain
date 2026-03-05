@@ -47,13 +47,19 @@ namespace Coworking.Data.Providers
         // sa informacijom da li je trenutno dostupno ili zauzeto.
         public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId);
         // Evidencija sala za sastanke: naziv, kapacitet, opremljenost (projekat, TV, tabla, oprema za online sastanke...).
-        public List<SalaZaSastanke> prikaziSaleZaSastankePoId(int resursId);
-        public List<RadnoMesto> prikaziRadnaMestaPoId(int resursId);
+        public SalaZaSastanke prikaziSaleZaSastankePoId(int resursId);
+        public RadnoMesto prikaziRadnaMestaPoId(int resursId);
         // Lista svih resursa po lokaciji, razvrstanih po tipu (radna mesta, sala za sastanke)
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name);
         // Lista svih resursa
         public List<Resurs> prikaziSveResurse();
 
+        public void izmeniRadnoMesto(RadnoMesto r);
+        public void dodajRadnoMesto(RadnoMesto r);
+        public void izmeniSaluZaSastanke(SalaZaSastanke s);
+        public void dodajSaluZaSastanke(SalaZaSastanke s);
+        public void izmeniResurs(Resurs r);
+        public void dodajResurs(Resurs r);
 
         //-------------------------TIP CLANSTVA-------------------------
         public void dodajTipClanstva(TipClanstva t);

@@ -504,6 +504,7 @@
             addResourceButton.TabIndex = 43;
             addResourceButton.Text = "Dodaj resurs";
             addResourceButton.TextColor = Color.FromArgb(243, 243, 243);
+            addResourceButton.Click += addResourceButton_Click;
             // 
             // DodajResurs
             // 

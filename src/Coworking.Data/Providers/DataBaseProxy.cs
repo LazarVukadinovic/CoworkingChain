@@ -20,8 +20,8 @@ namespace Coworking.Data.Providers
         private Dictionary<(string datum, int lokacija), List<Rezervacija>> cachedRezervacijeZaDanILokaciju = new Dictionary<(string, int), List<Rezervacija>>();
 
         private Dictionary<int, List<RadnoMesto>> cachedRadnaMestaPoLokaciji = new Dictionary<int, List<RadnoMesto>>();
-        List<SalaZaSastanke>? cachedSalaZaSastanke = null;
-        List<RadnoMesto>? cachedRadnaMesta = null;
+        SalaZaSastanke? cachedSalaZaSastanke = null;
+        RadnoMesto? cachedRadnaMesta = null;
         private Dictionary<int, List<Resurs>> cachedResursiPoLokacijiIPoTipu = new Dictionary<int, List<Resurs>>();
         List<Resurs> cachedResursi = null;
 
@@ -197,22 +197,22 @@ namespace Coworking.Data.Providers
             }
             return cachedRadnaMestaPoLokaciji[lokacijaId];
         }
-        public List<SalaZaSastanke> prikaziSaleZaSastankePoId(int resursId)
+        public SalaZaSastanke prikaziSaleZaSastankePoId(int resursId)
         {
             
-            cachedSalaZaSastanke = _facade.prikaziSaleZaSastankePoId(resursId);
-            needReset = false;
-            
-            return cachedSalaZaSastanke;
+            return _facade.prikaziSaleZaSastankePoId(resursId);
         }
-        public List<RadnoMesto> prikaziRadnaMestaPoId(int resursId)
+        public RadnoMesto prikaziRadnaMestaPoId(int resursId)
         {
-
-            cachedRadnaMesta = _facade.prikaziRadnaMestaPoId(resursId);
-            needReset = false;
-
-            return cachedRadnaMesta;
+            return _facade.prikaziRadnaMestaPoId(resursId);
         }
+        public void izmeniRadnoMesto(RadnoMesto r) => _facade.izmeniRadnoMesto(r);
+        public void dodajRadnoMesto(RadnoMesto r) => _facade.dodajRadnoMesto(r);
+        public void izmeniSaluZaSastanke(SalaZaSastanke s) => _facade.izmeniSaluZaSastanke(s);
+        public void dodajSaluZaSastanke(SalaZaSastanke s) => _facade.dodajSaluZaSastanke(s);
+        public void dodajResurs(Resurs r) => _facade.dodajResurs(r);
+
+        public void izmeniResurs(Resurs r) => _facade.izmeniResurs(r);
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name)
         {
             //if (cachedResursiPoLokacijiIPoTipu.ContainsKey(lokacijaId) == false || needReset == true)
