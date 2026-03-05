@@ -39,6 +39,10 @@ namespace Coworking.Data.Repositories
             string upit = $"SELECT * FROM tip_clanstva WHERE tip_clanstva_id = {id}";
             var tipClanstvaList = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapTipClanstva);
             return tipClanstvaList.FirstOrDefault();
+
+            //var tipClanstva = tipClanstvaList.FirstOrDefault();
+            //if (tipClanstva == null) throw new KeyNotFoundException($"Tip clanstva id='{id}' ne postoji");
+            //return tipClanstva;
         }
 
         public List<TipClanstva> GetAll()

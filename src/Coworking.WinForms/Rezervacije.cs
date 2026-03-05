@@ -47,7 +47,7 @@ namespace Coworking.WinForms
 
             var selectedReservation = (Rezervacija)reservationDataGridView.SelectedRows[0].DataBoundItem;
             var confirm = MessageBox.Show(
-                $"Da li sigurno želiš da obrišeš rezervaciju #{selectedReservation.rezervacijaId}?",
+                $"Da li sigurno ï¿½eliï¿½ da obriï¿½eï¿½ rezervaciju #{selectedReservation.rezervacijaId}?",
                 "Potvrda brisanja",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -114,6 +114,7 @@ namespace Coworking.WinForms
             }
 
             UpdateUI();
+            loadLocations();
         }
 
         private void UpdateUI()
@@ -133,6 +134,42 @@ namespace Coworking.WinForms
 
             // prikaz dugmeta
             searchButton.Visible = userRadioButton.Checked || locationDateRadioButton.Checked;
+        }
+
+        private void loadReservations()
+        {
+            var reservations = singleton.prikaziSveRezervacije();
+            reservationDataGridView.DataSource = reservations;
+        }
+
+        private void loadLocations()
+        {
+            var locations = singleton.prikaziLokacije(false);
+            locationComboBox.DataSource = locations;
+            locationComboBox.DisplayMember = "naziv";
+            locationComboBox.ValueMember = "lokacijaId";
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            if(locationDateRadioButton.Checked == true)
+            {
+                var locationId = (int)locationComboBox.SelectedValue;
+                var date = dateDateTime.Value.ToString("yyyy-MM-dd"); ;
+                var results = singleton.prikaziRezervacijeZaDanILokaciju(date.ToString(), locationId);
+                reservationDataGridView.DataSource = results;
+            }
+            else
+            {
+                //var user = userTextBox.Text;
+                //var statusi = new List<string>();
+                //if (reservedCheckBox.Checked) statusi.Add("Reserved");
+                //if (confirmedCheckBox.Checked) statusi.Add("Confirmed");
+                //if (cancelledCheckBox.Checked) statusi.Add("Cancelled");
+                //if (doneCheckBox.Checked) statusi.Add("Done");
+                //var results = singleton.prikaziRezervacijeSaStatusomZaIzabranogClana(user, statusi);
+                //reservationDataGridView.DataSource = results;
+            }
         }
     }
 }

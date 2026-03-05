@@ -1,11 +1,6 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
+using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -24,7 +19,7 @@ namespace Coworking.Data.Repositories
             string upit = $@"
             INSERT INTO resurs (lokacija_id, oznaka, tip_resursa, opis)
             VALUES (
-                '{item.lokacijaId}',
+                {item.lokacijaId},
                 '{item.oznaka}',
                 '{item.tipResursa}',
                 '{item.opis}'
@@ -46,7 +41,7 @@ namespace Coworking.Data.Repositories
             SELECT r.*
             FROM resurs r
             WHERE r.lokacija_id = {locationId}
-            AND r.tip_resursa = {name}";
+            AND r.tip_resursa = '{name}'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
         }
 
@@ -55,7 +50,7 @@ namespace Coworking.Data.Repositories
             string upit = $@"
             UPDATE resurs
             SET 
-                lokacija_id = '{item.lokacijaId}',
+                lokacija_id = {item.lokacijaId},
                 oznaka = '{item.oznaka}',
                 tip_resursa = '{item.tipResursa}',
                 opis = '{item.opis}'
@@ -64,34 +59,9 @@ namespace Coworking.Data.Repositories
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
-        {
-            string upit = $@"
-            SELECT r.*,rmd.podtip CASE 
-                WHEN rv.pocetak<SYSDATETIME() AND rv.kraj>SYSDATETIME() and rv.status!='Otkazan' THEN 'Zauzeto'
-                ELSE 'Dostupno'
-                END AS dostupnost
-            FROM radno_mesto_detalj rmd
-            JOIN resurs r on rmd.resurs_id=r.resurs_id
-            JOIN rezervacija rv on rv.resurs_id=r.resurs_id
-            WHERE r.lokacija_id = {lokacijaId}";
-
-            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRadnoMesto);
-        }
-
-        public List<SalaZaSastanke> prikaziSaleZaSastanke()
-        {
-            string upit = $@"
-            SELECT r.*,s.sala_id,s.kapacitet,s.ima_projektor,s.ima_tv,s.ima_tablu,s.ima_online_opremu
-            FROM sala_detalj s
-            JOIN resurs r on r.resurs_id=s.resurs_id";
-
-            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapSalaZaSastanke);
-        }
-
         public void Delete(int id)
         {
-            string upit = $"DeleTE FROM resurs WHERE resurs_id = {id}";
+            string upit = $"DELETE FROM resurs WHERE resurs_id = {id}";
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
@@ -100,6 +70,9 @@ namespace Coworking.Data.Repositories
             string upit = $"SELECT * FROM resurs WHERE resurs_id = {id}";
             List<Resurs> resursi = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
             return resursi.Count > 0 ? resursi[0] : null;
+
+            //if (resursi.Count == 0) throw new KeyNotFoundException($"Resurs sa id={id} ne postoji.");
+            //return resursi[0];
         }
 
         public List<Resurs> GetByName(string name)

@@ -1,5 +1,6 @@
 using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
 using Microsoft.Identity.Client;
 using System.Diagnostics;
 
@@ -10,6 +11,8 @@ namespace Coworking.Data.Providers
         private readonly ClanRepository _clanRepo;
         private readonly LokacijaRepository _lokacijaRepo;
         private readonly ResursRepository _resursRepo;
+        private readonly RadnoMestoRepository _radnoMestoRepo;
+        private readonly SalaZaSastankeRepository _salaRepo;
         private readonly RezervacijaRepository _rezRepo;
         private readonly TipClanstvaRepository _tcRepo;
         private readonly AdminRepository _adminRepo;
@@ -19,6 +22,8 @@ namespace Coworking.Data.Providers
             _clanRepo = new ClanRepository(settings.Adapter, settings.Mapper);
             _lokacijaRepo = new LokacijaRepository(settings.Adapter, settings.Mapper);
             _resursRepo = new ResursRepository(settings.Adapter, settings.Mapper);
+            _radnoMestoRepo = new RadnoMestoRepository(settings.Adapter, settings.Mapper);
+            _salaRepo = new SalaZaSastankeRepository(settings.Adapter, settings.Mapper);
             _rezRepo = new RezervacijaRepository(settings.Adapter, settings.Mapper);
             _tcRepo = new TipClanstvaRepository(settings.Adapter, settings.Mapper);
             _adminRepo = new AdminRepository(settings.Adapter, settings.Mapper);
@@ -35,7 +40,7 @@ namespace Coworking.Data.Providers
 
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
         {
-            // Uvek kreni od svih, pa sužavaj krug
+            // Uvek kreni od svih, pa suï¿½avaj krug
             var clanovi = _clanRepo.GetAll();
 
             if (lokacijaId.HasValue)
@@ -87,7 +92,8 @@ namespace Coworking.Data.Providers
 
                 int brojRezervisanih = rezervacije.FindAll(r =>
                     resursiLokacije.Exists(res => res.resursId == r.resursId) &&
-                    r.status == "Aktivna").Count;
+                    r.status == ReservationStatus.Rezervisana ||
+                    r.status == ReservationStatus.Potvrdjena).Count;
 
                 double procenat = brojResursa == 0 ? 0 : (double)brojRezervisanih / brojResursa * 100;
 
@@ -123,28 +129,37 @@ namespace Coworking.Data.Providers
             foreach (var r in rezervacije)
                 if (DateTime.Parse(r.kraj) < DateTime.Now)
                 {
-                    _rezRepo.UpdateStatus(r.rezervacijaId, "Prošla");
-                    r.status = "Prošla";
+                    _rezRepo.UpdateStatus(r.rezervacijaId, ReservationStatus.Zavrsena);
+                    r.status = ReservationStatus.Zavrsena;
                 }
 
             return rezervacije;
         }
 
 
-        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);
 
 
         //-------------------------RESURSI-------------------------
         //-------------------------RESURSI-------------------------
         //-------------------------RESURSI-------------------------
 
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _resursRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
+        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _radnoMestoRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
+        public RadnoMesto prikaziRadnaMestaPoId(int resurdId) => _radnoMestoRepo.GetById(resurdId);
+        public void izmeniRadnoMesto(RadnoMesto r) => _radnoMestoRepo.Update(r);
+        public void dodajRadnoMesto(RadnoMesto r) => _radnoMestoRepo.Add(r);
 
-        public List<SalaZaSastanke> prikaziSaleZaSastanke() => _resursRepo.prikaziSaleZaSastanke();
 
+        public SalaZaSastanke prikaziSaleZaSastankePoId(int resurdId) => _salaRepo.GetById(resurdId);
+        public void izmeniSaluZaSastanke(SalaZaSastanke s) => _salaRepo.Update(s);
+        public void dodajSaluZaSastanke(SalaZaSastanke s) => _salaRepo.Add(s);
+
+
+        public void izmeniResurs(Resurs r) => _resursRepo.Update(r);
+        public void dodajResurs(Resurs r) => _resursRepo.Add(r);
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string? name) 
         {
-            // Uvek kreni od svih, pa sužavaj krug
+            // Uvek kreni od svih, pa suï¿½avaj krug
             var resursi = _resursRepo.GetAll();
 
             if (lokacijaId.HasValue)
@@ -197,6 +212,7 @@ namespace Coworking.Data.Providers
         //-------------------------LOGIN-------------------------
         public bool getAdminByUsername(string username, string password)
         {
+            // tokom radne faze projekta return true, za gotov projekat se brise return true
             return true;
             var admin = _adminRepo.getAdminByUsername(username);
             if (admin == null)

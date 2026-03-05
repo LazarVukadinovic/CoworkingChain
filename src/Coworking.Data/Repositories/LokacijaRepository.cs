@@ -1,10 +1,6 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -40,7 +36,10 @@ namespace Coworking.Data.Repositories
             string upit = "SELECT DISTINCT l.* FROM lokacija l";
             if(check)
             {
-                upit += $" JOIN resurs r on r.lokacija_id=l.lokacija_id JOIN rezervacija rv on rv.resurs_id=r.resurs_id WHERE rv.status='Rezervisana'";
+                upit += $@" JOIN resurs r on r.lokacija_id=l.lokacija_id 
+                            JOIN rezervacija rv on rv.resurs_id=r.resurs_id 
+                            WHERE rv.status='{ReservationStatus.Rezervisana.ToDbString()}' OR 
+                                    rv.status='{ReservationStatus.Potvrdjena.ToDbString()}'";
             }
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
         }

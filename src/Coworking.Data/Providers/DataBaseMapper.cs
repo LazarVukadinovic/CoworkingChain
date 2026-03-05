@@ -1,4 +1,5 @@
 ﻿using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
 using System.Data;
 
 namespace Coworking.Data.Providers
@@ -70,8 +71,8 @@ namespace Coworking.Data.Providers
                 oznaka = red["oznaka"].ToString(),
                 tipResursa = red["tip_resursa"].ToString(),
                 opis = red["opis"].ToString(),
-                podtip = (PodtipRadnogMesta)Enum.Parse(typeof(PodtipRadnogMesta), red["podtip"].ToString()),
-                dostupan = red["dostupnost"].ToString()
+                podtip = (PodtipRadnogMesta)Enum.Parse(typeof(PodtipRadnogMesta), red["podtip"].ToString())
+                //dostupan = red["dostupnost"].ToString()
             };
         }
 
@@ -83,7 +84,7 @@ namespace Coworking.Data.Providers
                 oznaka = red["oznaka"].ToString(), 
                 tipResursa = red["tip_resursa"].ToString(), 
                 opis = red["opis"].ToString(),
-                salaId= (int)red["sala_id"],
+                salaId= (int)red["sala_detalj_id"],
                 kapacitet = (int)red["kapacitet"],
                 imaProjektor = Convert.ToBoolean(red["ima_projektor"]), 
                 imaTablu = Convert.ToBoolean(red["ima_tablu"]), 
@@ -114,7 +115,10 @@ namespace Coworking.Data.Providers
                 rezervacijaId = (int)red["rezervacija_id"],
                 pocetak = red["pocetak"].ToString(),
                 kraj = red["kraj"].ToString(),
-                status = red["status"].ToString(),
+                // red["status"]?.ToString() ?? ""
+                // ako je red["status"] null ceo izraz postaje null i ne zove se ToString(), ako nije null normalno se izvrsava
+                // ?? - ako je levi deo null koristi se prazan string "", ako nije null onda standardno levi
+                status = ReservationStatusTransformator.FromDbString(red["status"]?.ToString() ?? ""),
                 kreiranoU = red["kreirano_u"].ToString(),
                 otkazanoU = red["otkazano_u"].ToString(),
                 clanId = (int)red["clan_id"],

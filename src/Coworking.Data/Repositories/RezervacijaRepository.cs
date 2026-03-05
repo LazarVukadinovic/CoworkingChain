@@ -1,9 +1,6 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -26,11 +23,11 @@ namespace Coworking.Data.Repositories
                 VALUES (
                     '{item.pocetak}',
                     '{item.kraj}',
-                    '{item.status}',
+                    '{item.status.ToDbString()}',
                     '{item.kreiranoU}',
                     '{item.otkazanoU}',
-                    '{item.clanId}',
-                    '{item.resursId}'
+                    {item.clanId},
+                    {item.resursId}
                 );";
 
             _adapter.izvrsiUpitBezRezultata(upit);
@@ -42,12 +39,12 @@ namespace Coworking.Data.Repositories
                 UPDATE rezervacija
                 SET pocetak = '{item.pocetak}',
                     kraj = '{item.kraj}',
-                    status = '{item.status}',
+                    status = '{item.status.ToDbString()}',
                     kreirano_u = '{item.kreiranoU}',
                     otkazano_u = '{item.otkazanoU}',
-                    clan_id = '{item.clanId}',
-                    resurs_id = '{item.resursId}'
-                WHERE rezervacija_id = '{item.rezervacijaId}';";
+                    clan_id = {item.clanId},
+                    resurs_id = {item.resursId}
+                WHERE rezervacija_id = {item.rezervacijaId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
@@ -56,7 +53,7 @@ namespace Coworking.Data.Repositories
         {
             string upit = $@"
                 UPDATE rezervacija
-                SET status = 'Otkazana'
+                SET status = '{ReservationStatus.Otkazana.ToDbString()}'
                 WHERE rezervacija_id = {rezervacijaId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);
@@ -68,11 +65,11 @@ namespace Coworking.Data.Repositories
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
-        public void UpdateStatus(int rezervacijaId, string status)
+        public void UpdateStatus(int rezervacijaId, ReservationStatus status)
         {
             string upit = $@"
                 UPDATE rezervacija
-                SET status = '{status}'
+                SET status = '{status.ToDbString()}'
                 WHERE rezervacija_id = {rezervacijaId};";
             _adapter.izvrsiUpitBezRezultata(upit);
         }
@@ -83,10 +80,17 @@ namespace Coworking.Data.Repositories
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
-        public List<Rezervacija> GetReservationsByDateAndLocation(string date, string location)
+        public List<Rezervacija> GetReservationsByDateAndLocation(string date, int location)
         {
-            string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
-                $"WHERE rv.pocetak >= '{date}' AND rv.kraj < DATEADD(day, 1, '{date}') AND r.lokacija_id={location} AND rv.status != 'Otkazana'";
+            //DateTime dt = DateTime.Parse(date);
+            //string sutra = dt.AddDays(1).ToString("yyyy-MM-dd");
+            string nextDay = _adapter.AddDaysExpr($"'{date}'", 1);
+
+            // Ovaj upit sada radi na SVIM bazama (MySQL, MSSQL, PostgreSQL...)
+            string upit = $"SELECT rv.*, r.oznaka FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
+                          $"WHERE rv.pocetak >= '{date}' AND rv.kraj < '{nextDay}' " +
+                          $"AND r.lokacija_id={location} AND rv.status != '{ReservationStatus.Otkazana.ToDbString()}'";
+
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
@@ -105,7 +109,9 @@ namespace Coworking.Data.Repositories
 
         public List<Rezervacija> GetByName(string name)
         {
-            string upit = $"SELECT rv.*, r.naziv FROM rezervacija rv JOIN resurs r ON rv.resurs_id = r.resurs_id WHERE r.naziv LIKE '%{name.Trim()}%'";
+            string upit = $@"SELECT rv.*, r.oznaka FROM rezervacija rv 
+                            JOIN resurs r ON rv.resurs_id = r.resurs_id 
+                            WHERE r.naziv LIKE '%{name.Trim()}%'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
     }
