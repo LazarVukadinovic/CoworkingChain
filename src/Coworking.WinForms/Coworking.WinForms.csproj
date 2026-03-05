@@ -33,7 +33,7 @@
     <None Update="migrations\mysql\003_views.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="migrations\mysql\procedures.sql">
+    <None Update="migrations\mysql\004_procedures.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="migrations\mysql\reset.sql">

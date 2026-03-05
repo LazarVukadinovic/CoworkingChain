@@ -26,8 +26,8 @@ namespace Coworking.Data.Repositories
                     '{item.status.ToDbString()}',
                     '{item.kreiranoU}',
                     '{item.otkazanoU}',
-                    '{item.clanId}',
-                    '{item.resursId}'
+                    {item.clanId},
+                    {item.resursId}
                 );";
 
             _adapter.izvrsiUpitBezRezultata(upit);
@@ -42,9 +42,9 @@ namespace Coworking.Data.Repositories
                     status = '{item.status.ToDbString()}',
                     kreirano_u = '{item.kreiranoU}',
                     otkazano_u = '{item.otkazanoU}',
-                    clan_id = '{item.clanId}',
-                    resurs_id = '{item.resursId}'
-                WHERE rezervacija_id = '{item.rezervacijaId}';";
+                    clan_id = {item.clanId},
+                    resurs_id = {item.resursId}
+                WHERE rezervacija_id = {item.rezervacijaId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
@@ -82,12 +82,13 @@ namespace Coworking.Data.Repositories
 
         public List<Rezervacija> GetReservationsByDateAndLocation(string date, int location)
         {
-            DateTime dt = DateTime.Parse(date);
-            string sutra = dt.AddDays(1).ToString("yyyy-MM-dd");
+            //DateTime dt = DateTime.Parse(date);
+            //string sutra = dt.AddDays(1).ToString("yyyy-MM-dd");
+            string nextDay = _adapter.AddDaysExpr($"'{date}'", 1);
 
             // Ovaj upit sada radi na SVIM bazama (MySQL, MSSQL, PostgreSQL...)
             string upit = $"SELECT rv.*, r.oznaka FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
-                          $"WHERE rv.pocetak >= '{date}' AND rv.kraj < '{sutra}' " +
+                          $"WHERE rv.pocetak >= '{date}' AND rv.kraj < '{nextDay}' " +
                           $"AND r.lokacija_id={location} AND rv.status != '{ReservationStatus.Otkazana.ToDbString()}'";
 
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
@@ -108,7 +109,9 @@ namespace Coworking.Data.Repositories
 
         public List<Rezervacija> GetByName(string name)
         {
-            string upit = $"SELECT rv.*, r.oznaka FROM rezervacija rv JOIN resurs r ON rv.resurs_id = r.resurs_id WHERE r.naziv LIKE '%{name.Trim()}%'";
+            string upit = $@"SELECT rv.*, r.oznaka FROM rezervacija rv 
+                            JOIN resurs r ON rv.resurs_id = r.resurs_id 
+                            WHERE r.naziv LIKE '%{name.Trim()}%'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
     }

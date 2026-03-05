@@ -19,7 +19,7 @@ namespace Coworking.Data.Migrations
             string migrationsPath = System.IO.Path.Combine(migrationsBasePath, providerFolder);
 
             var history = new MigrationHistoryRepository(adapter, provider);
-            var runner = new MigrationRunner(adapter, history);
+            var runner = new MigrationRunner(adapter, history, provider);
             runner.DajNoveMigracije(migrationsPath);
         }
 
