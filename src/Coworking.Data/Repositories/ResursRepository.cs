@@ -1,11 +1,6 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
+using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -68,7 +63,7 @@ namespace Coworking.Data.Repositories
         {
             string upit = $@"
             SELECT r.*,rmd.podtip CASE 
-                WHEN rv.pocetak<SYSDATETIME() AND rv.kraj>SYSDATETIME() and rv.status!='Otkazan' THEN 'Zauzeto'
+                WHEN rv.pocetak<SYSDATETIME() AND rv.kraj>SYSDATETIME() and rv.status!='{ReservationStatus.Otkazana.ToDbString()}' THEN 'Zauzeto'
                 ELSE 'Dostupno'
                 END AS dostupnost
             FROM radno_mesto_detalj rmd

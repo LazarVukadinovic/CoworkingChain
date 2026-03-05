@@ -1,10 +1,6 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -90,7 +86,7 @@ namespace Coworking.Data.Repositories
 
         public List<Clan> vratiClanovePoLokaciji(int lokacijaId)
         {
-            string upit = @$"SELECT DISTINCT c.* FROM clan c JOIN rezervacija rv on rv.clan_id=c.clan_id JOIN resurs r on r.resurs_id=rv.resurs_id WHERE r.lokacija_id={lokacijaId} AND rv.status = 'Rezervisana'";
+            string upit = @$"SELECT DISTINCT c.* FROM clan c JOIN rezervacija rv on rv.clan_id=c.clan_id JOIN resurs r on r.resurs_id=rv.resurs_id WHERE r.lokacija_id={lokacijaId} AND rv.status = '{ReservationStatus.Rezervisana.ToDbString()}'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
     }
