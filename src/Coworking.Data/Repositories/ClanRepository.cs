@@ -26,7 +26,7 @@ namespace Coworking.Data.Repositories
                 '{item.datumPocetka}',
                 '{item.datumKraja}',
                 '{item.statusNaloga}',
-                '{item.tipClanstva}',
+                {item.tipClanstva},
                 '{item.kreiran}'
             );";
 
@@ -37,7 +37,7 @@ namespace Coworking.Data.Repositories
         {
             string upit = $@"
             DELETE FROM clan
-            WHERE clan_id={clanId};
+            WHERE clan_id = {clanId};
             ";
 
             _adapter.izvrsiUpitBezRezultata(upit);
@@ -56,14 +56,17 @@ namespace Coworking.Data.Repositories
 
         public Clan GetById(int id)
         {
-            string upit = $"SELECT * FROM clan WHERE clan_id={id}";
+            string upit = $"SELECT * FROM clan WHERE clan_id = {id}";
             var clanovi = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
             return clanovi.Count > 0 ? clanovi[0] : null;
+
+            //if (clanovi.Count == 0) throw new KeyNotFoundException($"Clan sa id={id} ne postoji.");
+            //return clanovi[0];
         }
 
         public List<Clan> GetByName(string name)
         {
-            string upit = $"SELECT * FROM clan WHERE ime='{name}'";
+            string upit = $"SELECT * FROM clan WHERE ime = '{name}'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
 
@@ -86,7 +89,11 @@ namespace Coworking.Data.Repositories
 
         public List<Clan> vratiClanovePoLokaciji(int lokacijaId)
         {
-            string upit = @$"SELECT DISTINCT c.* FROM clan c JOIN rezervacija rv on rv.clan_id=c.clan_id JOIN resurs r on r.resurs_id=rv.resurs_id WHERE r.lokacija_id={lokacijaId} AND rv.status = '{ReservationStatus.Rezervisana.ToDbString()}'";
+            string upit = @$"SELECT DISTINCT c.* FROM clan c 
+                                JOIN rezervacija rv on rv.clan_id=c.clan_id 
+                                JOIN resurs r on r.resurs_id=rv.resurs_id 
+                                WHERE r.lokacija_id={lokacijaId} AND 
+                                    rv.status = '{ReservationStatus.Rezervisana.ToDbString()}'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
     }

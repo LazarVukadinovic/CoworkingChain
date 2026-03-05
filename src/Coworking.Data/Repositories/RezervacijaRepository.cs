@@ -26,8 +26,8 @@ namespace Coworking.Data.Repositories
                     '{item.status.ToDbString()}',
                     '{item.kreiranoU}',
                     '{item.otkazanoU}',
-                    '{item.clanId}',
-                    '{item.resursId}'
+                    {item.clanId},
+                    {item.resursId}
                 );";
 
             _adapter.izvrsiUpitBezRezultata(upit);
@@ -42,9 +42,9 @@ namespace Coworking.Data.Repositories
                     status = '{item.status.ToDbString()}',
                     kreirano_u = '{item.kreiranoU}',
                     otkazano_u = '{item.otkazanoU}',
-                    clan_id = '{item.clanId}',
-                    resurs_id = '{item.resursId}'
-                WHERE rezervacija_id = '{item.rezervacijaId}';";
+                    clan_id = {item.clanId},
+                    resurs_id = {item.resursId}
+                WHERE rezervacija_id = {item.rezervacijaId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
@@ -108,7 +108,9 @@ namespace Coworking.Data.Repositories
 
         public List<Rezervacija> GetByName(string name)
         {
-            string upit = $"SELECT rv.*, r.oznaka FROM rezervacija rv JOIN resurs r ON rv.resurs_id = r.resurs_id WHERE r.naziv LIKE '%{name.Trim()}%'";
+            string upit = $@"SELECT rv.*, r.oznaka FROM rezervacija rv 
+                            JOIN resurs r ON rv.resurs_id = r.resurs_id 
+                            WHERE r.naziv LIKE '%{name.Trim()}%'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
     }

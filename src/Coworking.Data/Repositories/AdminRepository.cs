@@ -40,6 +40,10 @@ namespace Coworking.Data.Repositories
             ";
             var result = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapAdmin);
             return result?.FirstOrDefault();
+
+            //var admin = result?.FirstOrDefault();
+            //if (admin == null) throw new KeyNotFoundException($"Admin '{username}' ne postoji");
+            //return admin;
         }
     }
 }
