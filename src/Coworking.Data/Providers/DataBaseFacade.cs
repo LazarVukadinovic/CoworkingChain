@@ -1,4 +1,4 @@
-﻿using Coworking.Data.Repositories;
+using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using Microsoft.Identity.Client;
@@ -40,7 +40,7 @@ namespace Coworking.Data.Providers
 
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
         {
-            // Uvek kreni od svih, pa sužavaj krug
+            // Uvek kreni od svih, pa su�avaj krug
             var clanovi = _clanRepo.GetAll();
 
             if (lokacijaId.HasValue)
@@ -114,6 +114,7 @@ namespace Coworking.Data.Providers
         public void dodajRezervaciju(Rezervacija r) => _rezRepo.Add(r);
         public void izmeniRezervaciju(Rezervacija r) => _rezRepo.Update(r);
         public void otkaziRezervaciju(int rezervacijaId) => _rezRepo.Cancel(rezervacijaId);
+        public void obrisiRezervaciju(int rezervacijaId) => _rezRepo.Delete(rezervacijaId);
         public List<Rezervacija> prikaziSveRezervacije() => _rezRepo.GetAll();
 
 
@@ -158,7 +159,7 @@ namespace Coworking.Data.Providers
         public void dodajResurs(Resurs r) => _resursRepo.Add(r);
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string? name) 
         {
-            // Uvek kreni od svih, pa sužavaj krug
+            // Uvek kreni od svih, pa su�avaj krug
             var resursi = _resursRepo.GetAll();
 
             if (lokacijaId.HasValue)
@@ -170,6 +171,7 @@ namespace Coworking.Data.Providers
             return resursi;
         }
         public List<Resurs> prikaziSveResurse() => _resursRepo.GetAll();
+        public void obrisiResurs(int resursId) => _resursRepo.Delete(resursId);
 
 
         //-------------------------TIP CLANSTVA-------------------------
@@ -229,3 +231,5 @@ namespace Coworking.Data.Providers
 
     }
 }
+
+

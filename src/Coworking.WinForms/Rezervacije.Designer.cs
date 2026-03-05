@@ -1,4 +1,4 @@
-ï»¿namespace Coworking.WinForms
+namespace Coworking.WinForms
 {
     partial class Rezervacije
     {
@@ -36,6 +36,7 @@
             filterPanel = new Panel();
             currentLocationCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
             editReservationButton = new ReaLTaiizor.Controls.ForeverButton();
+            deleteReservationButton = new ReaLTaiizor.Controls.ForeverButton();
             addReservationButton = new ReaLTaiizor.Controls.ForeverButton();
             locationLabel = new ReaLTaiizor.Controls.HeaderLabel();
             locationComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
@@ -87,6 +88,7 @@
             filterPanel.BackColor = Color.FromArgb(37, 52, 68);
             filterPanel.BorderStyle = BorderStyle.FixedSingle;
             filterPanel.Controls.Add(currentLocationCheckBox);
+            filterPanel.Controls.Add(deleteReservationButton);
             filterPanel.Controls.Add(editReservationButton);
             filterPanel.Controls.Add(addReservationButton);
             filterPanel.Dock = DockStyle.Top;
@@ -119,7 +121,7 @@
             currentLocationCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
             currentLocationCheckBox.LinearGradient_Background = false;
             currentLocationCheckBox.LinearGradientPen = false;
-            currentLocationCheckBox.Location = new Point(398, 12);
+            currentLocationCheckBox.Location = new Point(586, 12);
             currentLocationCheckBox.Name = "currentLocationCheckBox";
             currentLocationCheckBox.RGB = false;
             currentLocationCheckBox.Rounding = false;
@@ -148,7 +150,21 @@
             editReservationButton.TextColor = Color.FromArgb(243, 243, 243);
             editReservationButton.Click += editReservationButton_Click;
             // 
-            // addReservationButton
+                        // deleteReservationButton
+            // 
+            deleteReservationButton.BackColor = Color.Transparent;
+            deleteReservationButton.BaseColor = Color.Red;
+            deleteReservationButton.Cursor = Cursors.Hand;
+            deleteReservationButton.Font = new Font("Segoe UI", 12F);
+            deleteReservationButton.Location = new Point(381, 12);
+            deleteReservationButton.Name = "deleteReservationButton";
+            deleteReservationButton.Rounded = true;
+            deleteReservationButton.Size = new Size(183, 45);
+            deleteReservationButton.TabIndex = 8;
+            deleteReservationButton.Text = "Obriši rezervaciju";
+            deleteReservationButton.TextColor = Color.FromArgb(243, 243, 243);
+            deleteReservationButton.Click += deleteReservationButton_Click;
+            // // addReservationButton
             // 
             addReservationButton.BackColor = Color.Transparent;
             addReservationButton.BaseColor = Color.FromArgb(35, 168, 109);
@@ -622,6 +638,7 @@
         private ReaLTaiizor.Controls.CyberTextBox userTextBox;
         private ReaLTaiizor.Controls.ForeverButton searchButton;
         private ReaLTaiizor.Controls.ForeverButton editReservationButton;
+        private ReaLTaiizor.Controls.ForeverButton deleteReservationButton;
         private ReaLTaiizor.Controls.ForeverButton addReservationButton;
         private Panel filteringpanel;
         private ReaLTaiizor.Controls.CyberCheckBox reservedCheckBox;
@@ -639,3 +656,4 @@
         private ReaLTaiizor.Controls.CyberCheckBox currentLocationCheckBox;
     }
 }
+

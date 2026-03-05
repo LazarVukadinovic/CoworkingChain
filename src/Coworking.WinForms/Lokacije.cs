@@ -1,4 +1,4 @@
-ï»¿using Coworking.Data.Providers;
+using Coworking.Data.Providers;
 using Coworking.WinForms.Dialogues;
 using System;
 using System.Diagnostics;
@@ -58,9 +58,25 @@ namespace Coworking.WinForms
 
         private void deleteLocationButton_Click(object sender, EventArgs e)
         {
-            loadData();
-            var membershipId = (int)locationDataGridView.SelectedRows[0].Cells[0].Value;
-            DataBaseSingleton.vratiInstancu().obrisiLokaciju(membershipId);
+            if (locationDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi lokaciju za brisanje.", "Brisanje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var locationId = (int)locationDataGridView.SelectedRows[0].Cells[0].Value;
+            var confirm = MessageBox.Show(
+                "Da li sigurno želiš da obrišeš izabranu lokaciju?",
+                "Potvrda brisanja",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
+            DataBaseSingleton.vratiInstancu().obrisiLokaciju(locationId);
             loadData();
         }
 
@@ -72,3 +88,6 @@ namespace Coworking.WinForms
         }
     }
 }
+
+
+

@@ -1,4 +1,4 @@
-﻿using Coworking.Domain.Entities;
+using Coworking.Domain.Entities;
 
 namespace Coworking.Data.Providers
 {
@@ -31,6 +31,7 @@ namespace Coworking.Data.Providers
         public void dodajRezervaciju(Rezervacija r);
         public void izmeniRezervaciju(Rezervacija r);
         public void otkaziRezervaciju(int rezervacijaId);
+        public void obrisiRezervaciju(int rezervacijaId);
         public List<Rezervacija> prikaziSveRezervacije();
         // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
         // TO-DO
@@ -53,6 +54,7 @@ namespace Coworking.Data.Providers
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name);
         // Lista svih resursa
         public List<Resurs> prikaziSveResurse();
+        public void obrisiResurs(int resursId);
 
         public void izmeniRadnoMesto(RadnoMesto r);
         public void dodajRadnoMesto(RadnoMesto r);
@@ -83,3 +85,5 @@ namespace Coworking.Data.Providers
         public void addAdmin(Admin admin);
     }
 }
+
+

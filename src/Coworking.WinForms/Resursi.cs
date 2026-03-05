@@ -1,4 +1,4 @@
-ï»¿using Coworking.Data.Providers;
+using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.WinForms.Dialogues;
 using System;
@@ -21,13 +21,45 @@ namespace Coworking.WinForms
         {
             DodajResurs newResource = new DodajResurs();
             newResource.ShowDialog(this);
+            loadByLocationAndType();
         }
 
         private void editResourceButton_Click(object sender, EventArgs e)
         {
+            if (resourceDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi resurs za izmenu.", "Izmena", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var selectedRow = (Resurs)resourceDataGridView.SelectedRows[0].DataBoundItem;
             IzmeniResurs editResource = new IzmeniResurs(selectedRow);
             editResource.ShowDialog(this);
+            loadByLocationAndType();
+        }
+
+        private void deleteResourceButton_Click(object sender, EventArgs e)
+        {
+            if (resourceDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi resurs za brisanje.", "Brisanje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedRow = (Resurs)resourceDataGridView.SelectedRows[0].DataBoundItem;
+            var confirm = MessageBox.Show(
+                $"Da li sigurno želiš da obrišeš resurs '{selectedRow.oznaka}'?",
+                "Potvrda brisanja",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
+            singleton.obrisiResurs(selectedRow.resursId);
+            loadByLocationAndType();
         }
 
         private void resourceDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

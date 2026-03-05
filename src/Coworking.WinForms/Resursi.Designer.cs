@@ -1,4 +1,4 @@
-﻿namespace Coworking.WinForms
+namespace Coworking.WinForms
 {
     partial class Resursi
     {
@@ -161,7 +161,7 @@
             deleteResourceButton.Rounded = true;
             deleteResourceButton.Size = new Size(150, 45);
             deleteResourceButton.TabIndex = 3;
-            deleteResourceButton.Text = "Obriši resurs";
+            deleteResourceButton.Text = "Obri�i resurs";
             deleteResourceButton.TextColor = Color.FromArgb(243, 243, 243);
             deleteResourceButton.Click += deleteResourceButton_Click;
             // 
@@ -343,3 +343,4 @@
         private ReaLTaiizor.Controls.ForeverComboBox locationComboBox;
     }
 }
+
