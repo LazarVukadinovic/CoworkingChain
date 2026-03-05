@@ -24,12 +24,12 @@ namespace Coworking.Data.Repositories
             string upit = $@"
             INSERT INTO sala_detalj (resurs_id, kapacitet, ima_projektor, ima_tv, ima_tablu, ima_online_opremu)
             VALUES (
-                '{item.resursId}',
-                '{item.kapacitet}',
-                '{item.imaProjektor}',
-                '{item.imaTv}',
-                '{item.imaTablu}',
-                '{item.imaOpremuZaOnlineSastanke}'
+                {item.resursId},
+                {item.kapacitet},
+                {Convert.ToInt32(item.imaProjektor)},
+                {Convert.ToInt32(item.imaTv)},
+                {Convert.ToInt32(item.imaTablu)},
+                {Convert.ToInt32(item.imaOpremuZaOnlineSastanke)}
             );";
 
             _adapter.izvrsiUpitBezRezultata(upit);
@@ -38,7 +38,7 @@ namespace Coworking.Data.Repositories
         public List<SalaZaSastanke> GetAll()
         {
             string upit = $@"
-            SELECT r.*,rad.podtip
+            SELECT r.*,s.kapacitet,s.ima_projektor,s.ima_tv,s.ima_tablu,s.ima_online_opremu
             FROM sala_detalj s
             JOIN resurs r on r.resurs_id=s.resurs_id
             ";
@@ -51,11 +51,12 @@ namespace Coworking.Data.Repositories
             string upit = $@"
             UPDATE sala_detalj
             SET 
-                resurs_id = '{item.resursId}',
-                kapacitet = '{item.kapacitet}',
-                ima_projektor = '{item.imaProjektor}',
-                ima_tablu = '{item.imaTablu}',
-                ima_online_opremu = '{item.imaOpremuZaOnlineSastanke}'
+                resurs_id = {item.resursId},
+                kapacitet = {item.kapacitet},
+                ima_projektor = {Convert.ToInt32(item.imaProjektor)},
+                ima_tv = {Convert.ToInt32(item.imaTv)},
+                ima_tablu = {Convert.ToInt32(item.imaTablu)},
+                ima_online_opremu = {Convert.ToInt32(item.imaOpremuZaOnlineSastanke)}
             WHERE resurs_id = {item.resursId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);

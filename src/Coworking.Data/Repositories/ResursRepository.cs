@@ -80,5 +80,17 @@ namespace Coworking.Data.Repositories
             string upit = $"SELECT * FROM resurs WHERE oznaka LIKE '%{name.Trim()}%'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
         }
+
+        public Resurs giveLastAddedResource()
+        {
+            string upit = @"
+            SELECT *
+            FROM resurs
+            ORDER BY resurs_id DESC
+            LIMIT 1;";
+
+            List<Resurs> resursi = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
+            return resursi.Count > 0 ? resursi[0] : null;
+        }
     }
 }

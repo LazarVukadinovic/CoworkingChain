@@ -63,6 +63,7 @@ namespace Coworking.Data.Providers
         public void dodajSaluZaSastanke(SalaZaSastanke s);
         public void izmeniResurs(Resurs r);
         public void dodajResurs(Resurs r);
+        public Resurs giveLastAddedResource();
 
         //-------------------------TIP CLANSTVA-------------------------
         public void dodajTipClanstva(TipClanstva t);

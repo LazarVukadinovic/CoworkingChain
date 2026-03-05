@@ -25,7 +25,10 @@ namespace Coworking.Services.Builders
         {
             _resurs.opis = opis;
         }
-
+        public void SetResursId(int resursId)
+        {
+            _resurs.resursId = resursId;
+        }
         public void SetKapacitet(int kapacitet)
         {
             _resurs.kapacitet = kapacitet;

@@ -24,8 +24,8 @@ namespace Coworking.Data.Repositories
             string upit = $@"
             INSERT INTO radno_mesto_detalj (resurs_id, podtip)
             VALUES (
-                '{item.resursId}',
-                '{item.podtip}'
+                {item.resursId},
+                '{item.podtip.ToDbString()}'
             );";
 
             _adapter.izvrsiUpitBezRezultata(upit);
@@ -49,7 +49,7 @@ namespace Coworking.Data.Repositories
             UPDATE radno_mesto_detalj
             SET 
                 resurs_id = '{item.resursId}',
-                podtip = '{item.podtip}'
+                podtip = '{item.podtip.ToDbString()}'
             WHERE resurs_id = {item.resursId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);

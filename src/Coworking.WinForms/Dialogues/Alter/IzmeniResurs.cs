@@ -111,6 +111,8 @@ namespace Coworking.WinForms.Dialogues
             _selektovanResurs.lokacijaId = (int)locationComboBox.SelectedValue;
             _selektovanResurs.opis = aboutRichTextBox.TextButton;
 
+            singleton.izmeniResurs(_selektovanResurs);
+
             if (_selektovanResurs.tipResursa == "radno_mesto")
             {
                 RadnoMesto newRadnoMesto = singleton.prikaziRadnaMestaPoId(_selektovanResurs.resursId);
@@ -129,8 +131,6 @@ namespace Coworking.WinForms.Dialogues
 
                 singleton.izmeniSaluZaSastanke(newSalaZaSastanke);
             }
-
-            singleton.izmeniResurs(_selektovanResurs);
         }
     }
 }

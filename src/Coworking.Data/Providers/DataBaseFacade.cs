@@ -173,6 +173,7 @@ namespace Coworking.Data.Providers
         }
         public List<Resurs> prikaziSveResurse() => _resursRepo.GetAll();
         public void obrisiResurs(int resursId) => _resursRepo.Delete(resursId);
+        public Resurs giveLastAddedResource() => _resursRepo.giveLastAddedResource();
 
 
         //-------------------------TIP CLANSTVA-------------------------

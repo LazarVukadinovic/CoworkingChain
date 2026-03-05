@@ -16,6 +16,10 @@ namespace Coworking.Services.Builders
         {
             _resurs.lokacijaId = lokacijaId;
         }
+        public void SetResursId(int resursId)
+        {
+            _resurs.resursId = resursId;
+        }
 
         public void SetOznaka(string oznaka)
         {

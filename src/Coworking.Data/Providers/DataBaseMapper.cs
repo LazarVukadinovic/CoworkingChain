@@ -71,7 +71,7 @@ namespace Coworking.Data.Providers
                 oznaka = red["oznaka"].ToString(),
                 tipResursa = red["tip_resursa"].ToString(),
                 opis = red["opis"].ToString(),
-                podtip = (PodtipRadnogMesta)Enum.Parse(typeof(PodtipRadnogMesta), red["podtip"].ToString())
+                podtip = PodtipRadnogMestaTransformator.FromDbString(red["podtip"]?.ToString() ?? "")
                 //dostupan = red["dostupnost"].ToString()
             };
         }

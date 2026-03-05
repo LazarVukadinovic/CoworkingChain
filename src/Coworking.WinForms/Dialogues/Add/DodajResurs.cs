@@ -3,6 +3,7 @@ using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using Coworking.Services.Builders;
 using System;
+using System.Diagnostics;
 
 namespace Coworking.WinForms.Dialogues
 {
@@ -67,37 +68,37 @@ namespace Coworking.WinForms.Dialogues
             string oznaka = nameTextBox.textBox.Text;
             int lokacijaId = (int)locationComboBox.SelectedValue;
             string opis = aboutRichTextBox.TextButton;
+            string tipResursa = deskTypeRadioButton.Checked ? "radno_mesto" : "sala";
 
             Resurs newResurs = new Resurs();
             newResurs.oznaka = oznaka;
             newResurs.lokacijaId = lokacijaId;
+            newResurs.tipResursa = tipResursa;
             newResurs.opis = opis;
-
             singleton.dodajResurs(newResurs);
 
             var director = new ResursDirector();
+            int resursId = singleton.giveLastAddedResource().resursId;
 
             if (deskTypeRadioButton.Checked)
             {
-                var builder = new RadnoMestoBuilder();
-
                 var podtip = PodtipRadnogMestaTransformator.FromDbString(deskTypeComboBox.SelectedItem.ToString());
 
-                RadnoMesto newRadnoMesto = director.BuildRadnoMesto(builder, lokacijaId, oznaka, opis, podtip);
+                var builder = new RadnoMestoBuilder();
+                RadnoMesto newRadnoMesto = director.BuildRadnoMesto(builder, lokacijaId, oznaka, opis, resursId, podtip);
 
                 singleton.dodajRadnoMesto(newRadnoMesto);
             }
             else if (conferenceRadioButton.Checked)
             {
-                var builder = new SalaZaSastankeBuilder();
-
                 int kapacitet = Convert.ToInt32(capacityNumeric.Value);
                 bool imaOpremuZaOnlineSastanke = onlineCheckBox.Checked;
                 bool imaTablu = boardCheckBox.Checked;
                 bool imaTv = tvCheckBox.Checked;
                 bool imaProjektor = projectorCheckBox.Checked;
 
-                SalaZaSastanke newSalaZaSastanke = director.BuildSala(builder,lokacijaId,oznaka,opis,kapacitet,imaProjektor,imaTablu,imaTv,imaOpremuZaOnlineSastanke);
+                var builder = new SalaZaSastankeBuilder();
+                SalaZaSastanke newSalaZaSastanke = director.BuildSala(builder,lokacijaId,oznaka,opis,resursId,kapacitet,imaProjektor,imaTablu,imaTv,imaOpremuZaOnlineSastanke);
 
                 singleton.dodajSaluZaSastanke(newSalaZaSastanke);
             }

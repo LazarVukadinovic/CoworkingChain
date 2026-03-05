@@ -234,7 +234,7 @@ namespace Coworking.Data.Providers
             _facade.obrisiResurs(resursId);
             needReset = true;
         }
-
+        public Resurs giveLastAddedResource() => _facade.giveLastAddedResource();
 
         //-------------------------TIP CLANSTVA-------------------------
         //-------------------------TIP CLANSTVA-------------------------
