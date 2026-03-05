@@ -107,10 +107,5 @@ namespace Coworking.WinForms
         {
             loadByLocationAndType();
         }
-
-        private void deleteResourceButton_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
