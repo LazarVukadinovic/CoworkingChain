@@ -61,10 +61,11 @@ namespace Coworking.Data.Repositories
 
         public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
         {
+            string now = _adapter.NowExpr();
             string upit = $@"
             SELECT r.*,rmd.podtip, 
                 CASE 
-                    WHEN rv.pocetak<SYSDATETIME() AND rv.kraj>SYSDATETIME() and rv.status!='{ReservationStatus.Otkazana.ToDbString()}'
+                    WHEN rv.pocetak<{now} AND rv.kraj>{now} and rv.status!='{ReservationStatus.Otkazana.ToDbString()}'
                     THEN 'Zauzeto'
                     ELSE 'Dostupno'
                 END AS dostupnost

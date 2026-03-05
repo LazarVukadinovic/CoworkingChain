@@ -40,5 +40,17 @@ namespace Coworking.Data.Providers
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public string NowExpr()
+        {
+            return _factory is MySqlFactory ? "NOW()" : "SYSDATETIME()";
+        }
+
+        public string AddDaysExpr(string dateParam, int days)
+        {
+            return _factory is MySqlFactory
+                ? $"DATE_ADD({dateParam}, INTERVAL {days} DAY)"
+                : $"DATEADD(day, {days}, {dateParam})";
+        }
     }
 }
