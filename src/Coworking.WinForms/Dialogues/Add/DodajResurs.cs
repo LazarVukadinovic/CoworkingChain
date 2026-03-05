@@ -1,4 +1,7 @@
 ﻿using Coworking.Data.Providers;
+using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
+using Coworking.Services.Builders;
 using System;
 
 namespace Coworking.WinForms.Dialogues
@@ -57,6 +60,47 @@ namespace Coworking.WinForms.Dialogues
             locationComboBox.DisplayMember = "naziv";
             locationComboBox.ValueMember = "lokacijaId";
             locationComboBox.DataSource = locations;
+        }
+
+        private void addResourceButton_Click(object sender, EventArgs e)
+        {
+            string oznaka = nameTextBox.textBox.Text;
+            int lokacijaId = (int)locationComboBox.SelectedValue;
+            string opis = aboutRichTextBox.TextButton;
+
+            Resurs newResurs = new Resurs();
+            newResurs.oznaka = oznaka;
+            newResurs.lokacijaId = lokacijaId;
+            newResurs.opis = opis;
+
+            singleton.dodajResurs(newResurs);
+
+            var director = new ResursDirector();
+
+            if (deskTypeRadioButton.Checked)
+            {
+                var builder = new RadnoMestoBuilder();
+
+                var podtip = PodtipRadnogMestaTransformator.FromDbString(deskTypeComboBox.SelectedItem.ToString());
+
+                RadnoMesto newRadnoMesto = director.BuildRadnoMesto(builder, lokacijaId, oznaka, opis, podtip);
+
+                singleton.dodajRadnoMesto(newRadnoMesto);
+            }
+            else if (conferenceRadioButton.Checked)
+            {
+                var builder = new SalaZaSastankeBuilder();
+
+                int kapacitet = Convert.ToInt32(capacityNumeric.Value);
+                bool imaOpremuZaOnlineSastanke = onlineCheckBox.Checked;
+                bool imaTablu = boardCheckBox.Checked;
+                bool imaTv = tvCheckBox.Checked;
+                bool imaProjektor = projectorCheckBox.Checked;
+
+                SalaZaSastanke newSalaZaSastanke = director.BuildSala(builder,lokacijaId,oznaka,opis,kapacitet,imaProjektor,imaTablu,imaTv,imaOpremuZaOnlineSastanke);
+
+                singleton.dodajSaluZaSastanke(newSalaZaSastanke);
+            }
         }
     }
 }

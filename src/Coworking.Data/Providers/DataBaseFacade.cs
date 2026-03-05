@@ -11,6 +11,8 @@ namespace Coworking.Data.Providers
         private readonly ClanRepository _clanRepo;
         private readonly LokacijaRepository _lokacijaRepo;
         private readonly ResursRepository _resursRepo;
+        private readonly RadnoMestoRepository _radnoMestoRepo;
+        private readonly SalaZaSastankeRepository _salaRepo;
         private readonly RezervacijaRepository _rezRepo;
         private readonly TipClanstvaRepository _tcRepo;
         private readonly AdminRepository _adminRepo;
@@ -20,6 +22,8 @@ namespace Coworking.Data.Providers
             _clanRepo = new ClanRepository(settings.Adapter, settings.Mapper);
             _lokacijaRepo = new LokacijaRepository(settings.Adapter, settings.Mapper);
             _resursRepo = new ResursRepository(settings.Adapter, settings.Mapper);
+            _radnoMestoRepo = new RadnoMestoRepository(settings.Adapter, settings.Mapper);
+            _salaRepo = new SalaZaSastankeRepository(settings.Adapter, settings.Mapper);
             _rezRepo = new RezervacijaRepository(settings.Adapter, settings.Mapper);
             _tcRepo = new TipClanstvaRepository(settings.Adapter, settings.Mapper);
             _adminRepo = new AdminRepository(settings.Adapter, settings.Mapper);
@@ -139,11 +143,19 @@ namespace Coworking.Data.Providers
         //-------------------------RESURSI-------------------------
         //-------------------------RESURSI-------------------------
 
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _resursRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
+        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _radnoMestoRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
+        public RadnoMesto prikaziRadnaMestaPoId(int resurdId) => _radnoMestoRepo.GetById(resurdId);
+        public void izmeniRadnoMesto(RadnoMesto r) => _radnoMestoRepo.Update(r);
+        public void dodajRadnoMesto(RadnoMesto r) => _radnoMestoRepo.Add(r);
 
-        public List<SalaZaSastanke> prikaziSaleZaSastankePoId(int resurdId) => _resursRepo.prikaziSaleZaSastankePoId(resurdId);
-        public List<RadnoMesto> prikaziRadnaMestaPoId(int resurdId) => _resursRepo.prikaziRadnaMestaPoId(resurdId);
 
+        public SalaZaSastanke prikaziSaleZaSastankePoId(int resurdId) => _salaRepo.GetById(resurdId);
+        public void izmeniSaluZaSastanke(SalaZaSastanke s) => _salaRepo.Update(s);
+        public void dodajSaluZaSastanke(SalaZaSastanke s) => _salaRepo.Add(s);
+
+
+        public void izmeniResurs(Resurs r) => _resursRepo.Update(r);
+        public void dodajResurs(Resurs r) => _resursRepo.Add(r);
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string? name) 
         {
             // Uvek kreni od svih, pa sužavaj krug
