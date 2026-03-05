@@ -1,5 +1,6 @@
 ﻿using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
 using Microsoft.Identity.Client;
 using System.Diagnostics;
 
@@ -87,7 +88,8 @@ namespace Coworking.Data.Providers
 
                 int brojRezervisanih = rezervacije.FindAll(r =>
                     resursiLokacije.Exists(res => res.resursId == r.resursId) &&
-                    r.status == "Aktivna").Count;
+                    r.status == ReservationStatus.Rezervisana ||
+                    r.status == ReservationStatus.Potvrdjena).Count;
 
                 double procenat = brojResursa == 0 ? 0 : (double)brojRezervisanih / brojResursa * 100;
 
@@ -122,8 +124,8 @@ namespace Coworking.Data.Providers
             foreach (var r in rezervacije)
                 if (DateTime.Parse(r.kraj) < DateTime.Now)
                 {
-                    _rezRepo.UpdateStatus(r.rezervacijaId, "Prošla");
-                    r.status = "Prošla";
+                    _rezRepo.UpdateStatus(r.rezervacijaId, ReservationStatus.Zavrsena);
+                    r.status = ReservationStatus.Zavrsena;
                 }
 
             return rezervacije;
@@ -196,6 +198,7 @@ namespace Coworking.Data.Providers
         //-------------------------LOGIN-------------------------
         public bool getAdminByUsername(string username, string password)
         {
+            // tokom radne faze projekta return true, za gotov projekat se brise return true
             return true;
             var admin = _adminRepo.getAdminByUsername(username);
             if (admin == null)

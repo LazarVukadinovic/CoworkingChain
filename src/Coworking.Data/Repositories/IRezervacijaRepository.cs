@@ -1,9 +1,5 @@
 ﻿using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -13,7 +9,7 @@ namespace Coworking.Data.Repositories
         void Cancel(int rezervacijaId);
         public List<Rezervacija> GetReservationsByDateAndLocation(string date, string location);
 
-        public void UpdateStatus(int rezervacijaId, string status);
+        public void UpdateStatus(int rezervacijaId, ReservationStatus status);
     }
 
 }
