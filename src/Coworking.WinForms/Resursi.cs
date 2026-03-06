@@ -8,13 +8,25 @@ namespace Coworking.WinForms
     public partial class Resursi : Form
     {
         IDataBase singleton;
+        DataBaseProxy proxy;
         public Resursi()
         {
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
+            proxy = (DataBaseProxy)singleton;
+            proxy.DataChanged += OnDataChanged;
             resourceTypeComboBox.SelectedIndex = 0;
             loadData();
             loadLocations();
+        }
+
+        private void OnDataChanged(DataEntity entity)
+        {
+            if (entity == DataEntity.Resurs)
+            {
+                loadData();
+                loadLocations();
+            }
         }
 
         private void addResourceButton_Click(object sender, EventArgs e)

@@ -5,18 +5,21 @@ using System.Security.Claims;
 
 namespace Coworking.Data.Providers
 {
-    internal class DataBaseProxy : IDataBase
+    public class DataBaseProxy : IDataBase //promenio sa internal na public
     {
         private IDataBase _facade;
 
         bool check2=false;
         List<Clan>? cachedClanovi = null;
-        List<Clan>? cachedClanoviFiltrirano = null;
+        List<Lokacija>? cachedLokacija = null;
+        List<Rezervacija>? cachedRezervacije = null;
+        List<Resurs> cachedResursi = null;
+        List<TipClanstva>? cachedTipClanstva = null;
+
+       /* List<Clan>? cachedClanoviFiltrirano = null;
 
         List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)>? cachedLokacijaStatistika = null;
-        List<Lokacija>? cachedLokacija = null;
 
-        List<Rezervacija>? cachedRezervacije = null;
         private Dictionary<int, List<Rezervacija>> cachedRezervacijeSaStatusomZaIzabranogClana = new Dictionary<int, List<Rezervacija>>();
         private Dictionary<(string datum, int lokacija), List<Rezervacija>> cachedRezervacijeZaDanILokaciju = new Dictionary<(string, int), List<Rezervacija>>();
 
@@ -24,9 +27,12 @@ namespace Coworking.Data.Providers
         SalaZaSastanke? cachedSalaZaSastanke = null;
         List<RadnoMesto> cachedRadnaMesta = null;
         private Dictionary<int, List<Resurs>> cachedResursiPoLokacijiIPoTipu = new Dictionary<int, List<Resurs>>();
-        List<Resurs> cachedResursi = null;
 
-        List<TipClanstva>? cachedTipClanstva = null;
+
+        !!!!ovo se sve vrlo verovatno ne koristi i nema potrebe da se koristi
+        */
+
+
 
         bool clanReset = true;
         bool lokacijaReset = true;
@@ -34,10 +40,14 @@ namespace Coworking.Data.Providers
         bool rezervacijaReset = true;
         bool tipClanstvaReset = true;
 
+        public event Action<DataEntity> DataChanged;
+
         public DataBaseProxy(IDataBase facade) 
         {
             _facade = facade;
         }
+
+        private void Notify(DataEntity entity) => DataChanged?.Invoke(entity);
 
         //-------------------------CLANOVI-------------------------
         //-------------------------CLANOVI-------------------------
@@ -47,11 +57,13 @@ namespace Coworking.Data.Providers
         {
             _facade.dodajClana(c);
             clanReset = true;
+            Notify(DataEntity.Clan);
         }
         public void izmeniClana(Clan c)
         {
             _facade.izmeniClana(c);
             clanReset = true;
+            Notify(DataEntity.Clan);
         }
         public List<Clan> prikaziClanove()
         {
@@ -76,13 +88,13 @@ namespace Coworking.Data.Providers
             //sledeci put
 
             clanReset = true;
+            Notify(DataEntity.Clan);
         }
 
         //ovde mozda treba dictionary
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
         {
-                cachedClanoviFiltrirano = _facade.PrikaziClanoveFiltrirano(lokacijaId,tipClanstvaId,status);
-            return cachedClanoviFiltrirano;
+                return _facade.PrikaziClanoveFiltrirano(lokacijaId,tipClanstvaId,status);
         }
 
         public int vratiClanovePoLokaciji(int lokacijaId) => _facade.vratiClanovePoLokaciji(lokacijaId);
@@ -99,25 +111,23 @@ namespace Coworking.Data.Providers
         {
             _facade.dodajLokaciju(l);
             lokacijaReset = true;
+            Notify(DataEntity.Lokacija);
         }
         public void izmeniLokaciju(Lokacija l)
         {
             _facade.izmeniLokaciju(l);
             lokacijaReset = true;
+            Notify(DataEntity.Lokacija);
         }
         public void obrisiLokaciju(int lokacijaId)
         {
             _facade.obrisiLokaciju(lokacijaId);
             lokacijaReset = true;
+            Notify(DataEntity.Lokacija);
         }
         public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
         {
-            if (cachedLokacijaStatistika == null || lokacijaReset == true)
-            {
-                cachedLokacijaStatistika = _facade.PrikaziStatistikuLokacija();
-                lokacijaReset = false;
-            }
-            return cachedLokacijaStatistika;
+            return _facade.PrikaziStatistikuLokacija();
         }
         public List<Lokacija> prikaziLokacije(bool check)
         {
@@ -150,21 +160,25 @@ namespace Coworking.Data.Providers
         {
             _facade.dodajRezervaciju(r);
             rezervacijaReset = true;
+            Notify(DataEntity.Rezervacija);
         }
         public void izmeniRezervaciju(Rezervacija r)
         {
             _facade.izmeniRezervaciju(r);
             rezervacijaReset = true;
+            Notify(DataEntity.Rezervacija);
         }
         public void otkaziRezervaciju(int rezervacijaId)
         {
             _facade.otkaziRezervaciju(rezervacijaId);
             rezervacijaReset = true;
+            Notify(DataEntity.Rezervacija);
         }
         public void obrisiRezervaciju(int rezervacijaId)
         {
             _facade.obrisiRezervaciju(rezervacijaId);
             rezervacijaReset = true;
+            Notify(DataEntity.Rezervacija);
         }
         public List<Rezervacija> prikaziSveRezervacije()
         {
@@ -181,13 +195,7 @@ namespace Coworking.Data.Providers
         public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId, List<ReservationStatus> filterStatusi) => _facade.prikaziRezervacijeSaStatusomZaIzabranogClana(clanId, filterStatusi);
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacija)
         {
-            var key = (datum, lokacija);
-            if (cachedRezervacijeZaDanILokaciju.ContainsKey(key) == false || rezervacijaReset)
-            {
-                cachedRezervacijeZaDanILokaciju[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
-                rezervacijaReset = false;
-            }
-            return cachedRezervacijeZaDanILokaciju[key];
+            return _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
         }
 
 
@@ -197,22 +205,12 @@ namespace Coworking.Data.Providers
 
         public List<RadnoMesto> prikaziDostupnaRadnaMestaPoLokaciji(int lokacijaId)
         {
-            if (cachedRadnaMestaPoLokaciji.ContainsKey(lokacijaId) == false || resursReset == true)
-            {
-                cachedRadnaMestaPoLokaciji[lokacijaId] = _facade.prikaziDostupnaRadnaMestaPoLokaciji(lokacijaId);
-                resursReset = false;
-            }
-            return cachedRadnaMestaPoLokaciji[lokacijaId];
+            return _facade.prikaziDostupnaRadnaMestaPoLokaciji(lokacijaId);
         }
 
         public List<RadnoMesto> prikaziDostupnaRadnaMesta()
         {
-            if (resursReset == true)
-            {
-                cachedRadnaMesta = _facade.prikaziDostupnaRadnaMesta();
-                resursReset = false;
-            }
-            return cachedRadnaMesta;
+            return _facade.prikaziDostupnaRadnaMesta();
         }
         public SalaZaSastanke prikaziSaleZaSastankePoId(int resursId)
         {
@@ -223,13 +221,43 @@ namespace Coworking.Data.Providers
         {
             return _facade.prikaziRadnaMestaPoId(resursId);
         }
-        public void izmeniRadnoMesto(RadnoMesto r) => _facade.izmeniRadnoMesto(r);
-        public void dodajRadnoMesto(RadnoMesto r) => _facade.dodajRadnoMesto(r);
-        public void izmeniSaluZaSastanke(SalaZaSastanke s) => _facade.izmeniSaluZaSastanke(s);
-        public void dodajSaluZaSastanke(SalaZaSastanke s) => _facade.dodajSaluZaSastanke(s);
-        public void dodajResurs(Resurs r) => _facade.dodajResurs(r);
+        public void izmeniRadnoMesto(RadnoMesto r)
+        {
+            _facade.izmeniRadnoMesto(r);
+            resursReset = true;
+            Notify(DataEntity.Resurs);
+        }
+        public void dodajRadnoMesto(RadnoMesto r)
+        {
+            _facade.dodajRadnoMesto(r);
+            resursReset = true;
+            Notify(DataEntity.Resurs);
+        }
+        public void izmeniSaluZaSastanke(SalaZaSastanke s)
+        {
+            _facade.izmeniSaluZaSastanke(s);
+            resursReset = true;
+            Notify(DataEntity.Resurs);
+        }
+        public void dodajSaluZaSastanke(SalaZaSastanke s)
+        {
+            _facade.dodajSaluZaSastanke(s);
+            resursReset = true;
+            Notify(DataEntity.Resurs);
+        }
+        public void dodajResurs(Resurs r)
+        {
+            _facade.dodajResurs(r);
+            resursReset = true;
+            Notify(DataEntity.Resurs);
+        }
 
-        public void izmeniResurs(Resurs r) => _facade.izmeniResurs(r);
+        public void izmeniResurs(Resurs r)
+        {
+            _facade.izmeniResurs(r);
+            resursReset = true;
+            Notify(DataEntity.Resurs);
+        }
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name)
         {
             //if (cachedResursiPoLokacijiIPoTipu.ContainsKey(lokacijaId) == false || needReset == true)
@@ -263,6 +291,7 @@ namespace Coworking.Data.Providers
         {
             _facade.dodajTipClanstva(t);
             tipClanstvaReset = true;
+            Notify(DataEntity.TipClanstva);
         }
         public List<TipClanstva> prikaziSveTipoveClanstva()
         {
@@ -274,12 +303,6 @@ namespace Coworking.Data.Providers
             return cachedTipClanstva;
         }
 
-        public void izmeniTipClanstva(TipClanstva t)
-        {
-            _facade.updateTipClanstva(t);
-            tipClanstvaReset = true;
-        }
-
         public List<TipClanstva> GetTipClanstvaByName(string naziv)
         {
             return _facade.GetTipClanstvaByName(naziv);
@@ -289,6 +312,7 @@ namespace Coworking.Data.Providers
         {
             _facade.updateTipClanstva(t);
             tipClanstvaReset = true;
+            Notify(DataEntity.TipClanstva);
         }
 
         public TipClanstva GetTipClanstvaById(int id)
@@ -300,6 +324,7 @@ namespace Coworking.Data.Providers
         {
             _facade.DeleteTipClanstva(id);
             tipClanstvaReset = true;
+            Notify(DataEntity.TipClanstva);
         }
 
 

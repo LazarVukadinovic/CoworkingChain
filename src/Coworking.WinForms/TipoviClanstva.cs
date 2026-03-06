@@ -7,11 +7,22 @@ namespace Coworking.WinForms
     public partial class TipoviClanstva : Form
     {
         IDataBase singleton;
+        DataBaseProxy proxy;
         public TipoviClanstva()
         {
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
+            proxy = (DataBaseProxy)singleton;
+            proxy.DataChanged += OnDataChanged;
             loadData();
+        }
+
+        private void OnDataChanged(DataEntity entity)
+        {
+            if (entity == DataEntity.Resurs)
+            {
+                loadData();
+            }
         }
 
         private void addMembershipButton_Click(object sender, EventArgs e)

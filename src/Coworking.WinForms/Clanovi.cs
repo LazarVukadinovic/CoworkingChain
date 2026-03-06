@@ -11,10 +11,13 @@ namespace Coworking.WinForms
     {
         IDataBase singleton;
         Clan _selektovanClan;
+        DataBaseProxy proxy;
         public Clanovi()
         {
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
+            proxy = (DataBaseProxy)singleton;
+            proxy.DataChanged += OnDataChanged;
             loadMemberships();
             loadLocations();
             loadStatuses();
@@ -22,6 +25,17 @@ namespace Coworking.WinForms
             //statusComboBox.SelectedIndex = 0;
             //ResetComboBox();
 
+        }
+
+        private void OnDataChanged(DataEntity entity)
+        {
+            if (entity == DataEntity.Clan)
+            {
+                loadMemberships();
+                loadLocations();
+                loadStatuses();
+                loadData2();
+            }
         }
 
         private void addMemberButton_Click(object sender, EventArgs e)

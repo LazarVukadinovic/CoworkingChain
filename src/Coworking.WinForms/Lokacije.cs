@@ -7,10 +7,21 @@ namespace Coworking.WinForms
 {
     public partial class Lokacije : Form
     {
+        DataBaseProxy proxy;
         public Lokacije()
         {
             InitializeComponent();
             loadData();
+            proxy = (DataBaseProxy)DataBaseSingleton.vratiInstancu();
+            proxy.DataChanged += OnDataChanged;
+        }
+
+        private void OnDataChanged(DataEntity entity)
+        {
+            if (entity == DataEntity.Lokacija)
+            {
+                loadData();
+            }
         }
 
         private void addLocationButton_Click(object sender, EventArgs e)

@@ -9,13 +9,24 @@ namespace Coworking.WinForms
     public partial class Rezervacije : Form
     {
         private readonly IDataBase singleton;
+        DataBaseProxy proxy;
 
         public Rezervacije()
         {
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
+            proxy = (DataBaseProxy)singleton;
+            proxy.DataChanged += OnDataChanged;
             locationComboBox.SelectedIndex = 0;
             loadData();
+        }
+
+        private void OnDataChanged(DataEntity entity)
+        {
+            if (entity == DataEntity.Resurs)
+            {
+                loadData();
+            }
         }
 
         private void addReservationButton_Click(object sender, EventArgs e)
