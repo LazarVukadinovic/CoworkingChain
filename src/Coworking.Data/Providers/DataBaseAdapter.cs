@@ -52,5 +52,23 @@ namespace Coworking.Data.Providers
                 ? $"DATE_ADD({dateParam}, INTERVAL {days} DAY)"
                 : $"DATEADD(day, {days}, {dateParam})";
         }
+
+        public string DateDiffMinutesExpr(string startExpr, string endExpr)
+        {
+            return _factory is MySqlFactory
+                ? $"TIMESTAMPDIFF(MINUTE, {startExpr}, {endExpr})"
+                : $"DATEDIFF(minute, {startExpr}, {endExpr})";
+        }
+        public object izvrsiUpitSkalar(string upit)
+        {
+            // Koristimo tvoju fabriku da dobijemo odgovarajuću konekciju i komandu
+            using (var connection = _factory.napraviKonekciju(_konekcioniString))
+            using (var command = _factory.napraviKomandu(upit, connection))
+            {
+                connection.Open();
+                // ExecuteScalar vraća prvi stubac prvog reda (idealno za SUM)
+                return command.ExecuteScalar();
+            }
+        }
     }
 }

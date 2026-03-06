@@ -13,6 +13,7 @@ namespace Coworking.Data.Providers
         // Lista svih clanova, sa mogucnoscu filtriranja po lokaciji, tipu clanstva ili statusu naloga
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status);
         public int vratiClanovePoLokaciji(int lokacijaId);
+        public double dajBrojSati(int clanId);
 
         //-------------------------LOKACIJE-------------------------
         public void dodajLokaciju(Lokacija l);

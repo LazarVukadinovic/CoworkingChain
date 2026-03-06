@@ -5,6 +5,7 @@
 
 IF OBJECT_ID(N'dbo.sp_proveri_dostupnost', N'P') IS NOT NULL
     DROP PROCEDURE dbo.sp_proveri_dostupnost
+GO
 
 CREATE PROCEDURE dbo.sp_proveri_dostupnost
     @p_resurs_id INT,

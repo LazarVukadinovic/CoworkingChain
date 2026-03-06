@@ -4,9 +4,9 @@
 -- 002_seed_data.sql
 
 -- Admin korisnici
-INSERT INTO dbo.admin_korisnik (korisnicko_ime, lozinka_hash, lozinka_salt, aktivan) VALUES
-('admin', 'hash123', 'salt123', 1),
-('manager', 'hash456', 'salt456', 1)
+INSERT INTO dbo.admin_korisnik (korisnicko_ime, lozinka_hash) VALUES
+('admin', 'hash123'),
+('manager', 'hash456')
 
 -- Tipovi clanstva
 INSERT INTO dbo.tip_clanstva (naziv, cena, trajanje_dana, max_sati_mesecno, dozvoljena_sala, sati_sale_mesecno) VALUES

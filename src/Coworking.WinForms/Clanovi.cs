@@ -21,6 +21,8 @@ namespace Coworking.WinForms
             loadData2();
             //statusComboBox.SelectedIndex = 0;
             //ResetComboBox();
+
+            Debug.WriteLine(singleton.dajBrojSati(1));
         }
 
         private void addMemberButton_Click(object sender, EventArgs e)

@@ -56,8 +56,8 @@ INSERT INTO radno_mesto_detalj (resurs_id, podtip) VALUES
 
 -- Rezervacije
 INSERT INTO rezervacija (pocetak, kraj, status, clan_id, resurs_id) VALUES
-('2025-02-16 10:00:00', '2025-02-16 12:00:00', 'Rezervisana', 1, 1),
+('2026-03-16 10:00:00', '2026-03-18 12:00:00', 'Rezervisana', 1, 1),
 ('2025-02-16 14:00:00', '2025-02-16 16:00:00', 'Rezervisana', 2, 1),
 ('2025-02-16 09:00:00', '2025-02-16 17:00:00', 'Rezervisana', 3, 5),
-('2025-02-17 10:00:00', '2025-02-17 12:00:00', 'Rezervisana', 1, 2),
+('2026-03-29 10:00:00', '2026-04-01 12:00:00', 'Rezervisana', 1, 2),
 ('2025-02-15 10:00:00', '2025-02-15 12:00:00', 'Zavrsena', 2, 3);

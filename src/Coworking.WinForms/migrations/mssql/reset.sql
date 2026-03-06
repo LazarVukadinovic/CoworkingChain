@@ -1,4 +1,4 @@
-﻿-- 005_reset.sql
+﻿-- reset.sql
 -- RESET baze (manual only) - sve brise!
 
 IF OBJECT_ID(N'dbo.sp_proveri_dostupnost', N'P') IS NOT NULL DROP PROCEDURE dbo.sp_proveri_dostupnost

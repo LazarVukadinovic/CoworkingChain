@@ -6,6 +6,7 @@
 IF OBJECT_ID(N'dbo.view_sale', N'V') IS NOT NULL DROP VIEW dbo.view_sale
 IF OBJECT_ID(N'dbo.view_radna_mesta', N'V') IS NOT NULL DROP VIEW dbo.view_radna_mesta
 IF OBJECT_ID(N'dbo.view_aktivne_rezervacije', N'V') IS NOT NULL DROP VIEW dbo.view_aktivne_rezervacije
+GO
 
 -- View za sve sale sa detaljima
 CREATE VIEW dbo.view_sale AS
@@ -26,6 +27,7 @@ FROM dbo.resurs r
 JOIN dbo.lokacija l ON r.lokacija_id = l.lokacija_id
 JOIN dbo.sala_detalj sd ON r.resurs_id = sd.resurs_id
 WHERE r.tip_resursa = 'sala'
+GO
 
 -- View za sva radna mesta sa detaljima
 CREATE VIEW dbo.view_radna_mesta AS
@@ -42,6 +44,7 @@ FROM dbo.resurs r
 JOIN dbo.lokacija l ON r.lokacija_id = l.lokacija_id
 JOIN dbo.radno_mesto_detalj rmd ON r.resurs_id = rmd.resurs_id
 WHERE r.tip_resursa = 'radno_mesto'
+GO
 
 -- View za aktivne rezervacije sa detaljima
 CREATE VIEW dbo.view_aktivne_rezervacije AS

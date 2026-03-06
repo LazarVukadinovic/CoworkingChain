@@ -61,6 +61,7 @@ namespace Coworking.Data.Providers
         public int vratiClanovePoLokaciji(int lokacijaId) => _clanRepo.vratiClanovePoLokaciji(lokacijaId).Count();
         //Marta:druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma
 
+        public double dajBrojSati(int clanId) => _clanRepo.GetTotalHoursInCurrentMonth(clanId);
 
         //-------------------------LOKACIJE-------------------------
         //-------------------------LOKACIJE-------------------------
