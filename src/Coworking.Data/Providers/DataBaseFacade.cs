@@ -190,7 +190,8 @@ namespace Coworking.Data.Providers
         //-------------------------RESURSI-------------------------
         //-------------------------RESURSI-------------------------
 
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _radnoMestoRepo.prikaziDostupnaRadnaMestaPoLokaciji(lokacijaId);
+        public List<RadnoMesto> prikaziDostupnaRadnaMestaPoLokaciji(int lokacijaId) => _radnoMestoRepo.prikaziDostupnaRadnaMestaPoLokaciji(lokacijaId);
+        public List<RadnoMesto> prikaziDostupnaRadnaMesta() => _radnoMestoRepo.prikaziDostupnaRadnaMesta();
         public RadnoMesto prikaziRadnaMestaPoId(int resurdId) => _radnoMestoRepo.GetById(resurdId);
         public void izmeniRadnoMesto(RadnoMesto r) => _radnoMestoRepo.Update(r);
         public void dodajRadnoMesto(RadnoMesto r) => _radnoMestoRepo.Add(r);

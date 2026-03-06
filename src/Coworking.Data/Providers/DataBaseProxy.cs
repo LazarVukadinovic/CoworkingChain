@@ -22,7 +22,7 @@ namespace Coworking.Data.Providers
 
         private Dictionary<int, List<RadnoMesto>> cachedRadnaMestaPoLokaciji = new Dictionary<int, List<RadnoMesto>>();
         SalaZaSastanke? cachedSalaZaSastanke = null;
-        RadnoMesto? cachedRadnaMesta = null;
+        List<RadnoMesto> cachedRadnaMesta = null;
         private Dictionary<int, List<Resurs>> cachedResursiPoLokacijiIPoTipu = new Dictionary<int, List<Resurs>>();
         List<Resurs> cachedResursi = null;
 
@@ -191,14 +191,24 @@ namespace Coworking.Data.Providers
         //-------------------------RESURSI-------------------------
         //-------------------------RESURSI-------------------------
 
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
+        public List<RadnoMesto> prikaziDostupnaRadnaMestaPoLokaciji(int lokacijaId)
         {
             if (cachedRadnaMestaPoLokaciji.ContainsKey(lokacijaId) == false || needReset == true)
             {
-                cachedRadnaMestaPoLokaciji[lokacijaId] = _facade.prikaziRadnaMestaPoLokaciji(lokacijaId);
+                cachedRadnaMestaPoLokaciji[lokacijaId] = _facade.prikaziDostupnaRadnaMestaPoLokaciji(lokacijaId);
                 needReset = false;
             }
             return cachedRadnaMestaPoLokaciji[lokacijaId];
+        }
+
+        public List<RadnoMesto> prikaziDostupnaRadnaMesta()
+        {
+            if (needReset == true)
+            {
+                cachedRadnaMesta = _facade.prikaziDostupnaRadnaMesta();
+                needReset = false;
+            }
+            return cachedRadnaMesta;
         }
         public SalaZaSastanke prikaziSaleZaSastankePoId(int resursId)
         {

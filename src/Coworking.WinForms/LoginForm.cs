@@ -11,7 +11,7 @@ namespace Coworking.WinForms
         public LoginForm()
         {
             InitializeComponent();
-            //database.addAdmin(new Domain.Entities.Admin { KorisnickoIme = "admin5", LozinkaHash = "admin5" });
+            database.addAdmin(new Domain.Entities.Admin { KorisnickoIme = "admin5", LozinkaHash = "admin5" });
         }
 
         private void exitButton_Click(object sender, EventArgs e)

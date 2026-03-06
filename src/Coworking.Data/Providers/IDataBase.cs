@@ -49,7 +49,8 @@ namespace Coworking.Data.Providers
 
         // Evidencija radnih mesta po lokaciji: hot desk, dedicated desk, privatna kancelarija,
         // sa informacijom da li je trenutno dostupno ili zauzeto.
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId);
+        public List<RadnoMesto> prikaziDostupnaRadnaMestaPoLokaciji(int lokacijaId);
+        public List<RadnoMesto> prikaziDostupnaRadnaMesta();
         // Evidencija sala za sastanke: naziv, kapacitet, opremljenost (projekat, TV, tabla, oprema za online sastanke...).
         public SalaZaSastanke prikaziSaleZaSastankePoId(int resursId);
         public RadnoMesto prikaziRadnaMestaPoId(int resursId);
