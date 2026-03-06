@@ -28,7 +28,11 @@ namespace Coworking.Data.Providers
 
         List<TipClanstva>? cachedTipClanstva = null;
 
-        bool needReset = true;
+        bool clanReset = true;
+        bool lokacijaReset = true;
+        bool resursReset = true;
+        bool rezervacijaReset = true;
+        bool tipClanstvaReset = true;
 
         public DataBaseProxy(IDataBase facade) 
         {
@@ -42,19 +46,19 @@ namespace Coworking.Data.Providers
         public void dodajClana(Clan c)
         {
             _facade.dodajClana(c);
-            needReset = true;
+            clanReset = true;
         }
         public void izmeniClana(Clan c)
         {
             _facade.izmeniClana(c);
-            needReset = true;
+            clanReset = true;
         }
         public List<Clan> prikaziClanove()
         {
-            if (cachedClanovi == null || needReset == true)
+            if (cachedClanovi == null || clanReset == true)
             {
                 cachedClanovi = _facade.prikaziClanove();
-                needReset = false;
+                clanReset = false;
             }
             return cachedClanovi;
         }
@@ -71,7 +75,7 @@ namespace Coworking.Data.Providers
             //Ovo:briše clana iz cachedClanovi, briše njegove rezervacije iz cachedKorisnickeRezervacije i dalje forsira reload
             //sledeci put
 
-            needReset = true;
+            clanReset = true;
         }
 
         //ovde mozda treba dictionary
@@ -94,24 +98,24 @@ namespace Coworking.Data.Providers
         public void dodajLokaciju(Lokacija l)
         {
             _facade.dodajLokaciju(l);
-            needReset = true;
+            lokacijaReset = true;
         }
         public void izmeniLokaciju(Lokacija l)
         {
             _facade.izmeniLokaciju(l);
-            needReset = true;
+            lokacijaReset = true;
         }
         public void obrisiLokaciju(int lokacijaId)
         {
             _facade.obrisiLokaciju(lokacijaId);
-            needReset = true;
+            lokacijaReset = true;
         }
         public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
         {
-            if (cachedLokacijaStatistika == null || needReset == true)
+            if (cachedLokacijaStatistika == null || lokacijaReset == true)
             {
                 cachedLokacijaStatistika = _facade.PrikaziStatistikuLokacija();
-                needReset = false;
+                lokacijaReset = false;
             }
             return cachedLokacijaStatistika;
         }
@@ -120,12 +124,12 @@ namespace Coworking.Data.Providers
             if (check2 != check)
             {
                 check2 = check;
-                needReset = true;
+                lokacijaReset = true;
             }
-            if (cachedLokacija == null || needReset)
+            if (cachedLokacija == null || lokacijaReset)
             {
                 cachedLokacija = _facade.prikaziLokacije(check);
-                needReset = false;
+                lokacijaReset = false;
             }
 
             return cachedLokacija;
@@ -145,26 +149,26 @@ namespace Coworking.Data.Providers
         public void dodajRezervaciju(Rezervacija r)
         {
             _facade.dodajRezervaciju(r);
-            needReset = true;
+            rezervacijaReset = true;
         }
         public void izmeniRezervaciju(Rezervacija r)
         {
             _facade.izmeniRezervaciju(r);
-            needReset = true;
+            rezervacijaReset = true;
         }
         public void otkaziRezervaciju(int rezervacijaId)
         {
             _facade.otkaziRezervaciju(rezervacijaId);
-            needReset = true;
+            rezervacijaReset = true;
         }
         public void obrisiRezervaciju(int rezervacijaId)
         {
             _facade.obrisiRezervaciju(rezervacijaId);
-            needReset = true;
+            rezervacijaReset = true;
         }
         public List<Rezervacija> prikaziSveRezervacije()
         {
-            if (cachedRezervacije == null || needReset == true)
+            if (cachedRezervacije == null || rezervacijaReset == true)
             {
                 cachedRezervacije = _facade.prikaziSveRezervacije();
                 
@@ -178,10 +182,10 @@ namespace Coworking.Data.Providers
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacija)
         {
             var key = (datum, lokacija);
-            if (cachedRezervacijeZaDanILokaciju.ContainsKey(key) == false || needReset)
+            if (cachedRezervacijeZaDanILokaciju.ContainsKey(key) == false || rezervacijaReset)
             {
                 cachedRezervacijeZaDanILokaciju[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
-                needReset = false;
+                rezervacijaReset = false;
             }
             return cachedRezervacijeZaDanILokaciju[key];
         }
@@ -193,20 +197,20 @@ namespace Coworking.Data.Providers
 
         public List<RadnoMesto> prikaziDostupnaRadnaMestaPoLokaciji(int lokacijaId)
         {
-            if (cachedRadnaMestaPoLokaciji.ContainsKey(lokacijaId) == false || needReset == true)
+            if (cachedRadnaMestaPoLokaciji.ContainsKey(lokacijaId) == false || resursReset == true)
             {
                 cachedRadnaMestaPoLokaciji[lokacijaId] = _facade.prikaziDostupnaRadnaMestaPoLokaciji(lokacijaId);
-                needReset = false;
+                resursReset = false;
             }
             return cachedRadnaMestaPoLokaciji[lokacijaId];
         }
 
         public List<RadnoMesto> prikaziDostupnaRadnaMesta()
         {
-            if (needReset == true)
+            if (resursReset == true)
             {
                 cachedRadnaMesta = _facade.prikaziDostupnaRadnaMesta();
-                needReset = false;
+                resursReset = false;
             }
             return cachedRadnaMesta;
         }
@@ -237,17 +241,17 @@ namespace Coworking.Data.Providers
         }
         public List<Resurs> prikaziSveResurse()
         {
-            if (cachedResursi == null || needReset == true)
+            if (cachedResursi == null || resursReset == true)
             {
                 cachedResursi = _facade.prikaziSveResurse();
-                needReset = false;
+                resursReset = false;
             }
             return cachedResursi;
         }
         public void obrisiResurs(int resursId)
         {
             _facade.obrisiResurs(resursId);
-            needReset = true;
+            resursReset = true;
         }
         public Resurs giveLastAddedResource() => _facade.giveLastAddedResource();
 
@@ -258,14 +262,14 @@ namespace Coworking.Data.Providers
         public void dodajTipClanstva(Domain.Entities.TipClanstva t)
         {
             _facade.dodajTipClanstva(t);
-            needReset = true;
+            tipClanstvaReset = true;
         }
         public List<TipClanstva> prikaziSveTipoveClanstva()
         {
-            if (cachedTipClanstva == null || needReset == true)
+            if (cachedTipClanstva == null || tipClanstvaReset == true)
             {
                 cachedTipClanstva = _facade.prikaziSveTipoveClanstva();
-                needReset = false;
+                tipClanstvaReset = false;
             }
             return cachedTipClanstva;
         }
@@ -273,7 +277,7 @@ namespace Coworking.Data.Providers
         public void izmeniTipClanstva(TipClanstva t)
         {
             _facade.updateTipClanstva(t);
-            needReset = true;
+            tipClanstvaReset = true;
         }
 
         public List<TipClanstva> GetTipClanstvaByName(string naziv)
@@ -284,7 +288,7 @@ namespace Coworking.Data.Providers
         public void updateTipClanstva(TipClanstva t)
         {
             _facade.updateTipClanstva(t);
-            needReset = true;
+            tipClanstvaReset = true;
         }
 
         public TipClanstva GetTipClanstvaById(int id)
@@ -295,7 +299,7 @@ namespace Coworking.Data.Providers
         public void DeleteTipClanstva(int id)
         {
             _facade.DeleteTipClanstva(id);
-            needReset = true;
+            tipClanstvaReset = true;
         }
 
 
