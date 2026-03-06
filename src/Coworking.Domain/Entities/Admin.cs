@@ -11,14 +11,12 @@ namespace Coworking.Domain.Entities
         public int adminId { get; set; }
         public string KorisnickoIme { get; set; }
         public string LozinkaHash { get; set; }
-        public string LozinkaSalt { get; set; }  
 
         public Admin() { }
-        public Admin(string KorisnickoIme, string LozinkaHash, string LozinkaSalt="")
+        public Admin(string KorisnickoIme, string LozinkaHash)
         {
             this.KorisnickoIme = KorisnickoIme;
             this.LozinkaHash = LozinkaHash;
-            this.LozinkaSalt = LozinkaSalt;
         }
     }
 }

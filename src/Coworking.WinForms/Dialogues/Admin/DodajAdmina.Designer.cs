@@ -49,6 +49,7 @@
             addAdminButton.TabIndex = 22;
             addAdminButton.Text = "Dodaj administratora";
             addAdminButton.TextColor = Color.FromArgb(243, 243, 243);
+            addAdminButton.Click += addAdminButton_Click;
             // 
             // nameTextBox
             // 

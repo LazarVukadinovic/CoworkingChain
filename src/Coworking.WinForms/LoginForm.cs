@@ -21,17 +21,25 @@ namespace Coworking.WinForms
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            Dashboard main = new Dashboard(this);
-            main.FormClosed += (s, e) => Application.Exit();
-
             string username = usernameTextBox.textBox.Text;
             string password = passwordTextBox.textBox.Text;
-            var result = database.getAdminByUsername(username, password);
-            Debug.WriteLine(result);
-            if (!result)
-                MessageBox.Show("Pogrešno korisničko ime ili lozinka!", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            var ulogovaniAdmin = database.getAdminByUsername(username, password);
+
+            if (ulogovaniAdmin == null)
+            {
+                MessageBox.Show("Pogrešno korisničko ime ili lozinka!", "Greška",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             else
             {
+
+                AdminSession.Instance.PrijaviAdmina(ulogovaniAdmin);
+
+
+                Dashboard main = new Dashboard(this);
+                main.FormClosed += (s, args) => Application.Exit();
+
                 this.Hide();
                 main.Show();
             }

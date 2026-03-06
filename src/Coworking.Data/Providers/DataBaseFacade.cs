@@ -16,6 +16,7 @@ namespace Coworking.Data.Providers
         private readonly RezervacijaRepository _rezRepo;
         private readonly TipClanstvaRepository _tcRepo;
         private readonly AdminRepository _adminRepo;
+        private readonly string _applicationName;
 
         public DataBaseFacade(DBSettings settings)
         {
@@ -27,6 +28,7 @@ namespace Coworking.Data.Providers
             _rezRepo = new RezervacijaRepository(settings.Adapter, settings.Mapper);
             _tcRepo = new TipClanstvaRepository(settings.Adapter, settings.Mapper);
             _adminRepo = new AdminRepository(settings.Adapter, settings.Mapper);
+            _applicationName = settings.ApplicationName;
         }
 
         //-------------------------CLANOVI-------------------------
@@ -188,7 +190,7 @@ namespace Coworking.Data.Providers
         //-------------------------RESURSI-------------------------
         //-------------------------RESURSI-------------------------
 
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _radnoMestoRepo.prikaziRadnaMestaPoLokaciji(lokacijaId);
+        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId) => _radnoMestoRepo.prikaziDostupnaRadnaMestaPoLokaciji(lokacijaId);
         public RadnoMesto prikaziRadnaMestaPoId(int resurdId) => _radnoMestoRepo.GetById(resurdId);
         public void izmeniRadnoMesto(RadnoMesto r) => _radnoMestoRepo.Update(r);
         public void dodajRadnoMesto(RadnoMesto r) => _radnoMestoRepo.Add(r);
@@ -248,32 +250,47 @@ namespace Coworking.Data.Providers
 
         public string prikazLanca()
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "config.txt");
-            return File.ReadAllLines(path)[0];
+            return _applicationName;
         }
 
         //-------------------------LOGIN-------------------------
         //-------------------------LOGIN-------------------------
         //-------------------------LOGIN-------------------------
-        public bool getAdminByUsername(string username, string password)
+        public Admin getAdminByUsername(string username, string password)
         {
-            // tokom radne faze projekta return true, za gotov projekat se brise return true
-            return true;
-            var admin = _adminRepo.getAdminByUsername(username);
-            if (admin == null)
-                return false;
 
-            
-            return BCrypt.Net.BCrypt.Verify(password, admin.LozinkaHash);
+            var admin = _adminRepo.GetByName(username)[0];
+            if (admin == null)
+                return null;
+            if (BCrypt.Net.BCrypt.Verify(password, admin.LozinkaHash))
+            {
+                return admin;
+            }
+
+            return null;
         }
 
         public void addAdmin(Admin admin)
         {
             admin.LozinkaHash = BCrypt.Net.BCrypt.HashPassword(admin.LozinkaHash, 11);
-            _adminRepo.addAdmin(admin);
+            _adminRepo.Add(admin);
         }
 
+        public void updateAdmin(Admin admin)
+        {
+            if (!string.IsNullOrEmpty(admin.LozinkaHash))
+            {
+                admin.LozinkaHash = BCrypt.Net.BCrypt.HashPassword(admin.LozinkaHash, 11);
+            }
+            _adminRepo.Update(admin);
 
+        }
+
+        public void updateAdminByUsername(Admin admin, string username)
+        {
+            _adminRepo.UpdateAdminByUsername(admin, username);
+        }
+        public void deleteAdmin(int id) => _adminRepo.Delete(id);
     }
 }
 

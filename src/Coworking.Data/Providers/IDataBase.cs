@@ -85,8 +85,12 @@ namespace Coworking.Data.Providers
 
 
         //-------------------------LOGIN-------------------------
-        public bool getAdminByUsername(string username, string password);
+        public Admin getAdminByUsername(string username, string password);
+
+        public void updateAdminByUsername(Admin admin, string username);
         public void addAdmin(Admin admin);
+        public void updateAdmin(Admin admin);
+        public void deleteAdmin(int id);
     }
 }
 

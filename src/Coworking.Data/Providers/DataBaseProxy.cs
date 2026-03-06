@@ -302,7 +302,7 @@ namespace Coworking.Data.Providers
         //-------------------------LOGIN-------------------------
         //-------------------------LOGIN-------------------------
 
-        public bool getAdminByUsername(string username, string password)
+        public Admin getAdminByUsername(string username, string password)
         {
             return _facade.getAdminByUsername(username, password);
         }
@@ -312,6 +312,20 @@ namespace Coworking.Data.Providers
             _facade.addAdmin(admin);
         }
 
+        public void updateAdmin(Admin admin)
+        {
+            _facade.updateAdmin(admin);
+        }
+
+        public void deleteAdmin(int id)
+        {
+            _facade.deleteAdmin(id);
+        }
+
+        public void updateAdminByUsername(Admin admin, string username)
+        {
+            _facade.updateAdminByUsername(admin, username);
+        }
     }
 }
 
