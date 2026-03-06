@@ -82,7 +82,11 @@ namespace Coworking.Data.Providers
         }
 
         public int vratiClanovePoLokaciji(int lokacijaId) => _facade.vratiClanovePoLokaciji(lokacijaId);
-        public double dajBrojSati(int clanId) => _facade.dajBrojSati(clanId);
+
+        public double vratiUkupneSateSalaZaClana(int clanId)
+        {
+            return _facade.vratiUkupneSateSalaZaClana(clanId);
+        }
 
         //-------------------------LOKACIJE-------------------------
         //-------------------------LOKACIJE-------------------------

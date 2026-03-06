@@ -1,5 +1,6 @@
 using Coworking.Data.Providers;
 using Coworking.Data.Reports;
+using System.Diagnostics;
 
 namespace Coworking.WinForms
 {
@@ -24,6 +25,12 @@ namespace Coworking.WinForms
 
             // izvrsavanje migracija
             Data.Migrations.MigrationBootstrapper.EnsureDbAndMigrate(targetCs, migrationsBase);
+
+            // --- TEST ---
+            var db = DataBaseSingleton.vratiInstancu();
+            double sati = db.vratiUkupneSateSalaZaClana(1); // Marko
+            Debug.WriteLine($"[TEST] Marko - ukupno sati sale: {sati}");
+            // --- KRAJ TESTA ---
 
             // izvrsavanje izvestaja
             //IDataBase dbSettings = DataBaseSingleton.vratiInstancu();

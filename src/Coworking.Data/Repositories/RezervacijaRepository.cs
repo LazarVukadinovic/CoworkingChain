@@ -123,5 +123,27 @@ namespace Coworking.Data.Repositories
                             WHERE r.naziv LIKE '%{name.Trim()}%'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
+
+        public List<SatiSaleInfo> vratiSatiSaleZaClana(int clanId)
+        {
+            string now = _adapter.NowExpr();
+            string upit = $@"
+            SELECT rv.pocetak, rv.kraj, l.radno_vreme
+            FROM rezervacija rv
+            JOIN resurs r ON rv.resurs_id = r.resurs_id
+            JOIN lokacija l ON r.lokacija_id = l.lokacija_id
+            WHERE rv.clan_id = {clanId}
+              AND r.tip_resursa = 'sala'
+              AND rv.status IN ('Rezervisana', 'Potvrdjena', 'Zavrsena')
+              AND MONTH(rv.pocetak) = MONTH({now})
+              AND YEAR(rv.pocetak)  = YEAR({now})";
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), red => new SatiSaleInfo
+            {
+                pocetak = red["pocetak"].ToString(),
+                kraj = red["kraj"].ToString(),
+                radnoVreme = red["radno_vreme"].ToString()
+            });
+        }
     }
 }

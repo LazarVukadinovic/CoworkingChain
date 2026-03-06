@@ -40,7 +40,7 @@ namespace Coworking.Data.Providers
 
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
         {
-            // Uvek kreni od svih, pa su�avaj krug
+            // Uvek kreni od svih, pa sucavaj krug
             var clanovi = _clanRepo.GetAll();
 
             if (lokacijaId.HasValue)
@@ -61,7 +61,49 @@ namespace Coworking.Data.Providers
         public int vratiClanovePoLokaciji(int lokacijaId) => _clanRepo.vratiClanovePoLokaciji(lokacijaId).Count();
         //Marta:druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma
 
-        public double dajBrojSati(int clanId) => _clanRepo.GetTotalHoursInCurrentMonth(clanId);
+        public double vratiUkupneSateSalaZaClana(int clanId)
+        {
+            var stavke = _rezRepo.vratiSatiSaleZaClana(clanId);
+            double ukupno = 0;
+
+            int trenutniMesec = DateTime.Now.Month;
+            int trenutnaGodina = DateTime.Now.Year;
+
+            foreach (var s in stavke)
+            {
+                if (!DateTime.TryParse(s.pocetak, out DateTime pocetak)) continue;
+                if (!DateTime.TryParse(s.kraj, out DateTime kraj)) continue;
+                if (string.IsNullOrWhiteSpace(s.radnoVreme)) continue;
+
+                var parts = s.radnoVreme.Split('-');
+                if (parts.Length != 2) continue;
+                if (!TimeSpan.TryParse(parts[0].Trim(), out TimeSpan radnoOd)) continue;
+                if (!TimeSpan.TryParse(parts[1].Trim(), out TimeSpan radnoDo)) continue;
+
+                // Iterira dan po dan (zbog visednevnih rezervacija)
+                DateTime trenutniDan = pocetak.Date;
+                while (trenutniDan <= kraj.Date)
+                {
+                    // Preskoči dane van tekućeg meseca
+                    if (trenutniDan.Month == trenutniMesec && trenutniDan.Year == trenutnaGodina)
+                    {
+                        // Presek rezervacije i radnog vremena za taj dan
+                        DateTime radnoVremeOd = trenutniDan + radnoOd;
+                        DateTime radnoVremeDo = trenutniDan + radnoDo;
+
+                        DateTime efektivniPocetak = pocetak > radnoVremeOd ? pocetak : radnoVremeOd;
+                        DateTime efektivniKraj = kraj < radnoVremeDo ? kraj : radnoVremeDo;
+
+                        if (efektivniKraj > efektivniPocetak)
+                            ukupno += (efektivniKraj - efektivniPocetak).TotalHours;
+                    }
+
+                    trenutniDan = trenutniDan.AddDays(1);
+                }
+            }
+
+            return Math.Round(ukupno, 2);
+        }
 
         //-------------------------LOKACIJE-------------------------
         //-------------------------LOKACIJE-------------------------
