@@ -79,7 +79,7 @@ namespace Coworking.Data.Repositories
         }
 
         // Vraca radna mesta po lokaciji sa trenutnom dostupnoscu (Dostupno/Zauzeto)
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
+        public List<RadnoMesto> prikaziDostupnaRadnaMestaPoLokaciji(int lokacijaId)
         {
             string now = _adapter.NowExpr();
             string upit = $@"
@@ -95,6 +95,25 @@ namespace Coworking.Data.Repositories
                 AND rv.kraj > {now}
                 AND rv.status != 'Otkazana'
             WHERE r.lokacija_id = {lokacijaId}";
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRadnoMesto);
+        }
+
+        public List<RadnoMesto> prikaziDostupnaRadnaMesta()
+        {
+            string now = _adapter.NowExpr();
+            string upit = $@"
+            SELECT r.*, rmd.podtip,
+                CASE 
+                    WHEN rv.rezervacija_id IS NOT NULL THEN 'Zauzeto'
+                    ELSE 'Dostupno'
+                END AS dostupnost
+            FROM radno_mesto_detalj rmd
+            JOIN resurs r ON rmd.resurs_id = r.resurs_id
+            LEFT JOIN rezervacija rv ON rv.resurs_id = r.resurs_id
+                AND rv.pocetak <= {now}
+                AND rv.kraj > {now}
+                AND rv.status != 'Otkazana'";
 
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRadnoMesto);
         }
