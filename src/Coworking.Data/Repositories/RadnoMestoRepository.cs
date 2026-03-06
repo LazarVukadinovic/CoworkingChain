@@ -77,19 +77,23 @@ namespace Coworking.Data.Repositories
         {
             return null;
         }
+
+        // Vraca radna mesta po lokaciji sa trenutnom dostupnoscu (Dostupno/Zauzeto)
         public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
         {
             string now = _adapter.NowExpr();
             string upit = $@"
-            SELECT r.*,rmd.podtip, 
+            SELECT r.*, rmd.podtip,
                 CASE 
-                    WHEN rv.pocetak<{now} AND rv.kraj>{now} and rv.status!='{ReservationStatus.Otkazana.ToDbString()}'
-                    THEN 'Zauzeto'
+                    WHEN rv.rezervacija_id IS NOT NULL THEN 'Zauzeto'
                     ELSE 'Dostupno'
                 END AS dostupnost
             FROM radno_mesto_detalj rmd
-            JOIN resurs r on rmd.resurs_id=r.resurs_id
-            JOIN rezervacija rv on rv.resurs_id=r.resurs_id
+            JOIN resurs r ON rmd.resurs_id = r.resurs_id
+            LEFT JOIN rezervacija rv ON rv.resurs_id = r.resurs_id
+                AND rv.pocetak <= {now}
+                AND rv.kraj > {now}
+                AND rv.status != 'Otkazana'
             WHERE r.lokacija_id = {lokacijaId}";
 
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRadnoMesto);
