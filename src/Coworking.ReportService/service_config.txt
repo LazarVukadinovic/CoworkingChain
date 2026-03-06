@@ -1,0 +1,17 @@
+# ============================================
+# Coworking Report Service - Konfiguracija
+# ============================================
+# Linija 1: Interval izvrsavanja - na koliko se generise izvestaj
+#   Dostupne vrednosti: Hour1, Hour5, Day1, Week1, Month1
+#
+# Linija 2: Period izvestaja - koliko unazad izvestaj pokriva
+#   Dostupne vrednosti: Hour1, Hour5, Day1, Week1, Month1
+#
+# Linija 3: Folder gde se cuvaju izvestaji
+#   Primer: C:\Reports
+#           C:\Users\Admin\Desktop\Izvestaji
+# ============================================
+
+Hour1
+Year1
+C:\Reports
