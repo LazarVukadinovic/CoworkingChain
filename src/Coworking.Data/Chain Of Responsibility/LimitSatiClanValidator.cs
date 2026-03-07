@@ -4,7 +4,7 @@ using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Chain_Of_Responsibility
 {
-    internal class LimitSatiClanValidator : RezervacijaHandler
+    public class LimitSatiClanValidator : RezervacijaHandler
     {
         public LimitSatiClanValidator(IDataBase proxy) : base(proxy)
         {

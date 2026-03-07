@@ -4,7 +4,7 @@ using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Chain_Of_Responsibility
 {
-    internal class ZauzetostResursaValidator : RezervacijaHandler
+    public class ZauzetostResursaValidator : RezervacijaHandler
     {
         public ZauzetostResursaValidator(IDataBase proxy) : base(proxy)
         { }

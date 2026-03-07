@@ -3,7 +3,7 @@ using Coworking.Domain.Entities;
 
 namespace Coworking.Data.Chain_Of_Responsibility
 {
-    internal class RadnoVremeLokacijeValidator : RezervacijaHandler
+    public class RadnoVremeLokacijeValidator : RezervacijaHandler
     {
         public RadnoVremeLokacijeValidator(IDataBase proxy) : base(proxy)
         {

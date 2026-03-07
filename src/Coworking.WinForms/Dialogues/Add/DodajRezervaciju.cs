@@ -1,8 +1,10 @@
-﻿using Coworking.Data.Command;
+﻿using Coworking.Data.Chain_Of_Responsibility;
+using Coworking.Data.Command;
 using Coworking.Data.Command.RezervacijaCommand;
 using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
+using Org.BouncyCastle.Utilities.Collections;
 
 namespace Coworking.WinForms.Dialogues
 {
@@ -86,16 +88,22 @@ namespace Coworking.WinForms.Dialogues
                 otkazanoU = null
             };
 
-            var command = new DodajRezervacijuCommand(singleton, rezervacija);
-            var manager = new CommandManager();
-            var result = manager.ExecuteCommand(command);
+            var zauzetostResursaValidator = new ZauzetostResursaValidator(singleton);
+            var limitSatiClanValidator = new LimitSatiClanValidator(singleton);
+            var radnoVremeLokacijeValidator = new RadnoVremeLokacijeValidator(singleton);
+            zauzetostResursaValidator.SetNext(limitSatiClanValidator).SetNext(radnoVremeLokacijeValidator);
 
-            if (result.isValid)
+            RezervacijaHandler validatorChain = zauzetostResursaValidator;
+            var result = validatorChain.Handle(rezervacija);
+
+            if(result.isValid == true)
             {
+                singleton.dodajRezervaciju(rezervacija);
                 MessageBox.Show("Rezervacija uspešno dodata!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
-            else MessageBox.Show(result.errorMessage, "Greška validacije", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+                MessageBox.Show(result.errorMessage, "Greška validacije", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }

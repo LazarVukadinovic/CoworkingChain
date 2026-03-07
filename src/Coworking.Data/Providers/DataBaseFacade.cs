@@ -161,18 +161,10 @@ namespace Coworking.Data.Providers
         public void izmeniRezervaciju(Rezervacija r) => _rezRepo.Update(r);
         public void otkaziRezervaciju(int rezervacijaId) => _rezRepo.Cancel(rezervacijaId);
         public void obrisiRezervaciju(int rezervacijaId) => _rezRepo.Delete(rezervacijaId);
-        public List<Rezervacija> prikaziSveRezervacije() => _rezRepo.GetAll();
-
-
-        // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
-        // TO-DO
-
-
-        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId, List<ReservationStatus> filterStatusi)
+        public List<Rezervacija> prikaziSveRezervacije()
         {
-            var rezervacije = _rezRepo.GetByClanIdAndStatuses(clanId, filterStatusi);
-
-            foreach (var r in rezervacije)
+            var reservation = _rezRepo.GetAll();
+            foreach (var r in reservation)
             {
                 if (r.status != ReservationStatus.Zavrsena && DateTime.TryParse(r.kraj, out DateTime krajDt) && krajDt < DateTime.Now)
                 {
@@ -180,8 +172,12 @@ namespace Coworking.Data.Providers
                     r.status = ReservationStatus.Zavrsena;
                 }
             }
+            return reservation;
+        }
 
-            return rezervacije;
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId, List<ReservationStatus> filterStatusi)
+        {
+            return _rezRepo.GetByClanIdAndStatuses(clanId, filterStatusi);
         }
 
         public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacijaId) => _rezRepo.GetReservationsByDateAndLocation(datum, lokacijaId);

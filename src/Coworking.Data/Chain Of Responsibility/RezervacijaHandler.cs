@@ -3,7 +3,7 @@ using Coworking.Domain.Entities;
 
 namespace Coworking.Data.Chain_Of_Responsibility
 {
-    internal abstract class RezervacijaHandler
+    public abstract class RezervacijaHandler
     {
         protected RezervacijaHandler? _next;
         protected IDataBase _proxy;
