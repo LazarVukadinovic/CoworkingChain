@@ -300,6 +300,7 @@
             editLocationButton.TabIndex = 44;
             editLocationButton.Text = "Izmena podataka";
             editLocationButton.TextColor = Color.FromArgb(243, 243, 243);
+            editLocationButton.Click += editLocationButton_Click;
             // 
             // membershipID
             // 

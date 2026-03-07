@@ -2,7 +2,6 @@ using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using Coworking.WinForms.Dialogues;
-using System;
 
 namespace Coworking.WinForms
 {
@@ -17,13 +16,13 @@ namespace Coworking.WinForms
             singleton = DataBaseSingleton.vratiInstancu();
             proxy = (DataBaseProxy)singleton;
             proxy.DataChanged += OnDataChanged;
-            locationComboBox.SelectedIndex = 0;
+            //locationComboBox.SelectedIndex = 0;
             loadData();
         }
 
         private void OnDataChanged(DataEntity entity)
         {
-            if (entity == DataEntity.Resurs)
+            if (entity == DataEntity.Rezervacija) // bilo je DataEntity.Resurs
             {
                 loadData();
             }
@@ -44,7 +43,8 @@ namespace Coworking.WinForms
                 return;
             }
 
-            IzmeniRezervaciju editReservation = new IzmeniRezervaciju();
+            var selectedReservation = (Rezervacija)reservationDataGridView.SelectedRows[0].DataBoundItem;
+            IzmeniRezervaciju editReservation = new IzmeniRezervaciju(selectedReservation);
             editReservation.ShowDialog(this);
             loadData();
         }
@@ -65,9 +65,7 @@ namespace Coworking.WinForms
                 MessageBoxIcon.Question);
 
             if (confirm != DialogResult.Yes)
-            {
                 return;
-            }
 
             singleton.obrisiRezervaciju(selectedReservation.rezervacijaId);
             loadData();
@@ -149,11 +147,11 @@ namespace Coworking.WinForms
             searchButton.Visible = userRadioButton.Checked || locationDateRadioButton.Checked;
         }
 
-        private void loadReservations()
-        {
-            var reservations = singleton.prikaziSveRezervacije();
-            reservationDataGridView.DataSource = reservations;
-        }
+        //private void loadReservations()
+        //{
+        //    var reservations = singleton.prikaziSveRezervacije();
+        //    reservationDataGridView.DataSource = reservations;
+        //}
 
         private void loadLocations()
         {
@@ -204,7 +202,7 @@ namespace Coworking.WinForms
         {
             var users = singleton.prikaziClanove();
             userTextBox.ValueMember = "clanId";
-            userTextBox.DisplayMember = "";
+            userTextBox.DisplayMember = "PunoIme";
             userTextBox.DataSource = users;
         }
     }

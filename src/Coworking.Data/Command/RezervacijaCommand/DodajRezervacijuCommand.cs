@@ -4,7 +4,7 @@ using Coworking.Domain.Entities;
 
 namespace Coworking.Data.Command.RezervacijaCommand
 {
-    internal class DodajRezervacijuCommand : Command
+    public class DodajRezervacijuCommand : Command
     {
         private Rezervacija _rezervacija;
         private RezervacijaHandler _validatorChain;

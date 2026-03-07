@@ -188,6 +188,7 @@
             addReservationButton.TabIndex = 38;
             addReservationButton.Text = "Dodaj rezervaciju";
             addReservationButton.TextColor = Color.FromArgb(243, 243, 243);
+            addReservationButton.Click += addReservationButton_Click;
             // 
             // startDateDateTime
             // 

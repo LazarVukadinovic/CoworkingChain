@@ -1,7 +1,5 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace Coworking.WinForms.Dialogues
@@ -12,54 +10,101 @@ namespace Coworking.WinForms.Dialogues
         public IzmeniTipClanstva()
         {
             InitializeComponent();
-            // TODO
-            // popunjavanje komponenti podacima iz baze
             singleton = DataBaseSingleton.vratiInstancu();
             loadMemberships();
         }
 
         private void conferenceCheckBox_CheckedChanged()
         {
-            if (conferenceCheckBox.Checked)
-                conferenceTimeNumeric.Visible = conferenceTimeLabel.Visible = true;
-            else
-                conferenceTimeNumeric.Visible = conferenceTimeLabel.Visible = false;
+            //if (conferenceCheckBox.Checked)
+            //    conferenceTimeNumeric.Visible = conferenceTimeLabel.Visible = true;
+            //else
+            //    conferenceTimeNumeric.Visible = conferenceTimeLabel.Visible = false;
+
+            conferenceTimeNumeric.Visible = conferenceTimeLabel.Visible = conferenceCheckBox.Checked;
         }
 
         private void editMembershipButton_Click(object sender, EventArgs e)
         {
-            var id = nameTextBox.SelectedItem.ToString();
-            var membership = singleton.GetTipClanstvaById(int.Parse(id));
-            membership.naziv = cyberTextBox1.textBox.Text;
-            membership.cena = float.Parse(priceTextBox.textBox.Text, CultureInfo.InvariantCulture);
+            //var id = nameTextBox.SelectedItem.ToString();
+            //var membership = singleton.GetTipClanstvaById(int.Parse(id));
+            //membership.naziv = cyberTextBox1.textBox.Text;
+            //membership.cena = float.Parse(priceTextBox.textBox.Text, CultureInfo.InvariantCulture);
+            //membership.maxSatiRezervacijeMesecno = (int)monthlyNumeric1.Value;
+            //membership.trajanjeDana = (int)durationNumeric.Value;
+            //if (conferenceCheckBox.Checked == false)
+            //{
+            //    membership.dozvoljenaSala = false;
+            //    membership.satiSaleMesecno = 0;
+            //}
+            //else
+            //{
+            //    membership.dozvoljenaSala = true;
+            //    membership.satiSaleMesecno = (int)conferenceTimeNumeric.Value;
+            //}
+
+            //singleton.updateTipClanstva(membership);
+
+            if (nameTextBox.SelectedValue == null)
+            {
+                MessageBox.Show("Izaberi tip članstva.", "Greška",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!float.TryParse(priceTextBox.TextButton, NumberStyles.Any,
+                    CultureInfo.InvariantCulture, out float cena))
+            {
+                MessageBox.Show("Neispravan format cene.", "Greška",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var membership = singleton.GetTipClanstvaById((int)nameTextBox.SelectedValue);
+            membership.naziv = cyberTextBox1.TextButton;
+            membership.cena = cena;
             membership.maxSatiRezervacijeMesecno = (int)monthlyNumeric1.Value;
             membership.trajanjeDana = (int)durationNumeric.Value;
-            if (conferenceCheckBox.Checked == false)
-            {
-                membership.dozvoljenaSala = false;
-                membership.satiSaleMesecno = 0;
-            }
-            else
-            {
-                membership.dozvoljenaSala = true;
-                membership.satiSaleMesecno = (int)conferenceTimeNumeric.Value;
-            }
+            membership.dozvoljenaSala = conferenceCheckBox.Checked;
+            membership.satiSaleMesecno = conferenceCheckBox.Checked ? (int)conferenceTimeNumeric.Value : 0;
 
             singleton.updateTipClanstva(membership);
 
+            MessageBox.Show("Tip članstva uspešno izmenjen!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
         }
 
         private void membershipComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var membership = singleton.GetTipClanstvaById((int)nameTextBox.SelectedItem);
-            cyberTextBox1.textBox.Text = membership.naziv;
+            //var membership = singleton.GetTipClanstvaById((int)nameTextBox.SelectedItem);
+            //cyberTextBox1.textBox.Text = membership.naziv;
+
+            if (nameTextBox.SelectedValue == null) return;
+
+            var membership = singleton.GetTipClanstvaById((int)nameTextBox.SelectedValue);
+            if (membership == null) return;
+
+            membershipID.Text = $"ID paketa: {membership.tipClanstvaId}";
+            cyberTextBox1.TextButton = membership.naziv ?? "";
+            priceTextBox.TextButton = membership.cena?.ToString(CultureInfo.InvariantCulture) ?? "0";
+            monthlyNumeric1.Value = (long)(membership.maxSatiRezervacijeMesecno ?? 1);
+            durationNumeric.Value = (long)(membership.trajanjeDana ?? 1);
+            conferenceCheckBox.Checked = membership.dozvoljenaSala ?? false;
+
+            if (conferenceCheckBox.Checked)
+                conferenceTimeNumeric.Value = (long)(membership.satiSaleMesecno ?? 1);
         }
 
         private void loadMemberships()
         {
+            //var memberships = singleton.prikaziSveTipoveClanstva();
+            //foreach (var membership in memberships)
+            //    nameTextBox.Items.Add(membership.tipClanstvaId);
+
             var memberships = singleton.prikaziSveTipoveClanstva();
-            foreach (var membership in memberships)
-                nameTextBox.Items.Add(membership.tipClanstvaId);
+            nameTextBox.DisplayMember = "naziv";
+            nameTextBox.ValueMember = "tipClanstvaId";
+            nameTextBox.DataSource = memberships;
         }
 
         private void headerLabel1_Click(object sender, EventArgs e)

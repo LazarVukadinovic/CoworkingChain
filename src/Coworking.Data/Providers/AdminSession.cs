@@ -7,7 +7,7 @@ namespace Coworking.Data.Providers
         private static AdminSession? _instance;
         private static readonly object _lock = new object();
 
-        public Admin TrenutniAdmin { get; private set; }
+        public Admin? TrenutniAdmin { get; private set; }
 
         private AdminSession() { }
 

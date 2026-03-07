@@ -12,6 +12,7 @@
         public string? datumKraja { get; set; }
         public string? statusNaloga { get; set; }
         public string? kreiran {  get; set; }
+        public string PunoIme => $"{ime} {prezime}";
 
         public Clan()
         {

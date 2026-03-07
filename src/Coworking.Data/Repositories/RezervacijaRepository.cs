@@ -18,33 +18,37 @@ namespace Coworking.Data.Repositories
 
         public void Add(Rezervacija item)
         {
+            string otkazanoUVal = item.otkazanoU == null ? "NULL" : $"'{item.otkazanoU}'";
+
             string upit = $@"
-                INSERT INTO rezervacija (pocetak, kraj, status, kreirano_u, otkazano_u, clan_id, resurs_id)
-                VALUES (
-                    '{item.pocetak}',
-                    '{item.kraj}',
-                    '{item.status.ToDbString()}',
-                    '{item.kreiranoU}',
-                    '{item.otkazanoU}',
-                    {item.clanId},
-                    {item.resursId}
-                );";
+            INSERT INTO rezervacija (pocetak, kraj, status, kreirano_u, otkazano_u, clan_id, resurs_id)
+            VALUES (
+                '{item.pocetak}',
+                '{item.kraj}',
+                '{item.status.ToDbString()}',
+                '{item.kreiranoU}',
+                {otkazanoUVal},
+                {item.clanId},
+                {item.resursId}
+            );";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public void Update(Rezervacija item)
         {
+            string otkazanoUVal = item.otkazanoU == null ? "NULL" : $"'{item.otkazanoU}'";
+
             string upit = $@"
-                UPDATE rezervacija
-                SET pocetak = '{item.pocetak}',
-                    kraj = '{item.kraj}',
-                    status = '{item.status.ToDbString()}',
-                    kreirano_u = '{item.kreiranoU}',
-                    otkazano_u = '{item.otkazanoU}',
-                    clan_id = {item.clanId},
-                    resurs_id = {item.resursId}
-                WHERE rezervacija_id = {item.rezervacijaId};";
+            UPDATE rezervacija
+            SET pocetak = '{item.pocetak}',
+                kraj = '{item.kraj}',
+                status = '{item.status.ToDbString()}',
+                kreirano_u = '{item.kreiranoU}',
+                otkazano_u = {otkazanoUVal},
+                clan_id = {item.clanId},
+                resurs_id = {item.resursId}
+            WHERE rezervacija_id = {item.rezervacijaId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
@@ -119,8 +123,8 @@ namespace Coworking.Data.Repositories
         public List<Rezervacija> GetByName(string name)
         {
             string upit = $@"SELECT rv.*, r.oznaka FROM rezervacija rv 
-                            JOIN resurs r ON rv.resurs_id = r.resurs_id 
-                            WHERE r.naziv LIKE '%{name.Trim()}%'";
+                    JOIN resurs r ON rv.resurs_id = r.resurs_id 
+                    WHERE r.oznaka LIKE '%{name.Trim()}%'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 

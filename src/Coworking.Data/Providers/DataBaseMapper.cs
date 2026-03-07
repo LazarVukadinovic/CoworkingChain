@@ -43,7 +43,7 @@ namespace Coworking.Data.Providers
                 naziv = red["naziv"].ToString(),
                 adresa = red["adresa"].ToString(),
                 grad = red["grad"].ToString(),
-                radnoVreme = red["radno_vreme"].ToString(),
+                radnoVreme = red["radno_vreme"] == DBNull.Value ? null : red["radno_vreme"].ToString(),
                 maxKapacitet = Convert.ToInt32(red["max_kapacitet"]),
                 opis = red["opis"] == DBNull.Value ? null : red["opis"].ToString()
             };
@@ -57,10 +57,9 @@ namespace Coworking.Data.Providers
                 lokacijaId = Convert.ToInt32(red["lokacija_id"]),
                 oznaka = red["oznaka"].ToString(),
                 tipResursa = red["tip_resursa"].ToString(),
-                opis = red["opis"].ToString()
+                opis = red["opis"] == DBNull.Value ? null : red["opis"].ToString()
             };
         }
-
 
         public RadnoMesto mapRadnoMesto(DataRow red)
         {
@@ -108,19 +107,38 @@ namespace Coworking.Data.Providers
             };
         }
 
+        //public Rezervacija mapRezervacija(DataRow red)
+        //{
+        //    return new Rezervacija
+        //    {
+        //        rezervacijaId = Convert.ToInt32(red["rezervacija_id"]),
+        //        pocetak = red["pocetak"].ToString(),
+        //        kraj = red["kraj"].ToString(),
+        //        // red["status"]?.ToString() ?? ""
+        //        // ako je red["status"] null ceo izraz postaje null i ne zove se ToString(), ako nije null normalno se izvrsava
+        //        // ?? - ako je levi deo null koristi se prazan string "", ako nije null onda standardno levi
+        //        status = ReservationStatusTransformator.FromDbString(red["status"]?.ToString() ?? ""),
+        //        kreiranoU = red["kreirano_u"].ToString(),
+        //        otkazanoU = red["otkazano_u"] == DBNull.Value ? null : red["otkazano_u"].ToString(),
+        //        clanId = Convert.ToInt32(red["clan_id"]),
+        //        resursId = Convert.ToInt32(red["resurs_id"])
+        //    };
+        //}
+
         public Rezervacija mapRezervacija(DataRow red)
         {
             return new Rezervacija
             {
                 rezervacijaId = Convert.ToInt32(red["rezervacija_id"]),
-                pocetak = red["pocetak"].ToString(),
-                kraj = red["kraj"].ToString(),
-                // red["status"]?.ToString() ?? ""
-                // ako je red["status"] null ceo izraz postaje null i ne zove se ToString(), ako nije null normalno se izvrsava
-                // ?? - ako je levi deo null koristi se prazan string "", ako nije null onda standardno levi
+                pocetak = red["pocetak"] == DBNull.Value ? null : red["pocetak"].ToString(),
+                kraj = red["kraj"] == DBNull.Value ? null : red["kraj"].ToString(),
                 status = ReservationStatusTransformator.FromDbString(red["status"]?.ToString() ?? ""),
-                kreiranoU = red["kreirano_u"].ToString(),
-                otkazanoU = red["otkazano_u"] == DBNull.Value ? null : red["otkazano_u"].ToString(),
+                kreiranoU = red["kreirano_u"] == DBNull.Value ? null
+                                : red["kreirano_u"].ToString() == "0001-01-01 00:00:00" ? null
+                                : red["kreirano_u"].ToString(),
+                otkazanoU = red["otkazano_u"] == DBNull.Value ? null
+                                : red["otkazano_u"].ToString() == "0001-01-01 00:00:00" ? null
+                                : red["otkazano_u"].ToString(),
                 clanId = Convert.ToInt32(red["clan_id"]),
                 resursId = Convert.ToInt32(red["resurs_id"])
             };

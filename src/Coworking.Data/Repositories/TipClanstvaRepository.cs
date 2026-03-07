@@ -22,7 +22,7 @@ namespace Coworking.Data.Repositories
                 {item.cena},
                 {item.trajanjeDana},
                 {item.maxSatiRezervacijeMesecno},
-                {Convert.ToInt32(item.satiSaleMesecno)},
+                {Convert.ToInt32(item.dozvoljenaSala)},
                 {item.satiSaleMesecno}
             );";
 

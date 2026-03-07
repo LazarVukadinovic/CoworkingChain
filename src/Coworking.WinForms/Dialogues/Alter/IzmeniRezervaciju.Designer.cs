@@ -305,6 +305,7 @@
             editReservationButton.TabIndex = 64;
             editReservationButton.Text = "Izmena podataka";
             editReservationButton.TextColor = Color.FromArgb(243, 243, 243);
+            editReservationButton.Click += editReservationButton_Click;
             // 
             // IzmeniRezervaciju
             // 

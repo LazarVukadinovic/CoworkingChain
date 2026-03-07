@@ -1,6 +1,5 @@
 using Coworking.Data.Providers;
 using Coworking.WinForms.Dialogues;
-using System;
 
 namespace Coworking.WinForms
 {
@@ -19,7 +18,7 @@ namespace Coworking.WinForms
 
         private void OnDataChanged(DataEntity entity)
         {
-            if (entity == DataEntity.Resurs)
+            if (entity == DataEntity.TipClanstva) // bilo je DataEntity.Resurs
             {
                 loadData();
             }
