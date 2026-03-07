@@ -16,6 +16,8 @@ namespace Coworking.Data.Providers
 
         public double vratiUkupneSateSalaZaClana(int clanId);
 
+        public List<Clan> vratiClanovePoImenu(string name);
+
         //-------------------------LOKACIJE-------------------------
         public void dodajLokaciju(Lokacija l);
         public void izmeniLokaciju(Lokacija l);

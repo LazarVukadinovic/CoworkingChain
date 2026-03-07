@@ -78,5 +78,30 @@ namespace Coworking.Data.Providers
                 return command.ExecuteScalar();
             }
         }
+        public string DateOnlyExpr(string dateTimeExpr)
+        {
+            return _factory is MySqlFactory
+                ? $"DATE({dateTimeExpr})"
+                : $"CAST({dateTimeExpr} AS DATE)";
+        }
+
+        public string CurrDateExpr()
+        {
+            return _factory is MySqlFactory
+                ? "CURDATE()"
+                : "CAST(GETDATE() AS DATE)";
+        }
+
+        public string CombineDateAndTimeExpr(string dateExpr, string hourExpr)
+        {
+            if (_factory is MySqlFactory)
+            {
+                return $"STR_TO_DATE(CONCAT(DATE({dateExpr}), ' ', {hourExpr}, ':00:00'), '%Y-%m-%d %H:%i:%s')";
+            }
+            else
+            {
+                return $"DATEADD(HOUR, CAST({hourExpr} AS INT), CAST(CAST({dateExpr} AS DATE) AS DATETIME))";
+            }
+        }
     }
 }

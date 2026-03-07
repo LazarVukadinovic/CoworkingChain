@@ -48,7 +48,6 @@ namespace Coworking.Data.Repositories
 
         public List<TipClanstva> GetByName(string name)
         {
-            // Koristimo LIKE '%term%' da pronađemo poklapanje bilo gde u reči
             string upit = $"SELECT * FROM tip_clanstva WHERE naziv LIKE '%{name.Trim()}%'";
 
             var tabela = _adapter.izvrsiUpit(upit);

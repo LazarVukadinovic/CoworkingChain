@@ -148,11 +148,11 @@
             headerLabel.BackColor = Color.Transparent;
             headerLabel.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold);
             headerLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            headerLabel.Location = new Point(222, 31);
+            headerLabel.Location = new Point(34, 37);
             headerLabel.Name = "headerLabel";
-            headerLabel.Size = new Size(170, 36);
+            headerLabel.Size = new Size(291, 36);
             headerLabel.TabIndex = 15;
-            headerLabel.Text = "Dobrodošli";
+            headerLabel.Text = "Dobrodošli u lanac:";
             // 
             // headerSubLabel
             // 

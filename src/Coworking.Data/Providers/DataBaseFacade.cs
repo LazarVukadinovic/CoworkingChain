@@ -2,6 +2,7 @@ using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using Microsoft.Identity.Client;
+using System.Data;
 using System.Diagnostics;
 
 namespace Coworking.Data.Providers
@@ -60,51 +61,47 @@ namespace Coworking.Data.Providers
             return clanovi;
         }
 
+        public List<Clan> vratiClanovePoImenu(string name) => _clanRepo.GetByName(name);
+
         public int vratiClanovePoLokaciji(int lokacijaId) => _clanRepo.vratiClanovePoLokaciji(lokacijaId).Count();
         //Marta:druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma
 
         public double vratiUkupneSateSalaZaClana(int clanId)
         {
-            var stavke = _rezRepo.vratiSatiSaleZaClana(clanId);
-            double ukupno = 0;
+            var podaci = _clanRepo.GetReservationDetailsForMonth(clanId);
+            double suma = 0;
+            DateTime startMeseca = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime krajMeseca = startMeseca.AddMonths(1);
 
-            int trenutniMesec = DateTime.Now.Month;
-            int trenutnaGodina = DateTime.Now.Year;
-
-            foreach (var s in stavke)
+            foreach (var stavka in podaci)
             {
-                if (!DateTime.TryParse(s.pocetak, out DateTime pocetak)) continue;
-                if (!DateTime.TryParse(s.kraj, out DateTime kraj)) continue;
-                if (string.IsNullOrWhiteSpace(s.radnoVreme)) continue;
+                // Parsiranje formata "08:00 - 22:00"
+                string[] delovi = stavka.RadnoVreme.Split('-');
 
-                var parts = s.radnoVreme.Split('-');
-                if (parts.Length != 2) continue;
-                if (!TimeSpan.TryParse(parts[0].Trim(), out TimeSpan radnoOd)) continue;
-                if (!TimeSpan.TryParse(parts[1].Trim(), out TimeSpan radnoDo)) continue;
+                // Trim sklanja razmake, Substring(0,2) uzima samo sate
+                int otvara = int.Parse(delovi[0].Trim().Substring(0, 2));
+                int zatvara = int.Parse(delovi[1].Trim().Substring(0, 2));
 
-                // Iterira dan po dan (zbog visednevnih rezervacija)
-                DateTime trenutniDan = pocetak.Date;
-                while (trenutniDan <= kraj.Date)
+                DateTime rezPocetak = Convert.ToDateTime(stavka.PodaciRezervacije.pocetak);
+                DateTime rezKraj = Convert.ToDateTime(stavka.PodaciRezervacije.kraj);
+
+                for (DateTime dan = rezPocetak.Date; dan <= rezKraj.Date; dan = dan.AddDays(1))
                 {
-                    // Preskoči dane van tekućeg meseca
-                    if (trenutniDan.Month == trenutniMesec && trenutniDan.Year == trenutnaGodina)
+                    if (dan < startMeseca || dan >= krajMeseca) continue;
+
+                    DateTime lokOtvara = dan.AddHours(otvara);
+                    DateTime lokZatvara = dan.AddHours(zatvara);
+
+                    DateTime stvPocetak = rezPocetak > lokOtvara ? rezPocetak : lokOtvara;
+                    DateTime stvKraj = rezKraj < lokZatvara ? rezKraj : lokZatvara;
+
+                    if (stvKraj > stvPocetak)
                     {
-                        // Presek rezervacije i radnog vremena za taj dan
-                        DateTime radnoVremeOd = trenutniDan + radnoOd;
-                        DateTime radnoVremeDo = trenutniDan + radnoDo;
-
-                        DateTime efektivniPocetak = pocetak > radnoVremeOd ? pocetak : radnoVremeOd;
-                        DateTime efektivniKraj = kraj < radnoVremeDo ? kraj : radnoVremeDo;
-
-                        if (efektivniKraj > efektivniPocetak)
-                            ukupno += (efektivniKraj - efektivniPocetak).TotalHours;
+                        suma += (stvKraj - stvPocetak).TotalHours;
                     }
-
-                    trenutniDan = trenutniDan.AddDays(1);
                 }
             }
-
-            return Math.Round(ukupno, 2);
+            return Math.Round(suma, 2);
         }
 
         //-------------------------LOKACIJE-------------------------

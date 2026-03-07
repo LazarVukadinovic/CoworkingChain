@@ -11,6 +11,7 @@ namespace Coworking.WinForms
         public LoginForm()
         {
             InitializeComponent();
+            headerLabel.Text += " " + database.prikazLanca();
             //database.addAdmin(new Domain.Entities.Admin { KorisnickoIme = "admin5", LozinkaHash = "admin5" });
         }
 

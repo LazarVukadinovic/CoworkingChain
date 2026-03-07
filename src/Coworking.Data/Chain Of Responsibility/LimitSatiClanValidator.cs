@@ -13,49 +13,29 @@ namespace Coworking.Data.Chain_Of_Responsibility
         public override ValidationResult Handle(Rezervacija rezervacija)
         {
             var clan = _proxy.prikaziClanove().FirstOrDefault(c => c.clanId == rezervacija.clanId);
-            if (clan == null) return ValidationResult.Fail("Nepostojeci clan.");
+            if (clan == null) return ValidationResult.Fail("Nepostojeći član.");
 
             var tipClanstva = _proxy.prikaziSveTipoveClanstva().FirstOrDefault(t => t.tipClanstvaId == clan.tipClanstva);
-            if (tipClanstva == null) return ValidationResult.Fail("Nepostojeci tip clanstva.");
+            if (tipClanstva == null) return ValidationResult.Fail("Nepostojeći tip članstva.");
 
             if (!tipClanstva.maxSatiRezervacijeMesecno.HasValue)
                 return base.Handle(rezervacija);
 
-            // Izracunaj sate vec utrosene ovog meseca
-            int trenutniMesec = DateTime.Now.Month;
-            int trenutnaGodina = DateTime.Now.Year;
+            double satiUtroseni = _proxy.vratiUkupneSateSalaZaClana(clan.clanId);
 
-            double satiUtroseni = _proxy.prikaziSveRezervacije()
-                .Where(r =>
-                    r.clanId == clan.clanId &&
-                    r.rezervacijaId != rezervacija.rezervacijaId && // iskljuci sebe pri izmeni
-                    (r.status == ReservationStatus.Rezervisana ||
-                     r.status == ReservationStatus.Potvrdjena ||
-                     r.status == ReservationStatus.Zavrsena) &&
-                    DateTime.TryParse(r.pocetak, out DateTime p) &&
-                    p.Month == trenutniMesec && p.Year == trenutnaGodina)
-                .Sum(r =>
-                {
-                    if (!DateTime.TryParse(r.pocetak, out DateTime poc)) return 0;
-                    if (!DateTime.TryParse(r.kraj, out DateTime kr)) return 0;
-                    return (kr - poc).TotalHours;
-                });
-
-            // Izracunaj sate nove rezervacije
             if (!DateTime.TryParse(rezervacija.pocetak, out DateTime novaPoc))
-                return ValidationResult.Fail("Neispravan format pocetka rezervacije.");
+                return ValidationResult.Fail("Neispravan format početka.");
             if (!DateTime.TryParse(rezervacija.kraj, out DateTime novaKr))
-                return ValidationResult.Fail("Neispravan format kraja rezervacije.");
+                return ValidationResult.Fail("Neispravan format kraja.");
 
             double satiNoveRezervacije = (novaKr - novaPoc).TotalHours;
 
-            bool prekoracenLimit = (satiUtroseni + satiNoveRezervacije) > tipClanstva.maxSatiRezervacijeMesecno.Value;
-
-            if (prekoracenLimit)
+            if ((satiUtroseni + satiNoveRezervacije) > tipClanstva.maxSatiRezervacijeMesecno.Value)
+            {
                 return ValidationResult.Fail(
-                    $"Prekoracen mesecni limit od {tipClanstva.maxSatiRezervacijeMesecno} sati. " +
-                    $"Utroseno: {Math.Round(satiUtroseni, 1)}h, " +
-                    $"Nova rezervacija: {Math.Round(satiNoveRezervacije, 1)}h.");
+                    $"Prekoračen mesečni limit od {tipClanstva.maxSatiRezervacijeMesecno} sati. " +
+                    $"Već rezervisano (sa radnim vremenom): {Math.Round(satiUtroseni, 1)}h");
+            }
 
             return base.Handle(rezervacija);
         }

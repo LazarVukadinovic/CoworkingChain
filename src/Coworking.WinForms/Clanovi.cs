@@ -46,7 +46,8 @@ namespace Coworking.WinForms
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            ResetComboBox();
+            //ResetComboBox();
+            loadDataBySearch();
         }
 
         private void editMemberButton_Click(object sender, EventArgs e)
@@ -159,6 +160,20 @@ namespace Coworking.WinForms
 
             singleton.obrisiClana(_selektovanClan.clanId);
             loadData();
+        }
+
+        private void loadDataBySearch()
+        {
+            var searchTerm = searchTextBox.textBox.Text;
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                loadData2();
+                return;
+            }
+            var clanovi = singleton.vratiClanovePoImenu(searchTerm);
+            memberDataGridView.DataSource = null;
+            memberDataGridView.DataSource = clanovi;
+            memberDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
     }
 }

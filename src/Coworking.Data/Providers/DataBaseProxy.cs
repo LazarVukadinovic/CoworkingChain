@@ -97,6 +97,8 @@ namespace Coworking.Data.Providers
                 return _facade.PrikaziClanoveFiltrirano(lokacijaId,tipClanstvaId,status);
         }
 
+        public List<Clan> vratiClanovePoImenu(string name) => _facade.vratiClanovePoImenu(name);
+
         public int vratiClanovePoLokaciji(int lokacijaId) => _facade.vratiClanovePoLokaciji(lokacijaId);
 
         public double vratiUkupneSateSalaZaClana(int clanId)
