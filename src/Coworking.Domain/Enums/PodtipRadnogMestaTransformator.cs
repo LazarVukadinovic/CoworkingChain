@@ -6,9 +6,9 @@
         public static string ToDbString(this PodtipRadnogMesta podtip) =>
             podtip switch
             {
-                PodtipRadnogMesta.private_office => "Private office",
-                PodtipRadnogMesta.hot_desk => "Hot desk",
-                PodtipRadnogMesta.dedicated_desk => "Dedicated desk",
+                PodtipRadnogMesta.private_office => "private_office",
+                PodtipRadnogMesta.hot_desk => "hot_desk",
+                PodtipRadnogMesta.dedicated_desk => "dedicated_desk",
                 _ => throw new ArgumentOutOfRangeException(nameof(podtip), podtip, "Greska u podtipu!")
             };
 
@@ -16,9 +16,9 @@
         public static PodtipRadnogMesta FromDbString(string? dbStatus) =>
             dbStatus switch
             {
-                "Private office" => PodtipRadnogMesta.private_office,
-                "Hot desk" => PodtipRadnogMesta.hot_desk,
-                "Dedicated desk" => PodtipRadnogMesta.dedicated_desk,
+                "private_office" => PodtipRadnogMesta.private_office,
+                "hot_desk" => PodtipRadnogMesta.hot_desk,
+                "dedicated_desk" => PodtipRadnogMesta.dedicated_desk,
                 _ => throw new ArgumentException($"Nepoznat status u bazi: '{dbStatus}'", nameof(dbStatus))
             };
 

@@ -9,34 +9,25 @@ namespace Coworking.WinForms.Dialogues
     public partial class IzmeniRezervaciju : Form
     {
         private IDataBase _singleton;
-        private Rezervacija _rezervacija;
+        private Rezervacija _selektovanaRezervacija;
 
-        public IzmeniRezervaciju(Rezervacija rezervacija)
+        public IzmeniRezervaciju(Rezervacija selektovanaRezervacija)
         {
             InitializeComponent();
             _singleton = DataBaseSingleton.vratiInstancu();
-            _rezervacija = rezervacija;
+            _selektovanaRezervacija = selektovanaRezervacija;
 
+            loadMember();
             loadResources();
             loadStatuses();
-            loadLocations();
-            popuniPodatke();
+            loadDate();
         }
 
-        private void currentLocationCheckBox_CheckedChanged()
+        private void loadMember()
         {
-            //if (currentLocationCheckBox.Checked)
-            //{
-            //    locationComboBox.Enabled = false;
-            //    // TODO:
-            //    // prikaz trenutne lokacije u comboBox-u
-            //}
-            //else
-            //{
-            //    locationComboBox.Enabled = true;
-            //}
-
-            locationComboBox.Enabled = !currentLocationCheckBox.Checked;
+            var member = _singleton.prikaziClanove()
+                .FirstOrDefault(c => c.clanId == _selektovanaRezervacija.clanId);
+            userNameLabel.Text = member != null ? $"{member.ime} {member.prezime}" : $"Clan #{_selektovanaRezervacija.clanId}";
         }
 
         private void loadResources()
@@ -46,6 +37,8 @@ namespace Coworking.WinForms.Dialogues
             resourceComboBox.DisplayMember = "oznaka";
             resourceComboBox.ValueMember = "resursId";
             resourceComboBox.DataSource = resources;
+
+            resourceComboBox.SelectedValue = _selektovanaRezervacija.resursId;
         }
 
         private void loadStatuses()
@@ -58,35 +51,37 @@ namespace Coworking.WinForms.Dialogues
                 ReservationStatus.Otkazana.ToDbString(),
                 ReservationStatus.Zavrsena.ToDbString()
             });
+
+            statusComboBox.SelectedItem = _selektovanaRezervacija.status.ToDbString();
         }
 
-        private void loadLocations()
+        private void loadDate()
         {
-            var locations = _singleton.prikaziLokacije(false);
-            locationComboBox.DisplayMember = "naziv";
-            locationComboBox.ValueMember = "lokacijaId";
-            locationComboBox.DataSource = locations;
-        }
-
-        private void popuniPodatke()
-        {
-            var clan = _singleton.prikaziClanove()
-                .FirstOrDefault(c => c.clanId == _rezervacija.clanId);
-            userNameLabel.Text = clan != null ? $"{clan.ime} {clan.prezime}" : $"Clan #{_rezervacija.clanId}";
-
-            resourceComboBox.SelectedValue = _rezervacija.resursId;
-            statusComboBox.SelectedItem = _rezervacija.status.ToDbString();
-
-            if (DateTime.TryParse(_rezervacija.pocetak, out DateTime poc))
+            if (DateTime.TryParse(_selektovanaRezervacija.pocetak, out DateTime poc))
             {
                 startDateDateTime.Value = poc.Date;
                 startTimeDateTime.Value = poc;
             }
-            if (DateTime.TryParse(_rezervacija.kraj, out DateTime kraj))
+            if (DateTime.TryParse(_selektovanaRezervacija.kraj, out DateTime kraj))
             {
                 endDateDateTime.Value = kraj.Date;
                 endTimeDateTime.Value = kraj;
             }
+        }
+
+        private void loadLocation()
+        {
+            if (resourceComboBox.SelectedValue != null)
+            {
+                int resursId = (int)resourceComboBox.SelectedValue;
+                locationTextBox.Text = _singleton.getLokacijaByResursId(resursId).naziv;
+            }
+            else
+                locationTextBox.Text = "";
+        }
+        private void resourceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadLocation();
         }
 
         private void editReservationButton_Click(object sender, EventArgs e)
@@ -106,14 +101,14 @@ namespace Coworking.WinForms.Dialogues
                 return;
             }
 
-            var backup = new Rezervacija(_rezervacija);
+            var backup = new Rezervacija(_selektovanaRezervacija);
 
-            _rezervacija.pocetak = pocetak.ToString("yyyy-MM-dd HH:mm:ss");
-            _rezervacija.kraj = kraj.ToString("yyyy-MM-dd HH:mm:ss");
-            _rezervacija.resursId = (int)resourceComboBox.SelectedValue;
-            _rezervacija.status = ReservationStatusTransformator.FromDbString(statusComboBox.SelectedItem.ToString()!);
+            _selektovanaRezervacija.pocetak = pocetak.ToString("yyyy-MM-dd HH:mm:ss");
+            _selektovanaRezervacija.kraj = kraj.ToString("yyyy-MM-dd HH:mm:ss");
+            _selektovanaRezervacija.resursId = (int)resourceComboBox.SelectedValue;
+            _selektovanaRezervacija.status = ReservationStatusTransformator.FromDbString(statusComboBox.SelectedItem.ToString()!);
 
-            var command = new IzmeniRezervacijuCommand(_singleton, _rezervacija, backup);
+            var command = new IzmeniRezervacijuCommand(_singleton, _selektovanaRezervacija, backup);
             var manager = new CommandManager();
             var result = manager.ExecuteCommand(command);
 
@@ -125,10 +120,10 @@ namespace Coworking.WinForms.Dialogues
             else
             {
                 // Vrati backup ako validacija nije prosla
-                _rezervacija.pocetak = backup.pocetak;
-                _rezervacija.kraj = backup.kraj;
-                _rezervacija.resursId = backup.resursId;
-                _rezervacija.status = backup.status;
+                _selektovanaRezervacija.pocetak = backup.pocetak;
+                _selektovanaRezervacija.kraj = backup.kraj;
+                _selektovanaRezervacija.resursId = backup.resursId;
+                _selektovanaRezervacija.status = backup.status;
 
                 MessageBox.Show(result.errorMessage, "Greška validacije", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }

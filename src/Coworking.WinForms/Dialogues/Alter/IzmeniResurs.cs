@@ -116,7 +116,21 @@ namespace Coworking.WinForms.Dialogues
             if (_selektovanResurs.tipResursa == "radno_mesto")
             {
                 RadnoMesto newRadnoMesto = singleton.prikaziRadnaMestaPoId(_selektovanResurs.resursId);
-                newRadnoMesto.podtip = PodtipRadnogMestaTransformator.FromDbString(deskTypeComboBox.SelectedItem.ToString());
+
+                switch (deskTypeComboBox.SelectedItem.ToString())
+                {
+                    case "Dedicated desk":
+                        newRadnoMesto.podtip = PodtipRadnogMesta.dedicated_desk;
+                        break;
+
+                    case "Hot desk":
+                        newRadnoMesto.podtip = PodtipRadnogMesta.hot_desk;
+                        break;
+
+                    case "Private office":
+                        newRadnoMesto.podtip = PodtipRadnogMesta.private_office;
+                        break;
+                }
 
                 singleton.izmeniRadnoMesto(newRadnoMesto);
             }

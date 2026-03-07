@@ -152,6 +152,7 @@ namespace Coworking.Data.Providers
             return _facade.GetLokacijaById(id);
         }
 
+        public Lokacija getLokacijaByResursId(int resursId) => _facade.getLokacijaByResursId(resursId);
 
         //-------------------------REZERVACIJE-------------------------
         //-------------------------REZERVACIJE-------------------------

@@ -29,6 +29,7 @@ namespace Coworking.Data.Providers
         public List<Lokacija> GetLokacijaByName(string naziv);
 
         public Lokacija GetLokacijaById(int id);
+        public Lokacija getLokacijaByResursId(int resursId);
 
         //-------------------------REZERVACIJE-------------------------
         public void dodajRezervaciju(Rezervacija r);

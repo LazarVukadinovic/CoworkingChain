@@ -150,6 +150,7 @@ namespace Coworking.Data.Providers
 
 
         public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check);
+        public Lokacija getLokacijaByResursId(int resursId) => _lokacijaRepo.getLokacijaByResursId(resursId);
 
 
         //-------------------------REZERVACIJE-------------------------

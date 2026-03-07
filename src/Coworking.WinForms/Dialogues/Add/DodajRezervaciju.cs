@@ -15,30 +15,18 @@ namespace Coworking.WinForms.Dialogues
             singleton = DataBaseSingleton.vratiInstancu();
             loadResources();
             loadMembers();
-            loadLocations();
             // resourceComboBox.SelectedIndex = 0;
             // endTimeDateTime.Value = startTimeDateTime.Value + new TimeSpan(1, 0, 0);
             endDateDateTime.Value = startDateDateTime.Value;
             endTimeDateTime.Value = startTimeDateTime.Value.AddHours(1);
         }
-
-        private void currentLocationCheckBox_CheckedChanged()
+        private void loadMembers()
         {
-            //if (currentLocationCheckBox.Checked)
-            //{
-            //    locationComboBox.Enabled = false;
-            //    // TODO:
-            //    // prikaz trenutne lokacije u comboBox-u
-            //}
-            //else
-            //{
-            //    locationComboBox.Enabled = true;
-            //}
-            locationComboBox.Enabled = !currentLocationCheckBox.Checked;
+            var members = singleton.prikaziClanove();
+            userComboBox.DisplayMember = "PunoIme";
+            userComboBox.ValueMember = "clanId";
+            userComboBox.DataSource = members;
         }
-
-        private void resourceComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        { }
 
         private void loadResources()
         {
@@ -48,20 +36,24 @@ namespace Coworking.WinForms.Dialogues
             resourceComboBox.DataSource = resources;
         }
 
-        private void loadMembers()
+        private void loadLocation()
         {
-            var members = singleton.prikaziClanove();
-            userComboBox.DisplayMember = "PunoIme";
-            userComboBox.ValueMember = "clanId";
-            userComboBox.DataSource = members;
+            if (resourceComboBox.SelectedValue != null)
+            {
+                int resursId = (int)resourceComboBox.SelectedValue;
+                locationTextBox.Text = singleton.getLokacijaByResursId(resursId).naziv;
+            }
+            else
+                locationTextBox.Text = "";
         }
 
-        private void loadLocations()
+        private void resourceComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var locations = singleton.prikaziLokacije(false);
-            locationComboBox.DisplayMember = "naziv";
-            locationComboBox.ValueMember = "lokacijaId";
-            locationComboBox.DataSource = locations;
+            //loadLocation();
+        }
+        private void resourceComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            loadLocation();
         }
 
         private void addReservationButton_Click(object sender, EventArgs e)

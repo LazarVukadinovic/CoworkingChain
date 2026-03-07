@@ -85,5 +85,16 @@ namespace Coworking.Data.Repositories
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
 
         }
+        public Lokacija getLokacijaByResursId(int resursId)
+        {
+            string upit = $@"
+                SELECT l.*
+                FROM lokacija l
+                JOIN resurs r ON r.lokacija_id = l.lokacija_id
+                WHERE r.resurs_id = {resursId};";
+
+            var lokacije = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
+            return lokacije.FirstOrDefault();
+        }
     }
 }
