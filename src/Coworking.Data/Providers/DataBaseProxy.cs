@@ -40,7 +40,7 @@ namespace Coworking.Data.Providers
         bool rezervacijaReset = true;
         bool tipClanstvaReset = true;
 
-
+        public event Action<DataEntity> DataChanged;
 
         public DataBaseProxy(IDataBase facade) 
         {

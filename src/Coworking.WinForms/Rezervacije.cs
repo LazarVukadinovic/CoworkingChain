@@ -8,7 +8,6 @@ namespace Coworking.WinForms
     public partial class Rezervacije : Form
     {
         private readonly IDataBase singleton;
-        DataBaseProxy proxy;
 
         public Rezervacije()
         {

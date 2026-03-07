@@ -8,7 +8,6 @@ namespace Coworking.WinForms
     public partial class Resursi : Form
     {
         IDataBase singleton;
-        DataBaseProxy proxy;
         public Resursi()
         {
             InitializeComponent();
