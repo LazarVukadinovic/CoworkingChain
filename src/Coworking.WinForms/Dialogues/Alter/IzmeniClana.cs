@@ -15,6 +15,8 @@ namespace Coworking.WinForms.Dialogues
             singleton = DataBaseSingleton.vratiInstancu();
             loadSelectedMember();
             loadMemberships();
+            loadStatus();
+            loadDate();
         }
 
         private void loadSelectedMember()
@@ -22,7 +24,7 @@ namespace Coworking.WinForms.Dialogues
             fillNameLabel.Text = _selektovanClan.ime;
             fillLastnameLabel.Text = _selektovanClan.prezime;
             emailTextBox.TextButton = _selektovanClan.mail;
-            endDateDateTime.Value = startDateDateTime.Value.AddDays(30);
+            phoneTextBox.TextButton = _selektovanClan.brTelefona;
         }
 
         private void loadMemberships()
@@ -31,13 +33,32 @@ namespace Coworking.WinForms.Dialogues
             membershipComboBox.DisplayMember = "naziv";
             membershipComboBox.ValueMember = "tipClanstvaId";
             membershipComboBox.DataSource = memberships;
+
+            membershipComboBox.SelectedValue = _selektovanClan.tipClanstva;
+        }
+
+        private void loadStatus()
+        {
+            statusComboBox.SelectedItem = _selektovanClan.statusNaloga;
+        }
+
+        private void loadDate()
+        {
+            if (DateTime.TryParse(_selektovanClan.datumPocetka, out DateTime poc))
+                startDateDateTime.Value = poc.Date;
         }
 
         private void editMemberButton_Click(object sender, EventArgs e)
         {
-            _selektovanClan.tipClanstva = (int?)membershipComboBox.SelectedValue;
-            _selektovanClan.datumPocetka = startDateDateTime.Value.ToString("yyyy-MM-dd");
-            _selektovanClan.datumKraja = endDateDateTime.Value.ToString("yyyy-MM-dd");
+            int membershipTypeId = (int)membershipComboBox.SelectedValue;
+            var result = singleton.GetTipClanstvaById(membershipTypeId);
+            double dodatniDani = Convert.ToDouble(result.trajanjeDana ?? 0);
+
+            DateTime start = startDateDateTime.Value;
+
+            _selektovanClan.tipClanstva = membershipTypeId;
+            _selektovanClan.datumPocetka = start.ToString("yyyy-MM-dd");
+            _selektovanClan.datumKraja = start.AddDays(dodatniDani).ToString("yyyy-MM-dd");
             _selektovanClan.brTelefona = phoneTextBox.textBox.Text;
             _selektovanClan.statusNaloga = statusComboBox.SelectedItem.ToString();
 

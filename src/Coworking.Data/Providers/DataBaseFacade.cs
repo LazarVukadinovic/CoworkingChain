@@ -19,6 +19,8 @@ namespace Coworking.Data.Providers
         private readonly AdminRepository _adminRepo;
         private readonly string _applicationName;
 
+        public event Action<DataEntity> DataChanged;
+
         public DataBaseFacade(DBSettings settings)
         {
             _clanRepo = new ClanRepository(settings.Adapter, settings.Mapper);

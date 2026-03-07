@@ -41,8 +41,6 @@
             emailTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             statusComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
             statusLabel = new ReaLTaiizor.Controls.HeaderLabel();
-            endDateLabel = new ReaLTaiizor.Controls.HeaderLabel();
-            endDateDateTime = new ReaLTaiizor.Controls.PoisonDateTime();
             startDateLabel = new ReaLTaiizor.Controls.HeaderLabel();
             startDateDateTime = new ReaLTaiizor.Controls.PoisonDateTime();
             editMemberButton = new ReaLTaiizor.Controls.ForeverButton();
@@ -241,30 +239,6 @@
             statusLabel.TabIndex = 36;
             statusLabel.Text = "Status naloga:";
             // 
-            // endDateLabel
-            // 
-            endDateLabel.AutoSize = true;
-            endDateLabel.BackColor = Color.Transparent;
-            endDateLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
-            endDateLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            endDateLabel.Location = new Point(12, 465);
-            endDateLabel.Name = "endDateLabel";
-            endDateLabel.Size = new Size(180, 25);
-            endDateLabel.TabIndex = 48;
-            endDateLabel.Text = "Datum završetka:";
-            // 
-            // endDateDateTime
-            // 
-            endDateDateTime.CalendarMonthBackground = Color.FromArgb(18, 26, 33);
-            endDateDateTime.CustomFormat = "dddd, MMMM dd, yyyy";
-            endDateDateTime.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Medium;
-            endDateDateTime.Format = DateTimePickerFormat.Custom;
-            endDateDateTime.Location = new Point(197, 462);
-            endDateDateTime.MinimumSize = new Size(0, 30);
-            endDateDateTime.Name = "endDateDateTime";
-            endDateDateTime.Size = new Size(200, 30);
-            endDateDateTime.TabIndex = 47;
-            // 
             // startDateLabel
             // 
             startDateLabel.AutoSize = true;
@@ -286,7 +260,7 @@
             startDateDateTime.Location = new Point(197, 413);
             startDateDateTime.MinimumSize = new Size(0, 30);
             startDateDateTime.Name = "startDateDateTime";
-            startDateDateTime.Size = new Size(200, 30);
+            startDateDateTime.Size = new Size(243, 30);
             startDateDateTime.TabIndex = 45;
             // 
             // editMemberButton
@@ -294,7 +268,7 @@
             editMemberButton.BackColor = Color.Transparent;
             editMemberButton.BaseColor = Color.FromArgb(56, 95, 235);
             editMemberButton.Font = new Font("Segoe UI", 12F);
-            editMemberButton.Location = new Point(206, 520);
+            editMemberButton.Location = new Point(197, 474);
             editMemberButton.Name = "editMemberButton";
             editMemberButton.Rounded = true;
             editMemberButton.Size = new Size(183, 45);
@@ -310,8 +284,6 @@
             BackColor = Color.FromArgb(18, 26, 33);
             ClientSize = new Size(577, 587);
             Controls.Add(editMemberButton);
-            Controls.Add(endDateLabel);
-            Controls.Add(endDateDateTime);
             Controls.Add(startDateLabel);
             Controls.Add(startDateDateTime);
             Controls.Add(statusComboBox);
@@ -349,8 +321,6 @@
         private ReaLTaiizor.Controls.CyberTextBox emailTextBox;
         private ReaLTaiizor.Controls.ForeverComboBox statusComboBox;
         private ReaLTaiizor.Controls.HeaderLabel statusLabel;
-        private ReaLTaiizor.Controls.HeaderLabel endDateLabel;
-        private ReaLTaiizor.Controls.PoisonDateTime endDateDateTime;
         private ReaLTaiizor.Controls.HeaderLabel startDateLabel;
         private ReaLTaiizor.Controls.PoisonDateTime startDateDateTime;
         private ReaLTaiizor.Controls.ForeverButton editMemberButton;
