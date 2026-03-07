@@ -11,13 +11,11 @@ namespace Coworking.WinForms
     {
         IDataBase singleton;
         Clan _selektovanClan;
-        DataBaseProxy proxy;
         public Clanovi()
         {
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
-            proxy = (DataBaseProxy)singleton;
-            proxy.DataChanged += OnDataChanged;
+            singleton.DataChanged += OnDataChanged;
             loadMemberships();
             loadLocations();
             loadStatuses();

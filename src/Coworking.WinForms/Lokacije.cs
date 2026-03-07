@@ -7,13 +7,13 @@ namespace Coworking.WinForms
 {
     public partial class Lokacije : Form
     {
-        DataBaseProxy proxy;
+        IDataBase singleton;
         public Lokacije()
         {
             InitializeComponent();
             loadData();
-            proxy = (DataBaseProxy)DataBaseSingleton.vratiInstancu();
-            proxy.DataChanged += OnDataChanged;
+            singleton=DataBaseSingleton.vratiInstancu();
+            singleton.DataChanged += OnDataChanged;
         }
 
         private void OnDataChanged(DataEntity entity)
@@ -39,7 +39,7 @@ namespace Coworking.WinForms
         private void loadData()
         {
             bool check = currentLocationCheckBox.Checked;
-            var locations = DataBaseSingleton.vratiInstancu().prikaziLokacije(check);
+            var locations = singleton.prikaziLokacije(check);
 
             locationDataGridView.DataSource = null;
             locationDataGridView.DataSource = locations;
@@ -87,14 +87,14 @@ namespace Coworking.WinForms
                 return;
             }
 
-            DataBaseSingleton.vratiInstancu().obrisiLokaciju(locationId);
+            singleton.obrisiLokaciju(locationId);
             loadData();
         }
 
         private void searchButton_Click(object sender, EventArgs e)
         {
             var text = searchTextBox.textBox.Text;
-            var membership = DataBaseSingleton.vratiInstancu().GetLokacijaByName(text);
+            var membership = singleton.GetLokacijaByName(text);
             locationDataGridView.DataSource = membership;
         }
     }

@@ -13,8 +13,7 @@ namespace Coworking.WinForms
         {
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
-            proxy = (DataBaseProxy)singleton;
-            proxy.DataChanged += OnDataChanged;
+            singleton.DataChanged += OnDataChanged;
             resourceTypeComboBox.SelectedIndex = 0;
             loadData();
             loadLocations();

@@ -5,6 +5,7 @@ namespace Coworking.Data.Providers
 {
     public interface IDataBase
     {
+        event Action<DataEntity> DataChanged;
         //-------------------------CLANOVI-------------------------
         public void dodajClana(Clan c);
         public void izmeniClana(Clan c);

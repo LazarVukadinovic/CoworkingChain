@@ -6,13 +6,11 @@ namespace Coworking.WinForms
     public partial class TipoviClanstva : Form
     {
         IDataBase singleton;
-        DataBaseProxy proxy;
         public TipoviClanstva()
         {
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
-            proxy = (DataBaseProxy)singleton;
-            proxy.DataChanged += OnDataChanged;
+            singleton.DataChanged += OnDataChanged;
             loadData();
         }
 
