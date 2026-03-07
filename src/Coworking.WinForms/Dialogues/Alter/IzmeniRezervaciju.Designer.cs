@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IzmeniRezervaciju));
             locationTextBox = new TextBox();
             editReservationButton = new ReaLTaiizor.Controls.ForeverButton();
-            statusLabel = new ReaLTaiizor.Controls.HeaderLabel();
-            statusComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
             endTimeDateTime = new DateTimePicker();
             startTimeDateTime = new DateTimePicker();
             endTimeLabel = new ReaLTaiizor.Controls.HeaderLabel();
@@ -65,7 +63,7 @@
             editReservationButton.BackColor = Color.Transparent;
             editReservationButton.BaseColor = Color.FromArgb(56, 95, 235);
             editReservationButton.Font = new Font("Segoe UI", 12F);
-            editReservationButton.Location = new Point(265, 403);
+            editReservationButton.Location = new Point(245, 355);
             editReservationButton.Name = "editReservationButton";
             editReservationButton.Rounded = true;
             editReservationButton.Size = new Size(183, 45);
@@ -73,36 +71,6 @@
             editReservationButton.Text = "Izmena podataka";
             editReservationButton.TextColor = Color.FromArgb(243, 243, 243);
             editReservationButton.Click += editReservationButton_Click;
-            // 
-            // statusLabel
-            // 
-            statusLabel.AutoSize = true;
-            statusLabel.BackColor = Color.Transparent;
-            statusLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
-            statusLabel.ForeColor = Color.FromArgb(255, 255, 255);
-            statusLabel.Location = new Point(16, 351);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(81, 25);
-            statusLabel.TabIndex = 80;
-            statusLabel.Text = "Status:";
-            // 
-            // statusComboBox
-            // 
-            statusComboBox.BaseColor = Color.FromArgb(8, 133, 161);
-            statusComboBox.BGColor = Color.FromArgb(37, 52, 68);
-            statusComboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            statusComboBox.Font = new Font("Segoe UI", 8F);
-            statusComboBox.ForeColor = Color.White;
-            statusComboBox.FormattingEnabled = true;
-            statusComboBox.HoverColor = Color.FromArgb(35, 168, 109);
-            statusComboBox.HoverFontColor = Color.White;
-            statusComboBox.ItemHeight = 25;
-            statusComboBox.Items.AddRange(new object[] { "Rezervisana", "Potvrdjena", "Završena", "Otkazana" });
-            statusComboBox.Location = new Point(119, 348);
-            statusComboBox.Name = "statusComboBox";
-            statusComboBox.Size = new Size(562, 31);
-            statusComboBox.TabIndex = 79;
             // 
             // endTimeDateTime
             // 
@@ -270,8 +238,6 @@
             ClientSize = new Size(697, 497);
             Controls.Add(locationTextBox);
             Controls.Add(editReservationButton);
-            Controls.Add(statusLabel);
-            Controls.Add(statusComboBox);
             Controls.Add(endTimeDateTime);
             Controls.Add(startTimeDateTime);
             Controls.Add(endTimeLabel);
@@ -298,8 +264,6 @@
 
         private TextBox locationTextBox;
         private ReaLTaiizor.Controls.ForeverButton editReservationButton;
-        private ReaLTaiizor.Controls.HeaderLabel statusLabel;
-        private ReaLTaiizor.Controls.ForeverComboBox statusComboBox;
         private DateTimePicker endTimeDateTime;
         private DateTimePicker startTimeDateTime;
         private ReaLTaiizor.Controls.HeaderLabel endTimeLabel;

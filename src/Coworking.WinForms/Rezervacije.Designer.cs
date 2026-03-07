@@ -34,7 +34,7 @@ namespace Coworking.WinForms
             headerPanel = new Panel();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             filterPanel = new Panel();
-            currentLocationCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
+            cancelReservationButton = new ReaLTaiizor.Controls.ForeverButton();
             deleteReservationButton = new ReaLTaiizor.Controls.ForeverButton();
             editReservationButton = new ReaLTaiizor.Controls.ForeverButton();
             addReservationButton = new ReaLTaiizor.Controls.ForeverButton();
@@ -87,7 +87,7 @@ namespace Coworking.WinForms
             // 
             filterPanel.BackColor = Color.FromArgb(37, 52, 68);
             filterPanel.BorderStyle = BorderStyle.FixedSingle;
-            filterPanel.Controls.Add(currentLocationCheckBox);
+            filterPanel.Controls.Add(cancelReservationButton);
             filterPanel.Controls.Add(deleteReservationButton);
             filterPanel.Controls.Add(editReservationButton);
             filterPanel.Controls.Add(addReservationButton);
@@ -97,44 +97,19 @@ namespace Coworking.WinForms
             filterPanel.Size = new Size(1313, 72);
             filterPanel.TabIndex = 5;
             // 
-            // currentLocationCheckBox
+            // cancelReservationButton
             // 
-            currentLocationCheckBox.BackColor = Color.Transparent;
-            currentLocationCheckBox.Background = true;
-            currentLocationCheckBox.Background_WidthPen = 2F;
-            currentLocationCheckBox.BackgroundPen = true;
-            currentLocationCheckBox.Checked = false;
-            currentLocationCheckBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            currentLocationCheckBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.ColorChecked = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            currentLocationCheckBox.CyberCheckBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            currentLocationCheckBox.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.Effect_1_Transparency = 25;
-            currentLocationCheckBox.Effect_2 = true;
-            currentLocationCheckBox.Effect_2_ColorBackground = Color.White;
-            currentLocationCheckBox.Effect_2_Transparency = 15;
-            currentLocationCheckBox.Font = new Font("Arial", 12F);
-            currentLocationCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
-            currentLocationCheckBox.LinearGradient_Background = false;
-            currentLocationCheckBox.LinearGradientPen = false;
-            currentLocationCheckBox.Location = new Point(586, 12);
-            currentLocationCheckBox.Name = "currentLocationCheckBox";
-            currentLocationCheckBox.RGB = false;
-            currentLocationCheckBox.Rounding = false;
-            currentLocationCheckBox.RoundingInt = 100;
-            currentLocationCheckBox.Size = new Size(213, 45);
-            currentLocationCheckBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            currentLocationCheckBox.TabIndex = 26;
-            currentLocationCheckBox.Tag = "Cyber";
-            currentLocationCheckBox.TextButton = "Trenutna lokacija";
-            currentLocationCheckBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            currentLocationCheckBox.Timer_Effect_1 = 1;
-            currentLocationCheckBox.Timer_RGB = 300;
-            currentLocationCheckBox.CheckedChanged += currentLocationCheckBox_CheckedChanged;
+            cancelReservationButton.BackColor = Color.Transparent;
+            cancelReservationButton.BaseColor = Color.FromArgb(255, 192, 128);
+            cancelReservationButton.Font = new Font("Segoe UI", 12F);
+            cancelReservationButton.Location = new Point(380, 12);
+            cancelReservationButton.Name = "cancelReservationButton";
+            cancelReservationButton.Rounded = true;
+            cancelReservationButton.Size = new Size(183, 45);
+            cancelReservationButton.TabIndex = 9;
+            cancelReservationButton.Text = "Otkazi rezervaciju";
+            cancelReservationButton.TextColor = Color.FromArgb(243, 243, 243);
+            cancelReservationButton.Click += cancelReservationButton_Click;
             // 
             // deleteReservationButton
             // 
@@ -142,7 +117,7 @@ namespace Coworking.WinForms
             deleteReservationButton.BaseColor = Color.Red;
             deleteReservationButton.Cursor = Cursors.Hand;
             deleteReservationButton.Font = new Font("Segoe UI", 12F);
-            deleteReservationButton.Location = new Point(381, 12);
+            deleteReservationButton.Location = new Point(569, 12);
             deleteReservationButton.Name = "deleteReservationButton";
             deleteReservationButton.Rounded = true;
             deleteReservationButton.Size = new Size(183, 45);
@@ -641,8 +616,8 @@ namespace Coworking.WinForms
         private ReaLTaiizor.Controls.CyberCheckBox confirmedCheckBox;
         private ReaLTaiizor.Controls.HeaderLabel dateLabel;
         private ReaLTaiizor.Controls.PoisonDateTime dateDateTime;
-        private ReaLTaiizor.Controls.CyberCheckBox currentLocationCheckBox;
         private ReaLTaiizor.Controls.ForeverComboBox userTextBox;
+        private ReaLTaiizor.Controls.ForeverButton cancelReservationButton;
     }
 }
 

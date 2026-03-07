@@ -1,5 +1,4 @@
-﻿using Coworking.Data.Command;
-using Coworking.Data.Command.RezervacijaCommand;
+﻿using Coworking.Data.Chain_Of_Responsibility;
 using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
@@ -19,7 +18,6 @@ namespace Coworking.WinForms.Dialogues
 
             loadMember();
             loadResources();
-            loadStatuses();
             loadDate();
         }
 
@@ -39,20 +37,6 @@ namespace Coworking.WinForms.Dialogues
             resourceComboBox.DataSource = resources;
 
             resourceComboBox.SelectedValue = _selektovanaRezervacija.resursId;
-        }
-
-        private void loadStatuses()
-        {
-            statusComboBox.Items.Clear();
-            statusComboBox.Items.AddRange(new object[]
-            {
-                ReservationStatus.Rezervisana.ToDbString(),
-                ReservationStatus.Potvrdjena.ToDbString(),
-                ReservationStatus.Otkazana.ToDbString(),
-                ReservationStatus.Zavrsena.ToDbString()
-            });
-
-            statusComboBox.SelectedItem = _selektovanaRezervacija.status.ToDbString();
         }
 
         private void loadDate()
@@ -95,9 +79,9 @@ namespace Coworking.WinForms.Dialogues
                 return;
             }
 
-            if (statusComboBox.SelectedItem == null || resourceComboBox.SelectedValue == null)
+            if (resourceComboBox.SelectedValue == null)
             {
-                MessageBox.Show("Izaberi resurs i status.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Izaberi resurs.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -106,14 +90,18 @@ namespace Coworking.WinForms.Dialogues
             _selektovanaRezervacija.pocetak = pocetak.ToString("yyyy-MM-dd HH:mm:ss");
             _selektovanaRezervacija.kraj = kraj.ToString("yyyy-MM-dd HH:mm:ss");
             _selektovanaRezervacija.resursId = (int)resourceComboBox.SelectedValue;
-            _selektovanaRezervacija.status = ReservationStatusTransformator.FromDbString(statusComboBox.SelectedItem.ToString()!);
 
-            var command = new IzmeniRezervacijuCommand(_singleton, _selektovanaRezervacija, backup);
-            var manager = new CommandManager();
-            var result = manager.ExecuteCommand(command);
+            var zauzetostResursaValidator = new ZauzetostResursaValidator(_singleton);
+            var limitSatiClanValidator = new LimitSatiClanValidator(_singleton);
+            var radnoVremeLokacijeValidator = new RadnoVremeLokacijeValidator(_singleton);
+            zauzetostResursaValidator.SetNext(limitSatiClanValidator).SetNext(radnoVremeLokacijeValidator);
+
+            RezervacijaHandler validatorChain = zauzetostResursaValidator;
+            var result = validatorChain.Handle(_selektovanaRezervacija);
 
             if (result.isValid)
             {
+                _singleton.izmeniRezervaciju(_selektovanaRezervacija);
                 MessageBox.Show("Rezervacija uspešno izmenjena!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }

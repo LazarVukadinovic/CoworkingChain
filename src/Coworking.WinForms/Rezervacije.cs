@@ -48,6 +48,17 @@ namespace Coworking.WinForms
             editReservation.ShowDialog(this);
             loadData();
         }
+        private void cancelReservationButton_Click(object sender, EventArgs e)
+        {
+            var selectedReservation = (Rezervacija)reservationDataGridView.SelectedRows[0].DataBoundItem;
+            if(selectedReservation.status == ReservationStatus.Rezervisana)
+            {
+                singleton.otkaziRezervaciju(selectedReservation.rezervacijaId);
+                loadData();
+            }
+            else
+                MessageBox.Show("Izaberi rezervaciju sa statusom 'rezervisana'.", "Otkazivanje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
 
         private void deleteReservationButton_Click(object sender, EventArgs e)
         {
@@ -77,22 +88,6 @@ namespace Coworking.WinForms
             reservationDataGridView.DataSource = null;
             reservationDataGridView.DataSource = reservations;
             reservationDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        }
-
-        private void currentLocationCheckBox_CheckedChanged()
-        {
-            if (currentLocationCheckBox.Checked)
-            {
-                // zakljucava comboBox na nasu lokaciju
-                locationComboBox.Enabled = false;
-
-                // TODO:
-                // setovanje locationComboBox-a na trenutnu lokaciju
-            }
-            else
-            {
-                locationComboBox.Enabled = true;
-            }
         }
 
         private bool _syncingRadios;
