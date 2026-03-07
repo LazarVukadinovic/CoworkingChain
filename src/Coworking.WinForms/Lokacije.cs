@@ -11,9 +11,9 @@ namespace Coworking.WinForms
         public Lokacije()
         {
             InitializeComponent();
-            loadData();
             singleton=DataBaseSingleton.vratiInstancu();
             singleton.DataChanged += OnDataChanged;
+            loadData();
         }
 
         private void OnDataChanged(DataEntity entity)
@@ -39,7 +39,7 @@ namespace Coworking.WinForms
         private void loadData()
         {
             bool check = currentLocationCheckBox.Checked;
-            var locations = singleton.prikaziLokacije(check);
+            var locations = singleton.PrikaziStatistikuLokacija();
 
             locationDataGridView.DataSource = null;
             locationDataGridView.DataSource = locations;

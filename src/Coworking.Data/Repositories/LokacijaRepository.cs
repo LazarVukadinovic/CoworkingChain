@@ -1,6 +1,7 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
+using System.Data;
 
 namespace Coworking.Data.Repositories
 {
@@ -96,5 +97,57 @@ namespace Coworking.Data.Repositories
             var lokacije = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
             return lokacije.FirstOrDefault();
         }
+
+        public List<StatistikaLokacijeDTO> GetTrenutnaStatistika()
+        {
+            // Koristimo tvoj adapter da dobijemo pravu funkciju za vreme (NOW ili GETDATE)
+            string nowFunc = _adapter.NowExpr();
+
+            string sql = $@"
+        SELECT 
+            l.lokacija_id, 
+            MAX(l.naziv) AS NazivLokacije, 
+            COUNT(DISTINCT r.resurs_id) AS UkupnoResursa,
+            COUNT(DISTINCT CASE 
+                WHEN rez.status IN ('Rezervisana', 'Potvrdjena') 
+                AND {nowFunc} BETWEEN rez.pocetak AND rez.kraj
+                THEN r.resurs_id 
+            END) AS TrenutnoZauzetih
+        FROM lokacija l
+        LEFT JOIN resurs r ON l.lokacija_id = r.lokacija_id
+        LEFT JOIN rezervacija rez ON r.resurs_id = rez.resurs_id
+        GROUP BY l.lokacija_id";
+
+            DataTable dt = _adapter.izvrsiUpit(sql);
+            var rezultati = new List<StatistikaLokacijeDTO>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                int ukupno = Convert.ToInt32(row["UkupnoResursa"]);
+                int zauzeto = Convert.ToInt32(row["TrenutnoZauzetih"]);
+
+                rezultati.Add(new StatistikaLokacijeDTO
+                {
+                    LokacijaId = Convert.ToInt32(row["lokacija_id"]),
+                    Naziv = row["NazivLokacije"].ToString(),
+                    UkupnoResursa = ukupno,
+                    ZauzetihResursa = zauzeto,
+                    ProcenatZauzetosti = ukupno == 0 ? 0 : Math.Round((double)zauzeto / ukupno * 100, 2)
+                });
+            }
+            return rezultati;
+        }
+    }
+
+    public class StatistikaLokacijeDTO
+    {
+        public int LokacijaId { get; set; }
+        public string Naziv { get; set; }
+        public int UkupnoResursa { get; set; }
+        public int ZauzetihResursa { get; set; }
+        public double ProcenatZauzetosti { get; set; }
+
+        // Opciono: Dodajemo opisni status koji možeš direktno vezati za labelu u GUI-ju
+        public string StatusOpis => $"{ZauzetihResursa} / {UkupnoResursa} zauzeto ({ProcenatZauzetosti}%)";
     }
 }

@@ -1,3 +1,4 @@
+using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 
@@ -25,7 +26,7 @@ namespace Coworking.Data.Providers
         public void obrisiLokaciju(int lokacijaId);
         // Lista svih co-working lokacija sa osnovnim statistikama (ukupan broj radnih mesta, broj trenutno rezervisanih,
         // procenat zauzetosti).
-        public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija();
+        public List<StatistikaLokacijeDTO> PrikaziStatistikuLokacija();
         // Prikaz liste svih lokacija, uz mogucnost izbora aktivne lokacije
         public List<Lokacija> prikaziLokacije(bool check);
 

@@ -1,3 +1,4 @@
+using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -97,6 +98,8 @@ namespace Coworking.Data.Providers
                 return _facade.PrikaziClanoveFiltrirano(lokacijaId,tipClanstvaId,status);
         }
 
+        public List<StatistikaLokacijeDTO> PrikaziStatistikuLokacija() => _facade.PrikaziStatistikuLokacija();   
+
         public List<Clan> vratiClanovePoImenu(string name) => _facade.vratiClanovePoImenu(name);
 
         public int vratiClanovePoLokaciji(int lokacijaId) => _facade.vratiClanovePoLokaciji(lokacijaId);
@@ -127,10 +130,7 @@ namespace Coworking.Data.Providers
             lokacijaReset = true;
             Notify(DataEntity.Lokacija);
         }
-        public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
-        {
-            return _facade.PrikaziStatistikuLokacija();
-        }
+
         public List<Lokacija> prikaziLokacije(bool check)
         {
             if (check2 != check)
@@ -368,6 +368,7 @@ namespace Coworking.Data.Providers
         {
             _facade.updateAdminByUsername(admin, username);
         }
+
     }
 }
 

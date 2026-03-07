@@ -121,31 +121,7 @@ namespace Coworking.Data.Providers
             return _lokacijaRepo.GetById(id);
         }
 
-        public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
-        {
-            var lokacije = _lokacijaRepo.GetAllActive(false);
-            var resursi = _resursRepo.GetAll();
-            var rezervacije = _rezRepo.GetAll();
-
-            var rezultat = new List<(Lokacija, int, int, double)>();
-
-            foreach (var l in lokacije)
-            {
-                var resursiLokacije = resursi.FindAll(r => r.lokacijaId == l.lokacijaId);
-                int brojResursa = resursiLokacije.Count;
-
-                int brojRezervisanih = rezervacije.FindAll(r =>
-                    resursiLokacije.Exists(res => res.resursId == r.resursId) &&
-                    (r.status == ReservationStatus.Rezervisana ||
-                    r.status == ReservationStatus.Potvrdjena)).Count;
-
-                double procenat = brojResursa == 0 ? 0 : (double)brojRezervisanih / brojResursa * 100;
-
-                rezultat.Add((l, brojResursa, brojRezervisanih, procenat));
-            }
-
-            return rezultat;
-        } // ????????????
+        public List<StatistikaLokacijeDTO> PrikaziStatistikuLokacija() => _lokacijaRepo.GetTrenutnaStatistika();
 
 
         public List<Lokacija> prikaziLokacije(bool check) => _lokacijaRepo.GetAllActive(check);
