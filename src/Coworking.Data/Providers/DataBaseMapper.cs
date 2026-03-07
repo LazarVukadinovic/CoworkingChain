@@ -1,6 +1,7 @@
 ﻿using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using System.Data;
+using System.Reflection.PortableExecutable;
 
 namespace Coworking.Data.Providers
 {
@@ -16,6 +17,15 @@ namespace Coworking.Data.Providers
                 list.Add(mapFunction(row));
             }
             return list;
+        }
+
+        public EntityChange mapEntity(DataRow red)
+        {
+            return new EntityChange
+            {
+                EntityName = red["entity_name"].ToString(),
+                ChangeTime = Convert.ToDateTime(red["change_time"])
+            };
         }
 
         public Clan mapClan(DataRow red)

@@ -17,6 +17,7 @@ namespace Coworking.Data.Providers
         private readonly RezervacijaRepository _rezRepo;
         private readonly TipClanstvaRepository _tcRepo;
         private readonly AdminRepository _adminRepo;
+        private readonly ChangeLogRepository _changeRepo;
         private readonly string _applicationName;
 
         public event Action<DataEntity> DataChanged;
@@ -31,8 +32,14 @@ namespace Coworking.Data.Providers
             _rezRepo = new RezervacijaRepository(settings.Adapter, settings.Mapper);
             _tcRepo = new TipClanstvaRepository(settings.Adapter, settings.Mapper);
             _adminRepo = new AdminRepository(settings.Adapter, settings.Mapper);
+            _changeRepo=new ChangeLogRepository(settings.Adapter, settings.Mapper);
             _applicationName = settings.ApplicationName;
         }
+
+
+        public List<EntityChange> GetChangesAfter(DateTime lastCheck) => _changeRepo.GetChangesAfter(lastCheck);
+        
+
 
         //-------------------------CLANOVI-------------------------
         //-------------------------CLANOVI-------------------------
@@ -264,6 +271,8 @@ namespace Coworking.Data.Providers
             _adminRepo.UpdateAdminByUsername(admin, username);
         }
         public void deleteAdmin(int id) => _adminRepo.Delete(id);
+
+        
     }
 }
 

@@ -3,6 +3,7 @@ using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Security.Claims;
+using System.Timers;
 
 namespace Coworking.Data.Providers
 {
@@ -41,11 +42,67 @@ namespace Coworking.Data.Providers
         bool rezervacijaReset = true;
         bool tipClanstvaReset = true;
 
+        System.Timers.Timer _timer;
+
         public event Action<DataEntity> DataChanged;
+
+        DateTime lastCheck = DateTime.MinValue;
 
         public DataBaseProxy(IDataBase facade) 
         {
             _facade = facade;
+            _timer = new System.Timers.Timer(5000); // 5 sekundi
+            _timer.Elapsed += TimerElapsed;
+            _timer.AutoReset = true;
+            _timer.Start();
+
+            _timer.Start();
+        }
+
+        private void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            CheckExternalChanges();
+        }
+
+        public void CheckExternalChanges()
+        {
+            var changes = _facade.GetChangesAfter(lastCheck);
+
+            foreach (var change in changes)
+            {
+                var entity = Enum.Parse<DataEntity>(change.EntityName);
+
+                InvalidateCache(entity);
+
+                Notify(entity);
+            }
+
+            lastCheck = DateTime.Now;
+        }
+
+        private void InvalidateCache(DataEntity entity)
+        {
+            switch (entity)
+            {
+                case DataEntity.Clan:
+                    clanReset = true;
+                    break;
+
+                case DataEntity.Resurs:
+                    resursReset = true;
+                    break;
+
+                case DataEntity.Lokacija:
+                    lokacijaReset = true;
+                    break;
+
+                case DataEntity.Rezervacija:
+                    rezervacijaReset = true;
+                    break;
+                case DataEntity.TipClanstva:
+                    tipClanstvaReset = true;
+                    break;
+            }
         }
 
         private void Notify(DataEntity entity) => DataChanged?.Invoke(entity);
@@ -369,6 +426,11 @@ namespace Coworking.Data.Providers
             _facade.updateAdminByUsername(admin, username);
         }
 
+        public List<EntityChange> GetChangesAfter(DateTime lastCheck)
+        {
+            throw new NotImplementedException();
+            //ne treba nista da radi ovde, potrebna je gore u kodu da se pozove kroz facade za observer
+        }
     }
 }
 

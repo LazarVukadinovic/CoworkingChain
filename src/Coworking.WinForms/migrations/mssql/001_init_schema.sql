@@ -180,3 +180,16 @@ BEGIN
     CREATE INDEX idx_kraj ON dbo.rezervacija(kraj)
 END
 GO
+-------------------------------------------------
+-- 9)Tabela za observer
+-------------------------------------------------
+IF OBJECT_ID(N'dbo.change_log', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.change_log (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    entity_name VARCHAR(50),
+    change_time DATETIME
+);
+END
+GO
+

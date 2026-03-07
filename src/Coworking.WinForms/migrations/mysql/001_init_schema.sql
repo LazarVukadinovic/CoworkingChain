@@ -123,3 +123,9 @@ CREATE TABLE IF NOT EXISTS rezervacija (
     INDEX idx_datum_range (pocetak, kraj),
     CONSTRAINT chk_kraj_pocetak CHECK (kraj > pocetak)
 );
+
+CREATE TABLE IF NOT EXISTS change_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    entity_name VARCHAR(50),
+    change_time DATETIME
+);
