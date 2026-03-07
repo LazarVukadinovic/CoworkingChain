@@ -59,6 +59,14 @@ namespace Coworking.Data.Providers
                 ? $"TIMESTAMPDIFF(MINUTE, {startExpr}, {endExpr})"
                 : $"DATEDIFF(minute, {startExpr}, {endExpr})";
         }
+
+        public string LimitOneExpr(string orderByColumn, string direction = "DESC")
+        {
+            return _factory is MySqlFactory
+                ? $"ORDER BY {orderByColumn} {direction} LIMIT 1"
+                : $"ORDER BY {orderByColumn} {direction} OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY";
+        }
+
         public object izvrsiUpitSkalar(string upit)
         {
             // Koristimo tvoju fabriku da dobijemo odgovarajuću konekciju i komandu

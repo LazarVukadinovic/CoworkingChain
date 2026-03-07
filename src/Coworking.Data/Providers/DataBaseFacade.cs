@@ -37,7 +37,7 @@ namespace Coworking.Data.Providers
         public void dodajClana(Clan c) => _clanRepo.Add(c);
         public void izmeniClana(Clan c) => _clanRepo.Update(c);
         public List<Clan> prikaziClanove() => _clanRepo.GetAll();
-        public void obrisiClana(int clanId) => _clanRepo.delete(clanId);
+        public void obrisiClana(int clanId) => _clanRepo.Delete(clanId);
 
 
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
@@ -137,8 +137,8 @@ namespace Coworking.Data.Providers
 
                 int brojRezervisanih = rezervacije.FindAll(r =>
                     resursiLokacije.Exists(res => res.resursId == r.resursId) &&
-                    r.status == ReservationStatus.Rezervisana ||
-                    r.status == ReservationStatus.Potvrdjena).Count;
+                    (r.status == ReservationStatus.Rezervisana ||
+                    r.status == ReservationStatus.Potvrdjena)).Count;
 
                 double procenat = brojResursa == 0 ? 0 : (double)brojRezervisanih / brojResursa * 100;
 
@@ -173,7 +173,7 @@ namespace Coworking.Data.Providers
 
             foreach (var r in rezervacije)
             {
-                if (r.status != ReservationStatus.Zavrsena && DateTime.Parse(r.kraj) < DateTime.Now)
+                if (r.status != ReservationStatus.Zavrsena && DateTime.TryParse(r.kraj, out DateTime krajDt) && krajDt < DateTime.Now)
                 {
                     _rezRepo.UpdateStatus(r.rezervacijaId, ReservationStatus.Zavrsena);
                     r.status = ReservationStatus.Zavrsena;
@@ -259,10 +259,10 @@ namespace Coworking.Data.Providers
         //-------------------------LOGIN-------------------------
         public Admin getAdminByUsername(string username, string password)
         {
+            var lista = _adminRepo.GetByName(username);
+            if (lista.Count == 0) return null;
+            var admin = lista[0];
 
-            var admin = _adminRepo.GetByName(username)[0];
-            if (admin == null)
-                return null;
             if (BCrypt.Net.BCrypt.Verify(password, admin.LozinkaHash))
             {
                 return admin;

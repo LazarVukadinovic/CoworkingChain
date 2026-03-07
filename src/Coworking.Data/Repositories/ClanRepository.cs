@@ -1,6 +1,5 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -33,7 +32,7 @@ namespace Coworking.Data.Repositories
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
-        public void delete(int clanId)
+        public void Delete(int clanId)
         {
             string upit = $@"
             DELETE FROM clan
@@ -41,11 +40,6 @@ namespace Coworking.Data.Repositories
             ";
 
             _adapter.izvrsiUpitBezRezultata(upit);
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public List<Clan> GetAll()
@@ -93,7 +87,7 @@ namespace Coworking.Data.Repositories
                                 JOIN rezervacija rv on rv.clan_id=c.clan_id 
                                 JOIN resurs r on r.resurs_id=rv.resurs_id 
                                 WHERE r.lokacija_id={lokacijaId} AND 
-                                    rv.status = '{ReservationStatus.Rezervisana.ToDbString()}'";
+                                    rv.status IN ('Rezervisana', 'Potvrdjena')";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
 

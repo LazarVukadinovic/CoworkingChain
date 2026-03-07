@@ -1,5 +1,4 @@
-﻿
-namespace Coworking.Domain.Entities
+﻿namespace Coworking.Domain.Entities
 {
     public class SatiSaleInfo
     {

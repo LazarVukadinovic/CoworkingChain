@@ -1,11 +1,6 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Coworking.Data.Repositories
 {
@@ -75,7 +70,13 @@ namespace Coworking.Data.Repositories
 
         public List<RadnoMesto> GetByName(string name)
         {
-            return null;
+            string upit = $@"
+            SELECT r.*, rmd.podtip
+            FROM radno_mesto_detalj rmd
+            JOIN resurs r ON rmd.resurs_id = r.resurs_id
+            WHERE r.oznaka LIKE '%{name.Trim()}%'";
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRadnoMesto);
         }
 
         // Vraca radna mesta po lokaciji sa trenutnom dostupnoscu (Dostupno/Zauzeto)

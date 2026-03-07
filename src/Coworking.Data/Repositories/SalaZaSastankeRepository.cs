@@ -1,11 +1,5 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using Coworking.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Coworking.Data.Repositories
 {
@@ -81,7 +75,13 @@ namespace Coworking.Data.Repositories
 
         public List<SalaZaSastanke> GetByName(string name)
         {
-            return null;
+            string upit = $@"
+            SELECT r.*, s.sala_detalj_id, s.kapacitet, s.ima_projektor, s.ima_tv, s.ima_tablu, s.ima_online_opremu
+            FROM sala_detalj s
+            JOIN resurs r ON s.resurs_id = r.resurs_id
+            WHERE r.oznaka LIKE '%{name.Trim()}%'";
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapSalaZaSastanke);
         }
     }
 }

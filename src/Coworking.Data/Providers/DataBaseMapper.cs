@@ -22,15 +22,15 @@ namespace Coworking.Data.Providers
         {
             return new Clan
             {
-                clanId = (int)red["clan_id"],
+                clanId = Convert.ToInt32(red["clan_id"]),
                 ime = red["ime"].ToString(),
                 prezime = red["prezime"].ToString(),
                 mail = red["email"].ToString(),
-                brTelefona = red["telefon"].ToString(),
+                brTelefona = red["telefon"] == DBNull.Value ? null : red["telefon"].ToString(),
                 datumPocetka = red["datum_pocetka"].ToString(),
                 datumKraja = red["datum_kraja"].ToString(),
                 statusNaloga = red["status_naloga"].ToString(),
-                tipClanstva = (int)red["tip_clanstva_id"],
+                tipClanstva = Convert.ToInt32(red["tip_clanstva_id"]),
                 kreiran = red["kreiran_u"].ToString()
             };
         }
@@ -39,13 +39,13 @@ namespace Coworking.Data.Providers
         {
             return new Lokacija
             {
-                lokacijaId = (int)red["lokacija_id"],
+                lokacijaId = Convert.ToInt32(red["lokacija_id"]),
                 naziv = red["naziv"].ToString(),
                 adresa = red["adresa"].ToString(),
                 grad = red["grad"].ToString(),
                 radnoVreme = red["radno_vreme"].ToString(),
-                maxKapacitet = (int)red["max_kapacitet"],
-                opis = red["opis"].ToString()
+                maxKapacitet = Convert.ToInt32(red["max_kapacitet"]),
+                opis = red["opis"] == DBNull.Value ? null : red["opis"].ToString()
             };
         }
 
@@ -53,8 +53,8 @@ namespace Coworking.Data.Providers
         {
             return new Resurs
             {
-                resursId = (int)red["resurs_id"],
-                lokacijaId = (int)red["lokacija_id"],
+                resursId = Convert.ToInt32(red["resurs_id"]),
+                lokacijaId = Convert.ToInt32(red["lokacija_id"]),
                 oznaka = red["oznaka"].ToString(),
                 tipResursa = red["tip_resursa"].ToString(),
                 opis = red["opis"].ToString()
@@ -66,8 +66,8 @@ namespace Coworking.Data.Providers
         {
             return new RadnoMesto
             {
-                resursId = (int)red["resurs_id"],
-                lokacijaId = (int)red["lokacija_id"],
+                resursId = Convert.ToInt32(red["resurs_id"]),
+                lokacijaId = Convert.ToInt32(red["lokacija_id"]),
                 oznaka = red["oznaka"].ToString(),
                 tipResursa = red["tip_resursa"].ToString(),
                 opis = red["opis"].ToString(),
@@ -79,13 +79,13 @@ namespace Coworking.Data.Providers
         public SalaZaSastanke mapSalaZaSastanke(DataRow red)
         {
             return new SalaZaSastanke 
-            {   resursId = (int)red["resurs_id"], 
-                lokacijaId = (int)red["lokacija_id"], 
+            {   resursId = Convert.ToInt32(red["resurs_id"]), 
+                lokacijaId = Convert.ToInt32(red["lokacija_id"]), 
                 oznaka = red["oznaka"].ToString(), 
                 tipResursa = red["tip_resursa"].ToString(), 
                 opis = red["opis"].ToString(),
-                salaId= (int)red["sala_detalj_id"],
-                kapacitet = (int)red["kapacitet"],
+                salaId= Convert.ToInt32(red["sala_detalj_id"]),
+                kapacitet = Convert.ToInt32(red["kapacitet"]),
                 imaProjektor = Convert.ToBoolean(red["ima_projektor"]), 
                 imaTablu = Convert.ToBoolean(red["ima_tablu"]), 
                 imaTv = Convert.ToBoolean(red["ima_tv"]), 
@@ -98,12 +98,12 @@ namespace Coworking.Data.Providers
         {
             return new Domain.Entities.TipClanstva
             {
-                tipClanstvaId = (int)red["tip_clanstva_id"],
+                tipClanstvaId = Convert.ToInt32(red["tip_clanstva_id"]),
                 naziv = red["naziv"].ToString(),
-                cena = float.Parse(red["cena"].ToString()),
-                maxSatiRezervacijeMesecno = (int)red["max_sati_mesecno"],
-                trajanjeDana = (int)red["trajanje_dana"],
-                satiSaleMesecno = (int)red["sati_sale_mesecno"],
+                cena = Convert.ToSingle(red["cena"].ToString(), System.Globalization.CultureInfo.InvariantCulture),
+                maxSatiRezervacijeMesecno = Convert.ToInt32(red["max_sati_mesecno"]),
+                trajanjeDana = Convert.ToInt32(red["trajanje_dana"]),
+                satiSaleMesecno = Convert.ToInt32(red["sati_sale_mesecno"]),
                 dozvoljenaSala = Convert.ToBoolean(red["dozvoljena_sala"])
             };
         }
@@ -112,7 +112,7 @@ namespace Coworking.Data.Providers
         {
             return new Rezervacija
             {
-                rezervacijaId = (int)red["rezervacija_id"],
+                rezervacijaId = Convert.ToInt32(red["rezervacija_id"]),
                 pocetak = red["pocetak"].ToString(),
                 kraj = red["kraj"].ToString(),
                 // red["status"]?.ToString() ?? ""
@@ -120,9 +120,9 @@ namespace Coworking.Data.Providers
                 // ?? - ako je levi deo null koristi se prazan string "", ako nije null onda standardno levi
                 status = ReservationStatusTransformator.FromDbString(red["status"]?.ToString() ?? ""),
                 kreiranoU = red["kreirano_u"].ToString(),
-                otkazanoU = red["otkazano_u"].ToString(),
-                clanId = (int)red["clan_id"],
-                resursId = (int)red["resurs_id"]
+                otkazanoU = red["otkazano_u"] == DBNull.Value ? null : red["otkazano_u"].ToString(),
+                clanId = Convert.ToInt32(red["clan_id"]),
+                resursId = Convert.ToInt32(red["resurs_id"])
             };
         }
 
@@ -130,7 +130,7 @@ namespace Coworking.Data.Providers
         {
             return new Admin
             {
-                adminId = (int)red["admin_id"],
+                adminId = Convert.ToInt32(red["admin_id"]),
                 KorisnickoIme = red["korisnicko_ime"].ToString(),
                 LozinkaHash = red["lozinka_hash"].ToString(),
             };

@@ -1,11 +1,6 @@
 ﻿using Coworking.Data.Chain_Of_Responsibility;
 using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Coworking.Data.Command.RezervacijaCommand
 {
@@ -31,8 +26,8 @@ namespace Coworking.Data.Command.RezervacijaCommand
 
         public override void Undo()
         {
-            _proxy.dodajRezervaciju(_rezervacija);
-            //_proxy.izmeniRezervaciju(_rezervacija);
+            //_proxy.dodajRezervaciju(_rezervacija);
+            _proxy.izmeniRezervaciju(_rezervacija);
         }
     }
 }

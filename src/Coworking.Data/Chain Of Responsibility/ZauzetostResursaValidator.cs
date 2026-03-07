@@ -13,11 +13,12 @@ namespace Coworking.Data.Chain_Of_Responsibility
         {
             var sveRezervacije = _proxy.prikaziSveRezervacije();
             bool zauzet = sveRezervacije.Any(r => 
+                r.rezervacijaId != rezervacija.rezervacijaId &&
                 r.resursId == rezervacija.resursId &&
                 DateTime.Parse(r.pocetak!) < DateTime.Parse(rezervacija.kraj!) &&
                 DateTime.Parse(r.kraj!) > DateTime.Parse(rezervacija.pocetak!) &&
-                r.status == ReservationStatus.Rezervisana || 
-                r.status == ReservationStatus.Potvrdjena
+                (r.status == ReservationStatus.Rezervisana || 
+                r.status == ReservationStatus.Potvrdjena)
             );
 
             if (zauzet)

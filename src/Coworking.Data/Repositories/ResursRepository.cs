@@ -1,6 +1,5 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -83,11 +82,11 @@ namespace Coworking.Data.Repositories
 
         public Resurs giveLastAddedResource()
         {
-            string upit = @"
+            string limitExpr = _adapter.LimitOneExpr("resurs_id");
+            string upit = $@"
             SELECT *
             FROM resurs
-            ORDER BY resurs_id DESC
-            LIMIT 1;";
+            {limitExpr};";
 
             List<Resurs> resursi = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
             return resursi.Count > 0 ? resursi[0] : null;

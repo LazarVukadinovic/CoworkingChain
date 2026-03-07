@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Coworking.Domain.Entities
+﻿namespace Coworking.Domain.Entities
 {
     public class Clan
     {

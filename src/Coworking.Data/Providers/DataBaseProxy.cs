@@ -185,7 +185,7 @@ namespace Coworking.Data.Providers
             if (cachedRezervacije == null || rezervacijaReset == true)
             {
                 cachedRezervacije = _facade.prikaziSveRezervacije();
-                
+                rezervacijaReset = false;
             }
             return cachedRezervacije;
         }
