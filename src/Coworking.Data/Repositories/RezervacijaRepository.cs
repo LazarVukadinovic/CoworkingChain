@@ -16,17 +16,35 @@ namespace Coworking.Data.Repositories
             _mapper = mapper;
         }
 
+        //public void Add(Rezervacija item)
+        //{
+        //    string otkazanoUVal = item.otkazanoU == null ? "NULL" : $"'{item.otkazanoU}'";
+
+        //    string upit = $@"
+        //    INSERT INTO rezervacija (pocetak, kraj, status, kreirano_u, otkazano_u, clan_id, resurs_id)
+        //    VALUES (
+        //        '{item.pocetak}',
+        //        '{item.kraj}',
+        //        '{item.status.ToDbString()}',
+        //        '{item.kreiranoU}',
+        //        {otkazanoUVal},
+        //        {item.clanId},
+        //        {item.resursId}
+        //    );";
+
+        //    _adapter.izvrsiUpitBezRezultata(upit);
+        //}
+
         public void Add(Rezervacija item)
         {
             string otkazanoUVal = item.otkazanoU == null ? "NULL" : $"'{item.otkazanoU}'";
 
             string upit = $@"
-            INSERT INTO rezervacija (pocetak, kraj, status, kreirano_u, otkazano_u, clan_id, resurs_id)
+            INSERT INTO rezervacija (pocetak, kraj, status, otkazano_u, clan_id, resurs_id)
             VALUES (
                 '{item.pocetak}',
                 '{item.kraj}',
                 '{item.status.ToDbString()}',
-                '{item.kreiranoU}',
                 {otkazanoUVal},
                 {item.clanId},
                 {item.resursId}
@@ -37,6 +55,12 @@ namespace Coworking.Data.Repositories
 
         public void Update(Rezervacija item)
         {
+            if (item.status == ReservationStatus.Otkazana && item.otkazanoU == null)
+                item.otkazanoU = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            if (item.status != ReservationStatus.Otkazana)
+                item.otkazanoU = null;
+
             string otkazanoUVal = item.otkazanoU == null ? "NULL" : $"'{item.otkazanoU}'";
 
             string upit = $@"
@@ -44,7 +68,6 @@ namespace Coworking.Data.Repositories
             SET pocetak = '{item.pocetak}',
                 kraj = '{item.kraj}',
                 status = '{item.status.ToDbString()}',
-                kreirano_u = '{item.kreiranoU}',
                 otkazano_u = {otkazanoUVal},
                 clan_id = {item.clanId},
                 resurs_id = {item.resursId}
@@ -55,10 +78,12 @@ namespace Coworking.Data.Repositories
 
         public void Cancel(int rezervacijaId)
         {
+            string now = _adapter.NowExpr();
             string upit = $@"
-                UPDATE rezervacija
-                SET status = '{ReservationStatus.Otkazana.ToDbString()}'
-                WHERE rezervacija_id = {rezervacijaId};";
+            UPDATE rezervacija
+            SET status     = '{ReservationStatus.Otkazana.ToDbString()}',
+                otkazano_u = {now}
+            WHERE rezervacija_id = {rezervacijaId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
