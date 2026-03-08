@@ -14,8 +14,7 @@ namespace Coworking.WinForms.Dialogues
             singleton = DataBaseSingleton.vratiInstancu();
             loadResources();
             loadMembers();
-            // resourceComboBox.SelectedIndex = 0;
-            // endTimeDateTime.Value = startTimeDateTime.Value + new TimeSpan(1, 0, 0);
+
             endDateDateTime.Value = startDateDateTime.Value;
             endTimeDateTime.Value = startTimeDateTime.Value.AddHours(1);
         }
@@ -46,10 +45,6 @@ namespace Coworking.WinForms.Dialogues
                 locationTextBox.Text = "";
         }
 
-        private void resourceComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //loadLocation();
-        }
         private void resourceComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
             loadLocation();

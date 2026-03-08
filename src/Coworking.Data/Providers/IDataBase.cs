@@ -43,8 +43,6 @@ namespace Coworking.Data.Providers
         public void otkaziRezervaciju(int rezervacijaId);
         public void obrisiRezervaciju(int rezervacijaId);
         public List<Rezervacija> prikaziSveRezervacije();
-        // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
-        // TO-DO
 
         // Lista svih rezervacija za izabranog korisnika, sa prikazom statusa (aktivna, prosla, otkazana)
         public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId, List<ReservationStatus> filterStatusi);

@@ -243,7 +243,6 @@
             membershipComboBox.Name = "membershipComboBox";
             membershipComboBox.Size = new Size(237, 36);
             membershipComboBox.TabIndex = 29;
-            membershipComboBox.SelectedIndexChanged += membershipComboBox_SelectedIndexChanged;
             // 
             // addMemberButton
             // 

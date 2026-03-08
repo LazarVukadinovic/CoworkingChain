@@ -51,9 +51,6 @@ namespace Coworking.WinForms.Dialogues
 
         private void membershipComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //var membership = singleton.GetTipClanstvaById((int)nameTextBox.SelectedItem);
-            //cyberTextBox1.textBox.Text = membership.naziv;
-
             if (nameTextBox.SelectedValue == null) return;
 
             var membership = singleton.GetTipClanstvaById((int)nameTextBox.SelectedValue);
@@ -72,19 +69,10 @@ namespace Coworking.WinForms.Dialogues
 
         private void loadMemberships()
         {
-            //var memberships = singleton.prikaziSveTipoveClanstva();
-            //foreach (var membership in memberships)
-            //    nameTextBox.Items.Add(membership.tipClanstvaId);
-
             var memberships = singleton.prikaziSveTipoveClanstva();
             nameTextBox.DisplayMember = "naziv";
             nameTextBox.ValueMember = "tipClanstvaId";
             nameTextBox.DataSource = memberships;
-        }
-
-        private void headerLabel1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -18,7 +18,6 @@ namespace Coworking.WinForms
             loadLocations();
             loadStatuses();
             loadData2();
-            //ResetComboBox();
         }
 
         private void OnDataChanged(DataEntity entity)
@@ -54,7 +53,6 @@ namespace Coworking.WinForms
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            //ResetComboBox();
             loadDataBySearch();
         }
 
@@ -117,25 +115,21 @@ namespace Coworking.WinForms
 
         private void loadData()
         {
-            // 1. Zapamti ID pre nego što sve nestane
             int? sačuvaniId = null;
             if (memberDataGridView.SelectedRows.Count > 0)
             {
                 sačuvaniId = ((Clan)memberDataGridView.SelectedRows[0].DataBoundItem).clanId;
             }
 
-            // --- Tvoja logika za filtere ---
             int? lokacijaId = (locationComboBox.SelectedValue is int locId && locId != 0) ? locId : null;
             int? clanstvoId = (membershipComboBox.SelectedValue is int memId && memId != 0) ? memId : null;
             string status = statusComboBox.SelectedItem?.ToString() == "Svi" ? null : statusComboBox.SelectedItem?.ToString();
 
             var clanovi = singleton.PrikaziClanoveFiltrirano(lokacijaId, clanstvoId, status);
 
-            // 2. Osveži podatke
             memberDataGridView.DataSource = null;
             memberDataGridView.DataSource = clanovi;
 
-            // 3. Forsiraj selekciju nakon što se završi Binding
             if (sačuvaniId.HasValue)
             {
                 this.BeginInvoke(new Action(() => {
@@ -211,17 +205,14 @@ namespace Coworking.WinForms
 
         private void RefreshWithSelection(Action updateLogic)
         {
-            // 1. Zapamti ID pre osvežavanja
             int? sačuvaniId = null;
             if (memberDataGridView.SelectedRows.Count > 0 && memberDataGridView.SelectedRows[0].DataBoundItem is Clan c)
             {
                 sačuvaniId = c.clanId;
             }
 
-            // 2. Izvrši logiku punjenja (loadData, loadData2 ili loadBySearch)
             updateLogic();
 
-            // 3. Vrati selekciju
             if (sačuvaniId.HasValue)
             {
                 foreach (DataGridViewRow row in memberDataGridView.Rows)

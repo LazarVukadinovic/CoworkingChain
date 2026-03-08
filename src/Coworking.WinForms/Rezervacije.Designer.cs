@@ -483,7 +483,6 @@ namespace Coworking.WinForms
             userTextBox.Size = new Size(291, 31);
             userTextBox.TabIndex = 28;
             userTextBox.Visible = false;
-            userTextBox.SelectedIndexChanged += userTextBox_SelectedIndexChanged;
             // 
             // reservationDataGridView
             // 

@@ -31,7 +31,6 @@ namespace Coworking.WinForms
 
             if (entity == DataEntity.Resurs)
             {
-                // Koristimo zaključavanje selekcije prilikom automatskog osvežavanja
                 RefreshWithSelection(() => loadByLocationAndType());
             }
         }
@@ -103,7 +102,7 @@ namespace Coworking.WinForms
 
             var resources = singleton.prikaziResursePoLokacijiIPoTipu(lokacijaId, name);
 
-            resourceDataGridView.DataSource = null; // Reset da bi Binding uhvatio promene
+            resourceDataGridView.DataSource = null;
             resourceDataGridView.DataSource = resources;
             resourceDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
@@ -112,19 +111,16 @@ namespace Coworking.WinForms
         {
             int? savedId = null;
 
-            // 1. Zapamti selektovani resurs
             if (resourceDataGridView.CurrentRow?.DataBoundItem is Resurs r)
             {
                 savedId = r.resursId;
             }
 
-            // 2. Update podataka
             updateLogic();
 
             if (!savedId.HasValue)
                 return;
 
-            // 3. Vrati selekciju
             foreach (DataGridViewRow row in resourceDataGridView.Rows)
             {
                 if (row.DataBoundItem is Resurs res && res.resursId == savedId)
@@ -134,7 +130,6 @@ namespace Coworking.WinForms
                     row.Selected = true;
                     resourceDataGridView.CurrentCell = row.Cells[0];
 
-                    // scroll do reda
                     if (row.Index >= 0)
                         resourceDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
 
@@ -145,8 +140,6 @@ namespace Coworking.WinForms
 
         private void resourceTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Kada korisnik ručno menja filter, obično ne želimo "zaključavanje" 
-            // jer se set podataka drastično menja, ali loadByLocationAndType mora da radi.
             loadByLocationAndType();
         }
 

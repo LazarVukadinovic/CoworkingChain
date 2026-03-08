@@ -1,7 +1,5 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.WinForms.Dialogues.Admin;
-// Dodaj namespace gde ti se nalazi AdminSession i Admin entitet
-// using Coworking.Domain.Entities; 
 
 namespace Coworking.WinForms
 {
@@ -11,11 +9,6 @@ namespace Coworking.WinForms
         {
             InitializeComponent();
             OsveziPrikazAdmina();
-        }
-
-        private void AdminNalog_Load(object sender, EventArgs e)
-        {
-            
         }
 
         private void OsveziPrikazAdmina()
@@ -42,7 +35,6 @@ namespace Coworking.WinForms
         {
             PromeniLozinku newPassword = new PromeniLozinku();
             newPassword.ShowDialog(this);
-            // Napomena: Ovde obično ne osvežavamo prikaz jer je lozinka ionako maskirana
         }
 
         private void addAdminButton_Click(object sender, EventArgs e)

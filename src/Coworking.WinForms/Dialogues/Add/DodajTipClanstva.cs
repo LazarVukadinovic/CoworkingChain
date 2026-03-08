@@ -35,7 +35,6 @@ namespace Coworking.WinForms.Dialogues
                 maxHours = (int)conferenceTimeNumeric.Value;
             }
 
-            //singleton.dodajTipClanstva(new TipClanstva(name, price, monthlyNumeric, duration, maxHours, conferenceTime));
             singleton.dodajTipClanstva(new TipClanstva(name, price, duration, monthlyNumeric, maxHours, conferenceTime));
         }
 

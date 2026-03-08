@@ -19,12 +19,6 @@ namespace Coworking.WinForms
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            Dashboard main = new Dashboard(this);
-            main.FormClosed += (s, args) => Application.Exit();
-
-            this.Hide();
-            main.Show();
-            /*
             string username = usernameTextBox.textBox.Text;
             string password = passwordTextBox.textBox.Text;
 
@@ -47,12 +41,6 @@ namespace Coworking.WinForms
                 this.Hide();
                 main.Show();
             }
-            */
-        }
-
-        private void usernameTextBox_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

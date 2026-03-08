@@ -300,7 +300,6 @@
             membershipID.Size = new Size(111, 25);
             membershipID.TabIndex = 51;
             membershipID.Text = "ID paketa:";
-            membershipID.Click += headerLabel1_Click;
             // 
             // IzmeniTipClanstva
             // 

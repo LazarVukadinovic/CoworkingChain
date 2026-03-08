@@ -31,15 +31,12 @@ namespace Coworking.WinForms
         }
         private void loadData()
         {
-            // 1. Zapamti ID selektovane lokacije (ako je ima)
             int? sačuvaniId = null;
             if (locationDataGridView.SelectedRows.Count > 0)
             {
-                // Pretpostavljam da je Cells[0] tvoj LokacijaID
                 sačuvaniId = (int)locationDataGridView.SelectedRows[0].Cells[0].Value;
             }
 
-            // 2. Tvoja postojeća logika za punjenje podataka
             locationDataGridView.DataSource = null;
             switch (viewComboBox.Text)
             {
@@ -67,7 +64,6 @@ namespace Coworking.WinForms
                         locationDataGridView.ClearSelection();
                         row.Selected = true;
 
-                        // Nateraj "strelicu" da se pomeri na taj red
                         if (locationDataGridView.Columns.Count > 0)
                             locationDataGridView.CurrentCell = row.Cells[0];
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Mysqlx.Crud.Order.Types;
-
-namespace Coworking.Data.Adapter
+﻿namespace Coworking.Data.Adapter
 {
     public class MySqlSyntaxAdapter : ISqlSyntaxAdapter
     {

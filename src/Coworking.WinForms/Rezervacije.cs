@@ -15,13 +15,11 @@ namespace Coworking.WinForms
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
             singleton.DataChanged += OnDataChanged;
-            //locationComboBox.SelectedIndex = 0;
             loadData();
         }
 
         private void OnDataChanged(DataEntity entity)
         {
-            // Provera da li je forma uopšte živa i da li ima Handle
             if (!this.IsHandleCreated || this.IsDisposed) return;
 
             if (this.InvokeRequired)
@@ -84,7 +82,7 @@ namespace Coworking.WinForms
 
             var selectedReservation = (Rezervacija)reservationDataGridView.SelectedRows[0].DataBoundItem;
             var confirm = MessageBox.Show(
-                $"Da li sigurno �eli� da obri�e� rezervaciju #{selectedReservation.rezervacijaId}?",
+                $"Da li sigurno zelie da obrisete rezervaciju #{selectedReservation.rezervacijaId}?",
                 "Potvrda brisanja",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -98,14 +96,11 @@ namespace Coworking.WinForms
 
         private void loadData()
         {
-            // Standardno punjenje bez skakanja
             RefreshWithSelection(() => ApplyDataSource(singleton.prikaziSveRezervacije()));
         }
 
-        // Pomoćna metoda koja vrši promenu podataka bez resetovanja svega
         private void ApplyDataSource(object data)
         {
-            // Sprečavamo pucanje ako se podaci menjaju dok se forma gasi
             if (reservationDataGridView.IsDisposed) return;
 
             reservationDataGridView.DataSource = null;
@@ -185,12 +180,6 @@ namespace Coworking.WinForms
             }
         }
 
-        //private void loadReservations()
-        //{
-        //    var reservations = singleton.prikaziSveRezervacije();
-        //    reservationDataGridView.DataSource = reservations;
-        //}
-
         private void loadLocations()
         {
             var locations = singleton.prikaziLokacije(false);
@@ -223,11 +212,6 @@ namespace Coworking.WinForms
             });
         }
 
-        private void userTextBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void loadUsers()
         {
             var users = singleton.prikaziClanove();
@@ -247,7 +231,6 @@ namespace Coworking.WinForms
             int? sačuvaniId = null;
             int? prviVidljiviIndex = null;
 
-            // 1. Sačuvaj trenutno stanje
             if (reservationDataGridView.Rows.Count > 0 && reservationDataGridView.SelectedRows.Count > 0)
             {
                 var firstSelectedRow = reservationDataGridView.SelectedRows[0];
@@ -258,15 +241,12 @@ namespace Coworking.WinForms
                 }
             }
 
-            // 2. Suspenuj layout (sprečava treptanje) ✅
             reservationDataGridView.SuspendLayout();
 
             try
             {
-                // 3. Osveži podatke
                 updateLogic();
 
-                // 4. Vrati selekciju
                 if (sačuvaniId.HasValue && reservationDataGridView.Rows.Count > 0)
                 {
                     reservationDataGridView.ClearSelection();
@@ -291,7 +271,6 @@ namespace Coworking.WinForms
             }
             finally
             {
-                // 5. Nastavi layout (refresh grid) ✅
                 reservationDataGridView.ResumeLayout();
             }
         }

@@ -12,11 +12,6 @@ namespace Coworking.WinForms.Dialogues
             loadMemberships();
         }
 
-        private void membershipComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void loadMemberships()
         {
             var memberships = dataBase.prikaziSveTipoveClanstva();

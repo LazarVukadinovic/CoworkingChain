@@ -80,7 +80,6 @@ namespace Coworking.Data.Providers
                 tipResursa = red["tip_resursa"].ToString(),
                 opis = red["opis"].ToString(),
                 podtip = PodtipRadnogMestaTransformator.FromDbString(red["podtip"]?.ToString() ?? "")
-                //dostupan = red["dostupnost"].ToString()
             };
         }
 
@@ -115,24 +114,6 @@ namespace Coworking.Data.Providers
                 dozvoljenaSala = Convert.ToBoolean(red["dozvoljena_sala"])
             };
         }
-
-        //public Rezervacija mapRezervacija(DataRow red)
-        //{
-        //    return new Rezervacija
-        //    {
-        //        rezervacijaId = Convert.ToInt32(red["rezervacija_id"]),
-        //        pocetak = red["pocetak"].ToString(),
-        //        kraj = red["kraj"].ToString(),
-        //        // red["status"]?.ToString() ?? ""
-        //        // ako je red["status"] null ceo izraz postaje null i ne zove se ToString(), ako nije null normalno se izvrsava
-        //        // ?? - ako je levi deo null koristi se prazan string "", ako nije null onda standardno levi
-        //        status = ReservationStatusTransformator.FromDbString(red["status"]?.ToString() ?? ""),
-        //        kreiranoU = red["kreirano_u"].ToString(),
-        //        otkazanoU = red["otkazano_u"] == DBNull.Value ? null : red["otkazano_u"].ToString(),
-        //        clanId = Convert.ToInt32(red["clan_id"]),
-        //        resursId = Convert.ToInt32(red["resurs_id"])
-        //    };
-        //}
 
         public Rezervacija mapRezervacija(DataRow red)
         {

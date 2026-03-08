@@ -48,33 +48,27 @@ namespace Coworking.WinForms
         }
         private void loadData()
         {
-            // 1. Zapamti koji je red bio selektovan pre osvežavanja
             int? sačuvaniId = null;
             if (membershipDataGridView.SelectedRows.Count > 0)
             {
-                // Pretpostavljam da je prva kolona ID tipa članstva
                 sačuvaniId = (int)membershipDataGridView.SelectedRows[0].Cells[0].Value;
             }
 
-            // 2. Povuci nove podatke
             var membership = singleton.prikaziSveTipoveClanstva();
 
-            // 3. Osveži tabelu
-            membershipDataGridView.DataSource = null; // Reset
+            membershipDataGridView.DataSource = null;
             membershipDataGridView.DataSource = membership;
             membershipDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            // 4. VRATI SELEKCIJU tamo gde je bila
             if (sačuvaniId.HasValue)
             {
                 foreach (DataGridViewRow row in membershipDataGridView.Rows)
                 {
                     if ((int)row.Cells[0].Value == sačuvaniId.Value)
                     {
-                        membershipDataGridView.ClearSelection(); // Skloni selekciju sa prvog reda
+                        membershipDataGridView.ClearSelection();
                         row.Selected = true;
 
-                        // Fokusiraj "ćeliju" da bi i strelica sa strane bila na pravom mestu
                         if (membershipDataGridView.Columns.Count > 0)
                             membershipDataGridView.CurrentCell = row.Cells[0];
 

@@ -34,8 +34,6 @@ namespace Coworking.WinForms
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             headerPanel = new Panel();
             filterPanel = new Panel();
-            searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
-            searchButton = new ReaLTaiizor.Controls.ForeverButton();
             editResourceButton = new ReaLTaiizor.Controls.ForeverButton();
             deleteResourceButton = new ReaLTaiizor.Controls.ForeverButton();
             addResourceButton = new ReaLTaiizor.Controls.ForeverButton();
@@ -79,8 +77,6 @@ namespace Coworking.WinForms
             // 
             filterPanel.BackColor = Color.FromArgb(37, 52, 68);
             filterPanel.BorderStyle = BorderStyle.FixedSingle;
-            filterPanel.Controls.Add(searchTextBox);
-            filterPanel.Controls.Add(searchButton);
             filterPanel.Controls.Add(editResourceButton);
             filterPanel.Controls.Add(deleteResourceButton);
             filterPanel.Controls.Add(addResourceButton);
@@ -89,52 +85,6 @@ namespace Coworking.WinForms
             filterPanel.Name = "filterPanel";
             filterPanel.Size = new Size(1102, 72);
             filterPanel.TabIndex = 4;
-            // 
-            // searchTextBox
-            // 
-            searchTextBox.Alpha = 20;
-            searchTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            searchTextBox.BackColor = Color.Transparent;
-            searchTextBox.Background_WidthPen = 3F;
-            searchTextBox.BackgroundPen = true;
-            searchTextBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            searchTextBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            searchTextBox.ColorLighting = Color.FromArgb(29, 200, 238);
-            searchTextBox.ColorPen_1 = Color.FromArgb(29, 200, 238);
-            searchTextBox.ColorPen_2 = Color.FromArgb(37, 52, 68);
-            searchTextBox.CyberTextBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            searchTextBox.Font = new Font("Arial", 11F);
-            searchTextBox.ForeColor = Color.FromArgb(245, 245, 245);
-            searchTextBox.Lighting = false;
-            searchTextBox.LinearGradientPen = false;
-            searchTextBox.Location = new Point(597, 12);
-            searchTextBox.Name = "searchTextBox";
-            searchTextBox.PenWidth = 15;
-            searchTextBox.RGB = false;
-            searchTextBox.Rounding = true;
-            searchTextBox.RoundingInt = 60;
-            searchTextBox.Size = new Size(374, 45);
-            searchTextBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            searchTextBox.TabIndex = 11;
-            searchTextBox.Tag = "Cyber";
-            searchTextBox.TextButton = "";
-            searchTextBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            searchTextBox.Timer_RGB = 300;
-            // 
-            // searchButton
-            // 
-            searchButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            searchButton.BackColor = Color.Transparent;
-            searchButton.BaseColor = Color.FromArgb(8, 133, 161);
-            searchButton.Cursor = Cursors.Hand;
-            searchButton.Font = new Font("Segoe UI", 12F);
-            searchButton.Location = new Point(977, 12);
-            searchButton.Name = "searchButton";
-            searchButton.Rounded = true;
-            searchButton.Size = new Size(112, 45);
-            searchButton.TabIndex = 10;
-            searchButton.Text = "Pretraga";
-            searchButton.TextColor = Color.FromArgb(243, 243, 243);
             // 
             // editResourceButton
             // 
@@ -227,7 +177,6 @@ namespace Coworking.WinForms
             resourceDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             resourceDataGridView.Size = new Size(1102, 366);
             resourceDataGridView.TabIndex = 5;
-            //resourceDataGridView.CellContentClick += resourceDataGridView_CellContentClick;
             // 
             // filteringpanel
             // 
@@ -330,8 +279,6 @@ namespace Coworking.WinForms
         private ReaLTaiizor.Controls.HeaderLabel headerLabel;
         private Panel headerPanel;
         private Panel filterPanel;
-        private ReaLTaiizor.Controls.CyberTextBox searchTextBox;
-        private ReaLTaiizor.Controls.ForeverButton searchButton;
         private ReaLTaiizor.Controls.ForeverButton editResourceButton;
         private ReaLTaiizor.Controls.ForeverButton deleteResourceButton;
         private ReaLTaiizor.Controls.ForeverButton addResourceButton;

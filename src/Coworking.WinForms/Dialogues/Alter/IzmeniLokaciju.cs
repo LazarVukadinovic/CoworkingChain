@@ -30,10 +30,6 @@ namespace Coworking.WinForms.Dialogues
 
         private void loadLocations()
         {
-            //var memberships = singleton.prikaziLokacije(false);
-            //foreach (var membership in memberships)
-            //    foreverComboBox1.Items.Add(membership.lokacijaId);
-
             var locations = singleton.prikaziLokacije(false);
             foreverComboBox1.DisplayMember = "naziv";
             foreverComboBox1.ValueMember = "lokacijaId";

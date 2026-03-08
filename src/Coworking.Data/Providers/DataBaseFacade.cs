@@ -34,7 +34,6 @@ namespace Coworking.Data.Providers
             _applicationName = settings.ApplicationName;
         }
 
-
         public List<EntityChange> GetChangesAfter(DateTime lastCheck) => _changeRepo.GetChangesAfter(lastCheck);
         
 
@@ -47,33 +46,11 @@ namespace Coworking.Data.Providers
         public List<Clan> prikaziClanove() => _clanRepo.GetAll();
         public void obrisiClana(int clanId) => _clanRepo.Delete(clanId);
 
-        // OPTIMIZOVANO SA SQL
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status) => _clanRepo.GetFiltrirano(lokacijaId, tipClanstvaId, status);
-
-        //public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
-        //{
-        //    // Uvek kreni od svih, pa sucavaj krug
-        //    var clanovi = _clanRepo.GetAll();
-
-        //    if (lokacijaId.HasValue)
-        //    {
-        //        var poLokaciji = _clanRepo.vratiClanovePoLokaciji((int)lokacijaId);
-        //        clanovi = clanovi.FindAll(c => poLokaciji.Any(pl => pl.clanId == c.clanId));
-        //    }
-
-        //    if (tipClanstvaId.HasValue)
-        //        clanovi = clanovi.FindAll(c => c.tipClanstva == tipClanstvaId);
-
-        //    if (!string.IsNullOrEmpty(status))
-        //        clanovi = clanovi.FindAll(c => c.statusNaloga == status);
-
-        //    return clanovi;
-        //}
 
         public List<Clan> vratiClanovePoImenu(string name) => _clanRepo.GetByName(name);
 
         public int vratiClanovePoLokaciji(int lokacijaId) => _clanRepo.vratiClanovePoLokaciji(lokacijaId).Count();
-        //Marta:druga dva ifa mogu da se pozivaju da rade preko baze sa upitima preko repozitorijuma
 
         public double vratiUkupneSateSalaZaClana(int clanId)
         {
