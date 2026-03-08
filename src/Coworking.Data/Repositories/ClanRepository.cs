@@ -75,6 +75,7 @@ namespace Coworking.Data.Repositories
                     ime = '{item.ime}',
                     prezime = '{item.prezime}',
                     telefon = '{item.brTelefona}',
+                    email = '{item.mail}',
                     datum_pocetka = '{item.datumPocetka}',
                     datum_kraja = '{item.datumKraja}',
                     status_naloga = '{item.statusNaloga}',

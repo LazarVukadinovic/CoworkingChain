@@ -1,4 +1,4 @@
-using Coworking.Data.Reports;
+﻿using Coworking.Data.Reports;
 using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
@@ -113,12 +113,18 @@ namespace Coworking.Data.Providers
 
         public void dodajClana(Clan c)
         {
-            _facade.dodajClana(c);
+            _facade.dodajClana(c); // 1. Izvrši u bazi
+            InvalidateCache(DataEntity.Clan); // 2. Očisti lokalni keš odmah
+            Notify(DataEntity.Clan); // 3. Javi GUI-ju da se osveži TRENUTNO
         }
+
         public void izmeniClana(Clan c)
         {
             _facade.izmeniClana(c);
+            InvalidateCache(DataEntity.Clan);
+            Notify(DataEntity.Clan);
         }
+
         public List<Clan> prikaziClanove()
         {
             lock (_lock)
@@ -134,16 +140,8 @@ namespace Coworking.Data.Providers
         public void obrisiClana(int clanId)
         {
             _facade.obrisiClana(clanId);
-
-            //if (cachedClanovi != null)
-            //    cachedClanovi.RemoveAll(c => c.clanId == clanId);
-
-            //if (cachedKorisnickeRezervacije.ContainsKey(clanId))
-            //    cachedKorisnickeRezervacije.Remove(clanId);
-
-            //Ovo:bri�e clana iz cachedClanovi, bri�e njegove rezervacije iz cachedKorisnickeRezervacije i dalje forsira reload
-            //sledeci put
-
+            InvalidateCache(DataEntity.Clan);
+            Notify(DataEntity.Clan);
         }
 
         //ovde mozda treba dictionary
@@ -169,14 +167,20 @@ namespace Coworking.Data.Providers
         public void dodajLokaciju(Lokacija l)
         {
             _facade.dodajLokaciju(l);
+            InvalidateCache(DataEntity.Lokacija);
+            Notify(DataEntity.Lokacija);
         }
         public void izmeniLokaciju(Lokacija l)
         {
             _facade.izmeniLokaciju(l);
+            InvalidateCache(DataEntity.Lokacija);
+            Notify(DataEntity.Lokacija);
         }
         public void obrisiLokaciju(int lokacijaId)
         {
             _facade.obrisiLokaciju(lokacijaId);
+            InvalidateCache(DataEntity.Lokacija);
+            Notify(DataEntity.Lokacija);
         }
 
         public List<Lokacija> prikaziLokacije(bool check)
@@ -214,18 +218,26 @@ namespace Coworking.Data.Providers
         public void dodajRezervaciju(Rezervacija r)
         {
             _facade.dodajRezervaciju(r);
+            InvalidateCache(DataEntity.Rezervacija);
+            Notify(DataEntity.Rezervacija);
         }
         public void izmeniRezervaciju(Rezervacija r)
         {
             _facade.izmeniRezervaciju(r);
+            InvalidateCache(DataEntity.Rezervacija);
+            Notify(DataEntity.Rezervacija);
         }
         public void otkaziRezervaciju(int rezervacijaId)
         {
             _facade.otkaziRezervaciju(rezervacijaId);
+            InvalidateCache(DataEntity.Rezervacija);
+            Notify(DataEntity.Rezervacija);
         }
         public void obrisiRezervaciju(int rezervacijaId)
         {
             _facade.obrisiRezervaciju(rezervacijaId);
+            InvalidateCache(DataEntity.Rezervacija);
+            Notify(DataEntity.Rezervacija);
         }
         public List<Rezervacija> prikaziSveRezervacije()
         {
@@ -290,11 +302,15 @@ namespace Coworking.Data.Providers
         public void dodajResurs(Resurs r)
         {
             _facade.dodajResurs(r);
+            InvalidateCache(DataEntity.Resurs);
+            Notify(DataEntity.Resurs);
         }
 
         public void izmeniResurs(Resurs r)
         {
             _facade.izmeniResurs(r);
+            InvalidateCache(DataEntity.Resurs);
+            Notify(DataEntity.Resurs);
         }
         public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name)
         {
@@ -320,6 +336,8 @@ namespace Coworking.Data.Providers
         public void obrisiResurs(int resursId)
         {
             _facade.obrisiResurs(resursId);
+            InvalidateCache(DataEntity.Resurs);
+            Notify(DataEntity.Resurs);
         }
         public Resurs giveLastAddedResource() => _facade.giveLastAddedResource();
 
@@ -330,6 +348,8 @@ namespace Coworking.Data.Providers
         public void dodajTipClanstva(Domain.Entities.TipClanstva t)
         {
             _facade.dodajTipClanstva(t);
+            InvalidateCache(DataEntity.TipClanstva);
+            Notify(DataEntity.TipClanstva);
         }
         public List<TipClanstva> prikaziSveTipoveClanstva()
         {
@@ -352,6 +372,8 @@ namespace Coworking.Data.Providers
         public void updateTipClanstva(TipClanstva t)
         {
             _facade.updateTipClanstva(t);
+            InvalidateCache(DataEntity.TipClanstva);
+            Notify(DataEntity.TipClanstva);
         }
 
         public TipClanstva GetTipClanstvaById(int id)
@@ -362,6 +384,8 @@ namespace Coworking.Data.Providers
         public void DeleteTipClanstva(int id)
         {
             _facade.DeleteTipClanstva(id);
+            InvalidateCache(DataEntity.TipClanstva);
+            Notify(DataEntity.TipClanstva);
         }
 
 

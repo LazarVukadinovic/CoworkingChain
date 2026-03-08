@@ -49,7 +49,7 @@ namespace Coworking.WinForms.Dialogues
                 // Sada je bezbedno i tipovi se poklapaju
                 datumKraja = danas.AddDays(dodatniDani).ToString("yyyy-MM-dd"),
                 statusNaloga = "Aktivan",
-                kreiran = danas.ToString("yyyy-MM-dd")
+                kreiran = danas.ToString("yyyy-MM-dd HH:mm:ss")
             });
 
             MessageBox.Show("Uspešno dodat član!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
