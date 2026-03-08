@@ -110,51 +110,36 @@ namespace Coworking.WinForms
 
         private void RefreshWithSelection(Action updateLogic)
         {
-            int? sačuvaniId = null;
-            int? prviVidljiviIndex = null;
+            int? savedId = null;
 
-            if (resourceDataGridView.SelectedRows.Count > 0 &&
-                resourceDataGridView.SelectedRows[0].DataBoundItem is Resurs r)
+            // 1. Zapamti selektovani resurs
+            if (resourceDataGridView.CurrentRow?.DataBoundItem is Resurs r)
             {
-                sačuvaniId = r.resursId;
-                prviVidljiviIndex = resourceDataGridView.FirstDisplayedScrollingRowIndex;
+                savedId = r.resursId;
             }
 
-            // Isključujemo grid privremeno da sprečimo reset fokusa
-            resourceDataGridView.Enabled = false;
-
+            // 2. Update podataka
             updateLogic();
 
-            if (sačuvaniId.HasValue)
-            {
-                this.BeginInvoke(new Action(() => {
-                    try
-                    {
-                        foreach (DataGridViewRow row in resourceDataGridView.Rows)
-                        {
-                            if (row.DataBoundItem is Resurs res && res.resursId == sačuvaniId)
-                            {
-                                resourceDataGridView.ClearSelection();
+            if (!savedId.HasValue)
+                return;
 
-                                if (prviVidljiviIndex.HasValue && prviVidljiviIndex < resourceDataGridView.RowCount)
-                                    resourceDataGridView.FirstDisplayedScrollingRowIndex = Math.Max(0, prviVidljiviIndex.Value);
-
-                                row.Selected = true;
-                                if (resourceDataGridView.Columns.Count > 0)
-                                    resourceDataGridView.CurrentCell = row.Cells[0];
-                                break;
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        resourceDataGridView.Enabled = true;
-                    }
-                }));
-            }
-            else
+            // 3. Vrati selekciju
+            foreach (DataGridViewRow row in resourceDataGridView.Rows)
             {
-                resourceDataGridView.Enabled = true;
+                if (row.DataBoundItem is Resurs res && res.resursId == savedId)
+                {
+                    resourceDataGridView.ClearSelection();
+
+                    row.Selected = true;
+                    resourceDataGridView.CurrentCell = row.Cells[0];
+
+                    // scroll do reda
+                    if (row.Index >= 0)
+                        resourceDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
+
+                    break;
+                }
             }
         }
 

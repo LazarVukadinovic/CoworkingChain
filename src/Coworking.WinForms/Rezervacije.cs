@@ -167,7 +167,6 @@ namespace Coworking.WinForms
             userLabel.Visible = userTextBox.Visible = userRadioButton.Checked;
 
             reservedCheckBox.Visible =
-            confirmedCheckBox.Visible =
             cancelledCheckBox.Visible =
             doneCheckBox.Visible = userRadioButton.Checked;
 
@@ -215,7 +214,6 @@ namespace Coworking.WinForms
                 {
                     List<ReservationStatus> selektovaniStatusi = new List<ReservationStatus>();
                     if (reservedCheckBox.Checked) selektovaniStatusi.Add(ReservationStatus.Rezervisana);
-                    if (confirmedCheckBox.Checked) selektovaniStatusi.Add(ReservationStatus.Potvrdjena);
                     if (cancelledCheckBox.Checked) selektovaniStatusi.Add(ReservationStatus.Otkazana);
                     if (doneCheckBox.Checked) selektovaniStatusi.Add(ReservationStatus.Zavrsena);
 

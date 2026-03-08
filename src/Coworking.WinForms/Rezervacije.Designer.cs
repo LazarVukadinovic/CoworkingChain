@@ -28,9 +28,9 @@ namespace Coworking.WinForms
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             headerPanel = new Panel();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             filterPanel = new Panel();
@@ -45,7 +45,6 @@ namespace Coworking.WinForms
             dateLabel = new ReaLTaiizor.Controls.HeaderLabel();
             dateDateTime = new ReaLTaiizor.Controls.PoisonDateTime();
             doneCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
-            confirmedCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
             cancelledCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
             userLabel = new ReaLTaiizor.Controls.HeaderLabel();
             locationDateRadioButton = new ReaLTaiizor.Controls.CyberRadioButton();
@@ -211,7 +210,6 @@ namespace Coworking.WinForms
             filteringpanel.Controls.Add(searchButton);
             filteringpanel.Controls.Add(dateDateTime);
             filteringpanel.Controls.Add(doneCheckBox);
-            filteringpanel.Controls.Add(confirmedCheckBox);
             filteringpanel.Controls.Add(locationLabel);
             filteringpanel.Controls.Add(locationComboBox);
             filteringpanel.Controls.Add(cancelledCheckBox);
@@ -276,7 +274,7 @@ namespace Coworking.WinForms
             doneCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
             doneCheckBox.LinearGradient_Background = false;
             doneCheckBox.LinearGradientPen = false;
-            doneCheckBox.Location = new Point(778, 42);
+            doneCheckBox.Location = new Point(770, 7);
             doneCheckBox.Name = "doneCheckBox";
             doneCheckBox.RGB = false;
             doneCheckBox.Rounding = false;
@@ -290,45 +288,6 @@ namespace Coworking.WinForms
             doneCheckBox.Timer_Effect_1 = 1;
             doneCheckBox.Timer_RGB = 300;
             doneCheckBox.Visible = false;
-            // 
-            // confirmedCheckBox
-            // 
-            confirmedCheckBox.BackColor = Color.Transparent;
-            confirmedCheckBox.Background = true;
-            confirmedCheckBox.Background_WidthPen = 2F;
-            confirmedCheckBox.BackgroundPen = true;
-            confirmedCheckBox.Checked = false;
-            confirmedCheckBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            confirmedCheckBox.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            confirmedCheckBox.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            confirmedCheckBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            confirmedCheckBox.ColorChecked = Color.FromArgb(29, 200, 238);
-            confirmedCheckBox.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            confirmedCheckBox.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            confirmedCheckBox.CyberCheckBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            confirmedCheckBox.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
-            confirmedCheckBox.Effect_1_Transparency = 25;
-            confirmedCheckBox.Effect_2 = true;
-            confirmedCheckBox.Effect_2_ColorBackground = Color.White;
-            confirmedCheckBox.Effect_2_Transparency = 15;
-            confirmedCheckBox.Font = new Font("Arial", 12F);
-            confirmedCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
-            confirmedCheckBox.LinearGradient_Background = false;
-            confirmedCheckBox.LinearGradientPen = false;
-            confirmedCheckBox.Location = new Point(778, 5);
-            confirmedCheckBox.Name = "confirmedCheckBox";
-            confirmedCheckBox.RGB = false;
-            confirmedCheckBox.Rounding = false;
-            confirmedCheckBox.RoundingInt = 100;
-            confirmedCheckBox.Size = new Size(165, 45);
-            confirmedCheckBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            confirmedCheckBox.TabIndex = 25;
-            confirmedCheckBox.Tag = "Cyber";
-            confirmedCheckBox.TextButton = "Potvrdjena";
-            confirmedCheckBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            confirmedCheckBox.Timer_Effect_1 = 1;
-            confirmedCheckBox.Timer_RGB = 300;
-            confirmedCheckBox.Visible = false;
             // 
             // cancelledCheckBox
             // 
@@ -535,23 +494,23 @@ namespace Coworking.WinForms
             reservationDataGridView.BorderStyle = BorderStyle.None;
             reservationDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
             reservationDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            reservationDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            reservationDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             reservationDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            reservationDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            reservationDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             reservationDataGridView.Dock = DockStyle.Fill;
             reservationDataGridView.EnableHeadersVisualStyles = false;
             reservationDataGridView.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -560,14 +519,14 @@ namespace Coworking.WinForms
             reservationDataGridView.Name = "reservationDataGridView";
             reservationDataGridView.ReadOnly = true;
             reservationDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            reservationDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            reservationDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             reservationDataGridView.RowHeadersWidth = 51;
             reservationDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             reservationDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -613,7 +572,6 @@ namespace Coworking.WinForms
         private ReaLTaiizor.Controls.CyberCheckBox cancelledCheckBox;
         private ReaLTaiizor.Controls.HeaderLabel userLabel;
         private ReaLTaiizor.Controls.CyberCheckBox doneCheckBox;
-        private ReaLTaiizor.Controls.CyberCheckBox confirmedCheckBox;
         private ReaLTaiizor.Controls.HeaderLabel dateLabel;
         private ReaLTaiizor.Controls.PoisonDateTime dateDateTime;
         private ReaLTaiizor.Controls.ForeverComboBox userTextBox;

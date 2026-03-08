@@ -1,5 +1,6 @@
-﻿using System.Data;
+﻿using Coworking.Data.Adapter;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace Coworking.Data.Factories
 {
@@ -19,6 +20,8 @@ namespace Coworking.Data.Factories
         {
             return new SqlConnection(konekcioniString);
         }
+        public ISqlSyntaxAdapter createSqlSyntaxAdapter()
+            => new MsSqlSyntaxAdapter();
     }
 }
 

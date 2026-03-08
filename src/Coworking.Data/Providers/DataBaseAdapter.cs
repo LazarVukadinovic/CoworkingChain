@@ -1,4 +1,5 @@
-﻿using Coworking.Data.Factories;
+﻿using Coworking.Data.Adapter;
+using Coworking.Data.Factories;
 using System.Data;
 
 namespace Coworking.Data.Providers
@@ -7,11 +8,13 @@ namespace Coworking.Data.Providers
     {
         private readonly IDataBaseFactory _factory;
         private readonly string _konekcioniString;
+        private readonly ISqlSyntaxAdapter _syntax;
 
         public DataBaseAdapter(IDataBaseFactory factory, string konekcioniString)
         {
             _factory = factory;
             _konekcioniString = konekcioniString;
+            _syntax = _factory.createSqlSyntaxAdapter();
         }
 
         public DataTable izvrsiUpit(string upit)
@@ -43,67 +46,17 @@ namespace Coworking.Data.Providers
 
         public string NowExpr()
         {
-            return _factory is MySqlFactory ? "NOW()" : "SYSDATETIME()";
+            return _syntax.NowExpr();
         }
 
         public string AddDaysExpr(string dateParam, int days)
         {
-            return _factory is MySqlFactory
-                ? $"DATE_ADD({dateParam}, INTERVAL {days} DAY)"
-                : $"DATEADD(day, {days}, {dateParam})";
-        }
-
-        public string DateDiffMinutesExpr(string startExpr, string endExpr)
-        {
-            return _factory is MySqlFactory
-                ? $"TIMESTAMPDIFF(MINUTE, {startExpr}, {endExpr})"
-                : $"DATEDIFF(minute, {startExpr}, {endExpr})";
+            return _syntax.AddDaysExpr(dateParam, days);
         }
 
         public string LimitOneExpr(string orderByColumn, string direction = "DESC")
         {
-            return _factory is MySqlFactory
-                ? $"ORDER BY {orderByColumn} {direction} LIMIT 1"
-                : $"ORDER BY {orderByColumn} {direction} OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY";
-        }
-
-        public object izvrsiUpitSkalar(string upit)
-        {
-            // Koristimo tvoju fabriku da dobijemo odgovarajuću konekciju i komandu
-            using (var connection = _factory.napraviKonekciju(_konekcioniString))
-            using (var command = _factory.napraviKomandu(upit, connection))
-            {
-                connection.Open();
-                // ExecuteScalar vraća prvi stubac prvog reda (idealno za SUM)
-                return command.ExecuteScalar();
-            }
-        }
-
-        // NEISKORISCENE metode
-        public string DateOnlyExpr(string dateTimeExpr)
-        {
-            return _factory is MySqlFactory
-                ? $"DATE({dateTimeExpr})"
-                : $"CAST({dateTimeExpr} AS DATE)";
-        }
-
-        public string CurrDateExpr()
-        {
-            return _factory is MySqlFactory
-                ? "CURDATE()"
-                : "CAST(GETDATE() AS DATE)";
-        }
-
-        public string CombineDateAndTimeExpr(string dateExpr, string hourExpr)
-        {
-            if (_factory is MySqlFactory)
-            {
-                return $"STR_TO_DATE(CONCAT(DATE({dateExpr}), ' ', {hourExpr}, ':00:00'), '%Y-%m-%d %H:%i:%s')";
-            }
-            else
-            {
-                return $"DATEADD(HOUR, CAST({hourExpr} AS INT), CAST(CAST({dateExpr} AS DATE) AS DATETIME))";
-            }
+            return _syntax.LimitOneExpr(orderByColumn, direction);
         }
     }
 }

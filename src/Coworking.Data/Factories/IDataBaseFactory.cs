@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Coworking.Data.Adapter;
+using System.Data;
 
 namespace Coworking.Data.Factories
 {
@@ -9,5 +10,7 @@ namespace Coworking.Data.Factories
         IDbDataAdapter napraviAdapter(IDbCommand komanda);
 
         IDbCommand napraviKomandu(string upit, IDbConnection konekcija);
+
+        ISqlSyntaxAdapter createSqlSyntaxAdapter();
     }
 }

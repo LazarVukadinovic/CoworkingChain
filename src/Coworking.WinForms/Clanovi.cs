@@ -152,6 +152,7 @@ namespace Coworking.WinForms
                     }
                 }));
             }
+            memberDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void locationComboBox_SelectedIndexChanged(object sender, EventArgs e)

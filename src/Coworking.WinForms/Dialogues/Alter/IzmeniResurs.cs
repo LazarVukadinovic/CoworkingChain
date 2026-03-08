@@ -39,15 +39,15 @@ namespace Coworking.WinForms.Dialogues
                 switch (podTip)
                 {
                     case PodtipRadnogMesta.dedicated_desk:
-                        deskTypeComboBox.SelectedItem = "Dedicated desk";
+                        deskTypeComboBox.SelectedItem = "dedicated_desk";
                         break;
 
                     case PodtipRadnogMesta.hot_desk:
-                        deskTypeComboBox.SelectedItem = "Hot desk";
+                        deskTypeComboBox.SelectedItem = "hot_desk";
                         break;
 
                     case PodtipRadnogMesta.private_office:
-                        deskTypeComboBox.SelectedItem = "Private office";
+                        deskTypeComboBox.SelectedItem = "private_office";
                         break;
                 }
             }
