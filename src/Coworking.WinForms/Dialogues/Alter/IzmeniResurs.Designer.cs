@@ -315,7 +315,7 @@
             deskTypeComboBox.HoverColor = Color.FromArgb(35, 168, 109);
             deskTypeComboBox.HoverFontColor = Color.White;
             deskTypeComboBox.ItemHeight = 25;
-            deskTypeComboBox.Items.AddRange(new object[] { "Hot desk", "Dedicated desk", "Private office" });
+            deskTypeComboBox.Items.AddRange(new object[] { "hot_desk", "dedicated_desk", "private_office" });
             deskTypeComboBox.Location = new Point(12, 324);
             deskTypeComboBox.Name = "deskTypeComboBox";
             deskTypeComboBox.Size = new Size(250, 31);

@@ -14,7 +14,7 @@ namespace Coworking.WinForms.Dialogues
             this._selektovanResurs = selektovanResurs;
             singleton = DataBaseSingleton.vratiInstancu();
             loadLocations();
-            changeResource();
+            loadResource();
         }
         private bool _syncingRadios;
 
@@ -25,36 +25,27 @@ namespace Coworking.WinForms.Dialogues
             locationComboBox.DisplayMember = "naziv";
             locationComboBox.ValueMember = "lokacijaId";
             locationComboBox.DataSource = locations;
+
+            locationComboBox.SelectedValue = _selektovanResurs.lokacijaId;
         }
 
-        private void changeResource()
+        private void loadResource()
         {
             nameTextBox.textBox.Text = _selektovanResurs.oznaka;
-            locationComboBox.SelectedValue = _selektovanResurs.lokacijaId;
+            
             if (_selektovanResurs.tipResursa == "radno_mesto")
             {
                 deskTypeRadioButton.Checked = true;
                 conferenceRadioButton.Enabled = false;
+
                 var podTip = singleton.prikaziRadnaMestaPoId(_selektovanResurs.resursId).podtip;
-                switch (podTip)
-                {
-                    case PodtipRadnogMesta.dedicated_desk:
-                        deskTypeComboBox.SelectedItem = "dedicated_desk";
-                        break;
-
-                    case PodtipRadnogMesta.hot_desk:
-                        deskTypeComboBox.SelectedItem = "hot_desk";
-                        break;
-
-                    case PodtipRadnogMesta.private_office:
-                        deskTypeComboBox.SelectedItem = "private_office";
-                        break;
-                }
+                deskTypeComboBox.SelectedItem = podTip.ToDbString();
             }
             else if (_selektovanResurs.tipResursa == "sala")
             {
                 conferenceRadioButton.Checked = true;
                 deskTypeRadioButton.Enabled = false;
+
                 var sala = singleton.prikaziSaleZaSastankePoId(_selektovanResurs.resursId);
                 capacityNumeric.Value = sala.kapacitet;
                 projectorCheckBox.Checked = sala.imaProjektor;
@@ -63,7 +54,6 @@ namespace Coworking.WinForms.Dialogues
                 onlineCheckBox.Checked = sala.imaOpremuZaOnlineSastanke;
             }
             aboutRichTextBox.TextButton = _selektovanResurs.opis ?? "";
-
         }
 
         private void UpdateUI()
@@ -114,20 +104,8 @@ namespace Coworking.WinForms.Dialogues
             {
                 RadnoMesto newRadnoMesto = singleton.prikaziRadnaMestaPoId(_selektovanResurs.resursId);
 
-                switch (deskTypeComboBox.SelectedItem.ToString())
-                {
-                    case "Dedicated desk":
-                        newRadnoMesto.podtip = PodtipRadnogMesta.dedicated_desk;
-                        break;
-
-                    case "Hot desk":
-                        newRadnoMesto.podtip = PodtipRadnogMesta.hot_desk;
-                        break;
-
-                    case "Private office":
-                        newRadnoMesto.podtip = PodtipRadnogMesta.private_office;
-                        break;
-                }
+                newRadnoMesto.podtip = PodtipRadnogMestaTransformator.FromDbString(deskTypeComboBox.SelectedItem.ToString());
+                
 
                 singleton.izmeniRadnoMesto(newRadnoMesto);
                 MessageBox.Show("Uspešno izmenjeno radno mesto!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
