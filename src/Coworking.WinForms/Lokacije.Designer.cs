@@ -33,8 +33,8 @@
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             headerPanel = new Panel();
-            activeLocationsRadioButton = new ReaLTaiizor.Controls.CyberRadioButton();
-            showStatisticsRadioButton = new ReaLTaiizor.Controls.CyberRadioButton();
+            membershipTypeLabel = new ReaLTaiizor.Controls.HeaderLabel();
+            viewComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
             filterPanel = new Panel();
             searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             searchButton = new ReaLTaiizor.Controls.ForeverButton();
@@ -42,9 +42,11 @@
             deleteLocationButton = new ReaLTaiizor.Controls.ForeverButton();
             addLocationButton = new ReaLTaiizor.Controls.ForeverButton();
             locationDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
+            filteringPanel = new Panel();
             headerPanel.SuspendLayout();
             filterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)locationDataGridView).BeginInit();
+            filteringPanel.SuspendLayout();
             SuspendLayout();
             // 
             // headerLabel
@@ -64,8 +66,6 @@
             // 
             headerPanel.BackColor = Color.FromArgb(37, 52, 68);
             headerPanel.BorderStyle = BorderStyle.FixedSingle;
-            headerPanel.Controls.Add(activeLocationsRadioButton);
-            headerPanel.Controls.Add(showStatisticsRadioButton);
             headerPanel.Controls.Add(headerLabel);
             headerPanel.Dock = DockStyle.Top;
             headerPanel.Location = new Point(0, 0);
@@ -73,91 +73,36 @@
             headerPanel.Size = new Size(1102, 69);
             headerPanel.TabIndex = 1;
             // 
-            // activeLocationsRadioButton
+            // membershipTypeLabel
             // 
-            activeLocationsRadioButton.BackColor = Color.Transparent;
-            activeLocationsRadioButton.Background = true;
-            activeLocationsRadioButton.Background_WidthPen = 2F;
-            activeLocationsRadioButton.BackgroundPen = true;
-            activeLocationsRadioButton.Checked = false;
-            activeLocationsRadioButton.Color_1_Background_value = Color.Empty;
-            activeLocationsRadioButton.Color_2_Background_value = Color.Empty;
-            activeLocationsRadioButton.ColorBackground = Color.FromArgb(37, 52, 68);
-            activeLocationsRadioButton.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            activeLocationsRadioButton.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            activeLocationsRadioButton.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            activeLocationsRadioButton.ColorChecked = Color.FromArgb(29, 200, 238);
-            activeLocationsRadioButton.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            activeLocationsRadioButton.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            activeLocationsRadioButton.CyberRadioButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            activeLocationsRadioButton.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
-            activeLocationsRadioButton.Effect_1_Transparency = 25;
-            activeLocationsRadioButton.Effect_2 = true;
-            activeLocationsRadioButton.Effect_2_ColorBackground = Color.White;
-            activeLocationsRadioButton.Effect_2_Transparency = 15;
-            activeLocationsRadioButton.Font = new Font("Arial", 11F);
-            activeLocationsRadioButton.ForeColor = Color.FromArgb(245, 245, 245);
-            activeLocationsRadioButton.LinearGradient_Background = false;
-            activeLocationsRadioButton.LinearGradient_Value = false;
-            activeLocationsRadioButton.LinearGradientPen = false;
-            activeLocationsRadioButton.Location = new Point(11, 12);
-            activeLocationsRadioButton.Name = "activeLocationsRadioButton";
-            activeLocationsRadioButton.RGB = false;
-            activeLocationsRadioButton.Rounding = true;
-            activeLocationsRadioButton.RoundingInt = 100;
-            activeLocationsRadioButton.Size = new Size(180, 45);
-            activeLocationsRadioButton.SizeChecked = 8;
-            activeLocationsRadioButton.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            activeLocationsRadioButton.TabIndex = 29;
-            activeLocationsRadioButton.Tag = "Cyber";
-            activeLocationsRadioButton.TextButton = "Aktivne lokacije";
-            activeLocationsRadioButton.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            activeLocationsRadioButton.Timer_Effect_1 = 1;
-            activeLocationsRadioButton.Timer_RGB = 300;
-            activeLocationsRadioButton.Click += activeLocationsRadioButton_Click;
+            membershipTypeLabel.AutoSize = true;
+            membershipTypeLabel.BackColor = Color.Transparent;
+            membershipTypeLabel.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold);
+            membershipTypeLabel.ForeColor = Color.FromArgb(255, 255, 255);
+            membershipTypeLabel.Location = new Point(11, 20);
+            membershipTypeLabel.Name = "membershipTypeLabel";
+            membershipTypeLabel.Size = new Size(68, 20);
+            membershipTypeLabel.TabIndex = 19;
+            membershipTypeLabel.Text = "Prikaz:";
             // 
-            // showStatisticsRadioButton
+            // viewComboBox
             // 
-            showStatisticsRadioButton.BackColor = Color.Transparent;
-            showStatisticsRadioButton.Background = true;
-            showStatisticsRadioButton.Background_WidthPen = 2F;
-            showStatisticsRadioButton.BackgroundPen = true;
-            showStatisticsRadioButton.Checked = false;
-            showStatisticsRadioButton.Color_1_Background_value = Color.Empty;
-            showStatisticsRadioButton.Color_2_Background_value = Color.Empty;
-            showStatisticsRadioButton.ColorBackground = Color.FromArgb(37, 52, 68);
-            showStatisticsRadioButton.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            showStatisticsRadioButton.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            showStatisticsRadioButton.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            showStatisticsRadioButton.ColorChecked = Color.FromArgb(29, 200, 238);
-            showStatisticsRadioButton.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            showStatisticsRadioButton.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            showStatisticsRadioButton.CyberRadioButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            showStatisticsRadioButton.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
-            showStatisticsRadioButton.Effect_1_Transparency = 25;
-            showStatisticsRadioButton.Effect_2 = true;
-            showStatisticsRadioButton.Effect_2_ColorBackground = Color.White;
-            showStatisticsRadioButton.Effect_2_Transparency = 15;
-            showStatisticsRadioButton.Font = new Font("Arial", 11F);
-            showStatisticsRadioButton.ForeColor = Color.FromArgb(245, 245, 245);
-            showStatisticsRadioButton.LinearGradient_Background = false;
-            showStatisticsRadioButton.LinearGradient_Value = false;
-            showStatisticsRadioButton.LinearGradientPen = false;
-            showStatisticsRadioButton.Location = new Point(213, 12);
-            showStatisticsRadioButton.Name = "showStatisticsRadioButton";
-            showStatisticsRadioButton.RGB = false;
-            showStatisticsRadioButton.Rounding = true;
-            showStatisticsRadioButton.RoundingInt = 100;
-            showStatisticsRadioButton.Size = new Size(180, 45);
-            showStatisticsRadioButton.SizeChecked = 8;
-            showStatisticsRadioButton.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            showStatisticsRadioButton.TabIndex = 28;
-            showStatisticsRadioButton.Tag = "Cyber";
-            showStatisticsRadioButton.TextButton = "Prikazi statistiku";
-            showStatisticsRadioButton.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            showStatisticsRadioButton.Timer_Effect_1 = 1;
-            showStatisticsRadioButton.Timer_RGB = 300;
-            showStatisticsRadioButton.Click += showStatisticsRadioButton_Click;
+            viewComboBox.BaseColor = Color.FromArgb(8, 133, 161);
+            viewComboBox.BGColor = Color.FromArgb(18, 26, 33);
+            viewComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            viewComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            viewComboBox.Font = new Font("Segoe UI", 8F);
+            viewComboBox.ForeColor = Color.White;
+            viewComboBox.FormattingEnabled = true;
+            viewComboBox.HoverColor = Color.FromArgb(35, 168, 109);
+            viewComboBox.HoverFontColor = Color.White;
+            viewComboBox.ItemHeight = 25;
+            viewComboBox.Items.AddRange(new object[] { "Sve", "Aktivne lokacije", "Statistika lokacija" });
+            viewComboBox.Location = new Point(92, 19);
+            viewComboBox.Name = "viewComboBox";
+            viewComboBox.Size = new Size(223, 31);
+            viewComboBox.TabIndex = 18;
+            viewComboBox.SelectedIndexChanged += viewComboBox_SelectedIndexChanged;
             // 
             // filterPanel
             // 
@@ -295,7 +240,7 @@
             locationDataGridView.EnableHeadersVisualStyles = false;
             locationDataGridView.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             locationDataGridView.GridColor = Color.FromArgb(255, 255, 255);
-            locationDataGridView.Location = new Point(0, 141);
+            locationDataGridView.Location = new Point(0, 213);
             locationDataGridView.Name = "locationDataGridView";
             locationDataGridView.ReadOnly = true;
             locationDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -310,8 +255,20 @@
             locationDataGridView.RowHeadersWidth = 51;
             locationDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             locationDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            locationDataGridView.Size = new Size(1102, 463);
+            locationDataGridView.Size = new Size(1102, 391);
             locationDataGridView.TabIndex = 3;
+            // 
+            // filteringPanel
+            // 
+            filteringPanel.BackColor = Color.FromArgb(37, 52, 68);
+            filteringPanel.BorderStyle = BorderStyle.FixedSingle;
+            filteringPanel.Controls.Add(membershipTypeLabel);
+            filteringPanel.Controls.Add(viewComboBox);
+            filteringPanel.Dock = DockStyle.Top;
+            filteringPanel.Location = new Point(0, 141);
+            filteringPanel.Name = "filteringPanel";
+            filteringPanel.Size = new Size(1102, 72);
+            filteringPanel.TabIndex = 10;
             // 
             // Lokacije
             // 
@@ -319,6 +276,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1102, 604);
             Controls.Add(locationDataGridView);
+            Controls.Add(filteringPanel);
             Controls.Add(filterPanel);
             Controls.Add(headerPanel);
             Name = "Lokacije";
@@ -327,6 +285,8 @@
             headerPanel.PerformLayout();
             filterPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)locationDataGridView).EndInit();
+            filteringPanel.ResumeLayout(false);
+            filteringPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -336,14 +296,13 @@
         private Panel headerPanel;
         private Panel filterPanel;
         private ReaLTaiizor.Controls.ForeverButton editLocationButton;
-        private ReaLTaiizor.Controls.CyberTextBox cyberTextBox1;
-        private ReaLTaiizor.Controls.ForeverButton foreverButton3;
         private ReaLTaiizor.Controls.ForeverButton deleteLocationButton;
         private ReaLTaiizor.Controls.ForeverButton addLocationButton;
         private ReaLTaiizor.Controls.CyberTextBox searchTextBox;
         private ReaLTaiizor.Controls.ForeverButton searchButton;
         private ReaLTaiizor.Controls.PoisonDataGridView locationDataGridView;
-        private ReaLTaiizor.Controls.CyberRadioButton activeLocationsRadioButton;
-        private ReaLTaiizor.Controls.CyberRadioButton showStatisticsRadioButton;
+        private ReaLTaiizor.Controls.HeaderLabel membershipTypeLabel;
+        private ReaLTaiizor.Controls.ForeverComboBox viewComboBox;
+        private Panel filteringPanel;
     }
 }

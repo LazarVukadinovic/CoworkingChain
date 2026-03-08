@@ -12,6 +12,7 @@ namespace Coworking.WinForms
             InitializeComponent();
             singleton = DataBaseSingleton.vratiInstancu();
             singleton.DataChanged += OnDataChanged;
+            viewComboBox.SelectedIndex = 0;
             loadData();
         }
 
@@ -39,18 +40,20 @@ namespace Coworking.WinForms
             }
 
             // 2. Tvoja postojeća logika za punjenje podataka
-            if (showStatisticsRadioButton.Checked)
+            locationDataGridView.DataSource = null;
+            switch (viewComboBox.Text)
             {
-                var locations = singleton.PrikaziStatistikuLokacija();
-                locationDataGridView.DataSource = null;
-                locationDataGridView.DataSource = locations;
-            }
-            else
-            {
-                bool check = activeLocationsRadioButton.Checked;
-                var locations = singleton.prikaziLokacije(check);
-                locationDataGridView.DataSource = null;
-                locationDataGridView.DataSource = locations;
+                case "Sve":
+                    locationDataGridView.DataSource = singleton.prikaziLokacije(false);
+                    break;
+
+                case "Aktivne lokacije":
+                    locationDataGridView.DataSource = singleton.prikaziLokacije(true);
+                    break;
+
+                case "Statistika lokacija":
+                    locationDataGridView.DataSource = singleton.PrikaziStatistikuLokacija();
+                    break;
             }
 
             locationDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -73,45 +76,9 @@ namespace Coworking.WinForms
                 }
             }
         }
-        private void showStatisticsRadioButton_Click(object sender, EventArgs e)
+        private void viewComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (showStatisticsRadioButton.Checked)
-                showStatisticsRadioButton.Checked = false;
-            else
-            {
-                showStatisticsRadioButton.Checked = true;
-                activeLocationsRadioButton.Checked = false;
-            }
             loadData();
-        }
-
-        private void activeLocationsRadioButton_Click(object sender, EventArgs e)
-        {
-            if (activeLocationsRadioButton.Checked)
-                activeLocationsRadioButton.Checked = false;
-            else
-            {
-                activeLocationsRadioButton.Checked = true;
-                showStatisticsRadioButton.Checked = false;
-            }
-            loadData();
-        }
-
-        private void activeLocationsRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            // Proveravamo samo kada postane 'true' da ne bismo duplo osvežavali
-            if (activeLocationsRadioButton.Checked)
-            {
-                loadData();
-            }
-        }
-
-        private void showStatisticsRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (showStatisticsRadioButton.Checked)
-            {
-                loadData();
-            }
         }
 
         private void addLocationButton_Click(object sender, EventArgs e)
