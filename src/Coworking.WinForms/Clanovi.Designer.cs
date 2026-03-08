@@ -275,7 +275,7 @@
             statusComboBox.Name = "statusComboBox";
             statusComboBox.Size = new Size(223, 31);
             statusComboBox.TabIndex = 20;
-            statusComboBox.SelectedIndexChanged += statusComboBox_SelectedIndexChanged_1;
+            statusComboBox.SelectedIndexChanged += statusComboBox_SelectedIndexChanged;
             // 
             // locationLabel
             // 

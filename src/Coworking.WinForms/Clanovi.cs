@@ -1,4 +1,4 @@
-using Coworking.Data.Providers;
+﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.WinForms.Dialogues;
 using System;
@@ -27,12 +27,26 @@ namespace Coworking.WinForms
 
         private void OnDataChanged(DataEntity entity)
         {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action(() => OnDataChanged(entity)));
+                return;
+            }
+
             if (entity == DataEntity.Clan)
             {
-                loadMemberships();
-                loadLocations();
-                loadStatuses();
-                loadData2();
+                if (!string.IsNullOrEmpty(searchTextBox.textBox.Text))
+                {
+                    loadDataBySearch();
+                }
+                else if (locationComboBox.SelectedIndex > 0 || membershipComboBox.SelectedIndex > 0 || statusComboBox.SelectedIndex > 0)
+                {
+                    loadData();
+                }
+                else
+                {
+                    loadData2();
+                }
             }
         }
 
@@ -101,18 +115,41 @@ namespace Coworking.WinForms
 
         private void loadData()
         {
-            int? lokacijaId = (locationComboBox.SelectedValue is int locationId && locationId != 0) ? locationId : null;
-            int? clanstvoId = (membershipComboBox.SelectedValue is int membershipId && membershipId != 0) ? membershipId : null;
+            // 1. Zapamti ID pre nego što sve nestane
+            int? sačuvaniId = null;
+            if (memberDataGridView.SelectedRows.Count > 0)
+            {
+                sačuvaniId = ((Clan)memberDataGridView.SelectedRows[0].DataBoundItem).clanId;
+            }
 
-            string status = statusComboBox.SelectedItem?.ToString() ?? null;
-            status = status == "Svi" ? null : status;
+            // --- Tvoja logika za filtere ---
+            int? lokacijaId = (locationComboBox.SelectedValue is int locId && locId != 0) ? locId : null;
+            int? clanstvoId = (membershipComboBox.SelectedValue is int memId && memId != 0) ? memId : null;
+            string status = statusComboBox.SelectedItem?.ToString() == "Svi" ? null : statusComboBox.SelectedItem?.ToString();
 
             var clanovi = singleton.PrikaziClanoveFiltrirano(lokacijaId, clanstvoId, status);
 
+            // 2. Osveži podatke
             memberDataGridView.DataSource = null;
             memberDataGridView.DataSource = clanovi;
-            memberDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
+            // 3. Forsiraj selekciju nakon što se završi Binding
+            if (sačuvaniId.HasValue)
+            {
+                this.BeginInvoke(new Action(() => {
+                    foreach (DataGridViewRow row in memberDataGridView.Rows)
+                    {
+                        if (((Clan)row.DataBoundItem).clanId == sačuvaniId)
+                        {
+                            memberDataGridView.ClearSelection();
+                            row.Selected = true;
+                            if (memberDataGridView.Columns.Count > 0)
+                                memberDataGridView.CurrentCell = row.Cells[0];
+                            break;
+                        }
+                    }
+                }));
+            }
         }
 
         private void locationComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -146,7 +183,7 @@ namespace Coworking.WinForms
 
             _selektovanClan = (Clan)memberDataGridView.SelectedRows[0].DataBoundItem;
             var confirm = MessageBox.Show(
-                $"Da li sigurno �eli� da obri�e� clana '{_selektovanClan.ime} {_selektovanClan.prezime}'?",
+                $"Da li sigurno želiš da obrišeš clana '{_selektovanClan.ime} {_selektovanClan.prezime}'?",
                 "Potvrda brisanja",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);

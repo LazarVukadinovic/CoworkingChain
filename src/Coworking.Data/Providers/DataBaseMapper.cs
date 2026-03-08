@@ -24,7 +24,7 @@ namespace Coworking.Data.Providers
             return new EntityChange
             {
                 EntityName = red["entity_name"].ToString(),
-                ChangeTime = Convert.ToDateTime(red["change_time"])
+                ChangeTime = (red["change_time"]).ToString()
             };
         }
 

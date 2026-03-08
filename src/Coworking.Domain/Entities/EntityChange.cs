@@ -9,6 +9,6 @@ namespace Coworking.Data.Providers
     public class EntityChange
     {
         public string EntityName { get; set; }
-        public DateTime ChangeTime { get; set; }
+        public string ChangeTime { get; set; }
     }
 }

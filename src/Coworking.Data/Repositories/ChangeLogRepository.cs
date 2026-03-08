@@ -20,9 +20,9 @@ namespace Coworking.Data.Repositories
 
         public List<EntityChange> GetChangesAfter(DateTime lastCheck)
         {
-            string upit = @"SELECT entity_name, change_time
+            string upit = $@"SELECT entity_name, change_time
                             FROM change_log
-                            WHERE change_time > @lastCheck";
+                            WHERE change_time > '{lastCheck}'";
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapEntity);
         }
 

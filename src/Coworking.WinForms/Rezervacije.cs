@@ -83,8 +83,17 @@ namespace Coworking.WinForms
         private void loadData()
         {
             var reservations = singleton.prikaziSveRezervacije();
-            reservationDataGridView.DataSource = null;
-            reservationDataGridView.DataSource = reservations;
+            // Proveravamo da li poziv dolazi sa pogrešne niti
+            if (reservationDataGridView.InvokeRequired)
+            {
+                reservationDataGridView.Invoke(new Action(() => {
+                    reservationDataGridView.DataSource = reservations;
+                }));
+            }
+            else
+            {
+                reservationDataGridView.DataSource = reservations;
+            }
             reservationDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
