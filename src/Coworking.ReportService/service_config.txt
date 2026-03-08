@@ -12,6 +12,6 @@
 #           C:\Users\Admin\Desktop\Izvestaji
 # ============================================
 
-Hour1
+Min5
 Year1
 C:\Reports

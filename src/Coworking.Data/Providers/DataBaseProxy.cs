@@ -1,3 +1,4 @@
+using Coworking.Data.Reports;
 using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
@@ -431,6 +432,9 @@ namespace Coworking.Data.Providers
             throw new NotImplementedException();
             //ne treba nista da radi ovde, potrebna je gore u kodu da se pozove kroz facade za observer
         }
+
+        //-------------------------IZVESTAJ-------------------------
+        public List<ReportRow> GetReportRows(DateTime start, DateTime end) => _facade.GetReportRows(start, end);
     }
 }
 

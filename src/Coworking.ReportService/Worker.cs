@@ -74,6 +74,7 @@ namespace Coworking.ReportService
 
             TimeSpan interval = intervalType switch
             {
+                PeriodType.Min5 => TimeSpan.FromMinutes(5),
                 PeriodType.Hour1 => TimeSpan.FromHours(1),
                 PeriodType.Hour5 => TimeSpan.FromHours(5),
                 PeriodType.Day1 => TimeSpan.FromDays(1),

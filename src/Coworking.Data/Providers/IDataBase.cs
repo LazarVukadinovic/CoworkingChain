@@ -1,3 +1,4 @@
+using Coworking.Data.Reports;
 using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
@@ -98,6 +99,9 @@ namespace Coworking.Data.Providers
         public void addAdmin(Admin admin);
         public void updateAdmin(Admin admin);
         public void deleteAdmin(int id);
+
+        //-------------------------IZVESTAJ-------------------------
+        List<ReportRow> GetReportRows(DateTime start, DateTime end);
     }
 }
 

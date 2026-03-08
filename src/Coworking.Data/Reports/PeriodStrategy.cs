@@ -3,6 +3,7 @@ namespace Coworking.Data.Reports
 {
     public enum PeriodType
     {
+        Min5,
         Hour1,
         Hour5,
         Day1,
@@ -26,6 +27,7 @@ namespace Coworking.Data.Reports
         {
             return _period switch
             {
+                PeriodType.Min5 => DateTime.Now.AddMinutes(-5),
                 PeriodType.Hour1 => DateTime.Now.AddHours(-1),
                 PeriodType.Hour5 => DateTime.Now.AddHours(-5),
                 PeriodType.Day1 => DateTime.Now.AddDays(-1),

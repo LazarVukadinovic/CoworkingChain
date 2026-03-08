@@ -1,4 +1,5 @@
 ﻿using Coworking.Data.Providers;
+using Coworking.Data.Reports;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 
@@ -172,6 +173,36 @@ namespace Coworking.Data.Repositories
                 pocetak = red["pocetak"].ToString(),
                 kraj = red["kraj"].ToString(),
                 radnoVreme = red["radno_vreme"].ToString()
+            });
+        }
+
+        public List<ReportRow> GetReportRows(DateTime start, DateTime end)
+        {
+            string upit = $@"
+            SELECT 
+                c.clan_id, c.ime, c.prezime,
+                tc.tip_clanstva_id, tc.naziv AS naziv_tipa,
+                rv.pocetak, rv.kraj,
+                r.resurs_id, r.oznaka, r.tip_resursa
+            FROM rezervacija rv
+            JOIN clan c ON rv.clan_id = c.clan_id
+            JOIN resurs r ON rv.resurs_id = r.resurs_id
+            JOIN tip_clanstva tc ON c.tip_clanstva_id = tc.tip_clanstva_id
+            WHERE rv.pocetak >= '{start:yyyy-MM-dd HH:mm:ss}'
+              AND rv.kraj <= '{end:yyyy-MM-dd HH:mm:ss}'";
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), red => new ReportRow
+            {
+                ClanId = Convert.ToInt32(red["clan_id"]),
+                Ime = red["ime"].ToString() ?? "",
+                Prezime = red["prezime"].ToString() ?? "",
+                TipClanstva = red["tip_clanstva_id"].ToString() ?? "",
+                NazivTipaClanstva = red["naziv_tipa"].ToString() ?? "",
+                SatiKorisnik = Math.Round(
+                    (Convert.ToDateTime(red["kraj"]) - Convert.ToDateTime(red["pocetak"])).TotalHours, 2),
+                ResursId = Convert.ToInt32(red["resurs_id"]),
+                NazivResursa = red["oznaka"].ToString() ?? "",
+                TipResursa = red["tip_resursa"].ToString() ?? ""
             });
         }
     }
