@@ -39,8 +39,7 @@ namespace Coworking.Data.Repositories
             {
                 upit += $@" JOIN resurs r on r.lokacija_id=l.lokacija_id 
                             JOIN rezervacija rv on rv.resurs_id=r.resurs_id 
-                            WHERE rv.status='{ReservationStatus.Rezervisana.ToDbString()}' OR 
-                                    rv.status='{ReservationStatus.Potvrdjena.ToDbString()}'";
+                            WHERE rv.status='{ReservationStatus.Rezervisana.ToDbString()}'";
             }
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapLokacija);
         }

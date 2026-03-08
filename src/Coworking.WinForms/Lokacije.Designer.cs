@@ -33,7 +33,8 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             headerPanel = new Panel();
-            currentLocationCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
+            activeLocationsRadioButton = new ReaLTaiizor.Controls.CyberRadioButton();
+            showStatisticsRadioButton = new ReaLTaiizor.Controls.CyberRadioButton();
             filterPanel = new Panel();
             searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             searchButton = new ReaLTaiizor.Controls.ForeverButton();
@@ -63,7 +64,8 @@
             // 
             headerPanel.BackColor = Color.FromArgb(37, 52, 68);
             headerPanel.BorderStyle = BorderStyle.FixedSingle;
-            headerPanel.Controls.Add(currentLocationCheckBox);
+            headerPanel.Controls.Add(activeLocationsRadioButton);
+            headerPanel.Controls.Add(showStatisticsRadioButton);
             headerPanel.Controls.Add(headerLabel);
             headerPanel.Dock = DockStyle.Top;
             headerPanel.Location = new Point(0, 0);
@@ -71,44 +73,90 @@
             headerPanel.Size = new Size(1102, 69);
             headerPanel.TabIndex = 1;
             // 
-            // currentLocationCheckBox
+            // activeLocationsRadioButton
             // 
-            currentLocationCheckBox.BackColor = Color.Transparent;
-            currentLocationCheckBox.Background = true;
-            currentLocationCheckBox.Background_WidthPen = 2F;
-            currentLocationCheckBox.BackgroundPen = true;
-            currentLocationCheckBox.Checked = false;
-            currentLocationCheckBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            currentLocationCheckBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.ColorChecked = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            currentLocationCheckBox.CyberCheckBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            currentLocationCheckBox.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.Effect_1_Transparency = 25;
-            currentLocationCheckBox.Effect_2 = true;
-            currentLocationCheckBox.Effect_2_ColorBackground = Color.White;
-            currentLocationCheckBox.Effect_2_Transparency = 15;
-            currentLocationCheckBox.Font = new Font("Arial", 12F);
-            currentLocationCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
-            currentLocationCheckBox.LinearGradient_Background = false;
-            currentLocationCheckBox.LinearGradientPen = false;
-            currentLocationCheckBox.Location = new Point(11, 12);
-            currentLocationCheckBox.Name = "currentLocationCheckBox";
-            currentLocationCheckBox.RGB = false;
-            currentLocationCheckBox.Rounding = false;
-            currentLocationCheckBox.RoundingInt = 100;
-            currentLocationCheckBox.Size = new Size(213, 45);
-            currentLocationCheckBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            currentLocationCheckBox.TabIndex = 27;
-            currentLocationCheckBox.Tag = "Cyber";
-            currentLocationCheckBox.TextButton = "Aktivne lokacije";
-            currentLocationCheckBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            currentLocationCheckBox.Timer_Effect_1 = 1;
-            currentLocationCheckBox.Timer_RGB = 300;
-            currentLocationCheckBox.CheckedChanged += currentLocationCheckBox_CheckedChanged;
+            activeLocationsRadioButton.BackColor = Color.Transparent;
+            activeLocationsRadioButton.Background = true;
+            activeLocationsRadioButton.Background_WidthPen = 2F;
+            activeLocationsRadioButton.BackgroundPen = true;
+            activeLocationsRadioButton.Checked = false;
+            activeLocationsRadioButton.Color_1_Background_value = Color.Empty;
+            activeLocationsRadioButton.Color_2_Background_value = Color.Empty;
+            activeLocationsRadioButton.ColorBackground = Color.FromArgb(37, 52, 68);
+            activeLocationsRadioButton.ColorBackground_1 = Color.FromArgb(37, 52, 68);
+            activeLocationsRadioButton.ColorBackground_2 = Color.FromArgb(41, 63, 86);
+            activeLocationsRadioButton.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
+            activeLocationsRadioButton.ColorChecked = Color.FromArgb(29, 200, 238);
+            activeLocationsRadioButton.ColorPen_1 = Color.FromArgb(37, 52, 68);
+            activeLocationsRadioButton.ColorPen_2 = Color.FromArgb(41, 63, 86);
+            activeLocationsRadioButton.CyberRadioButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
+            activeLocationsRadioButton.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
+            activeLocationsRadioButton.Effect_1_Transparency = 25;
+            activeLocationsRadioButton.Effect_2 = true;
+            activeLocationsRadioButton.Effect_2_ColorBackground = Color.White;
+            activeLocationsRadioButton.Effect_2_Transparency = 15;
+            activeLocationsRadioButton.Font = new Font("Arial", 11F);
+            activeLocationsRadioButton.ForeColor = Color.FromArgb(245, 245, 245);
+            activeLocationsRadioButton.LinearGradient_Background = false;
+            activeLocationsRadioButton.LinearGradient_Value = false;
+            activeLocationsRadioButton.LinearGradientPen = false;
+            activeLocationsRadioButton.Location = new Point(11, 12);
+            activeLocationsRadioButton.Name = "activeLocationsRadioButton";
+            activeLocationsRadioButton.RGB = false;
+            activeLocationsRadioButton.Rounding = true;
+            activeLocationsRadioButton.RoundingInt = 100;
+            activeLocationsRadioButton.Size = new Size(180, 45);
+            activeLocationsRadioButton.SizeChecked = 8;
+            activeLocationsRadioButton.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            activeLocationsRadioButton.TabIndex = 29;
+            activeLocationsRadioButton.Tag = "Cyber";
+            activeLocationsRadioButton.TextButton = "Aktivne lokacije";
+            activeLocationsRadioButton.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            activeLocationsRadioButton.Timer_Effect_1 = 1;
+            activeLocationsRadioButton.Timer_RGB = 300;
+            // 
+            // showStatisticsRadioButton
+            // 
+            showStatisticsRadioButton.BackColor = Color.Transparent;
+            showStatisticsRadioButton.Background = true;
+            showStatisticsRadioButton.Background_WidthPen = 2F;
+            showStatisticsRadioButton.BackgroundPen = true;
+            showStatisticsRadioButton.Checked = false;
+            showStatisticsRadioButton.Color_1_Background_value = Color.Empty;
+            showStatisticsRadioButton.Color_2_Background_value = Color.Empty;
+            showStatisticsRadioButton.ColorBackground = Color.FromArgb(37, 52, 68);
+            showStatisticsRadioButton.ColorBackground_1 = Color.FromArgb(37, 52, 68);
+            showStatisticsRadioButton.ColorBackground_2 = Color.FromArgb(41, 63, 86);
+            showStatisticsRadioButton.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
+            showStatisticsRadioButton.ColorChecked = Color.FromArgb(29, 200, 238);
+            showStatisticsRadioButton.ColorPen_1 = Color.FromArgb(37, 52, 68);
+            showStatisticsRadioButton.ColorPen_2 = Color.FromArgb(41, 63, 86);
+            showStatisticsRadioButton.CyberRadioButtonStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
+            showStatisticsRadioButton.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
+            showStatisticsRadioButton.Effect_1_Transparency = 25;
+            showStatisticsRadioButton.Effect_2 = true;
+            showStatisticsRadioButton.Effect_2_ColorBackground = Color.White;
+            showStatisticsRadioButton.Effect_2_Transparency = 15;
+            showStatisticsRadioButton.Font = new Font("Arial", 11F);
+            showStatisticsRadioButton.ForeColor = Color.FromArgb(245, 245, 245);
+            showStatisticsRadioButton.LinearGradient_Background = false;
+            showStatisticsRadioButton.LinearGradient_Value = false;
+            showStatisticsRadioButton.LinearGradientPen = false;
+            showStatisticsRadioButton.Location = new Point(213, 12);
+            showStatisticsRadioButton.Name = "showStatisticsRadioButton";
+            showStatisticsRadioButton.RGB = false;
+            showStatisticsRadioButton.Rounding = true;
+            showStatisticsRadioButton.RoundingInt = 100;
+            showStatisticsRadioButton.Size = new Size(180, 45);
+            showStatisticsRadioButton.SizeChecked = 8;
+            showStatisticsRadioButton.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            showStatisticsRadioButton.TabIndex = 28;
+            showStatisticsRadioButton.Tag = "Cyber";
+            showStatisticsRadioButton.TextButton = "Prikazi statistiku";
+            showStatisticsRadioButton.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            showStatisticsRadioButton.Timer_Effect_1 = 1;
+            showStatisticsRadioButton.Timer_RGB = 300;
+            showStatisticsRadioButton.Click += showStatisticsRadioButton_Click;
             // 
             // filterPanel
             // 
@@ -294,6 +342,7 @@
         private ReaLTaiizor.Controls.CyberTextBox searchTextBox;
         private ReaLTaiizor.Controls.ForeverButton searchButton;
         private ReaLTaiizor.Controls.PoisonDataGridView locationDataGridView;
-        private ReaLTaiizor.Controls.CyberCheckBox currentLocationCheckBox;
+        private ReaLTaiizor.Controls.CyberRadioButton activeLocationsRadioButton;
+        private ReaLTaiizor.Controls.CyberRadioButton showStatisticsRadioButton;
     }
 }
