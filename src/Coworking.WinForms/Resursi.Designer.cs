@@ -227,7 +227,7 @@ namespace Coworking.WinForms
             resourceDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             resourceDataGridView.Size = new Size(1102, 366);
             resourceDataGridView.TabIndex = 5;
-            resourceDataGridView.CellContentClick += resourceDataGridView_CellContentClick;
+            //resourceDataGridView.CellContentClick += resourceDataGridView_CellContentClick;
             // 
             // filteringpanel
             // 

@@ -122,13 +122,16 @@ namespace Coworking.Data.Repositories
 
         public List<Rezervacija> GetReservationsByDateAndLocation(string date, int location)
         {
-            // Pretpostavljam da AddDaysExpr vraća nešto tipa: DATE_ADD('2025-02-16', INTERVAL 1 DAY)
+            // npr DATE_ADD('2025-02-16', INTERVAL 1 DAY)
             string nextDay = _adapter.AddDaysExpr($"'{date}'", 1);
 
-            // UKLONJENI NAVODNICI oko {nextDay}
-            string upit = $"SELECT rv.*, r.oznaka FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
-                          $"WHERE rv.pocetak >= '{date}' AND rv.kraj < {nextDay} " +
-                          $"AND r.lokacija_id={location} AND rv.status != '{ReservationStatus.Otkazana.ToDbString()}'";
+            string upit =
+                $"SELECT rv.*, r.oznaka FROM rezervacija rv " +
+                $"JOIN resurs r ON rv.resurs_id = r.resurs_id " +
+                $"WHERE rv.pocetak < {nextDay} " +
+                $"AND rv.kraj > '{date}' " +
+                $"AND r.lokacija_id = {location} " +
+                $"AND rv.status != '{ReservationStatus.Otkazana.ToDbString()}'";
 
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }

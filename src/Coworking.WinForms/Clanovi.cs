@@ -33,15 +33,15 @@ namespace Coworking.WinForms
             {
                 if (!string.IsNullOrEmpty(searchTextBox.textBox.Text))
                 {
-                    loadDataBySearch();
+                    RefreshWithSelection(() => loadDataBySearch());
                 }
                 else if (locationComboBox.SelectedIndex > 0 || membershipComboBox.SelectedIndex > 0 || statusComboBox.SelectedIndex > 0)
                 {
-                    loadData();
+                    RefreshWithSelection(() => loadData());
                 }
                 else
                 {
-                    loadData2();
+                    RefreshWithSelection(() => loadData2());
                 }
             }
         }
@@ -206,6 +206,35 @@ namespace Coworking.WinForms
             memberDataGridView.DataSource = null;
             memberDataGridView.DataSource = clanovi;
             memberDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void RefreshWithSelection(Action updateLogic)
+        {
+            // 1. Zapamti ID pre osvežavanja
+            int? sačuvaniId = null;
+            if (memberDataGridView.SelectedRows.Count > 0 && memberDataGridView.SelectedRows[0].DataBoundItem is Clan c)
+            {
+                sačuvaniId = c.clanId;
+            }
+
+            // 2. Izvrši logiku punjenja (loadData, loadData2 ili loadBySearch)
+            updateLogic();
+
+            // 3. Vrati selekciju
+            if (sačuvaniId.HasValue)
+            {
+                foreach (DataGridViewRow row in memberDataGridView.Rows)
+                {
+                    if (row.DataBoundItem is Clan clan && clan.clanId == sačuvaniId)
+                    {
+                        memberDataGridView.ClearSelection();
+                        row.Selected = true;
+                        if (memberDataGridView.Columns.Count > 0)
+                            memberDataGridView.CurrentCell = row.Cells[0];
+                        break;
+                    }
+                }
+            }
         }
     }
 }

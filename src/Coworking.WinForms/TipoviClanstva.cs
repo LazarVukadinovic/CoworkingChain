@@ -1,4 +1,4 @@
-using Coworking.Data.Providers;
+﻿using Coworking.Data.Providers;
 using Coworking.Domain.Enums;
 using Coworking.WinForms.Dialogues;
 
@@ -17,7 +17,13 @@ namespace Coworking.WinForms
 
         private void OnDataChanged(DataEntity entity)
         {
-            if (entity == DataEntity.TipClanstva) // bilo je DataEntity.Resurs
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action(() => OnDataChanged(entity)));
+                return;
+            }
+
+            if (entity == DataEntity.TipClanstva)
             {
                 loadData();
             }
@@ -42,9 +48,40 @@ namespace Coworking.WinForms
         }
         private void loadData()
         {
+            // 1. Zapamti koji je red bio selektovan pre osvežavanja
+            int? sačuvaniId = null;
+            if (membershipDataGridView.SelectedRows.Count > 0)
+            {
+                // Pretpostavljam da je prva kolona ID tipa članstva
+                sačuvaniId = (int)membershipDataGridView.SelectedRows[0].Cells[0].Value;
+            }
+
+            // 2. Povuci nove podatke
             var membership = singleton.prikaziSveTipoveClanstva();
+
+            // 3. Osveži tabelu
+            membershipDataGridView.DataSource = null; // Reset
             membershipDataGridView.DataSource = membership;
             membershipDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // 4. VRATI SELEKCIJU tamo gde je bila
+            if (sačuvaniId.HasValue)
+            {
+                foreach (DataGridViewRow row in membershipDataGridView.Rows)
+                {
+                    if ((int)row.Cells[0].Value == sačuvaniId.Value)
+                    {
+                        membershipDataGridView.ClearSelection(); // Skloni selekciju sa prvog reda
+                        row.Selected = true;
+
+                        // Fokusiraj "ćeliju" da bi i strelica sa strane bila na pravom mestu
+                        if (membershipDataGridView.Columns.Count > 0)
+                            membershipDataGridView.CurrentCell = row.Cells[0];
+
+                        break;
+                    }
+                }
+            }
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -64,7 +101,7 @@ namespace Coworking.WinForms
 
             var membershipId = (int)membershipDataGridView.SelectedRows[0].Cells[0].Value;
             var confirm = MessageBox.Show(
-                "Da li sigurno �eli� da obri�e� izabrani tip clanstva?",
+                "Da li sigurno želiš da obrišeš izabrani tip clanstva?",
                 "Potvrda brisanja",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);

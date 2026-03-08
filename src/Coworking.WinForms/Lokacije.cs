@@ -1,4 +1,4 @@
-using Coworking.Data.Providers;
+﻿using Coworking.Data.Providers;
 using Coworking.Domain.Enums;
 using Coworking.WinForms.Dialogues;
 
@@ -17,6 +17,12 @@ namespace Coworking.WinForms
 
         private void OnDataChanged(DataEntity entity)
         {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action(() => OnDataChanged(entity)));
+                return;
+            }
+
             if (entity == DataEntity.Lokacija)
             {
                 loadData();
@@ -24,6 +30,15 @@ namespace Coworking.WinForms
         }
         private void loadData()
         {
+            // 1. Zapamti ID selektovane lokacije (ako je ima)
+            int? sačuvaniId = null;
+            if (locationDataGridView.SelectedRows.Count > 0)
+            {
+                // Pretpostavljam da je Cells[0] tvoj LokacijaID
+                sačuvaniId = (int)locationDataGridView.SelectedRows[0].Cells[0].Value;
+            }
+
+            // 2. Tvoja postojeća logika za punjenje podataka
             if (showStatisticsRadioButton.Checked)
             {
                 var locations = singleton.PrikaziStatistikuLokacija();
@@ -39,6 +54,24 @@ namespace Coworking.WinForms
             }
 
             locationDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            if (sačuvaniId.HasValue)
+            {
+                foreach (DataGridViewRow row in locationDataGridView.Rows)
+                {
+                    if ((int)row.Cells[0].Value == sačuvaniId.Value)
+                    {
+                        locationDataGridView.ClearSelection();
+                        row.Selected = true;
+
+                        // Nateraj "strelicu" da se pomeri na taj red
+                        if (locationDataGridView.Columns.Count > 0)
+                            locationDataGridView.CurrentCell = row.Cells[0];
+
+                        break;
+                    }
+                }
+            }
         }
         private void showStatisticsRadioButton_Click(object sender, EventArgs e)
         {
@@ -64,6 +97,23 @@ namespace Coworking.WinForms
             loadData();
         }
 
+        private void activeLocationsRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            // Proveravamo samo kada postane 'true' da ne bismo duplo osvežavali
+            if (activeLocationsRadioButton.Checked)
+            {
+                loadData();
+            }
+        }
+
+        private void showStatisticsRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showStatisticsRadioButton.Checked)
+            {
+                loadData();
+            }
+        }
+
         private void addLocationButton_Click(object sender, EventArgs e)
         {
             DodajLokaciju newLocation = new DodajLokaciju();
@@ -86,7 +136,7 @@ namespace Coworking.WinForms
 
             var locationId = (int)locationDataGridView.SelectedRows[0].Cells[0].Value;
             var confirm = MessageBox.Show(
-                "Da li sigurno �eli� da obri�e� izabranu lokaciju?",
+                "Da li sigurno želiš da obrišeš izabranu lokaciju?",
                 "Potvrda brisanja",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);

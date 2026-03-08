@@ -29,15 +29,16 @@ namespace Coworking.Data.Providers
 
         public event Action<DataEntity> DataChanged;
 
-        DateTime lastCheck = DateTime.MinValue;
+        
         private bool _checking = false;
-
+        DateTime lastCheck;
         public DataBaseProxy(IDataBase facade) 
         {
             _facade = facade;
-            _timer = new System.Timers.Timer(5000); // 5 sekundi
+            _timer = new System.Timers.Timer(10000); // 5 sekundi
             _timer.Elapsed += TimerElapsed;
             _timer.AutoReset = true;
+            lastCheck = DateTime.Now;
             _timer.Start();
         }
 
