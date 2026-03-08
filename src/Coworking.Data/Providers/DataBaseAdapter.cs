@@ -78,6 +78,8 @@ namespace Coworking.Data.Providers
                 return command.ExecuteScalar();
             }
         }
+
+        // NEISKORISCENE metode
         public string DateOnlyExpr(string dateTimeExpr)
         {
             return _factory is MySqlFactory

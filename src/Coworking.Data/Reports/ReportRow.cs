@@ -1,5 +1,4 @@
-﻿
-namespace Coworking.Data.Reports
+﻿namespace Coworking.Data.Reports
 {
     public class ReportRow
     {

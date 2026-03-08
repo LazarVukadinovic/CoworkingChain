@@ -1,7 +1,7 @@
 using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
 using Coworking.WinForms.Dialogues;
-using System;
 
 namespace Coworking.WinForms
 {

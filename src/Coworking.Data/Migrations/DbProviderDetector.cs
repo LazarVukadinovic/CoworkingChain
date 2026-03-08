@@ -1,5 +1,4 @@
-﻿
-namespace Coworking.Data.Migrations
+﻿namespace Coworking.Data.Migrations
 {
     internal enum DbProvider
     {

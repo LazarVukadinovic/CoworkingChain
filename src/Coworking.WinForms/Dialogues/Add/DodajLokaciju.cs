@@ -1,6 +1,4 @@
 ﻿using Coworking.Data.Providers;
-using System;
-using System.Diagnostics;
 
 namespace Coworking.WinForms.Dialogues
 {
@@ -32,8 +30,8 @@ namespace Coworking.WinForms.Dialogues
                 opis = opis
             });
 
-
-
+            MessageBox.Show("Uspešno dodata lokacija!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Coworking.Data.Providers;
-using ReaLTaiizor.Controls;
 
 namespace Coworking.WinForms.Dialogues
 {
@@ -15,15 +14,6 @@ namespace Coworking.WinForms.Dialogues
 
         private void foreverComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //var membership = singleton.GetLokacijaById((int)foreverComboBox1.SelectedItem);
-            //nameTextBox.textBox.Text = membership.naziv;
-            //addressTextBox.textBox.Text = membership.adresa;
-            //cityTextBox.textBox.Text = membership.grad;
-            //workTextBox.textBox.Text = membership.radnoVreme;
-            //capacityNumericUpDown.Value = (long)membership.maxKapacitet;
-            //capacityNumericUpDown.Refresh();
-            //commentRichTextBox.TextButton = membership.opis;
-
             if (foreverComboBox1.SelectedValue == null) return;
 
             var lokacija = singleton.GetLokacijaById((int)foreverComboBox1.SelectedValue);
@@ -52,18 +42,6 @@ namespace Coworking.WinForms.Dialogues
 
         private void editLocationButton_Click(object sender, EventArgs e)
         {
-            //var id = foreverComboBox1.SelectedItem.ToString();
-            //var membership = singleton.GetLokacijaById(int.Parse(id));
-            //membership.naziv = nameTextBox.textBox.Text;
-            //membership.adresa = addressTextBox.textBox.Text;
-            //membership.grad = cityTextBox.textBox.Text;
-            //membership.radnoVreme = workTextBox.textBox.Text;
-            //membership.maxKapacitet = Convert.ToInt32(capacityNumericUpDown.Value);
-            //membership.opis = commentRichTextBox.TextButton;
-
-            //singleton.izmeniLokaciju(membership);
-            //loadLocations();
-
             if (foreverComboBox1.SelectedValue == null)
             {
                 MessageBox.Show("Izaberi lokaciju.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);

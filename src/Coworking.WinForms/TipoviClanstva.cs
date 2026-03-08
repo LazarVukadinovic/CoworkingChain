@@ -1,4 +1,5 @@
 using Coworking.Data.Providers;
+using Coworking.Domain.Enums;
 using Coworking.WinForms.Dialogues;
 
 namespace Coworking.WinForms

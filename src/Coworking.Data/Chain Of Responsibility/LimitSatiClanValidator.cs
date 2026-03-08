@@ -1,14 +1,12 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Chain_Of_Responsibility
 {
     public class LimitSatiClanValidator : RezervacijaHandler
     {
         public LimitSatiClanValidator(IDataBase proxy) : base(proxy)
-        {
-        }
+        { }
 
         public override ValidationResult Handle(Rezervacija rezervacija)
         {

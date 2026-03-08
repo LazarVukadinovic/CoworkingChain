@@ -1,5 +1,4 @@
-﻿
-namespace Coworking.Data.Chain_Of_Responsibility
+﻿namespace Coworking.Data.Chain_Of_Responsibility
 {
     public class ValidationResult
     {

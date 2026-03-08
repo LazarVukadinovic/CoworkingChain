@@ -16,13 +16,15 @@ namespace Coworking.Data.Repositories
         }
         public void Add(Clan item)
         {
+            string telefonVal = item.brTelefona == null ? "NULL" : $"'{item.brTelefona}'";
+
             string upit = $@"
             INSERT INTO clan (ime, prezime, email, telefon, datum_pocetka, datum_kraja, status_naloga, tip_clanstva_id, kreiran_u)
             VALUES (
                 '{item.ime}',
                 '{item.prezime}',
                 '{item.mail}',
-                '{item.brTelefona}',
+                {telefonVal},
                 '{item.datumPocetka}',
                 '{item.datumKraja}',
                 '{item.statusNaloga}',
@@ -119,6 +121,33 @@ namespace Coworking.Data.Repositories
                 });
             }
             return lista;
+        }
+
+        // OPTIMIZOVANO
+        public List<Clan> GetFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
+        {
+            string upit = "SELECT DISTINCT c.* FROM clan c";
+
+            var uslovi = new List<string>();
+
+            if (lokacijaId.HasValue)
+            {
+                upit += @" JOIN resurs r ON r.lokacija_id = r.lokacija_id
+                   JOIN rezervacija rv ON rv.resurs_id = r.resurs_id
+                     AND rv.clan_id = c.clan_id";
+                uslovi.Add($"r.lokacija_id = {lokacijaId.Value}");
+            }
+
+            if (tipClanstvaId.HasValue)
+                uslovi.Add($"c.tip_clanstva_id = {tipClanstvaId.Value}");
+
+            if (!string.IsNullOrEmpty(status))
+                uslovi.Add($"c.status_naloga = '{status}'");
+
+            if (uslovi.Count > 0)
+                upit += " WHERE " + string.Join(" AND ", uslovi);
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapClan);
         }
     }
 

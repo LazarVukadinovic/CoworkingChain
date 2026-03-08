@@ -1,6 +1,5 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
 
 namespace Coworking.WinForms.Dialogues
 {
@@ -61,8 +60,12 @@ namespace Coworking.WinForms.Dialogues
             _selektovanClan.datumKraja = start.AddDays(dodatniDani).ToString("yyyy-MM-dd");
             _selektovanClan.brTelefona = phoneTextBox.textBox.Text;
             _selektovanClan.statusNaloga = statusComboBox.SelectedItem.ToString();
+            _selektovanClan.mail = emailTextBox.TextButton;
 
             singleton.izmeniClana(_selektovanClan);
+
+            MessageBox.Show("Član uspešno izmenjen!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
         }
     }
 }

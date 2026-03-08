@@ -1,5 +1,4 @@
-﻿
-namespace Coworking.Data.Providers
+﻿namespace Coworking.Domain.Enums
 {
     public enum DataEntity
     {

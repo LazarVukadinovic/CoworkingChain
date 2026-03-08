@@ -26,6 +26,7 @@ namespace Coworking.ReportService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                var ciklusPocetak = DateTime.Now;
                 try
                 {
                     var config = UcitajKonfiguraciju();
@@ -39,12 +40,19 @@ namespace Coworking.ReportService
 
                     LogInfo($"Izvestaj generisan: {fullPath}");
 
-                    await Task.Delay(config.interval, stoppingToken);
+                    var elapsed = DateTime.Now - ciklusPocetak;
+                    var remaining = config.interval - elapsed;
+                    if (remaining > TimeSpan.Zero)
+                        await Task.Delay(remaining, stoppingToken);
                 }
                 catch (Exception ex)
                 {
                     LogError(ex.Message);
-                    await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+
+                    var elapsed = DateTime.Now - ciklusPocetak;
+                    var remaining = TimeSpan.FromMinutes(1) - elapsed;
+                    if (remaining > TimeSpan.Zero)
+                        await Task.Delay(remaining, stoppingToken);
                 }
             }
         }

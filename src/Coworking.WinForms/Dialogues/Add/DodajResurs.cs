@@ -2,8 +2,6 @@
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using Coworking.Services.Builders;
-using System;
-using System.Diagnostics;
 
 namespace Coworking.WinForms.Dialogues
 {

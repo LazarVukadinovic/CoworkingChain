@@ -1,12 +1,4 @@
 ﻿using Coworking.Domain.Entities;
-using Org.BouncyCastle.Crypto.Generators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BCrypt.Net;
-using Microsoft.IdentityModel.Tokens;
 using Coworking.Data.Providers;
 
 namespace Coworking.Data.Repositories

@@ -34,13 +34,30 @@ namespace Coworking.Data.Repositories
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
         }
 
-        public List<Resurs> GetResourcesByLocation(int? locationId, string name)
+        //public List<Resurs> GetResourcesByLocation(int? locationId, string name)
+        //{
+        //    string upit = $@"
+        //    SELECT r.*
+        //    FROM resurs r
+        //    WHERE r.lokacija_id = {locationId}
+        //    AND r.tip_resursa = '{name}'";
+        //    return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
+        //}
+
+        public List<Resurs> GetResourcesByLocation(int? locationId, string? name)
         {
-            string upit = $@"
-            SELECT r.*
-            FROM resurs r
-            WHERE r.lokacija_id = {locationId}
-            AND r.tip_resursa = '{name}'";
+            var uslovi = new List<string>();
+
+            if (locationId.HasValue)
+                uslovi.Add($"r.lokacija_id = {locationId.Value}");
+
+            if (!string.IsNullOrEmpty(name))
+                uslovi.Add($"r.tip_resursa = '{name}'");
+
+            string where = uslovi.Count > 0 ? "WHERE " + string.Join(" AND ", uslovi) : "";
+
+            string upit = $"SELECT r.* FROM resurs r {where}";
+
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapResurs);
         }
 

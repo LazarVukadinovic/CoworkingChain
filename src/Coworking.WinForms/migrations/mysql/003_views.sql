@@ -1,7 +1,6 @@
 -- ============================================
--- KORISNI VIEW-ovi
--- ============================================
 -- 003_views.sql
+-- ============================================
 
 DROP VIEW IF EXISTS view_sale;
 DROP VIEW IF EXISTS view_radna_mesta;
@@ -9,11 +8,10 @@ DROP VIEW IF EXISTS view_aktivne_rezervacije;
 
 -- View za sve sale sa detaljima
 CREATE VIEW view_sale AS
-SELECT 
+SELECT
     r.resurs_id,
     r.oznaka,
     r.opis,
-    r.aktivan,
     l.naziv AS lokacija_naziv,
     l.adresa,
     l.grad,
@@ -29,11 +27,10 @@ WHERE r.tip_resursa = 'sala';
 
 -- View za sva radna mesta sa detaljima
 CREATE VIEW view_radna_mesta AS
-SELECT 
+SELECT
     r.resurs_id,
     r.oznaka,
     r.opis,
-    r.aktivan,
     l.naziv AS lokacija_naziv,
     l.adresa,
     l.grad,
@@ -45,7 +42,7 @@ WHERE r.tip_resursa = 'radno_mesto';
 
 -- View za aktivne rezervacije sa detaljima
 CREATE VIEW view_aktivne_rezervacije AS
-SELECT 
+SELECT
     rez.rezervacija_id,
     rez.pocetak,
     rez.kraj,

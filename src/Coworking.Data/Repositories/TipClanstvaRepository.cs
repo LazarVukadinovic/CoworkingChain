@@ -63,7 +63,7 @@ namespace Coworking.Data.Repositories
                 cena = {item.cena},
                 trajanje_dana = {item.trajanjeDana},
                 max_sati_mesecno = {item.maxSatiRezervacijeMesecno},
-                dozvoljena_sala = {item.dozvoljenaSala},
+                dozvoljena_sala = {Convert.ToInt32(item.dozvoljenaSala ?? false)},
                 sati_sale_mesecno = {Convert.ToInt32(item.satiSaleMesecno)}
             WHERE tip_clanstva_id = {item.tipClanstvaId};";
             _adapter.izvrsiUpitBezRezultata(upit);

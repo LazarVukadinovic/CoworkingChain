@@ -2,7 +2,6 @@
 using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
-using Org.BouncyCastle.Utilities.Collections;
 
 namespace Coworking.WinForms.Dialogues
 {
@@ -60,8 +59,7 @@ namespace Coworking.WinForms.Dialogues
         {
             if (userComboBox.SelectedValue == null || resourceComboBox.SelectedValue == null)
             {
-                MessageBox.Show("Izaberi korisnika i resurs.", "Greška",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Izaberi korisnika i resurs.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -82,7 +80,6 @@ namespace Coworking.WinForms.Dialogues
                 pocetak = pocetak.ToString("yyyy-MM-dd HH:mm:ss"),
                 kraj = kraj.ToString("yyyy-MM-dd HH:mm:ss"),
                 status = ReservationStatus.Rezervisana,
-                kreiranoU = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 otkazanoU = null
             };
 

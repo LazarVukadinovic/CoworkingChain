@@ -1,7 +1,6 @@
 ﻿using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
 using System.Data;
-using System.Reflection.PortableExecutable;
 
 namespace Coworking.Data.Providers
 {

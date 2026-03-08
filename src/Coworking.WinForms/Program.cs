@@ -26,25 +26,6 @@ namespace Coworking.WinForms
             // izvrsavanje migracija
             Data.Migrations.MigrationBootstrapper.EnsureDbAndMigrate(targetCs, migrationsBase);
 
-            // --- TEST ---
-            var db = DataBaseSingleton.vratiInstancu();
-            double sati = db.vratiUkupneSateSalaZaClana(1); // Marko
-            Debug.WriteLine($"[TEST] Marko - ukupno sati sale: {sati}");
-            // --- KRAJ TESTA ---
-
-            // izvrsavanje izvestaja
-            //IDataBase dbSettings = DataBaseSingleton.vratiInstancu();
-            //var reportCreator = new CreateReport(dbSettings);
-
-            //var strategy = new PeriodStrategy(PeriodType.Day1);
-            //var rows = reportCreator.GenerateReport(strategy);
-
-            //var exporter = new CsvExporter();
-            //string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\izvestaj.csv";
-            //exporter.ExportToCsv(rows, filePath);
-
-            //MessageBox.Show($"CSV izveštaj je napravljen: {filePath}");
-
             Application.Run(new LoginForm());
         }
     }

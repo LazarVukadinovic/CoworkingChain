@@ -8,6 +8,7 @@ namespace Coworking.WinForms
     public partial class Rezervacije : Form
     {
         private readonly IDataBase singleton;
+        private bool _filterAktivan = false;
 
         public Rezervacije()
         {
@@ -22,7 +23,8 @@ namespace Coworking.WinForms
         {
             if (entity == DataEntity.Rezervacija) // bilo je DataEntity.Resurs
             {
-                loadData();
+                if (!_filterAktivan) // osveži samo ako nije aktivan filter
+                    loadData();
             }
         }
 
@@ -48,6 +50,12 @@ namespace Coworking.WinForms
         }
         private void cancelReservationButton_Click(object sender, EventArgs e)
         {
+            if(reservationDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi rezervaciju za otkazivanje.", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var selectedReservation = (Rezervacija)reservationDataGridView.SelectedRows[0].DataBoundItem;
             if(selectedReservation.status == ReservationStatus.Rezervisana)
             {
@@ -102,6 +110,12 @@ namespace Coworking.WinForms
         {
             if (_syncingRadios) return;
 
+            if (!locationDateRadioButton.Checked)
+            {
+                _filterAktivan = false;
+                loadData();
+            }
+
             if (userRadioButton.Checked)
             {
                 _syncingRadios = true;
@@ -117,6 +131,12 @@ namespace Coworking.WinForms
         private void locationDateRadioButton_CheckedChanged()
         {
             if (_syncingRadios) return;
+
+            if (!locationDateRadioButton.Checked)
+            {
+                _filterAktivan = false;
+                loadData();
+            }
 
             if (locationDateRadioButton.Checked)
             {
@@ -147,6 +167,12 @@ namespace Coworking.WinForms
 
             // prikaz dugmeta
             searchButton.Visible = userRadioButton.Checked || locationDateRadioButton.Checked;
+
+            if (!userRadioButton.Checked && !locationDateRadioButton.Checked)
+            {
+                _filterAktivan = false;
+                loadData();
+            }
         }
 
         //private void loadReservations()
@@ -165,6 +191,8 @@ namespace Coworking.WinForms
 
         private void searchButton_Click(object sender, EventArgs e)
         {
+            _filterAktivan = true;
+
             if (locationDateRadioButton.Checked == true)
             {
                 var locationId = (int)locationComboBox.SelectedValue;

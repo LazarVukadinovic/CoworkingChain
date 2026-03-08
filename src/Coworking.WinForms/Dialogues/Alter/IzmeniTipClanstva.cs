@@ -1,5 +1,4 @@
 ﻿using Coworking.Data.Providers;
-using Coworking.Domain.Entities;
 using System.Globalization;
 
 namespace Coworking.WinForms.Dialogues
@@ -16,35 +15,11 @@ namespace Coworking.WinForms.Dialogues
 
         private void conferenceCheckBox_CheckedChanged()
         {
-            //if (conferenceCheckBox.Checked)
-            //    conferenceTimeNumeric.Visible = conferenceTimeLabel.Visible = true;
-            //else
-            //    conferenceTimeNumeric.Visible = conferenceTimeLabel.Visible = false;
-
             conferenceTimeNumeric.Visible = conferenceTimeLabel.Visible = conferenceCheckBox.Checked;
         }
 
         private void editMembershipButton_Click(object sender, EventArgs e)
         {
-            //var id = nameTextBox.SelectedItem.ToString();
-            //var membership = singleton.GetTipClanstvaById(int.Parse(id));
-            //membership.naziv = cyberTextBox1.textBox.Text;
-            //membership.cena = float.Parse(priceTextBox.textBox.Text, CultureInfo.InvariantCulture);
-            //membership.maxSatiRezervacijeMesecno = (int)monthlyNumeric1.Value;
-            //membership.trajanjeDana = (int)durationNumeric.Value;
-            //if (conferenceCheckBox.Checked == false)
-            //{
-            //    membership.dozvoljenaSala = false;
-            //    membership.satiSaleMesecno = 0;
-            //}
-            //else
-            //{
-            //    membership.dozvoljenaSala = true;
-            //    membership.satiSaleMesecno = (int)conferenceTimeNumeric.Value;
-            //}
-
-            //singleton.updateTipClanstva(membership);
-
             if (nameTextBox.SelectedValue == null)
             {
                 MessageBox.Show("Izaberi tip članstva.", "Greška",

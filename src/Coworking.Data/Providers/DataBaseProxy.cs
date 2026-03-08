@@ -2,13 +2,11 @@ using Coworking.Data.Reports;
 using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
-using Microsoft.Extensions.Logging.Abstractions;
-using System.Security.Claims;
 using System.Timers;
 
 namespace Coworking.Data.Providers
 {
-    public class DataBaseProxy : IDataBase //promenio sa internal na public
+    public class DataBaseProxy : IDataBase
     {
         private IDataBase _facade;
 
@@ -18,24 +16,6 @@ namespace Coworking.Data.Providers
         List<Rezervacija>? cachedRezervacije = null;
         List<Resurs> cachedResursi = null;
         List<TipClanstva>? cachedTipClanstva = null;
-
-       /* List<Clan>? cachedClanoviFiltrirano = null;
-
-        List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)>? cachedLokacijaStatistika = null;
-
-        private Dictionary<int, List<Rezervacija>> cachedRezervacijeSaStatusomZaIzabranogClana = new Dictionary<int, List<Rezervacija>>();
-        private Dictionary<(string datum, int lokacija), List<Rezervacija>> cachedRezervacijeZaDanILokaciju = new Dictionary<(string, int), List<Rezervacija>>();
-
-        private Dictionary<int, List<RadnoMesto>> cachedRadnaMestaPoLokaciji = new Dictionary<int, List<RadnoMesto>>();
-        SalaZaSastanke? cachedSalaZaSastanke = null;
-        List<RadnoMesto> cachedRadnaMesta = null;
-        private Dictionary<int, List<Resurs>> cachedResursiPoLokacijiIPoTipu = new Dictionary<int, List<Resurs>>();
-
-
-        !!!!ovo se sve vrlo verovatno ne koristi i nema potrebe da se koristi
-        */
-
-
 
         bool clanReset = true;
         bool lokacijaReset = true;
@@ -55,8 +35,6 @@ namespace Coworking.Data.Providers
             _timer = new System.Timers.Timer(5000); // 5 sekundi
             _timer.Elapsed += TimerElapsed;
             _timer.AutoReset = true;
-            _timer.Start();
-
             _timer.Start();
         }
 
@@ -341,6 +319,7 @@ namespace Coworking.Data.Providers
         {
             _facade.obrisiResurs(resursId);
             resursReset = true;
+            Notify(DataEntity.Resurs);
         }
         public Resurs giveLastAddedResource() => _facade.giveLastAddedResource();
 

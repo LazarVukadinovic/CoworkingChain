@@ -1,7 +1,6 @@
 ﻿using Coworking.Data.Chain_Of_Responsibility;
 using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using Coworking.Domain.Enums;
 
 namespace Coworking.WinForms.Dialogues
 {

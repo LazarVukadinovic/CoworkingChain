@@ -1,9 +1,7 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
 using Coworking.WinForms.Dialogues;
-using System;
-using System.Diagnostics;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace Coworking.WinForms
 {
@@ -20,9 +18,7 @@ namespace Coworking.WinForms
             loadLocations();
             loadStatuses();
             loadData2();
-            //statusComboBox.SelectedIndex = 0;
             //ResetComboBox();
-
         }
 
         private void OnDataChanged(DataEntity entity)
@@ -64,6 +60,12 @@ namespace Coworking.WinForms
 
         private void editMemberButton_Click(object sender, EventArgs e)
         {
+            if (memberDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Izaberi člana za izmenu.", "Izmena", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             _selektovanClan = (Clan)memberDataGridView.SelectedRows[0].DataBoundItem;
             IzmeniClana editMember = new IzmeniClana(_selektovanClan);
             editMember.ShowDialog(this);
@@ -158,11 +160,6 @@ namespace Coworking.WinForms
         }
 
         private void statusComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            loadData();
-        }
-
-        private void statusComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             loadData();
         }

@@ -1,7 +1,4 @@
 ﻿using Coworking.Data.Providers;
-using System;
-using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace Coworking.WinForms
 {

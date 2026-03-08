@@ -1,5 +1,4 @@
 ﻿using Coworking.Data.Providers;
-using System;
 
 namespace Coworking.WinForms.Dialogues.Admin
 {
@@ -19,6 +18,9 @@ namespace Coworking.WinForms.Dialogues.Admin
                 KorisnickoIme = nameTextBox.TextButton,
                 LozinkaHash = cyberTextBox1.TextButton
             });
+
+            MessageBox.Show("Uspešno dodat admin!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
         }
     }
 }

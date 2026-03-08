@@ -109,8 +109,6 @@
             currentLocationCheckBox.Timer_Effect_1 = 1;
             currentLocationCheckBox.Timer_RGB = 300;
             currentLocationCheckBox.CheckedChanged += currentLocationCheckBox_CheckedChanged;
-            currentLocationCheckBox.Load += currentLocationCheckBox_Load;
-            currentLocationCheckBox.Click += currentLocationCheckBox_Click;
             // 
             // filterPanel
             // 

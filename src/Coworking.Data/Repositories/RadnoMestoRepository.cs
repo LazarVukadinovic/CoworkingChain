@@ -43,7 +43,7 @@ namespace Coworking.Data.Repositories
             string upit = $@"
             UPDATE radno_mesto_detalj
             SET 
-                resurs_id = '{item.resursId}',
+                resurs_id = {item.resursId},
                 podtip = '{item.podtip.ToDbString()}'
             WHERE resurs_id = {item.resursId};";
 

@@ -1,7 +1,6 @@
-﻿-- ============================================
--- STORED PROCEDURE - Provera dostupnosti
--- ============================================
+﻿-------------------------------------------------
 -- 004_procedures.sql
+-------------------------------------------------
 
 IF OBJECT_ID(N'dbo.sp_proveri_dostupnost', N'P') IS NOT NULL
     DROP PROCEDURE dbo.sp_proveri_dostupnost
@@ -20,7 +19,7 @@ BEGIN
       AND status IN ('Rezervisana', 'Potvrdjena')
       AND (
           (pocetak <= @p_pocetak AND kraj > @p_pocetak) OR
-          (pocetak < @p_kraj    AND kraj >= @p_kraj)    OR
+          (pocetak <  @p_kraj   AND kraj >= @p_kraj)    OR
           (pocetak >= @p_pocetak AND kraj <= @p_kraj)
       )
 END

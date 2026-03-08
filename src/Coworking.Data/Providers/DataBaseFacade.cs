@@ -2,9 +2,6 @@ using Coworking.Data.Reports;
 using Coworking.Data.Repositories;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
-using Microsoft.Identity.Client;
-using System.Data;
-using System.Diagnostics;
 
 namespace Coworking.Data.Providers
 {
@@ -50,26 +47,28 @@ namespace Coworking.Data.Providers
         public List<Clan> prikaziClanove() => _clanRepo.GetAll();
         public void obrisiClana(int clanId) => _clanRepo.Delete(clanId);
 
+        // OPTIMIZOVANO SA SQL
+        public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status) => _clanRepo.GetFiltrirano(lokacijaId, tipClanstvaId, status);
 
-        public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
-        {
-            // Uvek kreni od svih, pa sucavaj krug
-            var clanovi = _clanRepo.GetAll();
+        //public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
+        //{
+        //    // Uvek kreni od svih, pa sucavaj krug
+        //    var clanovi = _clanRepo.GetAll();
 
-            if (lokacijaId.HasValue)
-            {
-                var poLokaciji = _clanRepo.vratiClanovePoLokaciji((int)lokacijaId);
-                clanovi = clanovi.FindAll(c => poLokaciji.Any(pl => pl.clanId == c.clanId));
-            }
+        //    if (lokacijaId.HasValue)
+        //    {
+        //        var poLokaciji = _clanRepo.vratiClanovePoLokaciji((int)lokacijaId);
+        //        clanovi = clanovi.FindAll(c => poLokaciji.Any(pl => pl.clanId == c.clanId));
+        //    }
 
-            if (tipClanstvaId.HasValue)
-                clanovi = clanovi.FindAll(c => c.tipClanstva == tipClanstvaId);
+        //    if (tipClanstvaId.HasValue)
+        //        clanovi = clanovi.FindAll(c => c.tipClanstva == tipClanstvaId);
 
-            if (!string.IsNullOrEmpty(status))
-                clanovi = clanovi.FindAll(c => c.statusNaloga == status);
+        //    if (!string.IsNullOrEmpty(status))
+        //        clanovi = clanovi.FindAll(c => c.statusNaloga == status);
 
-            return clanovi;
-        }
+        //    return clanovi;
+        //}
 
         public List<Clan> vratiClanovePoImenu(string name) => _clanRepo.GetByName(name);
 
@@ -184,19 +183,7 @@ namespace Coworking.Data.Providers
 
         public void izmeniResurs(Resurs r) => _resursRepo.Update(r);
         public void dodajResurs(Resurs r) => _resursRepo.Add(r);
-        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string? name) 
-        {
-            // Uvek kreni od svih, pa su�avaj krug
-            var resursi = _resursRepo.GetAll();
-
-            if (lokacijaId.HasValue)
-                resursi = resursi.FindAll(r => r.lokacijaId == lokacijaId);
-
-            if (!string.IsNullOrEmpty(name))
-                resursi = resursi.FindAll(r => r.tipResursa == name);
-
-            return resursi;
-        }
+        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string? name) => _resursRepo.GetResourcesByLocation(lokacijaId, name);
         public List<Resurs> prikaziSveResurse() => _resursRepo.GetAll();
         public void obrisiResurs(int resursId) => _resursRepo.Delete(resursId);
         public Resurs giveLastAddedResource() => _resursRepo.giveLastAddedResource();

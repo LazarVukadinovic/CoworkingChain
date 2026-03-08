@@ -11,9 +11,7 @@
         public string? opis { get; set; }
 
         public Lokacija()
-        {
-
-        }
+        { }
 
         public Lokacija(Lokacija l)
         {

@@ -1,5 +1,4 @@
-﻿
-namespace Coworking.Data.Providers
+﻿namespace Coworking.Data.Providers
 {
     public class DBSettings
     {

@@ -1,5 +1,4 @@
-﻿
-namespace Coworking.Data.Repositories
+﻿namespace Coworking.Data.Repositories
 {
     internal interface IRepository<T>
     {

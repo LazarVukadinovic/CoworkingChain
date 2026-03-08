@@ -1,7 +1,4 @@
 ﻿using Coworking.Data.Providers;
-using System;
-using System.Net;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace Coworking.WinForms.Dialogues
 {
@@ -55,6 +52,8 @@ namespace Coworking.WinForms.Dialogues
                 kreiran = danas.ToString("yyyy-MM-dd")
             });
 
+            MessageBox.Show("Uspešno dodat član!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
 using Coworking.Domain.Enums;
-using System;
-using System.Diagnostics;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Coworking.WinForms.Dialogues
 {
@@ -65,7 +62,7 @@ namespace Coworking.WinForms.Dialogues
                 tvCheckBox.Checked = sala.imaTv;
                 onlineCheckBox.Checked = sala.imaOpremuZaOnlineSastanke;
             }
-            aboutRichTextBox.TextButton = _selektovanResurs.opis;
+            aboutRichTextBox.TextButton = _selektovanResurs.opis ?? "";
 
         }
 
@@ -133,6 +130,8 @@ namespace Coworking.WinForms.Dialogues
                 }
 
                 singleton.izmeniRadnoMesto(newRadnoMesto);
+                MessageBox.Show("Uspešno izmenjeno radno mesto!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
             else if(_selektovanResurs.tipResursa == "sala")
             {
@@ -144,6 +143,8 @@ namespace Coworking.WinForms.Dialogues
                 newSalaZaSastanke.imaProjektor = projectorCheckBox.Checked;
 
                 singleton.izmeniSaluZaSastanke(newSalaZaSastanke);
+                MessageBox.Show("Uspešno izmenjena sala za sastanke!", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
         }
     }

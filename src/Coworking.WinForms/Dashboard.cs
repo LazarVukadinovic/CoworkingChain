@@ -1,5 +1,4 @@
 ﻿using Coworking.Data.Providers;
-using System;
 
 namespace Coworking.WinForms
 {
