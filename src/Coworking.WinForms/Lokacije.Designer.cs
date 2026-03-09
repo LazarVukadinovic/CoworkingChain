@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             headerPanel = new Panel();
-            currentLocationCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
+            membershipTypeLabel = new ReaLTaiizor.Controls.HeaderLabel();
+            viewComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
             filterPanel = new Panel();
             searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
             searchButton = new ReaLTaiizor.Controls.ForeverButton();
@@ -41,9 +42,11 @@
             deleteLocationButton = new ReaLTaiizor.Controls.ForeverButton();
             addLocationButton = new ReaLTaiizor.Controls.ForeverButton();
             locationDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
+            filteringPanel = new Panel();
             headerPanel.SuspendLayout();
             filterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)locationDataGridView).BeginInit();
+            filteringPanel.SuspendLayout();
             SuspendLayout();
             // 
             // headerLabel
@@ -63,7 +66,6 @@
             // 
             headerPanel.BackColor = Color.FromArgb(37, 52, 68);
             headerPanel.BorderStyle = BorderStyle.FixedSingle;
-            headerPanel.Controls.Add(currentLocationCheckBox);
             headerPanel.Controls.Add(headerLabel);
             headerPanel.Dock = DockStyle.Top;
             headerPanel.Location = new Point(0, 0);
@@ -71,43 +73,36 @@
             headerPanel.Size = new Size(1102, 69);
             headerPanel.TabIndex = 1;
             // 
-            // currentLocationCheckBox
+            // membershipTypeLabel
             // 
-            currentLocationCheckBox.BackColor = Color.Transparent;
-            currentLocationCheckBox.Background = true;
-            currentLocationCheckBox.Background_WidthPen = 2F;
-            currentLocationCheckBox.BackgroundPen = true;
-            currentLocationCheckBox.Checked = false;
-            currentLocationCheckBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            currentLocationCheckBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.ColorChecked = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            currentLocationCheckBox.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            currentLocationCheckBox.CyberCheckBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            currentLocationCheckBox.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
-            currentLocationCheckBox.Effect_1_Transparency = 25;
-            currentLocationCheckBox.Effect_2 = true;
-            currentLocationCheckBox.Effect_2_ColorBackground = Color.White;
-            currentLocationCheckBox.Effect_2_Transparency = 15;
-            currentLocationCheckBox.Font = new Font("Arial", 12F);
-            currentLocationCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
-            currentLocationCheckBox.LinearGradient_Background = false;
-            currentLocationCheckBox.LinearGradientPen = false;
-            currentLocationCheckBox.Location = new Point(11, 12);
-            currentLocationCheckBox.Name = "currentLocationCheckBox";
-            currentLocationCheckBox.RGB = false;
-            currentLocationCheckBox.Rounding = false;
-            currentLocationCheckBox.RoundingInt = 100;
-            currentLocationCheckBox.Size = new Size(213, 45);
-            currentLocationCheckBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            currentLocationCheckBox.TabIndex = 27;
-            currentLocationCheckBox.Tag = "Cyber";
-            currentLocationCheckBox.TextButton = "Trenutna lokacija";
-            currentLocationCheckBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            currentLocationCheckBox.Timer_Effect_1 = 1;
-            currentLocationCheckBox.Timer_RGB = 300;
+            membershipTypeLabel.AutoSize = true;
+            membershipTypeLabel.BackColor = Color.Transparent;
+            membershipTypeLabel.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold);
+            membershipTypeLabel.ForeColor = Color.FromArgb(255, 255, 255);
+            membershipTypeLabel.Location = new Point(11, 20);
+            membershipTypeLabel.Name = "membershipTypeLabel";
+            membershipTypeLabel.Size = new Size(68, 20);
+            membershipTypeLabel.TabIndex = 19;
+            membershipTypeLabel.Text = "Prikaz:";
+            // 
+            // viewComboBox
+            // 
+            viewComboBox.BaseColor = Color.FromArgb(8, 133, 161);
+            viewComboBox.BGColor = Color.FromArgb(18, 26, 33);
+            viewComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            viewComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            viewComboBox.Font = new Font("Segoe UI", 8F);
+            viewComboBox.ForeColor = Color.White;
+            viewComboBox.FormattingEnabled = true;
+            viewComboBox.HoverColor = Color.FromArgb(35, 168, 109);
+            viewComboBox.HoverFontColor = Color.White;
+            viewComboBox.ItemHeight = 25;
+            viewComboBox.Items.AddRange(new object[] { "Sve", "Aktivne lokacije", "Statistika lokacija" });
+            viewComboBox.Location = new Point(92, 19);
+            viewComboBox.Name = "viewComboBox";
+            viewComboBox.Size = new Size(223, 31);
+            viewComboBox.TabIndex = 18;
+            viewComboBox.SelectedIndexChanged += viewComboBox_SelectedIndexChanged;
             // 
             // filterPanel
             // 
@@ -169,6 +164,7 @@
             searchButton.TabIndex = 8;
             searchButton.Text = "Pretraga";
             searchButton.TextColor = Color.FromArgb(243, 243, 243);
+            searchButton.Click += searchButton_Click;
             // 
             // editLocationButton
             // 
@@ -197,6 +193,7 @@
             deleteLocationButton.TabIndex = 3;
             deleteLocationButton.Text = "Obriši lokaciju";
             deleteLocationButton.TextColor = Color.FromArgb(243, 243, 243);
+            deleteLocationButton.Click += deleteLocationButton_Click;
             // 
             // addLocationButton
             // 
@@ -222,44 +219,56 @@
             locationDataGridView.BorderStyle = BorderStyle.None;
             locationDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
             locationDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            locationDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            locationDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             locationDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle2.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            locationDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            locationDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             locationDataGridView.Dock = DockStyle.Fill;
             locationDataGridView.EnableHeadersVisualStyles = false;
             locationDataGridView.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             locationDataGridView.GridColor = Color.FromArgb(255, 255, 255);
-            locationDataGridView.Location = new Point(0, 141);
+            locationDataGridView.Location = new Point(0, 213);
             locationDataGridView.Name = "locationDataGridView";
             locationDataGridView.ReadOnly = true;
             locationDataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            locationDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle6.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            locationDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             locationDataGridView.RowHeadersWidth = 51;
             locationDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             locationDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            locationDataGridView.Size = new Size(1102, 463);
+            locationDataGridView.Size = new Size(1102, 391);
             locationDataGridView.TabIndex = 3;
+            // 
+            // filteringPanel
+            // 
+            filteringPanel.BackColor = Color.FromArgb(37, 52, 68);
+            filteringPanel.BorderStyle = BorderStyle.FixedSingle;
+            filteringPanel.Controls.Add(membershipTypeLabel);
+            filteringPanel.Controls.Add(viewComboBox);
+            filteringPanel.Dock = DockStyle.Top;
+            filteringPanel.Location = new Point(0, 141);
+            filteringPanel.Name = "filteringPanel";
+            filteringPanel.Size = new Size(1102, 72);
+            filteringPanel.TabIndex = 10;
             // 
             // Lokacije
             // 
@@ -267,6 +276,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1102, 604);
             Controls.Add(locationDataGridView);
+            Controls.Add(filteringPanel);
             Controls.Add(filterPanel);
             Controls.Add(headerPanel);
             Name = "Lokacije";
@@ -275,6 +285,8 @@
             headerPanel.PerformLayout();
             filterPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)locationDataGridView).EndInit();
+            filteringPanel.ResumeLayout(false);
+            filteringPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -284,13 +296,13 @@
         private Panel headerPanel;
         private Panel filterPanel;
         private ReaLTaiizor.Controls.ForeverButton editLocationButton;
-        private ReaLTaiizor.Controls.CyberTextBox cyberTextBox1;
-        private ReaLTaiizor.Controls.ForeverButton foreverButton3;
         private ReaLTaiizor.Controls.ForeverButton deleteLocationButton;
         private ReaLTaiizor.Controls.ForeverButton addLocationButton;
         private ReaLTaiizor.Controls.CyberTextBox searchTextBox;
         private ReaLTaiizor.Controls.ForeverButton searchButton;
         private ReaLTaiizor.Controls.PoisonDataGridView locationDataGridView;
-        private ReaLTaiizor.Controls.CyberCheckBox currentLocationCheckBox;
+        private ReaLTaiizor.Controls.HeaderLabel membershipTypeLabel;
+        private ReaLTaiizor.Controls.ForeverComboBox viewComboBox;
+        private Panel filteringPanel;
     }
 }

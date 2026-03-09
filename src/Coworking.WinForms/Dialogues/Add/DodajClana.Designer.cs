@@ -257,6 +257,7 @@
             addMemberButton.TabIndex = 30;
             addMemberButton.Text = "Dodaj člana";
             addMemberButton.TextColor = Color.FromArgb(243, 243, 243);
+            addMemberButton.Click += addMemberButton_Click;
             // 
             // DodajClana
             // 

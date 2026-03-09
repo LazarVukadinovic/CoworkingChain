@@ -137,6 +137,7 @@
             editPasswordButton.TabIndex = 27;
             editPasswordButton.Text = "Izmeni lozinku";
             editPasswordButton.TextColor = Color.FromArgb(243, 243, 243);
+            editPasswordButton.Click += editPasswordButton_Click;
             // 
             // PromeniLozinku
             // 

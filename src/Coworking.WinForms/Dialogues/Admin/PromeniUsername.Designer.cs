@@ -89,6 +89,7 @@
             editUsernameButton.TabIndex = 23;
             editUsernameButton.Text = "Izmeni korisničko ime";
             editUsernameButton.TextColor = Color.FromArgb(243, 243, 243);
+            editUsernameButton.Click += editUsernameButton_Click;
             // 
             // PromeniUsername
             // 

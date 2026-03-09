@@ -267,6 +267,7 @@
             addMembershipButton.TabIndex = 37;
             addMembershipButton.Text = "Dodaj tip";
             addMembershipButton.TextColor = Color.FromArgb(243, 243, 243);
+            addMembershipButton.Click += addMembershipButton_Click;
             // 
             // DodajTipClanstva
             // 

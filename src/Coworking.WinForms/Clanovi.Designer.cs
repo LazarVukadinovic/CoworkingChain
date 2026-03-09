@@ -166,6 +166,7 @@
             deleteMemberButton2.TabIndex = 3;
             deleteMemberButton2.Text = "Obriši člana";
             deleteMemberButton2.TextColor = Color.FromArgb(243, 243, 243);
+            deleteMemberButton2.Click += deleteMemberButton2_Click;
             // 
             // addMemberButton
             // 
@@ -270,11 +271,11 @@
             statusComboBox.HoverColor = Color.FromArgb(35, 168, 109);
             statusComboBox.HoverFontColor = Color.White;
             statusComboBox.ItemHeight = 25;
-            statusComboBox.Items.AddRange(new object[] { "Svi", "Aktivan", "Neaktivan", "Suspendovan" });
             statusComboBox.Location = new Point(529, 46);
             statusComboBox.Name = "statusComboBox";
             statusComboBox.Size = new Size(223, 31);
             statusComboBox.TabIndex = 20;
+            statusComboBox.SelectedIndexChanged += statusComboBox_SelectedIndexChanged;
             // 
             // locationLabel
             // 
@@ -305,6 +306,7 @@
             locationComboBox.Name = "locationComboBox";
             locationComboBox.Size = new Size(223, 31);
             locationComboBox.TabIndex = 18;
+            locationComboBox.SelectedIndexChanged += locationComboBox_SelectedIndexChanged;
             // 
             // membershipTypeLabel
             // 
@@ -335,6 +337,7 @@
             membershipComboBox.Name = "membershipComboBox";
             membershipComboBox.Size = new Size(223, 31);
             membershipComboBox.TabIndex = 0;
+            membershipComboBox.SelectedIndexChanged += membershipComboBox_SelectedIndexChanged;
             // 
             // Clanovi
             // 

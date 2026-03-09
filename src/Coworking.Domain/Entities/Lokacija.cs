@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Coworking.Domain.Entities
+﻿namespace Coworking.Domain.Entities
 {
     public class Lokacija
     {
@@ -17,9 +11,7 @@ namespace Coworking.Domain.Entities
         public string? opis { get; set; }
 
         public Lokacija()
-        {
-
-        }
+        { }
 
         public Lokacija(Lokacija l)
         {

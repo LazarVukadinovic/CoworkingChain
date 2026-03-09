@@ -1,35 +1,40 @@
 ﻿using Coworking.Data.Providers;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Coworking.Data.Chain_Of_Responsibility
 {
-    internal class LimitSatiClanValidator : RezervacijaHandler
+    public class LimitSatiClanValidator : RezervacijaHandler
     {
         public LimitSatiClanValidator(IDataBase proxy) : base(proxy)
-        {
-        }
+        { }
 
         public override ValidationResult Handle(Rezervacija rezervacija)
         {
             var clan = _proxy.prikaziClanove().FirstOrDefault(c => c.clanId == rezervacija.clanId);
-            if(clan == null) return ValidationResult.Fail("Nepostojeci clan.");
+            if (clan == null) return ValidationResult.Fail("Nepostojeći član.");
 
             var tipClanstva = _proxy.prikaziSveTipoveClanstva().FirstOrDefault(t => t.tipClanstvaId == clan.tipClanstva);
-            if (tipClanstva == null) return ValidationResult.Fail("Nepostojeci tip clanstva");
+            if (tipClanstva == null) return ValidationResult.Fail("Nepostojeći tip članstva.");
 
-            // TO DO
+            if (!tipClanstva.maxSatiRezervacijeMesecno.HasValue)
+                return base.Handle(rezervacija);
 
-            bool prekoracenLimit = false;
+            double satiUtroseni = _proxy.vratiUkupneSateSalaZaClana(clan.clanId);
 
-            if (prekoracenLimit)
+            if (!DateTime.TryParse(rezervacija.pocetak, out DateTime novaPoc))
+                return ValidationResult.Fail("Neispravan format početka.");
+            if (!DateTime.TryParse(rezervacija.kraj, out DateTime novaKr))
+                return ValidationResult.Fail("Neispravan format kraja.");
+
+            double satiNoveRezervacije = (novaKr - novaPoc).TotalHours;
+
+            if ((satiUtroseni + satiNoveRezervacije) > tipClanstva.maxSatiRezervacijeMesecno.Value)
             {
-                return ValidationResult.Fail("Korisnik je prekoracio dozvoljeni broj sati rezervacija.");
+                return ValidationResult.Fail(
+                    $"Prekoračen mesečni limit od {tipClanstva.maxSatiRezervacijeMesecno} sati. " +
+                    $"Već rezervisano (sa radnim vremenom): {Math.Round(satiUtroseni, 1)}h");
             }
+
             return base.Handle(rezervacija);
         }
     }

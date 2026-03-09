@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Coworking.Domain.Entities
+﻿namespace Coworking.Domain.Entities
 {
     public class Clan
     {
@@ -19,6 +12,7 @@ namespace Coworking.Domain.Entities
         public string? datumKraja { get; set; }
         public string? statusNaloga { get; set; }
         public string? kreiran {  get; set; }
+        public string PunoIme => $"{ime} {prezime}";
 
         public Clan()
         {
@@ -54,7 +48,7 @@ namespace Coworking.Domain.Entities
 
         public override string ToString()
         {
-            return $"{clanId} {ime} {prezime} - {mail}, {brTelefona}, {tipClanstva}, {datumPocetka}, {datumKraja}, {statusNaloga},{kreiran}";
+            return $"{ime} {prezime} - {mail}";
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Coworking.Data.Providers;
 
 namespace Coworking.WinForms
 {
@@ -57,6 +57,7 @@ namespace Coworking.WinForms
 
         private void izlazButton_Click(object sender, EventArgs e)
         {
+            AdminSession.Instance.OdjaviAdmina();
             Application.Exit();
         }
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Coworking.Data.Reports
 {
@@ -12,14 +8,14 @@ namespace Coworking.Data.Reports
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("ClanId,Ime,Prezime,TipClanstva,SatiKorisnik,ResursId,NazivResursa,TipResursa");
+            sb.AppendLine("ClanId,Ime,Prezime,TipClanstva,NazivTipaClanstva,SatiKorisnik,ResursId,NazivResursa,TipResursa");
 
             foreach (var r in rows)
             {
-                sb.AppendLine($"{r.ClanId},{r.Ime},{r.Prezime},{r.TipClanstva},{r.SatiKorisnik},{r.ResursId},{r.NazivResursa},{r.TipResursa}");
+                sb.AppendLine($"{r.ClanId},\"{r.Ime}\",\"{r.Prezime}\",{r.TipClanstva},\"{r.NazivTipaClanstva}\",{r.SatiKorisnik},{r.ResursId},\"{r.NazivResursa}\",\"{r.TipResursa}\"");
             }
 
-            File.WriteAllText(filePath, sb.ToString());
+            File.WriteAllText(filePath, sb.ToString(), new System.Text.UTF8Encoding(true));
         }
     }
 }

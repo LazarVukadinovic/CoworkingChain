@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Coworking.Data.Adapter;
+using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace Coworking.Data.Factories
@@ -19,6 +20,8 @@ namespace Coworking.Data.Factories
         {
             return new MySqlConnection(konekcioniString);
         }
+        public ISqlSyntaxAdapter createSqlSyntaxAdapter()
+            => new MySqlSyntaxAdapter();
     }
 }
 

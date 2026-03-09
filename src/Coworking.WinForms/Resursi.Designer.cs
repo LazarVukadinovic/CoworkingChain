@@ -1,4 +1,4 @@
-﻿namespace Coworking.WinForms
+namespace Coworking.WinForms
 {
     partial class Resursi
     {
@@ -34,14 +34,11 @@
             headerLabel = new ReaLTaiizor.Controls.HeaderLabel();
             headerPanel = new Panel();
             filterPanel = new Panel();
-            searchTextBox = new ReaLTaiizor.Controls.CyberTextBox();
-            searchButton = new ReaLTaiizor.Controls.ForeverButton();
             editResourceButton = new ReaLTaiizor.Controls.ForeverButton();
             deleteResourceButton = new ReaLTaiizor.Controls.ForeverButton();
             addResourceButton = new ReaLTaiizor.Controls.ForeverButton();
             resourceDataGridView = new ReaLTaiizor.Controls.PoisonDataGridView();
             filteringpanel = new Panel();
-            availableCheckBox = new ReaLTaiizor.Controls.CyberCheckBox();
             locationLabel = new ReaLTaiizor.Controls.HeaderLabel();
             locationComboBox = new ReaLTaiizor.Controls.ForeverComboBox();
             resourceTypeLabel = new ReaLTaiizor.Controls.HeaderLabel();
@@ -80,8 +77,6 @@
             // 
             filterPanel.BackColor = Color.FromArgb(37, 52, 68);
             filterPanel.BorderStyle = BorderStyle.FixedSingle;
-            filterPanel.Controls.Add(searchTextBox);
-            filterPanel.Controls.Add(searchButton);
             filterPanel.Controls.Add(editResourceButton);
             filterPanel.Controls.Add(deleteResourceButton);
             filterPanel.Controls.Add(addResourceButton);
@@ -90,52 +85,6 @@
             filterPanel.Name = "filterPanel";
             filterPanel.Size = new Size(1102, 72);
             filterPanel.TabIndex = 4;
-            // 
-            // searchTextBox
-            // 
-            searchTextBox.Alpha = 20;
-            searchTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            searchTextBox.BackColor = Color.Transparent;
-            searchTextBox.Background_WidthPen = 3F;
-            searchTextBox.BackgroundPen = true;
-            searchTextBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            searchTextBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            searchTextBox.ColorLighting = Color.FromArgb(29, 200, 238);
-            searchTextBox.ColorPen_1 = Color.FromArgb(29, 200, 238);
-            searchTextBox.ColorPen_2 = Color.FromArgb(37, 52, 68);
-            searchTextBox.CyberTextBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            searchTextBox.Font = new Font("Arial", 11F);
-            searchTextBox.ForeColor = Color.FromArgb(245, 245, 245);
-            searchTextBox.Lighting = false;
-            searchTextBox.LinearGradientPen = false;
-            searchTextBox.Location = new Point(597, 12);
-            searchTextBox.Name = "searchTextBox";
-            searchTextBox.PenWidth = 15;
-            searchTextBox.RGB = false;
-            searchTextBox.Rounding = true;
-            searchTextBox.RoundingInt = 60;
-            searchTextBox.Size = new Size(374, 45);
-            searchTextBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            searchTextBox.TabIndex = 11;
-            searchTextBox.Tag = "Cyber";
-            searchTextBox.TextButton = "";
-            searchTextBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            searchTextBox.Timer_RGB = 300;
-            // 
-            // searchButton
-            // 
-            searchButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            searchButton.BackColor = Color.Transparent;
-            searchButton.BaseColor = Color.FromArgb(8, 133, 161);
-            searchButton.Cursor = Cursors.Hand;
-            searchButton.Font = new Font("Segoe UI", 12F);
-            searchButton.Location = new Point(977, 12);
-            searchButton.Name = "searchButton";
-            searchButton.Rounded = true;
-            searchButton.Size = new Size(112, 45);
-            searchButton.TabIndex = 10;
-            searchButton.Text = "Pretraga";
-            searchButton.TextColor = Color.FromArgb(243, 243, 243);
             // 
             // editResourceButton
             // 
@@ -162,8 +111,9 @@
             deleteResourceButton.Rounded = true;
             deleteResourceButton.Size = new Size(150, 45);
             deleteResourceButton.TabIndex = 3;
-            deleteResourceButton.Text = "Obriši resurs";
+            deleteResourceButton.Text = "Obri�i resurs";
             deleteResourceButton.TextColor = Color.FromArgb(243, 243, 243);
+            deleteResourceButton.Click += deleteResourceButton_Click;
             // 
             // addResourceButton
             // 
@@ -232,7 +182,6 @@
             // 
             filteringpanel.BackColor = Color.FromArgb(37, 52, 68);
             filteringpanel.BorderStyle = BorderStyle.FixedSingle;
-            filteringpanel.Controls.Add(availableCheckBox);
             filteringpanel.Controls.Add(locationLabel);
             filteringpanel.Controls.Add(locationComboBox);
             filteringpanel.Controls.Add(resourceTypeLabel);
@@ -242,44 +191,6 @@
             filteringpanel.Name = "filteringpanel";
             filteringpanel.Size = new Size(1102, 97);
             filteringpanel.TabIndex = 6;
-            // 
-            // availableCheckBox
-            // 
-            availableCheckBox.BackColor = Color.Transparent;
-            availableCheckBox.Background = true;
-            availableCheckBox.Background_WidthPen = 2F;
-            availableCheckBox.BackgroundPen = true;
-            availableCheckBox.Checked = false;
-            availableCheckBox.ColorBackground = Color.FromArgb(37, 52, 68);
-            availableCheckBox.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            availableCheckBox.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            availableCheckBox.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            availableCheckBox.ColorChecked = Color.FromArgb(29, 200, 238);
-            availableCheckBox.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            availableCheckBox.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            availableCheckBox.CyberCheckBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            availableCheckBox.Effect_1_ColorBackground = Color.FromArgb(29, 200, 238);
-            availableCheckBox.Effect_1_Transparency = 25;
-            availableCheckBox.Effect_2 = true;
-            availableCheckBox.Effect_2_ColorBackground = Color.White;
-            availableCheckBox.Effect_2_Transparency = 15;
-            availableCheckBox.Font = new Font("Arial", 12F);
-            availableCheckBox.ForeColor = Color.FromArgb(245, 245, 245);
-            availableCheckBox.LinearGradient_Background = false;
-            availableCheckBox.LinearGradientPen = false;
-            availableCheckBox.Location = new Point(536, 39);
-            availableCheckBox.Name = "availableCheckBox";
-            availableCheckBox.RGB = false;
-            availableCheckBox.Rounding = false;
-            availableCheckBox.RoundingInt = 100;
-            availableCheckBox.Size = new Size(212, 45);
-            availableCheckBox.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            availableCheckBox.TabIndex = 20;
-            availableCheckBox.Tag = "Cyber";
-            availableCheckBox.TextButton = "Dostupno";
-            availableCheckBox.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            availableCheckBox.Timer_Effect_1 = 1;
-            availableCheckBox.Timer_RGB = 300;
             // 
             // locationLabel
             // 
@@ -310,6 +221,7 @@
             locationComboBox.Name = "locationComboBox";
             locationComboBox.Size = new Size(223, 31);
             locationComboBox.TabIndex = 18;
+            locationComboBox.SelectedIndexChanged += locationComboBox_SelectedIndexChanged;
             // 
             // resourceTypeLabel
             // 
@@ -335,11 +247,12 @@
             resourceTypeComboBox.HoverColor = Color.FromArgb(35, 168, 109);
             resourceTypeComboBox.HoverFontColor = Color.White;
             resourceTypeComboBox.ItemHeight = 25;
-            resourceTypeComboBox.Items.AddRange(new object[] { "Svi", "Sale za sastanke", "Radna mesta" });
+            resourceTypeComboBox.Items.AddRange(new object[] { "Svi", "sala", "radno_mesto" });
             resourceTypeComboBox.Location = new Point(12, 46);
             resourceTypeComboBox.Name = "resourceTypeComboBox";
             resourceTypeComboBox.Size = new Size(223, 31);
             resourceTypeComboBox.TabIndex = 0;
+            resourceTypeComboBox.SelectedIndexChanged += resourceTypeComboBox_SelectedIndexChanged;
             // 
             // Resursi
             // 
@@ -366,8 +279,6 @@
         private ReaLTaiizor.Controls.HeaderLabel headerLabel;
         private Panel headerPanel;
         private Panel filterPanel;
-        private ReaLTaiizor.Controls.CyberTextBox searchTextBox;
-        private ReaLTaiizor.Controls.ForeverButton searchButton;
         private ReaLTaiizor.Controls.ForeverButton editResourceButton;
         private ReaLTaiizor.Controls.ForeverButton deleteResourceButton;
         private ReaLTaiizor.Controls.ForeverButton addResourceButton;
@@ -377,6 +288,6 @@
         private ReaLTaiizor.Controls.HeaderLabel resourceTypeLabel;
         private ReaLTaiizor.Controls.HeaderLabel locationLabel;
         private ReaLTaiizor.Controls.ForeverComboBox locationComboBox;
-        private ReaLTaiizor.Controls.CyberCheckBox availableCheckBox;
     }
 }
+

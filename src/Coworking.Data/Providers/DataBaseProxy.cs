@@ -1,259 +1,484 @@
-﻿using Coworking.Domain.Entities;
-using Microsoft.Extensions.Logging.Abstractions;
-using System.Security.Claims;
+﻿using Coworking.Data.Reports;
+using Coworking.Data.Repositories;
+using Coworking.Domain.Entities;
+using Coworking.Domain.Enums;
+using System.Timers;
 
 namespace Coworking.Data.Providers
 {
-    internal class DataBaseProxy : IDataBase
+    public class DataBaseProxy : IDataBase
     {
         private IDataBase _facade;
 
+        // --- Simple caches ---
         List<Clan>? cachedClanovi = null;
-        List<Clan>? cachedClanoviFiltrirano = null;
-
-        List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)>? cachedLokacijaStatistika = null;
         List<Lokacija>? cachedLokacija = null;
-
         List<Rezervacija>? cachedRezervacije = null;
-        private Dictionary<int, List<Rezervacija>> cachedRezervacijeSaStatusomZaIzabranogClana = new Dictionary<int, List<Rezervacija>>();
-        private Dictionary<(string datum, string lokacija), List<Rezervacija>> cachedRezervacijeZaDanILokaciju = new Dictionary<(string, string), List<Rezervacija>>();
-
-        private Dictionary<int, List<RadnoMesto>> cachedRadnaMestaPoLokaciji = new Dictionary<int, List<RadnoMesto>>();
-        List<SalaZaSastanke>? cachedSalaZaSastanke = null;
-        private Dictionary<int, List<Resurs>> cachedResursiPoLokacijiIPoTipu = new Dictionary<int, List<Resurs>>();
-        List<Resurs> cachedResursi = null;
-
+        List<Resurs>? cachedResursi = null;
         List<TipClanstva>? cachedTipClanstva = null;
+        List<RadnoMesto>? cachedDostupnaRadnaMesta = null;
 
-        bool needReset = true;
+        // --- Dictionary caches za parametrizovane upite ---
+        Dictionary<(int?, int?, string?), List<Clan>> cachedFiltriraneClanovi = new();
+        Dictionary<(int?, string), List<Resurs>> cachedResursiPoLokacijiITipu = new();
+        Dictionary<(string, int), List<Rezervacija>> cachedRezervacijePoDatumuILokaciji = new();
+        Dictionary<(int, string), List<Rezervacija>> cachedRezervacijePoClanu = new();
+        Dictionary<int, List<RadnoMesto>> cachedDostupnaRadnaMestaPoLokaciji = new();
+        Dictionary<(DateTime, DateTime), List<ReportRow>> cachedReportRows = new();
 
-        public DataBaseProxy(IDataBase facade) 
+        // --- Reset flags ---
+        bool clanReset = true;
+        bool lokacijaReset = true;
+        bool resursReset = true;
+        bool rezervacijaReset = true;
+        bool tipClanstvaReset = true;
+
+        bool check2 = false;
+
+        private readonly object _lock = new object();
+        private bool _checking = false;
+        DateTime lastCheck;
+        System.Timers.Timer _timer;
+
+        public event Action<DataEntity> DataChanged;
+
+        public DataBaseProxy(IDataBase facade)
         {
             _facade = facade;
+            _timer = new System.Timers.Timer(10000);
+            _timer.Elapsed += TimerElapsed;
+            _timer.AutoReset = true;
+            lastCheck = DateTime.Now;
+            _timer.Start();
         }
 
-        //-------------------------CLANOVI-------------------------
-        //-------------------------CLANOVI-------------------------
+        private void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            if (_checking) return;
+            _checking = true;
+            try { CheckExternalChanges(); }
+            finally { _checking = false; }
+        }
+
+        public void CheckExternalChanges()
+        {
+            lock (_lock)
+            {
+                var changes = _facade.GetChangesAfter(lastCheck);
+                foreach (var change in changes)
+                {
+                    var entity = Enum.Parse<DataEntity>(change.EntityName);
+                    InvalidateCache(entity);
+                    Notify(entity);
+                }
+                lastCheck = DateTime.Now;
+            }
+        }
+
+        // BEZ lock-a unutra — uvek se poziva iz vec lock-ovanog konteksta
+        private void InvalidateCache(DataEntity entity)
+        {
+            switch (entity)
+            {
+                case DataEntity.Clan:
+                    clanReset = true;
+                    cachedClanovi = null;
+                    cachedFiltriraneClanovi.Clear();
+                    break;
+
+                case DataEntity.Resurs:
+                    resursReset = true;
+                    cachedResursi = null;
+                    cachedResursiPoLokacijiITipu.Clear();
+                    cachedDostupnaRadnaMesta = null;
+                    cachedDostupnaRadnaMestaPoLokaciji.Clear();
+                    break;
+
+                case DataEntity.Lokacija:
+                    lokacijaReset = true;
+                    cachedLokacija = null;
+                    break;
+
+                case DataEntity.Rezervacija:
+                    rezervacijaReset = true;
+                    cachedRezervacije = null;
+                    cachedRezervacijePoDatumuILokaciji.Clear();
+                    cachedRezervacijePoClanu.Clear();
+                    cachedReportRows.Clear(); // izvestaji zavise od rezervacija
+                    break;
+
+                case DataEntity.TipClanstva:
+                    tipClanstvaReset = true;
+                    cachedTipClanstva = null;
+                    break;
+            }
+        }
+
+        private void Notify(DataEntity entity) => DataChanged?.Invoke(entity);
+
         //-------------------------CLANOVI-------------------------
 
         public void dodajClana(Clan c)
         {
             _facade.dodajClana(c);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Clan); }
+            Notify(DataEntity.Clan);
         }
+
         public void izmeniClana(Clan c)
         {
             _facade.izmeniClana(c);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Clan); }
+            Notify(DataEntity.Clan);
         }
-        public List<Clan> prikaziClanove()
-        {
-            if (cachedClanovi == null || needReset == true)
-            {
-                cachedClanovi = _facade.prikaziClanove();
-                needReset = false;
-            }
-            return cachedClanovi;
-        }
+
         public void obrisiClana(int clanId)
         {
             _facade.obrisiClana(clanId);
-
-            //if (cachedClanovi != null)
-            //    cachedClanovi.RemoveAll(c => c.clanId == clanId);
-
-            //if (cachedKorisnickeRezervacije.ContainsKey(clanId))
-            //    cachedKorisnickeRezervacije.Remove(clanId);
-
-            //Ovo:briše člana iz cachedClanovi, briše njegove rezervacije iz cachedKorisnickeRezervacije i dalje forsira reload
-            //sledeći put
-
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Clan); }
+            Notify(DataEntity.Clan);
         }
 
-        //ovde mozda treba dictionary
+        public List<Clan> prikaziClanove()
+        {
+            lock (_lock)
+            {
+                if (cachedClanovi == null || clanReset)
+                {
+                    cachedClanovi = _facade.prikaziClanove();
+                    clanReset = false;
+                }
+                return cachedClanovi;
+            }
+        }
+
         public List<Clan> PrikaziClanoveFiltrirano(int? lokacijaId, int? tipClanstvaId, string? status)
         {
-            if (cachedClanoviFiltrirano == null || needReset == true)
+            lock (_lock)
             {
-                cachedClanoviFiltrirano = _facade.PrikaziClanoveFiltrirano(lokacijaId,tipClanstvaId,status);
-                needReset = false;
+                var key = (lokacijaId, tipClanstvaId, status);
+                if (clanReset || !cachedFiltriraneClanovi.ContainsKey(key))
+                {
+                    cachedFiltriraneClanovi[key] = _facade.PrikaziClanoveFiltrirano(lokacijaId, tipClanstvaId, status);
+                }
+                return cachedFiltriraneClanovi[key];
             }
-            return cachedClanoviFiltrirano;
         }
 
+        // Ne kesira — search upiti su uvek razliciti
+        public List<Clan> vratiClanovePoImenu(string name) => _facade.vratiClanovePoImenu(name);
+
+        public int vratiClanovePoLokaciji(int lokacijaId) => _facade.vratiClanovePoLokaciji(lokacijaId);
+
+        public double vratiUkupneSateSalaZaClana(int clanId) => _facade.vratiUkupneSateSalaZaClana(clanId);
+
+        public List<StatistikaLokacijeDTO> PrikaziStatistikuLokacija() => _facade.PrikaziStatistikuLokacija();
 
         //-------------------------LOKACIJE-------------------------
-        //-------------------------LOKACIJE-------------------------
-        //-------------------------LOKACIJE-------------------------
+
         public void dodajLokaciju(Lokacija l)
         {
             _facade.dodajLokaciju(l);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Lokacija); }
+            Notify(DataEntity.Lokacija);
         }
+
         public void izmeniLokaciju(Lokacija l)
         {
             _facade.izmeniLokaciju(l);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Lokacija); }
+            Notify(DataEntity.Lokacija);
         }
+
         public void obrisiLokaciju(int lokacijaId)
         {
             _facade.obrisiLokaciju(lokacijaId);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Lokacija); }
+            Notify(DataEntity.Lokacija);
         }
-        public List<(Lokacija lokacija, int brojResursa, int brojRezervisanih, double procenatZauzetosti)> PrikaziStatistikuLokacija()
-        {
-            if (cachedLokacijaStatistika == null || needReset == true)
-            {
-                cachedLokacijaStatistika = _facade.PrikaziStatistikuLokacija();
-                needReset = false;
-            }
-            return cachedLokacijaStatistika;
-        }
+
         public List<Lokacija> prikaziLokacije(bool check)
         {
-            if (cachedLokacija == null || needReset == true)
+            lock (_lock)
             {
-                cachedLokacija = _facade.prikaziLokacije(check);
-                needReset = false;
+                if (check2 != check)
+                {
+                    check2 = check;
+                    lokacijaReset = true;
+                }
+                if (cachedLokacija == null || lokacijaReset)
+                {
+                    cachedLokacija = _facade.prikaziLokacije(check);
+                    lokacijaReset = false;
+                }
+                return cachedLokacija;
             }
-            return cachedLokacija;
         }
 
+        // Ne kesira — search upit
+        public List<Lokacija> GetLokacijaByName(string naziv) => _facade.GetLokacijaByName(naziv);
+
+        public Lokacija GetLokacijaById(int id) => _facade.GetLokacijaById(id);
+
+        public Lokacija getLokacijaByResursId(int resursId) => _facade.getLokacijaByResursId(resursId);
 
         //-------------------------REZERVACIJE-------------------------
-        //-------------------------REZERVACIJE-------------------------
-        //-------------------------REZERVACIJE-------------------------
+
         public void dodajRezervaciju(Rezervacija r)
         {
             _facade.dodajRezervaciju(r);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Rezervacija); }
+            Notify(DataEntity.Rezervacija);
         }
+
         public void izmeniRezervaciju(Rezervacija r)
         {
             _facade.izmeniRezervaciju(r);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Rezervacija); }
+            Notify(DataEntity.Rezervacija);
         }
+
         public void otkaziRezervaciju(int rezervacijaId)
         {
             _facade.otkaziRezervaciju(rezervacijaId);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.Rezervacija); }
+            Notify(DataEntity.Rezervacija);
         }
+
+        public void obrisiRezervaciju(int rezervacijaId)
+        {
+            _facade.obrisiRezervaciju(rezervacijaId);
+            lock (_lock) { InvalidateCache(DataEntity.Rezervacija); }
+            Notify(DataEntity.Rezervacija);
+        }
+
         public List<Rezervacija> prikaziSveRezervacije()
         {
-            if (cachedRezervacije == null || needReset == true)
+            lock (_lock)
             {
-                cachedRezervacije = _facade.prikaziSveRezervacije();
-                needReset = false;
+                if (cachedRezervacije == null || rezervacijaReset)
+                {
+                    cachedRezervacije = _facade.prikaziSveRezervacije();
+                    rezervacijaReset = false;
+                }
+                return cachedRezervacije;
             }
-            return cachedRezervacije;
         }
 
-        // Kreiranje rezervacija: korisnik + resurs (radno mesto ili sala) + lokacija + datum i vreme pocetka + datum i vreme zavrsetka
-        // TO-DO
-        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId)
+        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, int lokacija)
         {
-            if (cachedRezervacijeSaStatusomZaIzabranogClana.ContainsKey(clanId) == false || needReset == true)
+            lock (_lock)
             {
-                cachedRezervacijeSaStatusomZaIzabranogClana[clanId] = _facade.prikaziRezervacijeSaStatusomZaIzabranogClana(clanId);
-                needReset = false;
+                var key = (datum, lokacija);
+                if (rezervacijaReset || !cachedRezervacijePoDatumuILokaciji.ContainsKey(key))
+                {
+                    cachedRezervacijePoDatumuILokaciji[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
+                }
+                return cachedRezervacijePoDatumuILokaciji[key];
             }
-            return cachedRezervacijeSaStatusomZaIzabranogClana[clanId];
-        }
-        public List<Rezervacija> prikaziRezervacijeZaDanILokaciju(string datum, string lokacija)
-        {
-            var key = (datum, lokacija);
-            if (cachedRezervacijeZaDanILokaciju.ContainsKey(key) == false || needReset)
-            {
-                cachedRezervacijeZaDanILokaciju[key] = _facade.prikaziRezervacijeZaDanILokaciju(datum, lokacija);
-                needReset = false;
-            }
-            return cachedRezervacijeZaDanILokaciju[key];
         }
 
+        public List<Rezervacija> prikaziRezervacijeSaStatusomZaIzabranogClana(int clanId, List<ReservationStatus> filterStatusi)
+        {
+            lock (_lock)
+            {
+                // Kljuc kombinuje clanId I sortiranu listu statusa da bi izbegao lazne cache hitove
+                var statusKey = string.Join(",", filterStatusi.Select(s => (int)s).OrderBy(x => x));
+                var key = (clanId, statusKey);
+
+                if (rezervacijaReset || !cachedRezervacijePoClanu.ContainsKey(key))
+                {
+                    cachedRezervacijePoClanu[key] = _facade.prikaziRezervacijeSaStatusomZaIzabranogClana(clanId, filterStatusi);
+                }
+                return cachedRezervacijePoClanu[key];
+            }
+        }
 
         //-------------------------RESURSI-------------------------
-        //-------------------------RESURSI-------------------------
-        //-------------------------RESURSI-------------------------
 
-        public List<RadnoMesto> prikaziRadnaMestaPoLokaciji(int lokacijaId)
+        public void dodajResurs(Resurs r)
         {
-            if (cachedRadnaMestaPoLokaciji.ContainsKey(lokacijaId) == false || needReset == true)
-            {
-                cachedRadnaMestaPoLokaciji[lokacijaId] = _facade.prikaziRadnaMestaPoLokaciji(lokacijaId);
-                needReset = false;
-            }
-            return cachedRadnaMestaPoLokaciji[lokacijaId];
+            _facade.dodajResurs(r);
+            lock (_lock) { InvalidateCache(DataEntity.Resurs); }
+            Notify(DataEntity.Resurs);
         }
-        public List<SalaZaSastanke> prikaziSaleZaSastanke()
+
+        public void izmeniResurs(Resurs r)
         {
-            if (cachedSalaZaSastanke == null || needReset == true)
-            {
-                cachedSalaZaSastanke = _facade.prikaziSaleZaSastanke();
-                needReset = false;
-            }
-            return cachedSalaZaSastanke;
+            _facade.izmeniResurs(r);
+            lock (_lock) { InvalidateCache(DataEntity.Resurs); }
+            Notify(DataEntity.Resurs);
         }
-        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int lokacijaId)
+
+        public void obrisiResurs(int resursId)
         {
-            if (cachedResursiPoLokacijiIPoTipu.ContainsKey(lokacijaId) == false || needReset == true)
-            {
-                cachedResursiPoLokacijiIPoTipu[lokacijaId] = _facade.prikaziResursePoLokacijiIPoTipu(lokacijaId);
-                needReset = false;
-            }
-            return cachedResursiPoLokacijiIPoTipu[lokacijaId];
+            _facade.obrisiResurs(resursId);
+            lock (_lock) { InvalidateCache(DataEntity.Resurs); }
+            Notify(DataEntity.Resurs);
         }
+
+        // RadnoMesto i SalaZaSastanke su podtipovi Resursa — invalidiraju Resurs kes
+        public void dodajRadnoMesto(RadnoMesto r)
+        {
+            _facade.dodajRadnoMesto(r);
+            lock (_lock) { InvalidateCache(DataEntity.Resurs); }
+            Notify(DataEntity.Resurs);
+        }
+
+        public void izmeniRadnoMesto(RadnoMesto r)
+        {
+            _facade.izmeniRadnoMesto(r);
+            lock (_lock) { InvalidateCache(DataEntity.Resurs); }
+            Notify(DataEntity.Resurs);
+        }
+
+        public void dodajSaluZaSastanke(SalaZaSastanke s)
+        {
+            _facade.dodajSaluZaSastanke(s);
+            lock (_lock) { InvalidateCache(DataEntity.Resurs); }
+            Notify(DataEntity.Resurs);
+        }
+
+        public void izmeniSaluZaSastanke(SalaZaSastanke s)
+        {
+            _facade.izmeniSaluZaSastanke(s);
+            lock (_lock) { InvalidateCache(DataEntity.Resurs); }
+            Notify(DataEntity.Resurs);
+        }
+
         public List<Resurs> prikaziSveResurse()
         {
-            if (cachedResursi == null || needReset == true)
+            lock (_lock)
             {
-                cachedResursi = _facade.prikaziSveResurse();
-                needReset = false;
+                if (cachedResursi == null || resursReset)
+                {
+                    cachedResursi = _facade.prikaziSveResurse();
+                    resursReset = false;
+                }
+                return cachedResursi;
             }
-            return cachedResursi;
         }
 
+        public List<Resurs> prikaziResursePoLokacijiIPoTipu(int? lokacijaId, string name)
+        {
+            lock (_lock)
+            {
+                var key = (lokacijaId, name);
+                if (resursReset || !cachedResursiPoLokacijiITipu.ContainsKey(key))
+                {
+                    cachedResursiPoLokacijiITipu[key] = _facade.prikaziResursePoLokacijiIPoTipu(lokacijaId, name);
+                }
+                return cachedResursiPoLokacijiITipu[key];
+            }
+        }
+
+        public List<RadnoMesto> prikaziDostupnaRadnaMesta()
+        {
+            lock (_lock)
+            {
+                if (cachedDostupnaRadnaMesta == null || resursReset)
+                {
+                    cachedDostupnaRadnaMesta = _facade.prikaziDostupnaRadnaMesta();
+                    // Ne resetujemo resursReset ovde jer ga dele vise metoda
+                }
+                return cachedDostupnaRadnaMesta;
+            }
+        }
+
+        public List<RadnoMesto> prikaziDostupnaRadnaMestaPoLokaciji(int lokacijaId)
+        {
+            lock (_lock)
+            {
+                if (resursReset || !cachedDostupnaRadnaMestaPoLokaciji.ContainsKey(lokacijaId))
+                {
+                    cachedDostupnaRadnaMestaPoLokaciji[lokacijaId] = _facade.prikaziDostupnaRadnaMestaPoLokaciji(lokacijaId);
+                }
+                return cachedDostupnaRadnaMestaPoLokaciji[lokacijaId];
+            }
+        }
+
+        public SalaZaSastanke prikaziSaleZaSastankePoId(int resursId) => _facade.prikaziSaleZaSastankePoId(resursId);
+
+        public RadnoMesto prikaziRadnaMestaPoId(int resursId) => _facade.prikaziRadnaMestaPoId(resursId);
+
+        public Resurs giveLastAddedResource() => _facade.giveLastAddedResource();
 
         //-------------------------TIP CLANSTVA-------------------------
-        //-------------------------TIP CLANSTVA-------------------------
-        //-------------------------TIP CLANSTVA-------------------------
 
-        public void dodajTipClanstva(Domain.Entities.TipClanstva t)
+        public void dodajTipClanstva(TipClanstva t)
         {
             _facade.dodajTipClanstva(t);
-            needReset = true;
+            lock (_lock) { InvalidateCache(DataEntity.TipClanstva); }
+            Notify(DataEntity.TipClanstva);
         }
+
+        public void updateTipClanstva(TipClanstva t)
+        {
+            _facade.updateTipClanstva(t);
+            lock (_lock) { InvalidateCache(DataEntity.TipClanstva); }
+            Notify(DataEntity.TipClanstva);
+        }
+
+        public void DeleteTipClanstva(int id)
+        {
+            _facade.DeleteTipClanstva(id);
+            lock (_lock) { InvalidateCache(DataEntity.TipClanstva); }
+            Notify(DataEntity.TipClanstva);
+        }
+
         public List<TipClanstva> prikaziSveTipoveClanstva()
         {
-            if (cachedTipClanstva == null || needReset == true)
+            lock (_lock)
             {
-                cachedTipClanstva = _facade.prikaziSveTipoveClanstva();
-                needReset = false;
+                if (cachedTipClanstva == null || tipClanstvaReset)
+                {
+                    cachedTipClanstva = _facade.prikaziSveTipoveClanstva();
+                    tipClanstvaReset = false;
+                }
+                return cachedTipClanstva;
             }
-            return cachedTipClanstva;
         }
 
-        //-------------------------NAZIV LANCA-------------------------
-        //-------------------------NAZIV LANCA-------------------------
+        // Ne kesira — search upit
+        public List<TipClanstva> GetTipClanstvaByName(string naziv) => _facade.GetTipClanstvaByName(naziv);
+
+        public TipClanstva GetTipClanstvaById(int id) => _facade.GetTipClanstvaById(id);
+
         //-------------------------NAZIV LANCA-------------------------
 
-        public string prikazLanca()
+        public string prikazLanca() => _facade.prikazLanca();
+
+        //-------------------------LOGIN-------------------------
+
+        public Admin getAdminByUsername(string username, string password) => _facade.getAdminByUsername(username, password);
+
+        public void addAdmin(Admin admin) => _facade.addAdmin(admin);
+
+        public void updateAdmin(Admin admin) => _facade.updateAdmin(admin);
+
+        public void deleteAdmin(int id) => _facade.deleteAdmin(id);
+
+        public void updateAdminByUsername(Admin admin, string username) => _facade.updateAdminByUsername(admin, username);
+
+        public List<EntityChange> GetChangesAfter(DateTime lastCheck)
         {
-            return _facade.prikazLanca();
+            throw new NotImplementedException();
+            // Ne treba ovde — poziva se kroz _facade gore u CheckExternalChanges
         }
 
-        //-------------------------LOGIN-------------------------
-        //-------------------------LOGIN-------------------------
-        //-------------------------LOGIN-------------------------
+        //-------------------------IZVESTAJ-------------------------
 
-        public bool getAdminByUsername(string username, string password)
+        public List<ReportRow> GetReportRows(DateTime start, DateTime end)
         {
-            return _facade.getAdminByUsername(username, password);
-        }
-
-        public void addAdmin(Admin admin)
-        {
-            _facade.addAdmin(admin);
+            lock (_lock)
+            {
+                var key = (start, end);
+                if (!cachedReportRows.ContainsKey(key))
+                {
+                    cachedReportRows[key] = _facade.GetReportRows(start, end);
+                }
+                return cachedReportRows[key];
+            }
         }
     }
 }

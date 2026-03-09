@@ -1,9 +1,7 @@
 ﻿using Coworking.Data.Providers;
+using Coworking.Data.Reports;
 using Coworking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Coworking.Domain.Enums;
 
 namespace Coworking.Data.Repositories
 {
@@ -19,45 +17,74 @@ namespace Coworking.Data.Repositories
             _mapper = mapper;
         }
 
+        //public void Add(Rezervacija item)
+        //{
+        //    string otkazanoUVal = item.otkazanoU == null ? "NULL" : $"'{item.otkazanoU}'";
+
+        //    string upit = $@"
+        //    INSERT INTO rezervacija (pocetak, kraj, status, kreirano_u, otkazano_u, clan_id, resurs_id)
+        //    VALUES (
+        //        '{item.pocetak}',
+        //        '{item.kraj}',
+        //        '{item.status.ToDbString()}',
+        //        '{item.kreiranoU}',
+        //        {otkazanoUVal},
+        //        {item.clanId},
+        //        {item.resursId}
+        //    );";
+
+        //    _adapter.izvrsiUpitBezRezultata(upit);
+        //}
+
         public void Add(Rezervacija item)
         {
+            string otkazanoUVal = item.otkazanoU == null ? "NULL" : $"'{item.otkazanoU}'";
+
             string upit = $@"
-                INSERT INTO rezervacija (pocetak, kraj, status, kreirano_u, otkazano_u, clan_id, resurs_id)
-                VALUES (
-                    '{item.pocetak}',
-                    '{item.kraj}',
-                    '{item.status}',
-                    '{item.kreiranoU}',
-                    '{item.otkazanoU}',
-                    '{item.clanId}',
-                    '{item.resursId}'
-                );";
+            INSERT INTO rezervacija (pocetak, kraj, status, otkazano_u, clan_id, resurs_id)
+            VALUES (
+                '{item.pocetak}',
+                '{item.kraj}',
+                '{item.status.ToDbString()}',
+                {otkazanoUVal},
+                {item.clanId},
+                {item.resursId}
+            );";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public void Update(Rezervacija item)
         {
+            if (item.status == ReservationStatus.Otkazana && item.otkazanoU == null)
+                item.otkazanoU = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            if (item.status != ReservationStatus.Otkazana)
+                item.otkazanoU = null;
+
+            string otkazanoUVal = item.otkazanoU == null ? "NULL" : $"'{item.otkazanoU}'";
+
             string upit = $@"
-                UPDATE rezervacija
-                SET pocetak = '{item.pocetak}',
-                    kraj = '{item.kraj}',
-                    status = '{item.status}',
-                    kreirano_u = '{item.kreiranoU}',
-                    otkazano_u = '{item.otkazanoU}',
-                    clan_id = '{item.clanId}',
-                    resurs_id = '{item.resursId}'
-                WHERE rezervacija_id = '{item.rezervacijaId}';";
+            UPDATE rezervacija
+            SET pocetak = '{item.pocetak}',
+                kraj = '{item.kraj}',
+                status = '{item.status.ToDbString()}',
+                otkazano_u = {otkazanoUVal},
+                clan_id = {item.clanId},
+                resurs_id = {item.resursId}
+            WHERE rezervacija_id = {item.rezervacijaId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
         public void Cancel(int rezervacijaId)
         {
+            string now = _adapter.NowExpr();
             string upit = $@"
-                UPDATE rezervacija
-                SET status = 'Otkazana'
-                WHERE rezervacija_id = {rezervacijaId};";
+            UPDATE rezervacija
+            SET status     = '{ReservationStatus.Otkazana.ToDbString()}',
+                otkazano_u = {now}
+            WHERE rezervacija_id = {rezervacijaId};";
 
             _adapter.izvrsiUpitBezRezultata(upit);
         }
@@ -68,26 +95,118 @@ namespace Coworking.Data.Repositories
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
-        public void UpdateStatus(int rezervacijaId, string status)
+        public void UpdateStatus(int rezervacijaId, ReservationStatus status)
         {
             string upit = $@"
                 UPDATE rezervacija
-                SET status = '{status}'
+                SET status = '{status.ToDbString()}'
                 WHERE rezervacija_id = {rezervacijaId};";
             _adapter.izvrsiUpitBezRezultata(upit);
         }
 
-        public List<Rezervacija> GetByClanId(int clanId)
+        public List<Rezervacija> GetByClanIdAndStatuses(int clanId, List<ReservationStatus> statusi)
         {
-            string upit = $"SELECT * FROM rezervacija WHERE clan_id={clanId}";
+            string upit = $@"SELECT rv.*, r.oznaka 
+                     FROM rezervacija rv 
+                     JOIN resurs r ON rv.resurs_id = r.resurs_id 
+                     WHERE rv.clan_id = {clanId}";
+
+            if (statusi != null && statusi.Count > 0)
+            {
+                string statusiString = string.Join(",", statusi.Select(s => $"'{s.ToDbString()}'"));
+                upit += $" AND rv.status IN ({statusiString})";
+            }
+
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
         }
 
-        public List<Rezervacija> GetReservationsByDateAndLocation(string date, string location)
+        public List<Rezervacija> GetReservationsByDateAndLocation(string date, int location)
         {
-            string upit = $"SELECT rv.*,r.naziv FROM rezervacija rv JOIN resurs r on rv.resurs_id=r.resurs_id " +
-                $"WHERE rv.pocetak >= '{date}' AND rv.kraj < DATEADD(day, 1, '{date}') AND r.lokacija_id={location} AND rv.status != 'Otkazana'";
+            // npr DATE_ADD('2025-02-16', INTERVAL 1 DAY)
+            string nextDay = _adapter.AddDaysExpr($"'{date}'", 1);
+
+            string upit =
+                $"SELECT rv.*, r.oznaka FROM rezervacija rv " +
+                $"JOIN resurs r ON rv.resurs_id = r.resurs_id " +
+                $"WHERE rv.pocetak < {nextDay} " +
+                $"AND rv.kraj > '{date}' " +
+                $"AND r.lokacija_id = {location} " +
+                $"AND rv.status != '{ReservationStatus.Otkazana.ToDbString()}'";
+
             return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
+        }
+
+        public void Delete(int id)
+        {
+            string upit = $"DELETE FROM rezervacija WHERE rezervacija_id = {id}";
+            _adapter.izvrsiUpitBezRezultata(upit);
+        }
+
+        public Rezervacija GetById(int id)
+        {
+            var upit = $"SELECT * FROM rezervacija WHERE rezervacija_id = {id}";
+            var rezervacije = _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
+            return rezervacije.Count > 0 ? rezervacije[0] : null;
+        }
+
+        public List<Rezervacija> GetByName(string name)
+        {
+            string upit = $@"SELECT rv.*, r.oznaka FROM rezervacija rv 
+                    JOIN resurs r ON rv.resurs_id = r.resurs_id 
+                    WHERE r.oznaka LIKE '%{name.Trim()}%'";
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), _mapper.mapRezervacija);
+        }
+
+        public List<SatiSaleInfo> vratiSatiSaleZaClana(int clanId)
+        {
+            string now = _adapter.NowExpr();
+            string upit = $@"
+            SELECT rv.pocetak, rv.kraj, l.radno_vreme
+            FROM rezervacija rv
+            JOIN resurs r ON rv.resurs_id = r.resurs_id
+            JOIN lokacija l ON r.lokacija_id = l.lokacija_id
+            WHERE rv.clan_id = {clanId}
+              AND r.tip_resursa = 'sala'
+              AND rv.status IN ('Rezervisana', 'Potvrdjena', 'Zavrsena')
+              AND MONTH(rv.pocetak) = MONTH({now})
+              AND YEAR(rv.pocetak)  = YEAR({now})";
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), red => new SatiSaleInfo
+            {
+                pocetak = red["pocetak"].ToString(),
+                kraj = red["kraj"].ToString(),
+                radnoVreme = red["radno_vreme"].ToString()
+            });
+        }
+
+        public List<ReportRow> GetReportRows(DateTime start, DateTime end)
+        {
+            string upit = $@"
+            SELECT 
+                c.clan_id, c.ime, c.prezime,
+                tc.tip_clanstva_id, tc.naziv AS naziv_tipa,
+                rv.pocetak, rv.kraj,
+                r.resurs_id, r.oznaka, r.tip_resursa
+            FROM rezervacija rv
+            JOIN clan c ON rv.clan_id = c.clan_id
+            JOIN resurs r ON rv.resurs_id = r.resurs_id
+            JOIN tip_clanstva tc ON c.tip_clanstva_id = tc.tip_clanstva_id
+            WHERE rv.pocetak >= '{start:yyyy-MM-dd HH:mm:ss}'
+              AND rv.kraj <= '{end:yyyy-MM-dd HH:mm:ss}'";
+
+            return _mapper.mapDataTable(_adapter.izvrsiUpit(upit), red => new ReportRow
+            {
+                ClanId = Convert.ToInt32(red["clan_id"]),
+                Ime = red["ime"].ToString() ?? "",
+                Prezime = red["prezime"].ToString() ?? "",
+                TipClanstva = red["tip_clanstva_id"].ToString() ?? "",
+                NazivTipaClanstva = red["naziv_tipa"].ToString() ?? "",
+                SatiKorisnik = Math.Round(
+                    (Convert.ToDateTime(red["kraj"]) - Convert.ToDateTime(red["pocetak"])).TotalHours, 2),
+                ResursId = Convert.ToInt32(red["resurs_id"]),
+                NazivResursa = red["oznaka"].ToString() ?? "",
+                TipResursa = red["tip_resursa"].ToString() ?? ""
+            });
         }
     }
 }

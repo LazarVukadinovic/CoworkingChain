@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Coworking.Domain.Entities
+﻿namespace Coworking.Domain.Entities
 {
     public class TipClanstva
     {
@@ -15,7 +8,7 @@ namespace Coworking.Domain.Entities
         public int? trajanjeDana { get; set; }
         public int? maxSatiRezervacijeMesecno { get; set; }
         public int? satiSaleMesecno { get; set; }
-        public string? dozvoljenaSala { get; set; }
+        public bool? dozvoljenaSala { get; set; }
 
         public TipClanstva()
         {
@@ -33,7 +26,7 @@ namespace Coworking.Domain.Entities
             this.dozvoljenaSala=t.dozvoljenaSala;
         }
 
-        public TipClanstva(string? naziv, float? cena, int? trajanjeDana, int? maxSatiRezervacijeMesecno, int? satiSaleMesecno, string? dozvoljenaSala)
+        public TipClanstva(string? naziv, float? cena, int? trajanjeDana, int? maxSatiRezervacijeMesecno, int? satiSaleMesecno, bool? dozvoljenaSala)
         {
             this.naziv = naziv;
             this.cena = cena;

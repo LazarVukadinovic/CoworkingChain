@@ -1,4 +1,5 @@
-﻿using Coworking.Data.Factories;
+﻿using Coworking.Data.Adapter;
+using Coworking.Data.Factories;
 using System.Data;
 
 namespace Coworking.Data.Providers
@@ -7,11 +8,13 @@ namespace Coworking.Data.Providers
     {
         private readonly IDataBaseFactory _factory;
         private readonly string _konekcioniString;
+        private readonly ISqlSyntaxAdapter _syntax;
 
         public DataBaseAdapter(IDataBaseFactory factory, string konekcioniString)
         {
             _factory = factory;
             _konekcioniString = konekcioniString;
+            _syntax = _factory.createSqlSyntaxAdapter();
         }
 
         public DataTable izvrsiUpit(string upit)
@@ -39,6 +42,21 @@ namespace Coworking.Data.Providers
                 connection.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public string NowExpr()
+        {
+            return _syntax.NowExpr();
+        }
+
+        public string AddDaysExpr(string dateParam, int days)
+        {
+            return _syntax.AddDaysExpr(dateParam, days);
+        }
+
+        public string LimitOneExpr(string orderByColumn, string direction = "DESC")
+        {
+            return _syntax.LimitOneExpr(orderByColumn, direction);
         }
     }
 }

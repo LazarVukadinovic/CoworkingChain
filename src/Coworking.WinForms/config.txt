@@ -1,2 +1,2 @@
 CoworkingChain
-Server=localhost;Database=coworking;Uid=root;Pwd=;
+Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CoworkingChain;Integrated Security=True;TrustServerCertificate=True;
