@@ -1,5 +1,0 @@
-docs/ → PDF zahtevi, SQL skripte, slike/screenshotovi
-
-docs/db/ → SQL skripte
-initial.sql	- shema baze podataka
-seed.sql	- pocetni podaci unutar baze podataka (tabela)

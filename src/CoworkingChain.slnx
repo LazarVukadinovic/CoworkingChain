@@ -3,4 +3,5 @@
   <Project Path="Coworking.Domain/Coworking.Domain.csproj" />
   <Project Path="Coworking.Services/Coworking.Services.csproj" />
   <Project Path="Coworking.WinForms/Coworking.WinForms.csproj" />
+  <Project Path="Coworking.ReportService/Coworking.ReportService.csproj" Id="fb3148a4-04e2-406e-ab7c-c111c407eedc" />
 </Solution>

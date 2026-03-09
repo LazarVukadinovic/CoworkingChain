@@ -1,0 +1,2 @@
+CoworkingChain
+Server=localhost;Database=coworking;Uid=root;Pwd=;Allow Zero Datetime=True;
