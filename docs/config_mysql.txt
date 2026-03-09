@@ -1,2 +1,2 @@
 CoworkingChain
-Server=localhost;Database=CoworkingChain;Uid=root;Pwd=;Port=3306;
+Server=localhost;Database=coworking;Uid=root;Pwd=;Allow Zero Datetime=True;
